@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Asia/Hong_Kong",
+  "purpose": "Source handoff closure only",
+  "implementation_files_byte_unchanged_in_original": 49,
+  "implementation_files_restored_equal_after_line_ending_normalization": 49,
+  "root_launch_manifest_files_restored": 4,
+  "original_regression": {
+    "tests": 46,
+    "passed": 46,
+    "failed": 0,
+    "evidence": "tests.txt",
+    "execution": "Normal Windows permissions; isolated local test data, HTTP and child processes"
+  },
+  "historical_real_text_probe": {
+    "date": "2026-10-20",
+    "models": 3,
+    "requests": 3,
+    "total_tokens": 60,
+    "evidence": "model-text-connectivity.json",
+    "gui_capability_verified": false
+  },
+  "source_bundle_restore": {
+    "status": "passed",
+    "restored_source_commit": "a05fd877ec3f776191b19308f8a984c2e2435879",
+    "bundle_complete_history_verified": true,
+    "ignored_data_dependencies_and_runtime_absent_before_smoke": true,
+    "smoke": {
+      "status": "passed",
+      "static_page_http": 200,
+      "frontend_module_http": 200,
+      "gui_lab_catalog_http": 200,
+      "mock_cases": 7,
+      "acceptance_definitions": 31,
+      "browser_gui_verified": false
+    },
+    "scope": "Local bundle clone without source working-copy data or installed SDK dependencies; fresh isolated data created solely for local HTTP startup check"
+  },
+  "staged_audit": {
+    "passed": true,
+    "findings": [],
+    "exact_saved_secrets_and_common_patterns_checked": true,
+    "forbidden_paths_checked": 11
+  },
+  "author_identity": "Codex <codex@local.invalid>, per command only",
+  "final_baseline_reference": "handoff-20261021",
+  "note": "Final baseline also contains this verification record; restored business implementation is unchanged. Source hash comparisons permit configured LF/CRLF checkout differences.",
+  "new_real_model_calls": 0,
+  "phone_commands": 0,
+  "business_implementation_modified": false,
+  "remote_uploads": 0
+}
