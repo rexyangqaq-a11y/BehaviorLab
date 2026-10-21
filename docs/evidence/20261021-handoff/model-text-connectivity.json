@@ -1,0 +1,71 @@
+{
+  "original_test_date": "2026-10-20",
+  "scope": "Historical real text connectivity only; no image, GUI or phone verification",
+  "new_model_calls_during_handoff": 0,
+  "results": [
+    {
+      "model": "qwen3.8-flash",
+      "checked_at": "2026-10-20T09:30:03.508Z",
+      "http_status": 200,
+      "status": "text_ok",
+      "expected_reply_matched": true,
+      "usage": {
+        "input_tokens": 30,
+        "output_tokens": 1,
+        "total_tokens": 31,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      "duration_ms": 671,
+      "requests": 1,
+      "retries": 0,
+      "max_output_tokens": 32,
+      "enable_thinking": false,
+      "image_input_tested": false,
+      "gui_actions_tested": false
+    },
+    {
+      "model": "qwen3.7-plus",
+      "checked_at": "2026-10-20T09:30:04.185Z",
+      "http_status": 200,
+      "status": "text_ok",
+      "expected_reply_matched": true,
+      "usage": {
+        "input_tokens": 17,
+        "output_tokens": 1,
+        "total_tokens": 18,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      "duration_ms": 1030,
+      "requests": 1,
+      "retries": 0,
+      "max_output_tokens": 32,
+      "enable_thinking": false,
+      "image_input_tested": false,
+      "gui_actions_tested": false
+    },
+    {
+      "model": "deepseek-v4.1-flash-1017",
+      "checked_at": "2026-10-20T09:30:05.220Z",
+      "http_status": 200,
+      "status": "text_ok",
+      "expected_reply_matched": true,
+      "usage": {
+        "input_tokens": 9,
+        "output_tokens": 2,
+        "total_tokens": 11,
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      "duration_ms": 662,
+      "requests": 1,
+      "retries": 0,
+      "max_output_tokens": 32,
+      "enable_thinking": false,
+      "image_input_tested": false,
+      "gui_actions_tested": false
+    }
+  ],
+  "total_tokens": 60
+}

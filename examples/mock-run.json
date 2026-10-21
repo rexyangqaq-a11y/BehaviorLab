@@ -1,0 +1,15 @@
+{
+  "run_id": "mock_demo",
+  "mode": "mock",
+  "virtual_start_date": "2026-01-01",
+  "virtual_end_date": "2026-01-02",
+  "virtual_timezone": "Asia/Hong_Kong",
+  "external_requirements": "验证工程闭环；此配置不用于评估行为自然性。",
+  "apps": [{ "app_id": "mock_catalog", "capabilities": ["browse_synthetic_objects"] }],
+  "users": [
+    { "user_id": "user_a", "requirements": { "interests": ["徒步", "摄影"], "note": "简单固定人设示例" } },
+    { "user_id": "user_b", "requirements": { "interests": ["烹饪", "阅读"], "note": "独立上下文示例" } }
+  ],
+  "settings": { "recent_activity_limit": 5, "description_max_attempts": 3 },
+  "mock": { "partial_first_activity": true, "description_fail_once": true, "execution_delay_ms": 5, "description_delay_ms": 10 }
+}

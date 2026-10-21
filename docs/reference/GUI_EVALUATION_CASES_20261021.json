@@ -1,0 +1,1088 @@
+{
+  "schema_version": 1,
+  "revision": "2026-10-21.draft.1",
+  "track": "gui_task_evaluation",
+  "status": "draft_pending_user_review",
+  "case_count": 14,
+  "original_task_reuse_count": 10,
+  "derived_task_count": 2,
+  "project_extension_count": 2,
+  "source_revision": {
+    "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+    "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+    "date": "2026-10-21",
+    "task_ids": [
+      1,
+      4,
+      18,
+      26,
+      35,
+      49,
+      53,
+      55,
+      74,
+      87,
+      14,
+      27
+    ]
+  },
+  "automatic_execution": false,
+  "real_model_calls_in_preparation": 0,
+  "measurement_policy": {
+    "measured_combination": [
+      "framework/version",
+      "model/service",
+      "role split",
+      "prompt/parser",
+      "phone/OS build",
+      "APP/account",
+      "initial state",
+      "task/rubric version"
+    ],
+    "metrics": [
+      "end-to-end elapsed time including waits",
+      "model latency and calls by role",
+      "tool actions",
+      "input/output/cache/reasoning usage when available",
+      "screenshots and missing evidence",
+      "verified objects/subgoals",
+      "interventions",
+      "cost per verified object"
+    ],
+    "outcome_values": [
+      "success",
+      "failure",
+      "partial",
+      "cannot_determine",
+      "blocked"
+    ],
+    "decision_policy": "Automatic checks are proposed only. Assistant produces evidence-based initial assessment; user reviews the report. Agent completion text is not ground truth.",
+    "aggregation": "Report all scheduled attempts and outcomes; no rate before actual execution. A conservative rate uses user-reviewed successes / all scheduled attempts; optionally report executable-only rate with exclusions and denominator separately.",
+    "repeats": "Choose trial count and budget before execution; do not multiply all frameworks and models automatically. No P95 claims from insufficient samples.",
+    "public_score_policy": "HarmonyOS adaptation and changed judges must not be reported as official RealMobile leaderboard scores."
+  },
+  "gaps": [
+    "系统 APP 的公开任务尚未选入，需继续核对 AndroidLab/AndroidWorld 的具体来源和 NEXT 迁移。",
+    "美团/大众点评/12306 的公开任务尚未整理成条目；本包不宣称覆盖全部首测 APP。",
+    "两条长活动参数、部分动态任务口径和实际可用 APP 仍需逐步确认。",
+    "未接入网页用例库/真实 runner/自动判分器/审核持久化界面。"
+  ],
+  "cases": [
+    {
+      "id": "GUI-001",
+      "track": "gui_task_evaluation",
+      "title": "关闭 B 站后台播放",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 1,
+        "original_instruction": "关闭b站后台播放",
+        "original_rubric_text": "打开哔哩哔哩App，进入\"我的/账号\"-\"设置/播放设置\"页面 → 总分:0.33\r\n在设置中定位\"后台播放/后台音频/小窗播放/画中画\"等相关选项，判断是否可在App内直接关闭 → 总分:0.66\r\n若在App内可设置：关闭\"后台播放\"（必要时一并关闭\"小窗播放/画中画\"等关联项） → 总分:1.0\r\n若App内无该选项或关闭后仍会后台播放：前往手机系统设置中，找到哔哩哔哩，关闭后台音频/画中画/后台应用刷新/悬浮窗等相关权限 → 总分:1.0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/1.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=1",
+        "local_rule_file": "sources/realmobile-1.py",
+        "rule_sha256": "a20e33c44db48990b9ac627fbcf30bfd4ab829fb9ab335698a2c77a627ef64a8",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "关闭b站后台播放",
+      "apps": [
+        "哔哩哔哩"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "后台播放初态为开，保存设置状态；记录允许修改的开关和恢复办法。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-001-M1",
+          "requirement": "进入正确应用的相关设置，截图可识别应用和选项。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-001-M2",
+          "requirement": "把后台播放设为关；以动作后的控件状态/可见效果确认，不能仅凭点击命中。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-001-M3",
+          "requirement": "再次观察仍为关；若只能通过系统权限实现，记录替代路径和实际改动。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "状态规则候选＋助手复核，报告交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "源规则存在点击命中可计成功的分支；本项目增加状态复核，不能直接复用其分数。"
+      ]
+    },
+    {
+      "id": "GUI-002",
+      "track": "gui_task_evaluation",
+      "title": "开启 QQ 夜间模式",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 4,
+        "original_instruction": "打开qq夜间模式",
+        "original_rubric_text": "1. 进入QQ APP → 总分:0.25\n\n2.1 在外观/深色模式中开启\"夜间模式/始终深色\" → 总分:1.0\n2.2 在个人中心页中点击夜间按钮或发现页面上出现日间按钮 → 总分:1.0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/4.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=4",
+        "local_rule_file": "sources/realmobile-4.py",
+        "rule_sha256": "9244b6a8d2c8f60b7cf0710b0be2a026062a93dfb69816db69dc9b1da1f0c6e8",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "打开qq夜间模式",
+      "apps": [
+        "QQ"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "使用可登录的测试账号；初态为日间，记录系统主题和应用跟随设置。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-002-M1",
+          "requirement": "进入 QQ 的主题/夜间模式入口。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-002-M2",
+          "requirement": "设置为夜间模式，允许不同有效入口。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-002-M3",
+          "requirement": "返回应用内容页后实际为深色；状态与画面对应，排除仅由系统主题自动切换。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "状态规则候选＋助手复核，报告交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUI-003",
+      "track": "gui_task_evaluation",
+      "title": "开启抖音自动连播",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 18,
+        "original_instruction": "打开抖音的自动连播",
+        "original_rubric_text": "评分规则（分阶段验证进度 - 2阶段简化版）\n\n1. 打开抖音App → 总分:0.5\n\n2. 打开/启用自动连播功能 → 总分:1.0\n\n一票否决条件：\n- 未打开抖音App → 分数:0\n- 未找到/启用自动连播 → 分数:0\n\n规则特点：\n- 支持多XPath匹配，一个页面可匹配多条xpath\n- 不使用break，使用布尔列表完整检查\n- 完整的错误处理和异常捕捉\n- 支持多路径input",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/18.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=18",
+        "local_rule_file": "sources/realmobile-18.py",
+        "rule_sha256": "63c791a57494b33cb637eadf1eb925cc97114d53eb2b5da23afd375fa2e719d0",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "打开抖音的自动连播",
+      "apps": [
+        "抖音"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "该 APP 版本提供自动连播；初态为关；固定可播放的测试内容，不操作点赞或发布。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-003-M1",
+          "requirement": "到达有自动连播功能的页面。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-003-M2",
+          "requirement": "动作后可见启用状态。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-003-M3",
+          "requirement": "采集至少一次内容结束到下一条开始的实际画面/事件；无法观察效果时标无法判断，不能仅凭模型声称已开启。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "开关状态候选＋执行后效果复核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "效果观察窗口需结合测试内容确定并记录；时长统计含等待，不能假装等待时间为模型推理。"
+      ]
+    },
+    {
+      "id": "GUI-004",
+      "track": "gui_task_evaluation",
+      "title": "QQ 音乐设置 30 分钟定时关闭",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 35,
+        "original_instruction": "打开qq音乐设置30分钟后自动关闭",
+        "original_rubric_text": "分段评分规则（4阶段）\n\n1. 打开QQ音乐 → 总分:0.25\n\n2. 进入设置页面 → 总分:0.5\n\n3. 找到定时关闭选项 → 总分:0.75\n\n4. 设置30分钟后自动关闭 → 总分:1.0\n\n一票否决条件：\n- 未打开QQ音乐 → 分数:0\n- 未找到定时关闭相关选项 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/35.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=35",
+        "local_rule_file": "sources/realmobile-35.py",
+        "rule_sha256": "743b0760862d03e7f4a97808410b3e9c4a1b0225f05980a793e471f4db217278",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "打开qq音乐设置30分钟后自动关闭",
+      "apps": [
+        "QQ音乐"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "定时关闭初态为未开启；应用可播放，记录执行前状态和恢复办法。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-004-M1",
+          "requirement": "找到定时关闭入口。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-004-M2",
+          "requirement": "选定 30 分钟，保存所选值。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-004-M3",
+          "requirement": "离开设置再查看仍启用且倒计时合理；不等待完整 30 分钟，不能据此宣称实际到点关闭已验证。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "状态/数值规则候选＋助手复核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "本用例验证设置成功，不验证 30 分钟后的实际关闭；后者需单独安排。"
+      ]
+    },
+    {
+      "id": "GUI-005",
+      "track": "gui_task_evaluation",
+      "title": "比较两款音乐 APP 的会员价格",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 26,
+        "original_instruction": "帮我对比一下汽水音乐和qq音乐的会员价格",
+        "original_rubric_text": "分段评分规则（4阶段）\n\n1. 打开汽水音乐 → 总分:0.25\n\n2. 在汽水音乐中找到会员价格 → 总分:0.5\n\n3. 打开qq音乐 → 总分:0.75\n\n4. 在qq音乐中找到会员价格 → 总分:1.0\n\n一票否决条件：\n- 未打开汽水音乐或qq音乐 → 分数:0\n- 未找到会员价格信息 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/26.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=26",
+        "local_rule_file": "sources/realmobile-26.py",
+        "rule_sha256": "5291c99e44c164cde09693b92750886d9f06cf613e74dcb334a6b49aa1497555",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "帮我对比一下汽水音乐和qq音乐的会员价格",
+      "apps": [
+        "汽水音乐",
+        "QQ音乐"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "两 APP 可打开会员页；固定账号、币种和观察时间，记录促销与续费条件。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-005-M1",
+          "requirement": "两平台分别取得可见会员名称、周期、价格及限制，关联原图。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-005-M2",
+          "requirement": "对同周期/可比权益给出比较；首购价与续费价、折扣与原价不可混算。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-005-M3",
+          "requirement": "最终回答可由实际截图核对；不可比或缺失项明确说明，不编造价目。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "数值计算自动化候选＋助手审核可比性",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "源评分文字主要检查进入页面与找到价格，本项目补齐原指令要求的比较结论。"
+      ]
+    },
+    {
+      "id": "GUI-006",
+      "track": "gui_task_evaluation",
+      "title": "比较两人在抖音和微博的粉丝总量",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 53,
+        "original_instruction": "看一下罗永浩和雷军在抖音和微博上的粉丝总量谁的多",
+        "original_rubric_text": "分段评分规则（5阶段）\n\n1. 打开抖音 → 总分:0.2\n\n2. 在抖音查看罗永浩和雷军粉丝数 → 总分:0.4\n\n3. 打开微博 → 总分:0.6\n\n4. 在微博查看罗永浩和雷军粉丝数 → 总分:0.8\n\n5. 比较粉丝总量并得出结论 → 总分:1.0\n\n一票否决条件：\n- 未打开抖音或微博 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/53.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=53",
+        "local_rule_file": "sources/realmobile-53.py",
+        "rule_sha256": "6be1fb8184b51ba1c8cbe0a1cfdfdd9974b56a4223781b6de6bb6d63767f644b",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "看一下罗永浩和雷军在抖音和微博上的粉丝总量谁的多",
+      "apps": [
+        "抖音",
+        "微博"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "运行前核对两人的四个官方主页身份，固定同一采集时间窗口。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-006-M1",
+          "requirement": "取得两人在两平台的四个粉丝数量，逐条关联身份和原图。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-006-M2",
+          "requirement": "保留原始显示值、单位和约数精度，计算各人跨平台总量。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-006-M3",
+          "requirement": "结论与可见数字一致；区间重叠无法比较时明确不确定，不以四舍五入伪造精确差值。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "算术自动化候选＋助手审核账号身份和证据",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUI-007",
+      "track": "gui_task_evaluation",
+      "title": "筛选两个高播放视频并计算倍速观看时间",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 55,
+        "original_instruction": "去 B 站搜索电影《让子弹飞》的解说，找播放量最高的那两个视频。帮我把这两个视频的时长加起来，然后算一下如果我用 1.5 倍速连续看完它们，一共需要花多少分钟？",
+        "original_rubric_text": "分段评分规则（4阶段）\n\n1. 打开B站 → 总分:0.25\n\n2. 搜索《让子弹飞》解说 → 总分:0.5\n\n3. 按播放量排序 → 总分:0.75\n\n4. 找到播放量最高的两个视频 → 总分:1.0\n\n一票否决条件：\n- 未打开B站 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/55.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=55",
+        "local_rule_file": "sources/realmobile-55.py",
+        "rule_sha256": "709e83326f9c274afd3e8dfd563ee7ec24b8deb44d2a07ed2ce8427bd0f1e987",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "去 B 站搜索电影《让子弹飞》的解说，找播放量最高的那两个视频。帮我把这两个视频的时长加起来，然后算一下如果我用 1.5 倍速连续看完它们，一共需要花多少分钟？",
+      "apps": [
+        "哔哩哔哩"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "搜索页面支持播放量排序或等效证据；固定关键词，排除广告和同一视频重复项。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-007-M1",
+          "requirement": "按指令检索并核实排序，确定搜索结果中前两个符合条件的不同视频。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-007-M2",
+          "requirement": "保存视频身份、播放量和各自完整时长的可见依据。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-007-M3",
+          "requirement": "将时长统一为秒后求和并除以 1.5，报告单位与舍入；计算输入必须来自采集证据。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "排序/对象证据复核＋算术自动化候选",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "源评分文字未完整覆盖时长与倍速计算，本项目补齐；不将补齐后的结果冒充原版分数。"
+      ]
+    },
+    {
+      "id": "GUI-008",
+      "track": "gui_task_evaluation",
+      "title": "比较颐和园到大兴机场的通行耗时",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 87,
+        "original_instruction": "高德地图看一下北京颐和园去大兴机场哪种交通方式耗时最短",
+        "original_rubric_text": "分段评分规则（3阶段）\n\n1. 打开高德地图 → 总分:0.333\n\n2. 搜索颐和园和大兴机场的路线 → 总分:0.667\n\n3. 查看不同交通方式并找出最短耗时 → 总分:1.0\n\n一票否决条件：\n- 未打开高德地图 → 分数:0\n- 未搜索路线 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/87.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=87",
+        "local_rule_file": "sources/realmobile-87.py",
+        "rule_sha256": "c7d01783a0a1a4926f60749e3f10523a0d37e416e3de98ae4fb54567327038a1",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "高德地图看一下北京颐和园去大兴机场哪种交通方式耗时最短",
+      "apps": [
+        "高德地图"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "运行前记录起终点具体位置、出发时间与拟比较交通方式；定位权限与所在城市可用。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-008-M1",
+          "requirement": "确认正确起终点，不把首都机场和大兴机场混淆。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-008-M2",
+          "requirement": "查看约定范围内可用交通方式，逐项保存路线和预估耗时。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-008-M3",
+          "requirement": "指出观察时最短耗时的可行方式；不存在的路线或缺失数据明确说明。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "时间数值比较自动化候选＋助手核对路线",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "必须先冻结交通方式范围；动态交通结果使用本次截图，不硬编码固定正确答案。"
+      ]
+    },
+    {
+      "id": "GUI-009",
+      "track": "gui_task_evaluation",
+      "title": "在高德与携程比较同酒店房价",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 74,
+        "original_instruction": "我后天要去北京，帮我对比一下高德和携程上北京五道口全季酒店的大床房价格",
+        "original_rubric_text": "分段评分规则（4阶段）\n\n1. 打开高德并查看酒店信息 → 总分:0.25\n\n2. 查看高德上的大床房价格 → 总分:0.5\n\n3. 打开携程并查看酒店信息 → 总分:0.75\n\n4. 对比两个平台的价格 → 总分:1.0\n\n一票否决条件：\n- 未打开高德 → 分数:0\n- 未打开携程 → 分数:0\n- 未查看酒店信息 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/74.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=74",
+        "local_rule_file": "sources/realmobile-74.py",
+        "rule_sha256": "6702d00703dff451e372551863972123886835a0212b6f30c5dabc642fa5fbe5",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "我后天要去北京，帮我对比一下高德和携程上北京五道口全季酒店的大床房价格",
+      "apps": [
+        "高德地图",
+        "携程"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "把“后天”锚定到同一 UTC+8 参考日，固定入住/离店、人数、同一门店及可比房型。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-009-M1",
+          "requirement": "两平台均进入正确门店，日期和入住条件一致。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-009-M2",
+          "requirement": "取得大床房可见价格、税费/早餐/取消及促销条件，保留原图。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-009-M3",
+          "requirement": "作出可比价格结论；售罄、房型/权益不一致需明示，不替换酒店凑结果。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "数值自动化候选＋助手审核可比条件",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "只查询比较，不下单；不同候选间价格漂移要记录，不能当模型错误。"
+      ]
+    },
+    {
+      "id": "GUI-010",
+      "track": "gui_task_evaluation",
+      "title": "小红书南京一日游攻略与高德路线规划",
+      "origin": "public_task_reuse",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 49,
+        "original_instruction": "小红书给帮我找一下南京的一日游攻略，多浏览几个帖子，总结一个攻略，然后去高德地图规划一下这些景点之间的通行方式，最后给我一个完整的旅游规划总结吧",
+        "original_rubric_text": "分段评分规则（6阶段）\n\n1. 打开小红书 → 总分:0.167\n\n2. 搜索南京一日游攻略 → 总分:0.334\n\n3. 浏览帖子并总结攻略 → 总分:0.5\n\n4. 打开高德地图 → 总分:0.667\n\n5. 规划景点之间的通行方式 → 总分:0.834\n\n6. 给出完整的旅游规划总结 → 总分:1.0\n\n一票否决条件：\n- 未打开小红书 → 分数:0\n- 未打开高德地图 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/49.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=49",
+        "local_rule_file": "sources/realmobile-49.py",
+        "rule_sha256": "c3afa3e00d22ce52e6b57622bf06be35b76428fe90d67c31974d5c6a6020f81a",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "小红书给帮我找一下南京的一日游攻略，多浏览几个帖子，总结一个攻略，然后去高德地图规划一下这些景点之间的通行方式，最后给我一个完整的旅游规划总结吧",
+      "apps": [
+        "小红书",
+        "高德地图"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "固定参考日期和南京城市；运行前约定“多个帖子”的最少样本数，尚未确认。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-010-M1",
+          "requirement": "实际浏览多个不同攻略帖，保存帖子身份和用于规划的内容证据。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-010-M2",
+          "requirement": "规划中的地点与帖子信息对应，在高德查到景点间交通方式和路线依据。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-010-M3",
+          "requirement": "给出覆盖地点、顺序、交通和一日可行性的总结；未查到的时段/费用不作为已证事实。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "执行后由助手按证据初评，交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "开放规划任务，不能仅靠出现关键词或最终总结自证成功；帖子数口径待审。"
+      ]
+    },
+    {
+      "id": "GUI-011",
+      "track": "gui_task_evaluation",
+      "title": "筛选餐厅并比较距离（只查询）",
+      "origin": "public_task_variant",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 14,
+        "original_instruction": "小红书搜索一下北京的黑珍珠餐厅推荐，找三家川菜相关的，然后高德地图收藏距离颐和园最近的那一家",
+        "original_rubric_text": "评分规则（分阶段验证进度）\n\n1. 打开小红书App，搜索北京的黑珍珠餐厅推荐 → 总分:0.25\n\n2. 找到三家川菜相关的餐厅 → 总分:0.5\n\n3. 打开高德地图App → 总分:0.75\n\n4. 收藏距离颐和园最近的那一家餐厅 → 总分:1.0\n\n一票否决条件：\n- 未搜索黑珍珠或北京相关内容 → 分数:0\n- 未找到川菜餐厅 → 分数:0\n\n规则特点：\n- 支持多XPath匹配，一个页面可匹配多条xpath\n- 不使用break，使用布尔列表完整检查\n- 完整的错误处理",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/14.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=14",
+        "local_rule_file": "sources/realmobile-14.py",
+        "rule_sha256": "c8bb2a48cb361ca9b056ca70d16926228824240658d4e758eaa0d320a08d277e",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "在小红书查找北京黑珍珠餐厅推荐，核实三家川菜相关候选；用高德按同一距离口径比较它们到颐和园的距离，报告最近的一家，不收藏。",
+      "apps": [
+        "小红书",
+        "高德地图"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "固定城市、参照地点与距离比较方式；APP 可查询。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-011-M1",
+          "requirement": "找到三个不同的候选餐厅，对川菜、黑珍珠相关条件逐项保留依据，缺证据不默认成立。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-011-M2",
+          "requirement": "在高德识别同一家门店，按同一种距离口径比较到颐和园的距离。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-011-M3",
+          "requirement": "给出最近候选及证据，数量不足如实报告；不执行收藏。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "执行后由助手复核条件和对象，交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "从公开任务删除收藏步骤，目标和评分均有改动；只能作为本项目派生用例。"
+      ]
+    },
+    {
+      "id": "GUI-012",
+      "track": "gui_task_evaluation",
+      "title": "微博与今日头条同事件评论比较（只读取）",
+      "origin": "public_task_variant",
+      "source": {
+        "benchmark": "RealMobile",
+        "task_id": 27,
+        "original_instruction": "我想调研一下微博和今日头条用户的评价特点，去微博热搜榜看看排名前三的社会新闻，浏览几条网友评论，总结一下网友的主要态度（是愤怒、同情还是吃瓜）。带着这个结论去今日头条搜一下这些事件，看看评论区的基调是否和微博有温差。最后在小红书发一个仅自己可见的帖子，写一段两者的态度对比",
+        "original_rubric_text": "分段评分规则（5阶段）\n\n1. 打开微博 → 总分:0.2\n\n2. 找到微博热搜榜和浏览评论 → 总分:0.4\n\n3. 打开今日头条并进入评论区 → 总分:0.6\n\n4. 打开小红书 → 总分:0.8\n\n5. 点击发送按钮发布帖子 → 总分:1.0\n\n一票否决条件：\n- 未打开微博或今日头条或小红书 → 分数:0\n- 未找到评论或热搜 → 分数:0",
+        "repository": "https://github.com/SeerRay-Lab/Xiaomi-GUI",
+        "revision": "bb50e06ff2c18260c9a9a0f81bdb124928697a94",
+        "rule_url": "https://github.com/SeerRay-Lab/Xiaomi-GUI/blob/bb50e06ff2c18260c9a9a0f81bdb124928697a94/realmobile/rules/27.py",
+        "viewer_url": "https://seerray-lab.github.io/Xiaomi-GUI/realmobile/viewer/task.html?id=27",
+        "local_rule_file": "sources/realmobile-27.py",
+        "rule_sha256": "4f306af48a6e2c8497444854081d83ce36607b3d3d919dfc9dda583d9f82caa9",
+        "code_license": "Apache-2.0",
+        "attribution": "Xiaomi / SeerRay-Lab, Xiaomi-GUI and RealMobile"
+      },
+      "instruction": "读取微博热搜前三条社会新闻及评论，在今日头条查找相同事件并采样评论，给出态度对比与样本依据，不发布内容。",
+      "apps": [
+        "微博",
+        "今日头条"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "固定观察时段，记录选取的三条社会新闻；每事件/每平台评论采样规则和数量待审。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-012-M1",
+          "requirement": "从微博热搜取得三条不同社会新闻身份与可见评论，不杜撰缺失内容。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-012-M2",
+          "requirement": "在今日头条匹配同一事件，保存评论样本及关联，不能拿不同事件作比较。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-012-M3",
+          "requirement": "给出以实际样本为依据的态度对比，说明样本局限和无法匹配项；不发帖子。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "执行后由助手抽查样本和总结，交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "draft_for_review",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "删除原任务的小红书发布步骤；评论采样阈值尚未冻结，不计入可执行批次。"
+      ]
+    },
+    {
+      "id": "GUI-013",
+      "track": "gui_task_evaluation",
+      "title": "淘宝手机商品长活动（规模口径待确认）",
+      "origin": "project_extension",
+      "source": null,
+      "instruction": "在淘宝搜索并浏览约定数量的不同手机商品，保留每对象详情和证据；数量分配、身份和详情要求待用户确认。",
+      "apps": [
+        "淘宝"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "沿用用户提出的百对象方向；两 APP 数量分配、商品/型号/SKU 去重和详情深度尚待确认。",
+        "先准备短样本，冻结搜索条件、目标数量与预算后才能进入长活动。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-013-M1",
+          "requirement": "按约定对象身份去重，为每个实际完成对象保存详情字段与页面证据；身份不确定单列。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-013-M2",
+          "requirement": "持续执行中保持条件、已完成对象与缺项；返回列表/重排后不将重复访问累加。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-013-M3",
+          "requirement": "按有效达标量报告目标完成情况、遗漏、误报完成、无进展和总耗时/用量；不足量保留 partial，不补造对象。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "逐对象证据检查＋助手抽样/争议项复核，交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "needs_parameters",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "项目场景扩展，不来自 RealMobile，不声称公开标准用例；数量口径未定，本轮仅列为待完善项。",
+        "真实中断恢复的工程正确性另归第一类测试；本项只评估续接后的任务效果与重复/遗漏表现。"
+      ]
+    },
+    {
+      "id": "GUI-014",
+      "track": "gui_task_evaluation",
+      "title": "京东手机商品长活动（规模口径待确认）",
+      "origin": "project_extension",
+      "source": null,
+      "instruction": "在京东搜索并浏览约定数量的不同手机商品，保留每对象详情和证据；数量分配、身份和详情要求待用户确认。",
+      "apps": [
+        "京东"
+      ],
+      "prerequisites": [
+        "实际鸿蒙 NEXT 构建、APP/账号和可重置初态需核对；当前未完成。",
+        "沿用用户提出的百对象方向；两 APP 数量分配、商品/型号/SKU 去重和详情深度尚待确认。",
+        "先准备短样本，冻结搜索条件、目标数量与预算后才能进入长活动。"
+      ],
+      "milestones": [
+        {
+          "id": "GUI-014-M1",
+          "requirement": "按约定对象身份去重，为每个实际完成对象保存详情字段与页面证据；身份不确定单列。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-014-M2",
+          "requirement": "持续执行中保持条件、已完成对象与缺项；返回列表/重排后不将重复访问累加。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        },
+        {
+          "id": "GUI-014-M3",
+          "requirement": "按有效达标量报告目标完成情况、遗漏、误报完成、无进展和总耗时/用量；不足量保留 partial，不补造对象。",
+          "mandatory": true,
+          "verdict": "not_assessed",
+          "evidence": []
+        }
+      ],
+      "proposed_judging": "逐对象证据检查＋助手抽样/争议项复核，交用户审核",
+      "rubric_status": "project_draft_pending_user_review",
+      "rubric_scope": "Project review criteria for HarmonyOS adaptation; not official benchmark scoring",
+      "execution_status": "not_run",
+      "assistant_assessment": null,
+      "user_review": {
+        "status": "pending_review",
+        "decision": null,
+        "comment": null
+      },
+      "readiness": {
+        "task_definition": "needs_parameters",
+        "device": "not_verified",
+        "runner": "not_integrated",
+        "automatic_judge": "not_implemented"
+      },
+      "limits": {
+        "configured": false,
+        "required_before_execution": true
+      },
+      "notes": [
+        "项目场景扩展，不来自 RealMobile，不声称公开标准用例；数量口径未定，本轮仅列为待完善项。",
+        "真实中断恢复的工程正确性另归第一类测试；本项只评估续接后的任务效果与重复/遗漏表现。"
+      ]
+    }
+  ]
+}

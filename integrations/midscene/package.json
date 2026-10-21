@@ -1,0 +1,8 @@
+{
+  "name": "behaviorlab-midscene-candidate",
+  "version": "0.4.0-preview.1",
+  "private": true,
+  "type": "module",
+  "description": "Isolated candidate SDK; not the selected production framework.",
+  "dependencies": { "@midscene/harmony": "1.16.0" }
+}

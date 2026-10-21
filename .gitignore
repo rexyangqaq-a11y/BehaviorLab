@@ -1,0 +1,62 @@
+# Local users, simulations, model credentials, assets and process-control tokens
+.data/
+.runtime/
+runtime/
+data/
+logs/
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+
+# Installed dependencies and generated caches (manifests/lockfiles stay tracked)
+node_modules/
+.pnpm-store/
+.npm/
+.cache/
+.build/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+coverage/
+.nyc_output/
+
+# Generated research material, original screenshots, deployment/data packages
+/output/
+/dist/
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.bundle
+*.log
+*.tmp
+*.bak
+*.tsbuildinfo
+
+# Local credentials and tool configuration
+.env
+.env.*
+!.env.example
+.npmrc
+.pypirc
+.netrc
+.aws/
+.ssh/
+.codex/
+.agents/
+credentials.json
+credentials.*.json
+secrets.json
+secrets.*.json
+*.key
+*.pem
+*.pfx
+*.p12
+
+# Editor/OS temporary files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
