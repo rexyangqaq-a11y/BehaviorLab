@@ -14,7 +14,7 @@
 | `src/phone-device.mjs`、`hdc-environment.mjs` | HDC与设备命令、截图、物理动作及环境探测 |
 | `src/gui-trial-transport.mjs`、`phone-evidence.mjs` | 唯一模型HTTP计量与本地证据；凭据清洗和图像资产哈希 |
 | `web/phone-lab.mjs`、`phone-results.mjs`、`phone-trace.mjs` | 四页签交互、列表/矩阵筛选、逐图模型回复与动作 |
-| `web/phone-process.mjs`、`phone-process-ui.mjs`、`src/phone-mirroring.mjs` | 只读过程轨迹、当前用例、浏览器本机窗口视频和显式启动官方工具 |
+| `web/phone-process.mjs`、`phone-process-ui.mjs` | 只读过程轨迹、当前用例、原始回复/动作与证据图；窗口投屏已按要求回退 |
 | `tests/` | 工程回归与夹具，不产生真实GUI通过成绩 |
 | `scripts/package-phone-*.mjs/.py`、`build-portable.mjs` | 干净Windows包、独立运行时与许可证、无符号链接依赖 |
 | `.data` / `.runtime` / `.build` / `output` | 本机数据、依赖/控制文件、构建过程、交付物，非源码 |

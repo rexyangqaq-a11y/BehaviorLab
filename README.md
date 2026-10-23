@@ -1,6 +1,6 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-**2026-10-23 更新（preview.7）**：新增[测试过程详情](docs/PHONE_PROCESS_VIEW.md)，显示当前冻结用例、手机信息、实时轨迹、原始模型回复和动作依据。连续视频通过浏览器共享官方 DevEco Testing 投屏窗口接入网页；用户需手动选窗，实际手机视频尚待这一步验证。原39条运行、6任务、3服务保留，零新增模型/手机任务。每轮改动按 [AGENTS.md](AGENTS.md) 提交本地 Git，现阶段无远程、无推送。旧2026-10-22部署包仍为preview.6。
+**2026-10-23 更新（preview.7）**：新增[测试过程详情](docs/PHONE_PROCESS_VIEW.md)，显示当前冻结用例、手机信息、实时轨迹、原始模型回复和动作依据。按用户最新要求已回退依赖官方工具窗口的投屏，保留过程页；直接视频流尚未部署验证，不以截图轮播替代。原39条运行、6任务、3服务保留，零新增模型/手机任务。每轮改动按 [AGENTS.md](AGENTS.md) 提交本地 Git，现阶段无远程、无推送。旧2026-10-22部署包仍为preview.6。
 
 **2026-10-22 汇报与协作交付（preview.6）**：[20页汇报PPT](output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx)、[进一步失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)、[协作开发](docs/DEVELOPMENT.md)、[新增框架](docs/FRAMEWORK_ADAPTER_GUIDE.md)。框架注册/执行适配已拆分，Python路径支持整体迁移，离线工程回归107/107通过。新[Windows干净真机包](output/BehaviorLab-Phone-Windows-x64-20261022.zip)包含依赖与离线检查，不含密钥、账号或真机历史原图。当前部署以[本版文档](docs/WINDOWS_PORTABLE.md)为准，下文旧包未更新的描述属于历史。本轮零新增真实模型/手机调用，36项成绩不变，最终框架待确认。
 

@@ -123,7 +123,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Referrer-Policy', 'no-referrer');
     response.setHeader('Cache-Control', 'no-store');
-    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
+    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
     try {
       const allowedHosts = [`127.0.0.1:${localPort}`, `localhost:${localPort}`];
       if (!allowedHosts.includes(request.headers.host)) throw fail(403, '仅接受本地调试请求');
@@ -151,7 +151,6 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         else if(/^\/tasks\/(task_[a-f0-9-]{36}|HM-[A-Z]+-\d+)$/.test(suffix)&&request.method==='POST')jsonResponse(response,200,phoneLab.tasks.save(await body(request),suffix.split('/')[2]));
         else if(suffix==='/pause'&&request.method==='POST'){const input=await body(request);jsonResponse(response,200,phoneLab.pause(typeof input.reason==='string'?input.reason.slice(0,500):undefined));}
         else if(suffix==='/resume'&&request.method==='POST'){await body(request);jsonResponse(response,200,phoneLab.resume());}
-        else if(suffix==='/mirroring/open-tool'&&request.method==='POST'){const input=await body(request);if(!input||Array.isArray(input)||Object.keys(input).length)throw fail(400,'投屏工具启动不接受路径或命令参数');jsonResponse(response,200,await phoneLab.mirroring.open());}
         else if(suffix==='/starts'&&request.method==='POST')jsonResponse(response,201,await phoneLab.captureStart(await body(request)));
         else if(suffix==='/runs'&&request.method==='POST')jsonResponse(response,201,await phoneLab.start(await body(request),modelSettings.read()));
         else if(suffix==='/batches'&&request.method==='POST')jsonResponse(response,201,await phoneLab.batch(await body(request),modelSettings.read()));

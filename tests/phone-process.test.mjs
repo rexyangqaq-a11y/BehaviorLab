@@ -1,13 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {EventEmitter} from 'node:events';
 import {mkdtemp,mkdir,writeFile,appendFile,rm} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {PhoneLab} from '../src/phone-lab.mjs';
 import {createDebugServer} from '../src/web-server.mjs';
-import {createPhoneMirroring} from '../src/phone-mirroring.mjs';
-import {currentProcessRun,mergeProcessSnapshot,processPhase,processSteps,renderProcessStep,WindowVideoSession,WINDOW_VIDEO_OPTIONS} from '../web/phone-process.mjs';
+import {currentProcessRun,mergeProcessSnapshot,processPhase,processSteps,renderProcessStep} from '../web/phone-process.mjs';
 
 const id='phone_00000000-0000-0000-0000-000000000001';
 async function setup(t){
@@ -32,19 +30,16 @@ test('process snapshots follow append-only evidence, tolerate a partial tail and
   for(const cursor of [-1,1.1,NaN,Infinity])assert.throws(()=>lab.processSnapshot(id,cursor),e=>e.status===400);
 });
 
-test('process HTTP is read-only, uncached and validates cursors; launch requires UI protection and no arbitrary command',async t=>{
-  const {root,opts,dir}=await setup(t);await writeFile(path.join(dir,'events.jsonl'),'');let launches=0;
-  const app=await createDebugServer({dataRoot:root,port:0,phoneLabOptions:{...opts,mirroring:{status:()=>({tool_available:true}),open:async()=>{launches++;return {status:'launch_requested'};}}}});
+test('process HTTP is read-only, uncached and validates cursors; withdrawn mirror endpoints are unavailable',async t=>{
+  const {root,opts,dir}=await setup(t);await writeFile(path.join(dir,'events.jsonl'),'');
+  const app=await createDebugServer({dataRoot:root,port:0,phoneLabOptions:opts});
   try{
     const result=await fetch(app.url+'/api/phone-lab/runs/'+id+'/process');assert.equal(result.status,200);assert.equal(result.headers.get('cache-control'),'no-store');
     for(const cursor of ['-1','NaN','1.1','Infinity'])assert.equal((await fetch(app.url+'/api/phone-lab/runs/'+id+'/process?after_seq='+cursor)).status,400);
     assert.equal((await fetch(app.url+'/api/phone-lab/runs/bad/process')).status,400);
     for(const file of ['/phone-process.mjs','/phone-process-ui.mjs'])assert.equal((await fetch(app.url+file)).status,200);
-    const html=await fetch(app.url+'/phone-lab');assert.match(html.headers.get('content-security-policy'),/media-src 'self' blob:/);
-    const post=(data,ui=true)=>fetch(app.url+'/api/phone-lab/mirroring/open-tool',{method:'POST',headers:{'Content-Type':'application/json',...(ui?{'X-Simulator-UI':'1'}:{})},body:JSON.stringify(data)});
-    assert.equal((await post({},false)).status,403);
-    for(const bad of [null,[],{path:'bad.exe'},{command:'anything'}])assert.equal((await post(bad)).status,400);
-    assert.equal(launches,0);assert.equal((await post({})).status,200);assert.equal(launches,1);
+    const html=await(await fetch(app.url+'/phone-lab')).text();assert.ok(!html.includes('phone-video'));assert.ok(!html.includes('mirror-open-tool'));
+    const removed=await fetch(app.url+'/api/phone-lab/mirroring/open-tool',{method:'POST',headers:{'Content-Type':'application/json','X-Simulator-UI':'1'},body:'{}'});assert.equal(removed.status,404);
   }finally{await app.close();}
 });
 
@@ -74,36 +69,4 @@ test('trajectory preserves pending replies, orphan actions, unknown effects and 
   const html=renderProcessStep(run,projection,'action:a1');assert.match(html,/&lt;script&gt;/);assert.ok(!html.includes('<script>'));assert.match(html,/hdc_intent/);assert.match(html,/data-process-image="input"/);assert.ok(!html.includes(' data-image='));
   assert.equal(projection.trace.calls[0].submitted_asset_ids[0],'input');
   const ended={...run,state:{status:'ended'},events:events.filter(e=>e.type!=='action_unknown')};assert.equal(processSteps(ended).steps.find(s=>s.id==='action:a1').status,'缺少返回，待核对');
-});
-
-const fakeStream=(surface='window')=>{
-  const track=new EventTarget();track.stops=0;track.stop=()=>{track.stops++;};track.getSettings=()=>({displaySurface:surface});
-  return {track,getTracks:()=>[track],getVideoTracks:()=>[track]};
-};
-test('continuous-video lifecycle requires actual tracks and cleans up denied, ended, muted and desktop selections',async()=>{
-  const states=[],stream=fakeStream();let options;
-  const session=new WindowVideoSession({capture:async o=>{options=o;return stream;},onChange:s=>states.push(s)});
-  assert.equal(await session.start(),true);assert.equal(await session.start(),false);assert.equal(options.audio,false);assert.equal(options,WINDOW_VIDEO_OPTIONS);
-  stream.track.dispatchEvent(new Event('mute'));assert.equal(states.at(-1),'muted');stream.track.dispatchEvent(new Event('unmute'));assert.equal(states.at(-1),'connected');
-  stream.track.dispatchEvent(new Event('ended'));assert.equal(session.stream,null);assert.equal(stream.track.stops,1);assert.equal(states.at(-1),'ended');
-  const desktop=fakeStream('monitor');await assert.rejects(new WindowVideoSession({capture:async()=>desktop}).start(),/请选择投屏窗口/);assert.equal(desktop.track.stops,1);
-  await assert.rejects(new WindowVideoSession().start(),/不支持/);
-  const denied=new WindowVideoSession({capture:async()=>{throw Object.assign(Error('denied'),{name:'NotAllowedError'});}});await assert.rejects(denied.start(),/未授权或已取消/);assert.equal(denied.pending,false);
-});
-
-test('leaving while the browser picker is open releases any late stream and permits reconnecting',async()=>{
-  let finish;const stream=fakeStream(),session=new WindowVideoSession({capture:()=>new Promise(resolve=>{finish=resolve;})});
-  const pending=session.start();assert.equal(session.pending,true);assert.equal(await session.start(),false);session.stop('left');finish(stream);assert.equal(await pending,false);assert.equal(stream.track.stops,1);assert.equal(session.stream,null);
-  const next=fakeStream();session.capture=async()=>next;await session.start();session.stop();assert.equal(next.track.stops,1);
-});
-
-test('official tool launch only uses installed configuration and reports a request rather than a connected phone',async t=>{
-  const {root}=await setup(t);await mkdir(path.join(root,'.runtime'));
-  const file=path.join(root,'DevEco Testing.exe');await writeFile(path.join(root,'.runtime/device-tools.json'),JSON.stringify({testing:{executable:file}}));
-  let launches=0;const mirroring=createPhoneMirroring(root,{exists:f=>f===file,launch:(exe,args,opts)=>{
-    launches++;assert.equal(exe,file);assert.deepEqual(args,[]);assert.equal(opts.windowsHide,false);assert.equal(opts.stdio,'ignore');
-    const child=new EventEmitter();child.unref=()=>{};queueMicrotask(()=>child.emit('spawn'));return child;
-  }});
-  assert.equal(mirroring.status().tool_available,true);assert.equal(launches,0);assert.equal((await mirroring.open()).status,'launch_requested');assert.equal((await mirroring.open()).reused,true);assert.equal(launches,1);
-  const missing=createPhoneMirroring(root,{exists:()=>false});await assert.rejects(missing.open(),e=>e.status===409);
 });

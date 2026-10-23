@@ -76,5 +76,7 @@
     "remote_configured": false,
     "checkpoint": "c18a846",
     "feature": "Recorded by the commit containing this file; no self-referential hash"
-  }
+  },
+  "superseded_by": "rollback-acceptance.json",
+  "note": "Historical WIP before the user rejected official-window mirroring. This is not the current implementation."
 }

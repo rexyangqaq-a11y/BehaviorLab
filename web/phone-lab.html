@@ -49,7 +49,6 @@
     <div class="process-layout">
       <section class="card process-timeline"><div class="heading"><h3>执行轨迹</h3><button id="process-follow" aria-pressed="true" class="quiet">跟随最新</button></div><p id="process-ledger-status" class="hint">尚无执行记录</p><div id="process-steps"></div></section>
       <section class="card process-detail" aria-label="选中步骤详情"><div id="process-step-detail"><div class="empty">开始执行后可查看模型回复、动作与对应截图。</div></div></section>
-      <aside class="card process-mirror"><div class="heading"><h3>手机连续投屏</h3><span id="mirror-badge" class="tag">未接入</span></div><div id="mirror-stage"><video id="phone-video" autoplay muted playsinline hidden></video><div id="mirror-placeholder"><span>连接官方投屏窗口</span><small>先在 DevEco Testing 中开启设备投屏，再接入该窗口。</small></div></div><p id="mirror-status" class="hint" role="status">尚未共享窗口。</p><div class="button-row mirror-buttons"><button id="mirror-open-tool">打开官方工具</button><button id="mirror-connect" class="primary">接入投屏窗口</button><button id="mirror-stop" disabled>断开</button><button id="mirror-fullscreen" disabled>全屏</button></div><p class="hint mirror-note">连续窗口视频，非执行截图轮播。共享窗口由你在浏览器中选择；仅本机实时查看，不录音、不录制、不上传。手机连接以官方工具为准。离开此页即断开共享。</p></aside>
     </div>
     <dialog id="process-image-dialog"><div class="heading"><h3>执行证据图</h3><button id="close-process-image">关闭</button></div><img id="process-image" class="screen" alt="本次执行留存的证据图"><p id="process-image-caption" class="hint"></p></dialog>
   </section>

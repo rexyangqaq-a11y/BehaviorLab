@@ -1,4 +1,4 @@
-import {currentProcessRun,mergeProcessSnapshot,processActive,processPhase,processSteps,renderProcessSteps,renderProcessStep,WindowVideoSession} from './phone-process.mjs';
+import {currentProcessRun,mergeProcessSnapshot,processActive,processPhase,processSteps,renderProcessSteps,renderProcessStep} from './phone-process.mjs';
 
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -8,42 +8,6 @@ const count=v=>Number(v??0).toLocaleString('zh-CN');
 // model, captures device screenshots, or supplies actions to the framework.
 export function createProcessPanel({api,getCatalog,openResults,message}){
   let visible=false,heldId=null,run=null,generation=0,inflight=false,follow=true,selected=null,signature='',detailHTML='',lastObserved=0,lastError='';
-  let videoState='idle',videoError='',frameAt=0,frameCount=0,frameHandle=null,frameGeneration=0,videoSource='';
-  const video=$('phone-video');
-  const session=new WindowVideoSession({
-    capture:navigator.mediaDevices?.getDisplayMedia?options=>navigator.mediaDevices.getDisplayMedia(options):null,
-    onChange(state,stream,error){
-      videoState=state;videoError=error??'';
-      if(state==='connected'&&stream){
-        video.srcObject=stream;frameAt=0;frameCount=0;
-        const settings=stream.getVideoTracks()[0]?.getSettings?.()??{};
-        videoSource=settings.displaySurface==='window'?'窗口':settings.displaySurface==='browser'?'浏览器标签页':'共享来源';
-        const epoch=++frameGeneration;
-        const observe=(_time,metadata)=>{if(epoch!==frameGeneration||!session.stream)return;frameAt=Date.now();frameCount=Math.max(frameCount,metadata?.presentedFrames??frameCount+1);renderVideo();frameHandle=video.requestVideoFrameCallback(observe);};
-        if(video.requestVideoFrameCallback)frameHandle=video.requestVideoFrameCallback(observe);
-        video.play().catch(error=>{videoError='视频播放未开始：'+error.message;renderVideo();});
-      }else if(!['connected','muted'].includes(state)){
-        frameGeneration++;if(frameHandle!=null&&video.cancelVideoFrameCallback)video.cancelVideoFrameCallback(frameHandle);
-        frameHandle=null;video.pause();video.srcObject=null;frameAt=0;frameCount=0;
-      }
-      renderVideo();
-    },
-  });
-  function renderVideo(){
-    const supported=Boolean(session.capture),stream=Boolean(session.stream);
-    if(stream){const frames=video.getVideoPlaybackQuality?.().totalVideoFrames??0;if(frames>frameCount){frameCount=frames;frameAt=Date.now();}}
-    const stale=stream&&frameAt>0&&Date.now()-frameAt>6000,playing=stream&&frameAt>0&&!stale&&videoState!=='muted';
-    $('mirror-badge').textContent=playing?'连续视频':videoState==='selecting'?'选择窗口中':stream?'等待画面':'未接入';
-    // Keep playback mounted while waiting: display:none can suppress browser
-    // frame callbacks. The placeholder covers unavailable or stale pictures.
-    video.hidden=!stream;$('mirror-placeholder').hidden=playing;
-    $('mirror-placeholder').firstElementChild.textContent=stream?'等待新的视频帧':'连接官方投屏窗口';
-    $('mirror-status').textContent=!supported?'当前浏览器不支持窗口共享。请在 Edge 或 Chrome 打开本机工作台。':videoError||(
-      videoState==='selecting'?'请在浏览器弹窗中选择官方投屏窗口。':videoState==='muted'?'共享窗口暂时没有画面，请恢复投屏窗口。':stale?'视频暂未收到新帧，请检查投屏窗口。':playing?`${videoSource}视频 · ${video.videoWidth}×${video.videoHeight} · 已接收 ${count(frameCount)} 帧；请核对窗口内手机状态。`:stream?'共享已建立，等待实际视频帧。':videoState==='ended'?'窗口共享已结束。':videoState==='left'?'已离开过程页，共享已断开。':'尚未共享窗口。');
-    $('mirror-connect').disabled=!supported||stream||videoState==='selecting';$('mirror-stop').disabled=!stream&&videoState!=='selecting';$('mirror-fullscreen').disabled=!playing;
-    $('mirror-open-tool').disabled=!getCatalog()?.mirroring?.tool_available;
-    $('mirror-open-tool').title=getCatalog()?.mirroring?.tool_available?'打开本机已安装的 DevEco Testing':'未检测到 DevEco Testing，可直接接入已打开的投屏窗口';
-  }
   function reset(id){heldId=id;run=null;generation++;selected=null;follow=true;signature='';detailHTML='';lastObserved=0;lastError='';}
   function render(){
     if(!visible)return;
@@ -53,7 +17,7 @@ export function createProcessPanel({api,getCatalog,openResults,message}){
       const batch=getCatalog()?.batches?.find(b=>b.id===getCatalog().active_batch_id);
       $('process-status').textContent=batch?'组合评估进行中，等待当前用例启动。':'当前没有正在执行的测试';
       $('process-steps').innerHTML='';$('process-step-detail').innerHTML='<div class="empty">开始执行后可查看模型回复、动作与对应截图。</div>';
-      $('process-ledger-status').textContent=lastError||'尚无执行记录';renderVideo();return;
+      $('process-ledger-status').textContent=lastError||'尚无执行记录';return;
     }
     const projection=processSteps(run),requests=projection.trace.calls.length,actions=projection.steps.filter(s=>s.kind==='action').length,responses=projection.trace.calls.filter(c=>c.response),usage=run.result?.model_usage;
     const tokens=usage?Number(usage.known_input_tokens??0)+Number(usage.known_output_tokens??0):responses.reduce((n,c)=>n+Number(c.response.usage?.input_tokens??0)+Number(c.response.usage?.output_tokens??0),0);
@@ -71,7 +35,7 @@ export function createProcessPanel({api,getCatalog,openResults,message}){
       drawSteps(projection);signature=nextSignature;
     }
     $('process-ledger-status').textContent=`${lastObserved?new Date(lastObserved).toLocaleTimeString('zh-CN',{hour12:false}):'—'} 更新 · ${run.events.length} 条事件 · ${follow?'自动跟随':'已暂停跟随，可查看旧步骤'}`;
-    $('process-follow').setAttribute('aria-pressed',String(follow));renderVideo();
+    $('process-follow').setAttribute('aria-pressed',String(follow));
   }
   function drawSteps(projection=processSteps(run)){
     const list=$('process-steps'),detail=$('process-step-detail'),scroll=list.scrollTop,detailScroll=detail.scrollTop;
@@ -94,11 +58,7 @@ export function createProcessPanel({api,getCatalog,openResults,message}){
   document.addEventListener('click',async event=>{
     const b=event.target.closest('button');if(!b)return;
     try{
-      if(b.id==='mirror-connect')await session.start();
-      else if(b.id==='mirror-stop')session.stop();
-      else if(b.id==='mirror-open-tool'){b.disabled=true;try{const result=await api('/mirroring/open-tool',{});message(result.message??'已请求打开官方工具，请打开设备投屏后接入窗口。');}finally{renderVideo();}}
-      else if(b.id==='mirror-fullscreen')await $('mirror-stage').requestFullscreen();
-      else if(b.id==='process-follow'&&run){follow=true;selected=processSteps(run).steps.at(-1)?.id??null;drawSteps();render();}
+      if(b.id==='process-follow'&&run){follow=true;selected=processSteps(run).steps.at(-1)?.id??null;drawSteps();render();}
       else if(b.dataset.processStep&&run){follow=false;selected=b.dataset.processStep;drawSteps();render();}
       else if(b.id==='process-results'&&run)await openResults(run.id);
       else if(b.id==='process-stop'&&run){await api('/runs/'+run.id+'/stop',{});message('已请求停止当前测试，不自动续跑。');await refresh();}
@@ -106,12 +66,11 @@ export function createProcessPanel({api,getCatalog,openResults,message}){
       else if(b.id==='close-process-image')$('process-image-dialog').close();
     }catch(error){message(error.message,true);}
   });
-  window.addEventListener('pagehide',()=>session.stop('left'));
-  const timer=setInterval(()=>{if(visible){void refresh();renderVideo();}},1000);
+  const timer=setInterval(()=>{if(visible){void refresh();}},1000);
   return {
-    setVisible(value){visible=value;if(!value){if(session.pending||session.stream)session.stop('left');return;}void refresh();},
+    setVisible(value){visible=value;if(value)void refresh();},
     catalogChanged(){if(visible)void refresh();},
     open(id){if(id!==heldId)reset(id);void refresh();},
-    dispose(){clearInterval(timer);session.stop();},
+    dispose(){clearInterval(timer);},
   };
 }

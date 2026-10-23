@@ -11,7 +11,6 @@ import {PhoneEvidence,sha256} from './phone-evidence.mjs';
 import {createPhoneDevice,layoutNodes} from './phone-device.mjs';
 import {startContract,namedStartContract,compareStart,resetPhoneStart} from './phone-startpoints.mjs';
 import {PhoneTasks} from './phone-tasks.mjs';
-import {createPhoneMirroring} from './phone-mirroring.mjs';
 import {phoneTestPlan} from '../web/phone-test-plan.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().toISOString();
 const fail=(status,message)=>Object.assign(Error(message),{status});
@@ -26,11 +25,10 @@ export function phoneRunDeviceInfo(input,environment){
     app:record?.app??null,source:actual?'execution_environment':baseline?'saved_startpoint':'not_recorded'};
 }
 export class PhoneLab {
-  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json'),mirroring=createPhoneMirroring(project)}={}){
+  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json')}={}){
     this.root=root;this.base=path.join(root,'.phone-lab');this.deviceFactory=deviceFactory;this.lockPath=lockPath;this.pausePath=pausePath;this.children=new Map();this.waitingBatches=new Map();this.closing=false;
     for(const dir of ['starts','runs','batches','evaluations'])mkdirSync(path.join(this.base,dir),{recursive:true});mkdirSync(path.dirname(lockPath),{recursive:true});
     this.tasks=new PhoneTasks(path.join(this.base,'tasks'));
-    this.mirroring=mirroring;
   }
   directory(kind,id){if(!/^(start|phone|batch)_[a-f0-9-]{36}$/.test(id))throw fail(400,'记录 ID 无效');return path.join(this.base,kind,id);}
   list(kind,file){return readdirSync(path.join(this.base,kind)).map(id=>read(path.join(this.base,kind,id,file))).filter(Boolean).sort((a,b)=>(b.created_at??'').localeCompare(a.created_at??''));}
@@ -79,7 +77,7 @@ export class PhoneLab {
     const deviations=new Map(evaluations.flatMap(e=>(e.entries??[]).filter(x=>x.run_id&&x.policy_deviation).map(x=>[x.run_id,x.policy_deviation])));
     const starts=this.list('starts','start.json'),tasks=this.listTasks(starts);
     return {version:PHONE_LAB_VERSION,final_framework:null,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
-      starts,runs:this.list('runs','input.json').map(i=>({...this.summary(i.id),evaluation_exclusion:excluded.get(i.id)??null,policy_deviation:deviations.get(i.id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},mirroring:this.mirroring.status()};
+      starts,runs:this.list('runs','input.json').map(i=>({...this.summary(i.id),evaluation_exclusion:excluded.get(i.id)??null,policy_deviation:deviations.get(i.id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false}};
   }
   async captureStart(input={}, {taskSnapshot=null}={}){
     this.assertDeviceEnabled();

@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-23",
+  "version": "0.4.0-preview.7",
+  "user_direction": "Avoid opening the official GUI; withdraw the current approach if a working direct solution is unavailable",
+  "removed": [
+    "Browser window capture / getDisplayMedia / video UI",
+    "Official-tool launcher API and module",
+    "Mirroring status in catalog and media-src CSP addition",
+    "Three tests for the removed window-video lifecycle"
+  ],
+  "retained": [
+    "Frozen current case and phone info",
+    "Read-only incremental trace",
+    "Original model judgments/replies, action/HDC evidence and exact screenshot references",
+    "Follow latest / inspect old steps / independent results review"
+  ],
+  "validation": {
+    "offline_tests": 111,
+    "passed": 111,
+    "failed": 0,
+    "browser": "Actual local workbench reloaded; process page visible and all mirroring controls absent",
+    "proof": "process-rollback-idle.png",
+    "prior_process_fixture_verification": "See superseded acceptance.json; process behavior retained, window video removed"
+  },
+  "history": {
+    "phone_runs": 39,
+    "tasks": 6,
+    "services": 3,
+    "metadata_hashes_unchanged": true,
+    "real_model_calls": 0,
+    "new_phone_tasks": 0,
+    "device_commands": 1,
+    "device_command_scope": "Read-only hdc list targets; one target, identifiers omitted"
+  },
+  "direct_video_research": {
+    "candidate": "HOScrcpy API and web_demo",
+    "primary_source": "https://gitcode.com/OpenHarmonyToolkitsPlaza/HOScrcpy",
+    "installed": false,
+    "tested_on_phone": false,
+    "minimum_missing": [
+      "Compatible capture SDK/JAR and device extension version",
+      "Headless local streaming relay and browser H.264 decode integration",
+      "Real stream verification and coexistence/cleanup with automation frameworks"
+    ]
+  },
+  "git": {
+    "scope": "local only",
+    "remote_configured": false,
+    "checkpoint_before_rollback": "9c76b10",
+    "final_commit": "The commit containing this evidence"
+  },
+  "deployment": {
+    "local_server": "Reloaded after idle/data-preservation checks",
+    "existing_zip": "Still preview.6"
+  }
+}

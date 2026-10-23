@@ -38,31 +38,3 @@ export function renderProcessStep(run,projection,selected){
   const shots=images.length?`<div class="process-evidence-images">${images.map(a=>`<figure><a href="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" target="_blank" rel="noopener"><img loading="lazy" src="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" alt="${esc(a.role==='model_input'?'模型实际输入图':a.role==='before'?'动作前截图':a.role==='after'?'动作后截图':'执行截图')}"></a><figcaption>${esc(a.role)} · ${esc(clock(a.at))}</figcaption></figure>`).join('')}</div>`:'';
   return `<h3>${esc(step.title)}</h3><p class="hint">${esc(clock(step.at))} · ${esc(step.status)}</p>${step.action?`<h4>实际动作参数与返回</h4><pre>${esc(JSON.stringify({name:step.action.name,param:step.action.param,outcome:step.outcome??'尚无返回'},null,2))}</pre>${physical.length?`<details><summary>动作期间的 HDC 命令与返回 · ${physical.length} 条</summary><pre>${esc(JSON.stringify(physical,null,2))}</pre></details>`:''}`:''}${step.event?`<pre>${esc(JSON.stringify(step.event,null,2))}</pre>`:''}${shots}${step.call?renderCall(step.call,trace,run,[],{imageAttribute:'process-image'}):''}`;
 }
-
-// This is a real MediaStream, never a slideshow of recorded test images.
-// Capture stays in this browser: no recorder, peer connection, or upload.
-export const WINDOW_VIDEO_OPTIONS={video:{displaySurface:'window',frameRate:{ideal:24,max:30}},audio:false,monitorTypeSurfaces:'exclude',selfBrowserSurface:'exclude',surfaceSwitching:'exclude',systemAudio:'exclude'};
-export class WindowVideoSession{
-  constructor({capture,onChange=()=>{}}={}){this.capture=capture;this.onChange=onChange;this.generation=0;this.stream=null;this.pending=false;}
-  async start(){
-    if(this.pending||this.stream)return false;
-    if(!this.capture)throw Error('当前浏览器不支持窗口视频，请在Edge或Chrome中打开本机工作台。');
-    const generation=++this.generation;this.pending=true;this.onChange('selecting');
-    try{
-      const stream=await this.capture(WINDOW_VIDEO_OPTIONS),track=stream.getVideoTracks()[0];
-      if(generation!==this.generation){stream.getTracks().forEach(t=>t.stop());return false;}
-      if(!track||track.getSettings?.().displaySurface==='monitor'){
-        stream.getTracks().forEach(t=>t.stop());throw Error('请选择投屏窗口，不接入整个桌面。');
-      }
-      this.stream=stream;track.addEventListener('ended',()=>{if(this.stream===stream)this.stop('ended');},{once:true});
-      track.addEventListener('mute',()=>{if(this.stream===stream)this.onChange('muted');});
-      track.addEventListener('unmute',()=>{if(this.stream===stream)this.onChange('connected');});
-      this.onChange('connected',stream);return true;
-    }catch(error){
-      if(generation!==this.generation)return false;
-      const message=error.name==='NotAllowedError'?'窗口共享未授权或已取消，可再次点击接入。':error.name==='NotFoundError'?'未找到可共享窗口，请先打开官方设备投屏。':error.message;
-      this.onChange('error',null,message);throw Error(message);
-    }finally{if(generation===this.generation)this.pending=false;}
-  }
-  stop(reason='stopped'){++this.generation;this.pending=false;const stream=this.stream;this.stream=null;stream?.getTracks().forEach(t=>t.stop());this.onChange(reason);}
-}
