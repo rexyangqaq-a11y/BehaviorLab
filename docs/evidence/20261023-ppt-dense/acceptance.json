@@ -1,0 +1,56 @@
+{
+  "checked_at": "2026-10-23T02:25:14.077710+00:00",
+  "reference": {
+    "thread": "文档生成",
+    "version": "architecture_figures_v5_20261019",
+    "use": "information density, diagram hierarchy, common-dimension comparison; no source edits"
+  },
+  "revision": {
+    "old_slides": 20,
+    "new_slides": 8,
+    "reduction_percent": 60,
+    "old_sha256": "6a8fd17cddf042bad25b72d120dafb9f9cd794c3e909614fb023bf86a112bed2",
+    "new_sha256": "8617f51bb69750899d6d4ebf375d7e463df9b054bd89ec547627078c11612f81",
+    "new_output": "output\\report_dense_20261023\\用户行为序列仿真系统_v0.4汇报_精简重构版_20261023.pptx",
+    "old_file_overwritten": false,
+    "slide_size_emu": {
+      "cx": "12192000",
+      "cy": "6858000"
+    },
+    "visible_characters": 5315,
+    "old_characters_per_slide": 256.3,
+    "new_characters_per_slide": 664.4,
+    "layouts": [
+      "closed-loop architecture",
+      "sequence swimlanes",
+      "common-dimension framework table",
+      "four task flows",
+      "full outcome matrix",
+      "performance table and editable bars",
+      "failure chain and forensic cases",
+      "dependency roadmap and acceptance table"
+    ]
+  },
+  "checks": {
+    "slides_statically_reviewed": 8,
+    "fit_warnings": 0,
+    "package_integrity": "passed",
+    "layout_findings": 0,
+    "first_party_import": "passed",
+    "native_tables": 9,
+    "single_object_native_routes": 47,
+    "native_dash_and_endpoint_properties": true,
+    "ordinary_group_locks_remaining": 0,
+    "matrix_cells": "matched frozen summary",
+    "performance_samples": "matched passed Q3.7 records",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "application_code_changed": false,
+    "phone_commands": 0,
+    "real_model_requests": 0,
+    "historical_evaluation_changed": false,
+    "other_threads_work_included": false,
+    "remote_or_upload": false
+  }
+}
