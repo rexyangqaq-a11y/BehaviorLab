@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-23",
+  "version": "0.4.0-preview.7",
+  "implementation": {
+    "process_tab": true,
+    "frozen_case_and_phone_info": true,
+    "incremental_existing_ledger": true,
+    "model_reply_and_action_evidence": true,
+    "independent_result_review": true,
+    "video": "browser getDisplayMedia of official DevEco Testing window",
+    "extra_phone_screenshot_polling": false,
+    "audio": false,
+    "recording": false,
+    "upload": false
+  },
+  "offline": {
+    "tests": 114,
+    "passed": 114,
+    "failed": 0,
+    "record": "software-tests.txt",
+    "scope": "Temporary data, local HTTP, fixture model replies and fake MediaStream tracks; no real phone/model task"
+  },
+  "browser": {
+    "fixture_url": "http://127.0.0.1:4322/phone-lab#process",
+    "actual_url": "http://127.0.0.1:4317/phone-lab#process",
+    "checked": [
+      "Current frozen fixture name, version, phone, requirements and independent counters",
+      "Pending reply becomes replied when JSONL grows",
+      "New action and second request appear without reload",
+      "Selecting earlier request pauses following and exposes original reply",
+      "Opened original reply remains open after another request completes",
+      "Ended run says waiting for business review; no invented GUI pass",
+      "Result button opens separate historical detail",
+      "Real workbench idle process page and 36/39 filtered result matrix"
+    ],
+    "window_capture": "Browser picker requested; no source selected; temporary tab closed",
+    "real_phone_video_verified": false,
+    "video_fullscreen_or_disconnect_on_actual_stream_verified": false,
+    "screenshots": [
+      "process-fixture.png",
+      "process-idle.png"
+    ]
+  },
+  "preservation": {
+    "phone_runs": 39,
+    "tasks": 6,
+    "services": 3,
+    "phone_metadata_unchanged": true,
+    "matrix": {
+      "runs": 36,
+      "passed": 16,
+      "partial": 10,
+      "failed": 10,
+      "requests": 331
+    }
+  },
+  "calls": {
+    "new_real_model_requests": 0,
+    "new_framework_phone_tasks": 0,
+    "device_commands_issued_by_agent": 0
+  },
+  "pending": {
+    "real_video": "User must open official phone mirroring and choose its window using the browser picker",
+    "minimum_conditions": [
+      "USB-connected unlocked debug-authorized phone",
+      "Official tool window showing that phone",
+      "Compatible browser and manual window selection"
+    ]
+  },
+  "deployment": {
+    "local_server": "updated while idle",
+    "existing_windows_zip": "2026-10-22 preview.6, not rebuilt"
+  },
+  "git": {
+    "scope": "local only",
+    "remote_configured": false,
+    "checkpoint": "c18a846",
+    "feature": "Recorded by the commit containing this file; no self-referential hash"
+  }
+}

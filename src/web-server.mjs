@@ -138,7 +138,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
         response.end(await readFile(path.join(publicRoot, filename))); return;
       }
-      const phoneFiles = { '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
+      const phoneFiles = { '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
       if(request.method==='GET'&&phoneFiles[url.pathname]){
         const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
       }

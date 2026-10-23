@@ -33,8 +33,10 @@ export function renderProcessStep(run,projection,selected){
   const {trace}=projection;let images=[];
   if(step.kind==='model')images=trace.images.filter(i=>step.call.submitted_asset_ids.includes(i.asset.id)).map(i=>i.asset);
   if(step.kind==='action')images=trace.images.filter(i=>i.asset.action_id===step.action.id||i.asset.id===step.action.before).map(i=>i.asset);
+  if(step.kind==='event')images=trace.images.filter(i=>i.asset.role===(step.event.type==='execution_start'?'initial':['execution_end','execution_stopped'].includes(step.event.type)?'final':null)).map(i=>i.asset);
+  const physical=step.action?(run.events??[]).filter(e=>e.seq>step.seq&&e.seq<(step.outcome?.seq??Infinity)&&['hdc_intent','hdc_return','hdc_failed_or_unknown'].includes(e.type)):[];
   const shots=images.length?`<div class="process-evidence-images">${images.map(a=>`<figure><a href="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" target="_blank" rel="noopener"><img loading="lazy" src="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" alt="${esc(a.role==='model_input'?'模型实际输入图':a.role==='before'?'动作前截图':a.role==='after'?'动作后截图':'执行截图')}"></a><figcaption>${esc(a.role)} · ${esc(clock(a.at))}</figcaption></figure>`).join('')}</div>`:'';
-  return `<h3>${esc(step.title)}</h3><p class="hint">${esc(clock(step.at))} · ${esc(step.status)}</p>${step.action?`<h4>实际动作参数与返回</h4><pre>${esc(JSON.stringify({name:step.action.name,param:step.action.param,outcome:step.outcome??'尚无返回'},null,2))}</pre>`:''}${step.event?`<pre>${esc(JSON.stringify(step.event,null,2))}</pre>`:''}${shots}${step.call?renderCall(step.call,trace,run,[],{imageAttribute:'process-image'}):''}`;
+  return `<h3>${esc(step.title)}</h3><p class="hint">${esc(clock(step.at))} · ${esc(step.status)}</p>${step.action?`<h4>实际动作参数与返回</h4><pre>${esc(JSON.stringify({name:step.action.name,param:step.action.param,outcome:step.outcome??'尚无返回'},null,2))}</pre>${physical.length?`<details><summary>动作期间的 HDC 命令与返回 · ${physical.length} 条</summary><pre>${esc(JSON.stringify(physical,null,2))}</pre></details>`:''}`:''}${step.event?`<pre>${esc(JSON.stringify(step.event,null,2))}</pre>`:''}${shots}${step.call?renderCall(step.call,trace,run,[],{imageAttribute:'process-image'}):''}`;
 }
 
 // This is a real MediaStream, never a slideshow of recorded test images.

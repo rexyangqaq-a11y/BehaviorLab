@@ -1,6 +1,7 @@
 import {renderPhoneTrace,renderPhoneDevice} from './phone-trace.mjs';
 import {filterPhoneRuns,comparablePhoneGroups,phoneResultTotals} from './phone-results.mjs';
 import {phoneTestPlan} from './phone-test-plan.mjs';
+import {createProcessPanel} from './phone-process-ui.mjs';
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 const labels={queued:'等待启动',running:'执行中',ended:'框架已结束',failed:'执行失败',blocked:'受阻',stopped:'已停止',interrupted:'中断待核对',stopping:'正在停止',waiting_for_start:'等待确认起点',passed:'通过',partial:'部分完成',cannot_determine:'无法确定',pending_review:'待核对'};
 const verdicts={passed:'通过',partial:'部分完成',failed:'未通过',blocked:'受阻',cannot_determine:'无法确定',pending_review:'待核对'};
@@ -13,6 +14,7 @@ let catalog,mode='single',tab='tasks',editingTask=null,taskTemplate=null,multiIn
 let resultView=saved.view==='comparison'?'comparison':'records',page=0,selectedRun=null,snapshot=null,selectedImage=null,showAllTraceImages=false,detailTab='trace',reviewEditing=false,reviewDraft=null,lastDetailSignature='';
 const multi={frameworks:new Set(),services:new Set(),tasks:new Set()};
 const filterIds={framework:'filter-framework',model:'filter-model',task:'filter-task',phone:'filter-phone',verdict:'filter-verdict',phase:'filter-phase',evaluation:'filter-evaluation',search:'filter-search'};
+const processPanel=createProcessPanel({api,getCatalog:()=>catalog,openResults:selectRun,message});
 function filters(){return Object.fromEntries(Object.entries(filterIds).map(([k,id])=>[k,$(id).value]));}
 function persist(){try{localStorage.setItem('phone-lab-ui-v3',JSON.stringify({filters:filters(),view:resultView,sort:$('result-sort').value,pageSize:$('page-size').value}));}catch{}}
 const tasks=()=>catalog?.tasks??catalog?.cases??[],taskById=id=>tasks().find(t=>t.id===id),availableTasks=()=>tasks().filter(t=>!t.archived);
@@ -20,7 +22,7 @@ const serviceLabel=s=>s.name?(s.name.includes(s.model)?s.name:s.name+' · '+s.mo
 const runTaskName=r=>r.task_name??r.task?.name??r.name;
 const frameworkName=id=>catalog.frameworks.find(f=>f.id===id)?.name??id,serviceName=id=>{const s=catalog.services.find(s=>s.id===id);return s?serviceLabel(s):id;};
 const usableService=s=>s.protocol==='openai-chat'&&s.family&&!s.missing?.length,usableFramework=f=>f.available;
-function showTab(next,{hash=true}={}){if(!['tasks','test','results'].includes(next))next='tasks';tab=next;document.querySelectorAll('.tab').forEach(el=>el.hidden=el.id!==next);document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.tab===next);b.setAttribute('aria-selected',String(b.dataset.tab===next));});if(hash)history.replaceState(null,'','#'+next);if(next==='results')renderResults();}
+function showTab(next,{hash=true}={}){if(!['tasks','test','process','results'].includes(next))next='tasks';tab=next;document.querySelectorAll('.tab').forEach(el=>el.hidden=el.id!==next);document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.tab===next);b.setAttribute('aria-selected',String(b.dataset.tab===next));});if(hash)history.replaceState(null,'','#'+next);processPanel.setVisible(next==='process');if(next==='results')renderResults();}
 function options(id,rows,{placeholder=null}={}){const el=$(id),previous=el.value,signature=JSON.stringify([placeholder,rows]);if(el.dataset.optionsSignature!==signature){el.innerHTML=(placeholder!=null?`<option value="">${esc(placeholder)}</option>`:'')+rows.map(([value,label,disabled])=>`<option value="${esc(value)}"${disabled?' disabled':''}>${esc(label)}</option>`).join('');el.dataset.optionsSignature=signature;if(rows.some(([v,,disabled])=>v===previous&&!disabled))el.value=previous;else if(placeholder!=null)el.value='';else el.value=rows.find(([, ,disabled])=>!disabled)?.[0]??'';}}
 
 function renderTasks(){
@@ -112,7 +114,7 @@ const badge=r=>`<span class="verdict ${esc(r.review?.verdict??'pending_review')}
 function renderActivity(){
   const b=catalog.batches.find(b=>b.id===catalog.active_batch_id);if(!b){$('batch-activity').innerHTML='';return;}
   const p=b.pending_entry,last=b.entries.filter(e=>e.run_id).at(-1);
-  $('batch-activity').innerHTML=`<section class="activity card"><div class="heading"><strong>${esc(b.name||'组合评估')} · ${esc(labels[b.status]??b.status)}</strong><button data-batch-stop="${b.id}">停止整批</button></div><p>已记录 ${b.entries.filter(e=>e.status!=='running').length} / ${b.case_ids.length*b.combinations.length} 项</p>${p?`<p><strong>${esc(p.task_name)}</strong> · ${esc(frameworkName(p.framework_id))} / ${esc(serviceName(p.service_id))}</p><p class="hint">请手动把手机摆回本批基准页面：${esc(p.initial_state)}</p><button class="primary" data-batch-continue="${b.id}" data-token="${p.token}">确认手机起点并继续</button>`:last?`<button data-run="${last.run_id}">查看当前执行</button>`:''}</section>`;
+  $('batch-activity').innerHTML=`<section class="activity card"><div class="heading"><strong>${esc(b.name||'组合评估')} · ${esc(labels[b.status]??b.status)}</strong><button data-batch-stop="${b.id}">停止整批</button></div><p>已记录 ${b.entries.filter(e=>e.status!=='running').length} / ${b.case_ids.length*b.combinations.length} 项</p>${p?`<p><strong>${esc(p.task_name)}</strong> · ${esc(frameworkName(p.framework_id))} / ${esc(serviceName(p.service_id))}</p><p class="hint">请手动把手机摆回本批基准页面：${esc(p.initial_state)}</p><button class="primary" data-batch-continue="${b.id}" data-token="${p.token}">确认手机起点并继续</button>`:last?`<button data-process-run="${last.run_id}">查看当前执行</button>`:''}</section>`;
 }
 function renderResults(){
   if(!catalog)return;resultOptions();renderActivity();const rows=resultRows(),total=phoneResultTotals(rows),size=Number($('page-size').value)||12,pages=Math.max(1,Math.ceil(rows.length/size));page=Math.max(0,Math.min(page,pages-1));
@@ -154,9 +156,9 @@ function backResults(){selectedRun=null;snapshot=null;reviewEditing=false;$('tra
 async function refreshCatalog({initial=false}={}){
   catalog=await api();const paused=Boolean(catalog.device_pause?.paused);$('device-status').textContent=paused?'真机已暂停':catalog.busy?'手机执行中':'当前无任务';$('pause-banner').hidden=!paused;$('pause-device').disabled=paused;
   const nextTasks=JSON.stringify(tasks());if(taskSignature!==nextTasks){renderTasks();taskSignature=nextTasks;}
-  syncSelection();resultOptions(initial);renderResults();
+  syncSelection();resultOptions(initial);renderResults();processPanel.catalogChanged();
 }
-async function startTest(){const plan=phoneTestPlan(selection()),name=$('test-name').value;busy=true;renderPlan();try{if(mode==='single'){const started=await api('/runs',{framework_id:plan.framework_ids[0],service_id:plan.service_ids[0],case_id:plan.case_ids[0],limits:limits(),phase_id:'single',name});await refreshCatalog();await selectRun(started.id);message('已启动单项测试，执行记录显示在结果页。');}else{const b=await api('/batches',{framework_ids:plan.framework_ids,service_ids:plan.service_ids,case_ids:plan.case_ids,limits:limits(),name});await refreshCatalog();$('filter-evaluation').value=b.id;selectedRun=null;showTab('results');message('组合评估已启动，共'+plan.count+'项；结果页可查看进度或停止。');}}finally{busy=false;startsSignature='';renderPreparation();renderPlan();}}
+async function startTest(){const plan=phoneTestPlan(selection()),name=$('test-name').value;busy=true;renderPlan();try{if(mode==='single'){const started=await api('/runs',{framework_id:plan.framework_ids[0],service_id:plan.service_ids[0],case_id:plan.case_ids[0],limits:limits(),phase_id:'single',name});await refreshCatalog();processPanel.open(started.id);showTab('process');message('已启动单项测试，过程页将跟随当前用例。');}else{const b=await api('/batches',{framework_ids:plan.framework_ids,service_ids:plan.service_ids,case_ids:plan.case_ids,limits:limits(),name});await refreshCatalog();$('filter-evaluation').value=b.id;showTab('process');message('组合评估已启动，共'+plan.count+'项；过程页可查看实时轨迹或停止。');}}finally{busy=false;startsSignature='';renderPreparation();renderPlan();}}
 
 document.addEventListener('click',async event=>{
   const b=event.target.closest('button');if(!b)return;
@@ -176,6 +178,7 @@ document.addEventListener('click',async event=>{
     else if(b.id==='close-start-dialog')$('start-dialog').close();
     else if(b.id==='pause-device'){await api('/pause',{reason:'测试者暂停使用手机'});await refreshCatalog();message('真机操作已暂停。');}
     else if(b.id==='resume-device'){await api('/resume',{});await refreshCatalog();message('已恢复测试入口，旧任务不会自动重启。');}
+    else if(b.dataset.processRun){processPanel.open(b.dataset.processRun);showTab('process');}
     else if(b.dataset.run)await selectRun(b.dataset.run);
     else if(b.id==='back-results')backResults();
     else if(b.id==='previous-run'||b.id==='next-run'){const rows=resultRows(),i=rows.findIndex(r=>r.id===selectedRun),next=rows[i+(b.id==='next-run'?1:-1)];if(next)await selectRun(next.id);}

@@ -13,12 +13,15 @@
 | `integrations/phone-frameworks.py` | Python原生循环的设备/模型RPC桥，不接收服务密钥 |
 | `src/phone-device.mjs`、`hdc-environment.mjs` | HDC与设备命令、截图、物理动作及环境探测 |
 | `src/gui-trial-transport.mjs`、`phone-evidence.mjs` | 唯一模型HTTP计量与本地证据；凭据清洗和图像资产哈希 |
-| `web/phone-lab.mjs`、`phone-results.mjs`、`phone-trace.mjs` | 三页签交互、列表/矩阵筛选、逐图模型回复与动作 |
+| `web/phone-lab.mjs`、`phone-results.mjs`、`phone-trace.mjs` | 四页签交互、列表/矩阵筛选、逐图模型回复与动作 |
+| `web/phone-process.mjs`、`phone-process-ui.mjs`、`src/phone-mirroring.mjs` | 只读过程轨迹、当前用例、浏览器本机窗口视频和显式启动官方工具 |
 | `tests/` | 工程回归与夹具，不产生真实GUI通过成绩 |
 | `scripts/package-phone-*.mjs/.py`、`build-portable.mjs` | 干净Windows包、独立运行时与许可证、无符号链接依赖 |
 | `.data` / `.runtime` / `.build` / `output` | 本机数据、依赖/控制文件、构建过程、交付物，非源码 |
 
 ## 本地工作
+
+用户2026-10-23明确要求每轮改动验证后提交本地Git，现阶段不配置远程、不推送。源码与验证文档纳入提交；凭据、运行数据、原始手机图、依赖和输出包按`.gitignore`排除。未完成的保存点用WIP说明，禁止据此宣称功能完成；提交前检查暂存范围和差异。
 
 Node.js24运行`npm run web`，本机默认4317。核心Mock无需安装npm依赖。真机SDK与Python环境按[操作指南](PHONE_LAB_GUIDE.md)准备，常规维护优先`npm run phone:doctor`。安装依赖是显式的`phone-frameworks-setup.mjs --install --python <Python3.12>`，会访问公开依赖源；不能将安装检查和真实设备测试混在一起。
 

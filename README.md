@@ -1,10 +1,12 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+**2026-10-23 更新（preview.7）**：新增[测试过程详情](docs/PHONE_PROCESS_VIEW.md)，显示当前冻结用例、手机信息、实时轨迹、原始模型回复和动作依据。连续视频通过浏览器共享官方 DevEco Testing 投屏窗口接入网页；用户需手动选窗，实际手机视频尚待这一步验证。原39条运行、6任务、3服务保留，零新增模型/手机任务。每轮改动按 [AGENTS.md](AGENTS.md) 提交本地 Git，现阶段无远程、无推送。旧2026-10-22部署包仍为preview.6。
+
 **2026-10-22 汇报与协作交付（preview.6）**：[20页汇报PPT](output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx)、[进一步失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)、[协作开发](docs/DEVELOPMENT.md)、[新增框架](docs/FRAMEWORK_ADAPTER_GUIDE.md)。框架注册/执行适配已拆分，Python路径支持整体迁移，离线工程回归107/107通过。新[Windows干净真机包](output/BehaviorLab-Phone-Windows-x64-20261022.zip)包含依赖与离线检查，不含密钥、账号或真机历史原图。当前部署以[本版文档](docs/WINDOWS_PORTABLE.md)为准，下文旧包未更新的描述属于历史。本轮零新增真实模型/手机调用，36项成绩不变，最终框架待确认。
 
 **2026-10-22 更新**：四阶段三框架 × 三模型 × 四题共 **36/36** 已执行并完成助手核对：**通过16、部分完成10、未通过10**，用户复核待定。确认4条输入/图片编码接入异常，修复后重测均通过，按用户要求覆盖旧记录；正常任务失败不重测。当前矩阵331请求，本批含诊断和已覆盖消耗累计373请求。结果支持组合筛选、每图模型回复/动作及设备版本。最新离线回归 **105/105**，不是 GUI 成绩。[实际结果与限制](docs/PHONE_EVALUATION_RESULTS_20261022.md)，[打开界面](http://127.0.0.1:4317/phone-lab)。
 
-Midscene、MobiAgent、Open-AutoGLM 已固定部署；**v0.4-preview.5 真机测试工作台**分为“任务列表、测试、结果与对比”：支持可命名的本机任务库、单项/组合三维选择及命名、任务中选择已有起点或给当前状态命名、分页列表/矩阵、每图模型回复、审核与导出，执行详情只在结果页展示。界面改版离线回归105/105及浏览器验收通过，零新增真机/模型调用，既有36单元成绩不变；新v9命名起点队列的实际真机执行待后续使用验证。用户复核待定，最终框架未定。[操作说明](docs/PHONE_LAB_GUIDE.md)，[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)，[NEXT_TASK.md](docs/NEXT_TASK.md)，[本地回退](docs/LOCAL_BASELINE.md)。
+Midscene、MobiAgent、Open-AutoGLM 已固定部署；**v0.4-preview.7 真机测试工作台**分为“任务列表、测试、测试过程详情、结果与对比”：支持可命名的本机任务库、单项/组合三维选择及命名、任务中选择已有起点或给当前状态命名、实时过程观察、分页列表/矩阵、每图模型回复、审核与导出。既有36单元成绩不变；新v9命名起点队列的实际真机执行待后续使用验证。用户复核待定，最终框架未定。[操作说明](docs/PHONE_LAB_GUIDE.md)，[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)，[NEXT_TASK.md](docs/NEXT_TASK.md)，[本地回退](docs/LOCAL_BASELINE.md)。
 
 当前流程见 [业务流程与用户创建 v0.3](docs/WORKSPACE_V03.md)：左侧为用户库、仿真任务、系统设置；规划、执行、观察文字和调用调试归属具体任务。用户支持辅助生成候选后审核入库，以及手动创建。
 
