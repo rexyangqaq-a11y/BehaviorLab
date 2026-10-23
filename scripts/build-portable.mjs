@@ -83,7 +83,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
     await writeFile(path.join(target, 'runtime/NODE-LICENSE.txt'), licenseBytes);
     await writeFile(path.join(target, 'runtime/NODE-SHASUMS256.txt'), official);
     await mkdir(path.join(target,'integrations/adapters'),{recursive:true});
-    for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});
+    for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters','hoscrcpy'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});
     const phoneRuntime=phone?await packagePhoneRuntime(root,target):null;
     await mkdir(path.join(target, '.data'));
     const runs = [];

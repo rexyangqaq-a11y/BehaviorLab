@@ -123,7 +123,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Referrer-Policy', 'no-referrer');
     response.setHeader('Cache-Control', 'no-store');
-    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
+    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
     try {
       const allowedHosts = [`127.0.0.1:${localPort}`, `localhost:${localPort}`];
       if (!allowedHosts.includes(request.headers.host)) throw fail(403, '仅接受本地调试请求');
@@ -138,13 +138,26 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
         response.end(await readFile(path.join(publicRoot, filename))); return;
       }
-      const phoneFiles = { '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
+      const phoneFiles = { '/phone-video-ui.mjs':['phone-video-ui.mjs','text/javascript'], '/phone-video-protocol.mjs':['phone-video-protocol.mjs','text/javascript'], '/vendor/jmuxer.min.js':['vendor/jmuxer.min.js','text/javascript'], '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
       if(request.method==='GET'&&phoneFiles[url.pathname]){
         const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
       }
       if(url.pathname.startsWith('/api/phone-lab')){
         const suffix=url.pathname.slice('/api/phone-lab'.length);
         if(!suffix&&request.method==='GET')jsonResponse(response,200,await phoneLab.catalog(modelSettings.read()));
+        else if(suffix==='/video/status'&&request.method==='GET')jsonResponse(response,200,phoneLab.video.status());
+        else if(suffix==='/video/start'&&request.method==='POST'){
+          const input=await body(request);if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length)throw fail(400,'投屏启动不接受设备、路径或命令参数');
+          jsonResponse(response,200,await phoneLab.video.start());
+        }
+        else if(suffix==='/video/stop'&&request.method==='POST'){
+          const input=await body(request);if(!input||typeof input.id!=='string'||typeof input.token!=='string'||Object.keys(input).some(k=>!['id','token'].includes(k)))throw fail(400,'投屏会话参数无效');
+          jsonResponse(response,200,phoneLab.video.stop(input));
+        }
+        else if(/^\/video\/video_[a-f0-9-]{36}\/stream$/.test(suffix)&&request.method==='GET'){
+          if(request.headers['sec-fetch-site']==='cross-site'||request.headers.origin&&![`http://127.0.0.1:${localPort}`,`http://localhost:${localPort}`].includes(request.headers.origin))throw fail(403,'投屏查看来源无效');
+          phoneLab.video.attach(suffix.split('/')[2],request.headers['x-phone-video-token'],response);
+        }
         else if(suffix==='/tasks'&&request.method==='GET')jsonResponse(response,200,phoneLab.listTasks());
         else if(suffix==='/tasks'&&request.method==='POST')jsonResponse(response,201,phoneLab.tasks.save(await body(request)));
         else if(/^\/tasks\/(task_[a-f0-9-]{36}|HM-[A-Z]+-\d+)\/startpoint$/.test(suffix)&&request.method==='POST')jsonResponse(response,200,await phoneLab.selectTaskStart(suffix.split('/')[2],await body(request)));

@@ -2,6 +2,8 @@
 
 当前交付`BehaviorLab-Phone-Windows-x64-20261022.zip`，preview.6干净版，适用Windows10/11、Intel/AMD x64。主仿真仍Mock，独立真机工作台包含三框架运行入口。旧2026-10-19包不包含当前工作台。
 
+2026-10-23源码已到preview.8：新增过程页与[HOScrcpy网页连续投屏](HOSCRCPY_VIDEO.md)。上述旧ZIP没有这些更新，本轮未重打包。构建器已包含视频桥源码与本地播放器；可选视频SDK/JDK不自动装入包，新电脑需显式安装JDK17+并执行`hoscrcpy-setup.mjs --install --java <java.exe>`。若没有系统Node命令，使用包内`runtime\node.exe`执行脚本。当前电脑已验证真实视频，第二台物理电脑未验证。
+
 ## 新电脑使用
 
 1. 完整解压到可写本地目录，如`D:\BehaviorLab`。运行`03_CHECK.cmd`完成离线检查，再运行`01_START.cmd`打开网页。停止用`02_STOP.cmd`。

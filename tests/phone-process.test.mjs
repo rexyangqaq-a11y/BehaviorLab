@@ -38,7 +38,7 @@ test('process HTTP is read-only, uncached and validates cursors; withdrawn mirro
     for(const cursor of ['-1','NaN','1.1','Infinity'])assert.equal((await fetch(app.url+'/api/phone-lab/runs/'+id+'/process?after_seq='+cursor)).status,400);
     assert.equal((await fetch(app.url+'/api/phone-lab/runs/bad/process')).status,400);
     for(const file of ['/phone-process.mjs','/phone-process-ui.mjs'])assert.equal((await fetch(app.url+file)).status,200);
-    const html=await(await fetch(app.url+'/phone-lab')).text();assert.ok(!html.includes('phone-video'));assert.ok(!html.includes('mirror-open-tool'));
+    const html=await(await fetch(app.url+'/phone-lab')).text();assert.ok(!html.includes('mirror-open-tool'));assert.ok(!html.includes('接入投屏窗口'));assert.ok(html.includes('USB 后台直连'));
     const removed=await fetch(app.url+'/api/phone-lab/mirroring/open-tool',{method:'POST',headers:{'Content-Type':'application/json','X-Simulator-UI':'1'},body:'{}'});assert.equal(removed.status,404);
   }finally{await app.close();}
 });

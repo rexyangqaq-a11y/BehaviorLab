@@ -11,6 +11,7 @@ import {PhoneEvidence,sha256} from './phone-evidence.mjs';
 import {createPhoneDevice,layoutNodes} from './phone-device.mjs';
 import {startContract,namedStartContract,compareStart,resetPhoneStart} from './phone-startpoints.mjs';
 import {PhoneTasks} from './phone-tasks.mjs';
+import {PhoneVideo} from './phone-video.mjs';
 import {phoneTestPlan} from '../web/phone-test-plan.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().toISOString();
 const fail=(status,message)=>Object.assign(Error(message),{status});
@@ -25,16 +26,17 @@ export function phoneRunDeviceInfo(input,environment){
     app:record?.app??null,source:actual?'execution_environment':baseline?'saved_startpoint':'not_recorded'};
 }
 export class PhoneLab {
-  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json')}={}){
+  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json'),videoFactory=options=>new PhoneVideo(options)}={}){
     this.root=root;this.base=path.join(root,'.phone-lab');this.deviceFactory=deviceFactory;this.lockPath=lockPath;this.pausePath=pausePath;this.children=new Map();this.waitingBatches=new Map();this.closing=false;
     for(const dir of ['starts','runs','batches','evaluations'])mkdirSync(path.join(this.base,dir),{recursive:true});mkdirSync(path.dirname(lockPath),{recursive:true});
     this.tasks=new PhoneTasks(path.join(this.base,'tasks'));
+    this.video=videoFactory({project,assertEnabled:()=>this.assertDeviceEnabled(),acquire:()=>this.acquire('phone_video_setup')});
   }
   directory(kind,id){if(!/^(start|phone|batch)_[a-f0-9-]{36}$/.test(id))throw fail(400,'记录 ID 无效');return path.join(this.base,kind,id);}
   list(kind,file){return readdirSync(path.join(this.base,kind)).map(id=>read(path.join(this.base,kind,id,file))).filter(Boolean).sort((a,b)=>(b.created_at??'').localeCompare(a.created_at??''));}
   acquire(owner){const token=randomUUID();if(existsSync(this.lockPath)){const old=read(this.lockPath);if(old&&alive(old.pid))throw fail(409,'手机正在被另一项真机准备或测试占用');unlinkSync(this.lockPath);}writeFileSync(this.lockPath,JSON.stringify({token,pid:process.pid,owner}),{flag:'wx',flush:true});return ()=>{if(read(this.lockPath)?.token===token)unlinkSync(this.lockPath);};}
   assertDeviceEnabled(){if(read(this.pausePath)?.paused)throw fail(423,'真机测试已暂停；查看与编辑界面不受影响。手机可用后由测试者恢复。');}
-  pause(reason='手机暂供日常使用'){save(this.pausePath,{paused:true,at:now(),reason});for(const id of this.children.keys())this.stop(id);if(this.activeBatch)this.stopBatch(this.activeBatch);return read(this.pausePath);}
+  pause(reason='手机暂供日常使用'){save(this.pausePath,{paused:true,at:now(),reason});for(const id of this.children.keys())this.stop(id);if(this.activeBatch)this.stopBatch(this.activeBatch);void this.video.stopAll('真机操作已暂停');return read(this.pausePath);}
   resume(){save(this.pausePath,{paused:false,at:now(),reason:'测试者在界面恢复'});return read(this.pausePath);}
   taskStart(task,{startpointId,starts=this.list('starts','start.json')}={}){
     const configured=read(path.join(this.base,'task-startpoints.json'))?.[task.id];
@@ -77,7 +79,7 @@ export class PhoneLab {
     const deviations=new Map(evaluations.flatMap(e=>(e.entries??[]).filter(x=>x.run_id&&x.policy_deviation).map(x=>[x.run_id,x.policy_deviation])));
     const starts=this.list('starts','start.json'),tasks=this.listTasks(starts);
     return {version:PHONE_LAB_VERSION,final_framework:null,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
-      starts,runs:this.list('runs','input.json').map(i=>({...this.summary(i.id),evaluation_exclusion:excluded.get(i.id)??null,policy_deviation:deviations.get(i.id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false}};
+      starts,runs:this.list('runs','input.json').map(i=>({...this.summary(i.id),evaluation_exclusion:excluded.get(i.id)??null,policy_deviation:deviations.get(i.id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},video:this.video.status()};
   }
   async captureStart(input={}, {taskSnapshot=null}={}){
     this.assertDeviceEnabled();
@@ -126,7 +128,7 @@ export class PhoneLab {
         service:{id:service.id,name:service.name,model:service.model,base_url:service.base_url,protocol:service.protocol,family:phoneModelFamily(service.model)},
         settings_revision:settings.revision,case_id:task?.id??null,case_revision:task?.revision??null,name,task_name:task?.name??'自定义任务',
         instruction,task_sha256:sha256(instruction),instruction_overridden:Boolean(task&&instruction!==task.instruction),acceptance:task?.acceptance??(input.acceptance??'').slice(0,4000),app:task?.app??input.app??'当前应用',bundle:task?.bundle??start.environment.app?.bundle??null,
-        task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',final_framework:null};
+        task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',video_observation_at_start:this.video.observation(),final_framework:null};
       save(path.join(dir,'input.json'),frozen);save(path.join(dir,'state.json'),{status:'queued',created_at:now()});
       const child=fork(path.join(project,'scripts/phone-lab-worker.mjs'),['--root',this.root,'--id',id],{cwd:project,windowsHide:true,stdio:['ignore','pipe','pipe','ipc']});
       const completion=new Promise(resolve=>{let settled=false;const finish=error=>{if(settled)return;settled=true;const state=read(path.join(dir,'state.json'));if(error)save(path.join(dir,'state.json'),{status:'blocked',error:error.message,finished_at:now()});else if(['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),{...state,status:'interrupted',finished_at:now(),reason:'Worker exited; action effects require review, no resume/replay'});this.children.delete(id);release();resolve();};child.once('error',finish);child.once('exit',()=>finish());});
@@ -224,5 +226,5 @@ export class PhoneLab {
     this.waitingBatches.delete(id);waiter.resolve(current);return {id,status:'running'};
   }
   stopBatch(id){const dir=this.directory('batches',id),b=read(path.join(dir,'batch.json'));if(!b)throw fail(404,'批次不存在');save(path.join(dir,'stop.json'),{at:now()});const waiter=this.waitingBatches.get(id);if(waiter){this.waitingBatches.delete(id);waiter.resolve(null);}for(const e of b.entries)if(e.run_id&&this.children.has(e.run_id))this.stop(e.run_id);return {id,status:'stopping'};}
-  async close(){this.closing=true;if(this.activeBatch)this.stopBatch(this.activeBatch);for(const id of this.children.keys())this.stop(id);await Promise.allSettled([...this.children.values()].map(c=>c.completion));await this.batchCompletion;}
+  async close(){this.closing=true;if(this.activeBatch)this.stopBatch(this.activeBatch);for(const id of this.children.keys())this.stop(id);await Promise.allSettled([...this.children.values()].map(c=>c.completion));await this.batchCompletion;await this.video.close();}
 }

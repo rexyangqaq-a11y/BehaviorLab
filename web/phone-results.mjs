@@ -10,7 +10,7 @@ export function comparablePhoneGroups(rows){
   const groups=new Map();
   for(const r of rows){
     if(r.evaluation_exclusion||!r.evaluation_protocol||!r.result?.model_usage?.requests||!r.result?.same_start?.same)continue;
-    const key=JSON.stringify([r.evaluation_protocol,r.case_id,r.case_revision,r.instruction,r.framework_id,r.framework?.version,r.source_versions,r.service_id,r.service?.model,r.startpoint?.contract?.comparison_key,r.device_info?.app,r.limits]);
+    const key=JSON.stringify([r.evaluation_protocol,r.case_id,r.case_revision,r.instruction,r.framework_id,r.framework?.version,r.source_versions,r.service_id,r.service?.model,r.startpoint?.contract?.comparison_key,r.device_info?.app,r.limits,r.video_observation_at_start?.enabled?r.video_observation_at_start:null]);
     if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r);
   }
   return [...groups.values()];

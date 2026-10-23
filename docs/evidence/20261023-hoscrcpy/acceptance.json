@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-23T06:03:04.714Z",
+  "version": "0.4.0-preview.8",
+  "scope": "headless HOScrcpy video integration; no business model tasks",
+  "status": {
+    "integration": "completed",
+    "real_video_and_shared_hdc_smoke": "completed",
+    "long_duration_stability": "partial_unexplained_disconnects_retained",
+    "three_framework_full_tasks_with_video": "not_executed",
+    "current_blockers": []
+  },
+  "entry": "http://127.0.0.1:4317/phone-lab#process",
+  "input": {
+    "capture": "start explicitly in process tab",
+    "backend": "HOScrcpy SDK 1.0.18-beta",
+    "system_extension": true,
+    "scale": 2,
+    "max_fps": 15,
+    "target_mbps": 4,
+    "probe": "Read layout; swipe desktop left then right, verify live video changed and returned; no app/business task"
+  },
+  "environment": {
+    "model": "SGT-AL10",
+    "os": "OpenHarmony-7.0.0.105",
+    "api": "26",
+    "native_screen": {
+      "width": 1320,
+      "height": 2848
+    },
+    "decoded_video": {
+      "width": 660,
+      "height": 1424
+    },
+    "node": "v24.19.0",
+    "java": "Temurin 21.0.8+9",
+    "sdk_sha256": "2ce60b1893cc2be471a8cd7eab7e4127e41921f1f89a32a134c730ba15c8c0fd",
+    "player": "JMuxer 2.1.4",
+    "browser": "ChatGPT in-app browser; native MediaSource playback",
+    "hdc": "3.2.0f"
+  },
+  "actions": {
+    "model_requests": 0,
+    "business_runs": 0,
+    "desktop_swipes": 2,
+    "shared_hdc_layout_read_while_streaming": true,
+    "diagnostic_snapshot_during_stream": true,
+    "layout_after_sdk_stop": true,
+    "sdk_internal_actions": "start native capture/control agent and HDC forwards, wake screen, request IDR frames, stop SDK; not counted as zero device commands"
+  },
+  "gui_observations": {
+    "first_stream_decoded_frames": 125,
+    "second_stream_decoded_frames": 61,
+    "main_long_session_observed_frames_at_least": 241,
+    "final_reconnect_observed_frames_at_least": 65,
+    "fullscreen": true,
+    "test_configuration_tab_keeps_stream": true,
+    "results_tab_releases_stream": true,
+    "active_phone_view_is_video_not_screenshot_loop": true,
+    "phone_auto_lock_was_visible_in_video": true
+  },
+  "sessions": [
+    {
+      "id": "video_365de3d8-29f2-4768-865d-11a25e07bbbc",
+      "created_at": "2026-10-23T02:13:26.273Z",
+      "finished_at": "2026-10-23T02:14:42.224Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 119,
+      "bytes": 558954,
+      "cleanup": "sdk_stopped",
+      "error": "手机视频采集失败",
+      "purpose": "initial_stream_disconnected",
+      "wall_duration_ms_including_setup_cleanup": 75951
+    },
+    {
+      "id": "video_f3042eca-d502-45be-9259-5cbaad360ce1",
+      "created_at": "2026-10-23T02:23:56.876Z",
+      "finished_at": "2026-10-23T02:26:50.656Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 82,
+      "bytes": 612055,
+      "cleanup": "sdk_stopped",
+      "error": null,
+      "purpose": "reconnect_and_shared_hdc_probe",
+      "wall_duration_ms_including_setup_cleanup": 173780
+    },
+    {
+      "id": "video_60566dc8-f8a5-4e3e-94fe-6ed4cfb154b4",
+      "created_at": "2026-10-23T02:30:28.216Z",
+      "finished_at": "2026-10-23T02:31:16.415Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 8,
+      "bytes": 71391,
+      "cleanup": "sdk_stopped",
+      "error": null,
+      "purpose": "isolated_reconnect_and_navigation_cleanup",
+      "wall_duration_ms_including_setup_cleanup": 48199
+    },
+    {
+      "id": "video_693ca415-7cbb-4b7f-84b9-4589bc821dcc",
+      "created_at": "2026-10-23T02:41:17.024Z",
+      "finished_at": "2026-10-23T02:50:36.750Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 1780,
+      "bytes": 9325787,
+      "cleanup": "sdk_stopped",
+      "error": "手机视频采集失败，请检查USB连接和手机解锁状态",
+      "purpose": "main_ui_fullscreen_and_test_configuration_hold_then_disconnected",
+      "wall_duration_ms_including_setup_cleanup": 559726
+    },
+    {
+      "id": "video_c24ec43a-03c8-4315-a353-6a0252b63f09",
+      "created_at": "2026-10-23T02:52:19.611Z",
+      "finished_at": "2026-10-23T02:53:17.876Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 102,
+      "bytes": 570566,
+      "cleanup": "sdk_stopped",
+      "error": null,
+      "purpose": "later_local_session_not_independently_observed",
+      "wall_duration_ms_including_setup_cleanup": 58265
+    },
+    {
+      "id": "video_e39852f2-1694-4064-9eb1-99a6418d06df",
+      "created_at": "2026-10-23T05:59:59.172Z",
+      "finished_at": "2026-10-23T06:01:32.045Z",
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "packets": 78,
+      "bytes": 384935,
+      "cleanup": "sdk_stopped",
+      "error": null,
+      "purpose": "final_main_reconnect_and_results_navigation_cleanup",
+      "wall_duration_ms_including_setup_cleanup": 92873
+    }
+  ],
+  "artifacts": [
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\live-video.png",
+      "bytes": 49841,
+      "sha256": "c423a09c44b81599d1013b600b0bd293e2546cc849640cf9cb4bce5522747b9a"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\after-swipe.png",
+      "bytes": 50710,
+      "sha256": "70bf35706f57fc7f1da2be98f7cea28f5007bfda7a91c8c923dc5cf85fc51047"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\main-live-video.png",
+      "bytes": 28380,
+      "sha256": "4ad6916d9e5be04b127b4b4cbb7f71eac7699ac39e5ad4c93706d155c30e4560"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\main-fullscreen.png",
+      "bytes": 24101,
+      "sha256": "bc8751eda10a1919e16f1f60fc147406cbec915d2ebe7e2a04f0ffe307a12d9e"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\coexist-swipe-left.json",
+      "bytes": 1018,
+      "sha256": "b0afcde16b80f4e7089eabc2930aadd6b63cb9359b06e06ffc66de4dba00d4ee"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\coexist-swipe-right.json",
+      "bytes": 1018,
+      "sha256": "821a9c03873898919a22cefbc5ab0023413a768ce55b5a6aec4dc44207c84906"
+    },
+    {
+      "local_ignored_file": "output\\hoscrcpy_20261023\\coexist-readonly.json",
+      "bytes": 856,
+      "sha256": "b1a9f6ad2bddfd3f0a2761500d18ef3a53f8126655281ebd7616e80f06a9d585"
+    }
+  ],
+  "offline_tests": {
+    "passed": 118,
+    "total": 118,
+    "log": "tests.txt",
+    "fixtures_not_real_gui_results": true
+  },
+  "preservation": {
+    "phone_runs": 39,
+    "tasks": 6,
+    "services": 3,
+    "phone_metadata_hashes_unchanged": true,
+    "old_matrix": {
+      "cells": 36,
+      "passed": 16,
+      "partial": 10,
+      "failed": 10,
+      "retained_requests": 331
+    }
+  },
+  "finish": {
+    "video_status": {
+      "available": true,
+      "missing": [],
+      "backend": "hoscrcpy",
+      "sdk_version": "1.0.18-beta",
+      "scale": 2,
+      "max_fps": 15,
+      "bitrate_mbps": 4,
+      "system_extension": true,
+      "state": "idle",
+      "error": null,
+      "packets": 0,
+      "bytes": 0,
+      "viewers": 0,
+      "last_frame_at": null
+    },
+    "device_lock": null,
+    "models_called": 0,
+    "remote_pushes": 0,
+    "official_gui_windows_opened": 0
+  },
+  "limits": [
+    "Two observed sessions ended with gRPC UNAVAILABLE; root cause not proven. HDC later had no visible device and was visible again after user confirmation.",
+    "No claim of stable 15fps: this is a ceiling; static frames and SDK packet count differ from decoded frame count.",
+    "No second phone/PC, long soak, browser matrix or three-framework model tasks with video verified.",
+    "Existing Windows ZIP remains preview.6; no new binary release built."
+  ]
+}

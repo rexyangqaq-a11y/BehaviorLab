@@ -3,7 +3,7 @@
 <body>
 <header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-status" class="pill">读取状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
 <main>
-  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.7 · 最终框架未定</small></div>
+  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.8 · 最终框架未定</small></div>
   <div id="pause-banner" class="pause-banner" hidden><div><strong>真机操作已暂停</strong><p>任务编辑与结果查看仍可使用。</p></div><button id="resume-device">恢复真机测试</button></div>
   <div id="message" role="status" hidden></div>
   <nav class="tabs" aria-label="工作台导航"><button data-tab="tasks" class="selected" aria-selected="true">任务列表</button><button data-tab="test" aria-selected="false">测试</button><button data-tab="process" aria-selected="false">测试过程详情</button><button data-tab="results" aria-selected="false">结果与对比</button></nav>
@@ -28,6 +28,7 @@
   </section>
 
   <section id="test" class="tab" aria-label="测试" hidden>
+    <div id="test-video-note" class="hint" hidden>手机投屏保持连接，启动测试后在过程页观看。<button type="button" id="test-video-stop" class="text-button">停止投屏</button></div>
     <div class="heading"><div><h2>配置测试</h2><p class="hint">按框架、模型服务、任务三个维度选择。</p></div><div class="segmented" aria-label="测试模式"><button data-test-mode="single" aria-pressed="true">单项测试</button><button data-test-mode="matrix" aria-pressed="false">组合评估</button></div></div>
     <form id="test-form">
       <div class="dimension-grid">
@@ -49,6 +50,7 @@
     <div class="process-layout">
       <section class="card process-timeline"><div class="heading"><h3>执行轨迹</h3><button id="process-follow" aria-pressed="true" class="quiet">跟随最新</button></div><p id="process-ledger-status" class="hint">尚无执行记录</p><div id="process-steps"></div></section>
       <section class="card process-detail" aria-label="选中步骤详情"><div id="process-step-detail"><div class="empty">开始执行后可查看模型回复、动作与对应截图。</div></div></section>
+      <aside class="card live-video-panel"><div class="heading"><h3>手机连续投屏</h3><span id="live-video-badge" class="tag">未连接</span></div><div id="live-video-stage"><video id="live-phone-video" autoplay muted playsinline></video><div id="live-video-placeholder"><strong>USB 后台直连</strong><span>点击开始投屏，直接查看手机视频。</span></div></div><p id="live-video-status" class="hint" role="status">正在读取视频组件状态。</p><div class="button-row"><button id="live-video-start" class="primary">开始投屏</button><button id="live-video-stop" disabled>停止</button><button id="live-video-fullscreen" disabled>全屏</button></div><p class="hint live-video-note">HOScrcpy · H.264 视频流 · 仅观看<br>无需打开官方工具或选择窗口。请在测试前启动投屏；切到测试页保持连接，切到任务或结果页断开。不录音、不录制、不上传。</p></aside>
     </div>
     <dialog id="process-image-dialog"><div class="heading"><h3>执行证据图</h3><button id="close-process-image">关闭</button></div><img id="process-image" class="screen" alt="本次执行留存的证据图"><p id="process-image-caption" class="hint"></p></dialog>
   </section>
