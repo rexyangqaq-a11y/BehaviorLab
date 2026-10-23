@@ -1,0 +1,438 @@
+{
+  "generated_at": "2026-10-23T06:11:33.188Z",
+  "source": "Retained 36 records after abnormal replacement",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "verified_request_response_and_usage_pairs": 331,
+  "totals": {
+    "midscene": {
+      "runs": 12,
+      "requests": 123,
+      "input_tokens": 1271411,
+      "average_input_tokens": 10336.674796747968,
+      "average_text_chars": 38345.41463414634,
+      "average_system_chars": 32903.12195121951,
+      "images_per_request": 1
+    },
+    "mobiagent": {
+      "runs": 12,
+      "requests": 116,
+      "input_tokens": 243331,
+      "average_input_tokens": 2097.6810344827586,
+      "average_text_chars": 3130.25,
+      "average_system_chars": 1379,
+      "images_per_request": 1
+    },
+    "autoglm": {
+      "runs": 12,
+      "requests": 92,
+      "input_tokens": 303560,
+      "average_input_tokens": 3299.5652173913045,
+      "average_text_chars": 4613.782608695652,
+      "average_system_chars": 3403,
+      "images_per_request": 1
+    }
+  },
+  "samples": [
+    {
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+      "case_id": "HM-STOR-001",
+      "framework": "midscene",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "69c253cff08dc558af16fc728b3a18b671a96d5c184f1a88bfb501b2c20268b6",
+      "duration_ms": 84881,
+      "requests": 7,
+      "input_tokens": 70789,
+      "output_tokens": 1569,
+      "model_http_ms": 35085,
+      "other_elapsed_ms": 49796,
+      "action_count": 6,
+      "image_count": 39,
+      "image_roles": {
+        "initial": 1,
+        "sdk-observation": 14,
+        "model_input": 7,
+        "before": 6,
+        "after": 6,
+        "model-screen-masked": 4,
+        "final": 1
+      },
+      "text_chars": [
+        33568,
+        34447,
+        35544,
+        36494,
+        37972,
+        39183,
+        40554
+      ],
+      "system_chars": [
+        33094,
+        33094,
+        33094,
+        33094,
+        33094,
+        33094,
+        33094
+      ],
+      "model_images": 7
+    },
+    {
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+      "case_id": "HM-STOR-001",
+      "framework": "mobiagent",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "90d78485e95c2fe8daec9848c1a883a641209a04cb521fae0e8de4afa4d8df56",
+      "duration_ms": 59647,
+      "requests": 6,
+      "input_tokens": 12620,
+      "output_tokens": 943,
+      "model_http_ms": 23716,
+      "other_elapsed_ms": 35931,
+      "action_count": 5,
+      "image_count": 28,
+      "image_roles": {
+        "initial": 1,
+        "framework-observation": 6,
+        "model_input": 6,
+        "before": 5,
+        "after": 5,
+        "model-screen-masked": 4,
+        "final": 1
+      },
+      "text_chars": [
+        2113,
+        2257,
+        2584,
+        2908,
+        3190,
+        3375
+      ],
+      "system_chars": [
+        1379,
+        1379,
+        1379,
+        1379,
+        1379,
+        1379
+      ],
+      "model_images": 6
+    },
+    {
+      "run_id": "phone_f18746b6-72c6-4719-a3df-825cbbb56858",
+      "case_id": "HM-STOR-001",
+      "framework": "autoglm",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "2ddab9443f03c769affb6617eb551f3801c5cab7c9a678d54ca9b054668b8786",
+      "duration_ms": 42436,
+      "requests": 5,
+      "input_tokens": 16310,
+      "output_tokens": 678,
+      "model_http_ms": 19154,
+      "other_elapsed_ms": 23282,
+      "action_count": 4,
+      "image_count": 23,
+      "image_roles": {
+        "initial": 1,
+        "framework-observation": 5,
+        "model_input": 5,
+        "before": 4,
+        "after": 4,
+        "model-screen-masked": 3,
+        "final": 1
+      },
+      "text_chars": [
+        3687,
+        3897,
+        4116,
+        4373,
+        4579
+      ],
+      "system_chars": [
+        3403,
+        3403,
+        3403,
+        3403,
+        3403
+      ],
+      "model_images": 5
+    },
+    {
+      "run_id": "phone_9833423e-9d5f-4913-b4e4-5ca2be106688",
+      "case_id": "HM-XHS-001",
+      "framework": "midscene",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "da6cee88d8c9d8fa81e948d34f331e191b0b89f7cb03c55d78302c14076cd082",
+      "duration_ms": 66354,
+      "requests": 5,
+      "input_tokens": 48777,
+      "output_tokens": 957,
+      "model_http_ms": 23850,
+      "other_elapsed_ms": 42504,
+      "action_count": 4,
+      "image_count": 25,
+      "image_roles": {
+        "initial": 1,
+        "sdk-observation": 10,
+        "model_input": 5,
+        "before": 4,
+        "after": 4,
+        "final": 1
+      },
+      "text_chars": [
+        33643,
+        34407,
+        35200,
+        36125,
+        37355
+      ],
+      "system_chars": [
+        33094,
+        33094,
+        33094,
+        33094,
+        33094
+      ],
+      "model_images": 5
+    },
+    {
+      "run_id": "phone_538b5f4b-5e32-4a9a-8354-09b5e03c6f08",
+      "case_id": "HM-XHS-001",
+      "framework": "mobiagent",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "13a15cc9d12f7e840fc0b93f74ec6c2b8fdeb6ae04261be88aa1b5d07b51b273",
+      "duration_ms": 68432,
+      "requests": 6,
+      "input_tokens": 12203,
+      "output_tokens": 817,
+      "model_http_ms": 21847,
+      "other_elapsed_ms": 46585,
+      "action_count": 5,
+      "image_count": 24,
+      "image_roles": {
+        "initial": 1,
+        "framework-observation": 6,
+        "model_input": 6,
+        "before": 5,
+        "after": 5,
+        "final": 1
+      },
+      "text_chars": [
+        2188,
+        2350,
+        2506,
+        2672,
+        2818,
+        3054
+      ],
+      "system_chars": [
+        1379,
+        1379,
+        1379,
+        1379,
+        1379,
+        1379
+      ],
+      "model_images": 6
+    },
+    {
+      "run_id": "phone_6eb7b64d-7db5-4ce0-b7fa-a2c97c6248ff",
+      "case_id": "HM-XHS-001",
+      "framework": "autoglm",
+      "model": "qwen3.7-plus",
+      "verdict": "passed",
+      "event_sha256": "8fd6dabc37a962e39be24049abdeb8c3eed811cad15cff3a7f8b6028a3f99bc1",
+      "duration_ms": 65850,
+      "requests": 6,
+      "input_tokens": 19968,
+      "output_tokens": 626,
+      "model_http_ms": 19446,
+      "other_elapsed_ms": 46404,
+      "action_count": 6,
+      "image_count": 26,
+      "image_roles": {
+        "initial": 1,
+        "framework-observation": 6,
+        "model_input": 6,
+        "before": 6,
+        "after": 6,
+        "final": 1
+      },
+      "text_chars": [
+        3762,
+        3973,
+        4172,
+        4391,
+        4570,
+        4880
+      ],
+      "system_chars": [
+        3403,
+        3403,
+        3403,
+        3403,
+        3403,
+        3403
+      ],
+      "model_images": 6
+    }
+  ],
+  "source_events": [
+    {
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+      "event_sha256": "17aa9551f603f1a2891aab8715d028d747fa6c24203261371dfecf08e0986ce8"
+    },
+    {
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207",
+      "event_sha256": "75d332c81bc714838b3bcf5cf26b9b3ea12a28ae4187ea4fc882f7cf3ccfef89"
+    },
+    {
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539",
+      "event_sha256": "cab7388c06b338320cf437672b75da297a2a6c3427316749205c7b7334154d08"
+    },
+    {
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9",
+      "event_sha256": "6c6ce67373605bd88c37bf3c378412587ff88a19a0a800ddf3b0f9a304016e5e"
+    },
+    {
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5",
+      "event_sha256": "82d8b9b16c7b6ad5d0b184eb3fd63f1c5a042e5de3ac1d4c8646f700809bf2cc"
+    },
+    {
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7",
+      "event_sha256": "04472bbd828ee7fd34d93deca1b6e94be7fa403b12ac391671ca3623a4fa90c0"
+    },
+    {
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+      "event_sha256": "69c253cff08dc558af16fc728b3a18b671a96d5c184f1a88bfb501b2c20268b6"
+    },
+    {
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+      "event_sha256": "b509ccf0dc97670d23718599074d8673ed3aa3d529266c11da9c0ba6846922b1"
+    },
+    {
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf",
+      "event_sha256": "43d6c9e413e1209e250906707d0abbd1e1c37faba39c4a2155f38585765bc846"
+    },
+    {
+      "run_id": "phone_507202c2-cf54-4915-979b-b15217dd17d8",
+      "event_sha256": "f818bc9dc67cffe0bdd1029f1ecaf579189f8231e97167151d14b80f5ae77ea1"
+    },
+    {
+      "run_id": "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19",
+      "event_sha256": "57bc99357393d264456fe3a7c1a4e91a7a3d53ac1c5cebc939626a11f0264e19"
+    },
+    {
+      "run_id": "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085",
+      "event_sha256": "6614aa294a654e36c2e25e4f85ab6087d2fafaa8edd57e8c06f75671656365b7"
+    },
+    {
+      "run_id": "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f",
+      "event_sha256": "7e217dd63a7a5bc4ada8e6c35eefd842b083d00f2d15821ce986ee4b0ee48119"
+    },
+    {
+      "run_id": "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3",
+      "event_sha256": "19ed513c1e4f03825511683195dd5a00258d2955caca709906094284c3725d3a"
+    },
+    {
+      "run_id": "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431",
+      "event_sha256": "20dde6da49a16af81307cefe741c09ddc9fe7070f910e6944b9770a54848943e"
+    },
+    {
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+      "event_sha256": "90d78485e95c2fe8daec9848c1a883a641209a04cb521fae0e8de4afa4d8df56"
+    },
+    {
+      "run_id": "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c",
+      "event_sha256": "97328c5264bb6e206bf9db022a5356da983a9e7287cd7dd63d7003730991cd78"
+    },
+    {
+      "run_id": "phone_7b8e87be-e329-444b-b0e4-9152a080d1db",
+      "event_sha256": "3a68eec4ce1068d3e0ca772a5120bac1ed9035e8fb71ed596ee4b3e781980fcd"
+    },
+    {
+      "run_id": "phone_f18746b6-72c6-4719-a3df-825cbbb56858",
+      "event_sha256": "2ddab9443f03c769affb6617eb551f3801c5cab7c9a678d54ca9b054668b8786"
+    },
+    {
+      "run_id": "phone_81b0042a-27fc-4c9b-b6fa-8356bcf091ed",
+      "event_sha256": "7a6aaa0551223ab69565b110f2d3f0d0478642227143ba87224c3dcd2fd4a699"
+    },
+    {
+      "run_id": "phone_7e5520c4-2493-4c1e-a4a2-78677758754c",
+      "event_sha256": "124533652ef144991b80e499a4e485362c8d6b27e8222f43490907dc8a1c3f94"
+    },
+    {
+      "run_id": "phone_f4e36a80-290f-44a9-a587-a41d554a1466",
+      "event_sha256": "d7a4419a685980296cdba96afdc42847bcbf9d78e2f053fa9543f79e6d313b2b"
+    },
+    {
+      "run_id": "phone_943084d5-640d-43aa-b08f-7c907e097745",
+      "event_sha256": "614371450a71a7f45b0bc0df4a0328036d006dee1de488bbc6dbf3a7755a3cc4"
+    },
+    {
+      "run_id": "phone_b66b2b64-1435-439a-afc9-3ce089fe8bd4",
+      "event_sha256": "4672cde83e96a948b41c214a1a9886ccc8d8272d1cf5542f734238aa8f67fed9"
+    },
+    {
+      "run_id": "phone_b71dbdb6-8cc3-4807-a999-ba2304fd2e4b",
+      "event_sha256": "ab9f144609277f307d8f7c32583e7f039df19efbef1d2c65a7884f108e056255"
+    },
+    {
+      "run_id": "phone_f6b93da7-3120-4e34-8594-9389be690629",
+      "event_sha256": "cbba8ffaed2fd64536f16f47ed60999caa55f10a5efface47e6666baac2bc80c"
+    },
+    {
+      "run_id": "phone_3a3d0c72-9990-4399-9a98-c59a1b9d3940",
+      "event_sha256": "3a43fa394b9bdbd322041106f82d986897faa9a2f694eb587bd48e5fe44fc7df"
+    },
+    {
+      "run_id": "phone_104e9594-d9c0-439b-96ba-8e30ce8fa731",
+      "event_sha256": "e1e1e81823191e4f8fe48753cc4e55e59f2dd66450513668f760c0dab7cdf610"
+    },
+    {
+      "run_id": "phone_9833423e-9d5f-4913-b4e4-5ca2be106688",
+      "event_sha256": "da6cee88d8c9d8fa81e948d34f331e191b0b89f7cb03c55d78302c14076cd082"
+    },
+    {
+      "run_id": "phone_b12d5c11-6361-432d-a75b-67a80d78e3a6",
+      "event_sha256": "e86bed632da55bfa8e7fec8e951c70212cdae6b726dda2dda81bc7891cf149cc"
+    },
+    {
+      "run_id": "phone_e0424521-b19d-4aa5-ba43-8d0921bea715",
+      "event_sha256": "54d08c274f951a4c127e704ddb973b70b0a1e172d4845713af3e7d894a3b95f6"
+    },
+    {
+      "run_id": "phone_538b5f4b-5e32-4a9a-8354-09b5e03c6f08",
+      "event_sha256": "13a15cc9d12f7e840fc0b93f74ec6c2b8fdeb6ae04261be88aa1b5d07b51b273"
+    },
+    {
+      "run_id": "phone_ec30526e-22a1-4414-9371-0b28a124677f",
+      "event_sha256": "de5e3d42aae85fe0370027a652ccfad51a582a2fbed4848c09710061b9b6121f"
+    },
+    {
+      "run_id": "phone_63ada03e-d3d7-47d9-8320-2deedf01bc98",
+      "event_sha256": "ff4a3d3689dd0f45613b82ac02930d0c348472ef47593dc46dccb39768de0f77"
+    },
+    {
+      "run_id": "phone_6eb7b64d-7db5-4ce0-b7fa-a2c97c6248ff",
+      "event_sha256": "8fd6dabc37a962e39be24049abdeb8c3eed811cad15cff3a7f8b6028a3f99bc1"
+    },
+    {
+      "run_id": "phone_67711e66-8d58-4148-958a-11650a24a0c5",
+      "event_sha256": "7fa8cb2f63fdb4f6807bb0205627890d78f99489cbf9b62ab1b025dbb54a6fa3"
+    }
+  ],
+  "boundaries": [
+    "HTTP duration includes interface/network round trip; not pure inference time",
+    "Other elapsed is total execution minus non-overlapping HTTP calls; no per-component attribution",
+    "Image event count includes copies and model input assets; not capture command count",
+    "Single-run exploratory comparison, historical starts/protocols changed",
+    "Private raw model replies and account-related screenshot text are excluded"
+  ]
+}

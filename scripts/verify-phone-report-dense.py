@@ -116,13 +116,13 @@ def native_values(slide):
     return [[[''.join(c.xpath('.//a:t/text()',namespaces=NS)) for c in row.findall('a:tc',NS)] for row in table.findall('a:tr',NS)] for table in node.findall('.//a:tbl',NS)]
 summary=json.loads((ROOT/'docs/evidence/20261022-phone-evaluation/summary.json').read_text(encoding='utf-8'))
 models=['qwen3.8-flash','qwen3.7-plus','deepseek-v4.1-flash-1017'];frameworks=['midscene','mobiagent','autoglm'];case_ids=['HM-CALC-001','HM-STOR-001','HM-TB-001','HM-XHS-001']
-matrix=native_values(5)[0];index=1
+matrix=native_values(scene.get('matrixSlide',5))[0];index=1
 for framework in frameworks:
     for model in models:
         rows=[next(r for r in summary['rows'] if r['framework_id']==framework and r['model']==model and r['case_id']==case) for case in case_ids]
         assert matrix[index][1:5]==[{'passed':'通过','partial':'部分','failed':'未通过'}[r['verdict']] for r in rows]
         assert matrix[index][5]==str(sum(r['verdict']=='passed' for r in rows))+'/4';index+=1
-performance=native_values(6)[0]
+performance=native_values(scene.get('performanceSlide',6))[0]
 for i,framework in enumerate(frameworks,1):
     for j,case in enumerate(['HM-STOR-001','HM-XHS-001'],1):
         r=next(r for r in summary['rows'] if r['framework_id']==framework and r['model']==models[1] and r['case_id']==case)
@@ -130,12 +130,13 @@ for i,framework in enumerate(frameworks,1):
         expected=f"{r['duration_ms']/1000:.1f} / {r['requests']} / {r['input_tokens']+r['output_tokens']:,}"
         assert performance[i][j]==expected,(performance[i][j],expected)
 (BUILD/'slides').mkdir(exist_ok=True)
-for i in range(1,9):
+slide_count=scene.get('slideCount',8)
+for i in range(1,slide_count+1):
     node=E.fromstring(parts[f'ppt/slides/slide{i}.xml']);assert not node.xpath('//*[@noGrp="1" or @noGrp="true"]')
     words=''.join(node.xpath('//a:t/text()',namespaces=NS));assert '下层规划模块' not in words
     counts.append({'slide':i,'characters':len(words),'native_shapes':len(node.findall('.//p:sp',NS)),'native_tables':len(node.findall('.//a:tbl',NS)),'native_routes':sum(1 for r in scene['routes'] if r['slide']==i)})
     (BUILD/'slides'/f'slide-{i:02d}.svg').write_text(render_slide(node,i),encoding='utf-8')
-report={'slides':8,'size_emu':dict(size.attrib),'removed_group_locks':lock_count,'native_route_count':route_count,'single_path_routes_verified':True,'matrix_36_cells':'matched frozen summary','performance_6_samples':'matched passed Q3.7 records','slides_detail':counts,'fit_warnings':warnings,'powerpoint_gui_verified':False,'rendering':'actual native OOXML geometry and installed font metrics'}
+report={'slides':slide_count,'size_emu':dict(size.attrib),'removed_group_locks':lock_count,'native_route_count':route_count,'single_path_routes_verified':True,'matrix_36_cells':'matched frozen summary','performance_6_samples':'matched passed Q3.7 records','slides_detail':counts,'fit_warnings':warnings,'powerpoint_gui_verified':False,'rendering':'actual native OOXML geometry and installed font metrics'}
 (BUILD/'structure-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
-print(json.dumps({'slides':8,'routes':route_count,'warnings':len(warnings),'characters':sum(c['characters'] for c in counts)},ensure_ascii=False))
+print(json.dumps({'slides':slide_count,'routes':route_count,'warnings':len(warnings),'characters':sum(c['characters'] for c in counts)},ensure_ascii=False))
 for warning in warnings:print(json.dumps(warning,ensure_ascii=False))

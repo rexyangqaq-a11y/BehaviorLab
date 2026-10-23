@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-23T06:15:47.744629+00:00",
+  "output": "output\\report_explained_20261023\\用户行为仿真系统_v0.4汇报_通俗修订版_20261023.pptx",
+  "sha256": "c250dc20590e7db66eccbf1e7a879bb43127d2fea0f70c48cd396b49da2f70b2",
+  "bytes": 82502,
+  "pages": 9,
+  "prior_outputs_preserved": true,
+  "checks": {
+    "static_pages_reviewed": 9,
+    "text_fit_warnings": 0,
+    "package_integrity": "passed",
+    "layout_findings": 0,
+    "layout_warnings": 1,
+    "warning_review": "One connector bounding-box warning on page 1; actual orthogonal path runs to the right and below the label, verified visually",
+    "artifact_import": "passed",
+    "native_tables": 7,
+    "native_single_path_arrows": 59,
+    "ordinary_group_locks_remaining": 0,
+    "matrix_cells_checked": 36,
+    "performance_samples_checked": 6,
+    "raw_run_request_response_and_usage_checked": 36,
+    "powerpoint_gui": "not_verified"
+  },
+  "content": [
+    "actual framework/model/device implementation flow",
+    "participant lifelines and request/reply time sequence",
+    "framework authors, use cases and qualified public evaluation",
+    "post-retest result matrix",
+    "three concrete retained partial/failure cases",
+    "record-based API time decomposition and action paths",
+    "plain-language failure categories and proposed improvements"
+  ],
+  "scope": {
+    "device_commands": 0,
+    "model_calls": 0,
+    "historical_results_changed": false,
+    "application_code_changed": false,
+    "raw_images_or_credentials_committed": false,
+    "remote_push_or_upload": false
+  }
+}
