@@ -40,3 +40,12 @@ Midscene这行也是整项任务一次成功、50轮，但MobileWorld与MobiFlow
 ## 本机同条件对照
 
 冻结矩阵内固定qwen3.7-plus、同HOP-AL10、同四题、每题15请求/40动作/600秒，Mid/Mobi/Auto严格通过分别3/4、2/4、3/4。模型完整标识直接展示在第三页，不隐藏在备注。每组合一次，历史协议v4–v7与应用内部状态变化仍存在，不能把本机样本当稳定可靠性排名。
+
+## 第三页补充：测试集背景与任务例子
+
+本轮只修改PPT第三页，不新增手机操作或模型调用。
+
+- [MobileWorld原论文](https://arxiv.org/html/2512.19432v1)作者来自阿里通义实验室等团队，整套为20个APP、201项任务。Midscene报告采用117题，两个数字口径不同。论文第1节的例子包括：先询问收件人邮箱再发邮件；读取GitHub项目README，概括后发到Mattermost团队聊天。这些是测试集的例子，不声称全部属于Midscene采用的117题。[项目说明](https://github.com/Tongyi-MAI/MobileWorld)介绍安卓模拟器和可控的自建APP后台。
+- [MobiFlow论文](https://www.preprints.org/manuscript/202603.1313)针对第三方APP难以通过统一系统接口验收的问题，将真实操作记录合并为页面状态图。第4.1节的微博评论例子约15步，采集7条完成路径。第4.3节基础任务涵盖信息搜索、商品购买、打车导航、社交和应用设置等。全套20个APP、240题，仍区分基础与特殊场景。这份2026年3月预印本尚未同行评审，不能把页面状态图评测写成逐题实时真机运行。
+
+上方框架区别改为原生设计侧重，而非重复共有的“截图、操作、再截图”。[Midscene API](https://midscenejs.com/reference/)提供可组合的操作、读数和结果检查；[MobiAgent项目](https://github.com/IPADS-SAI/MobiAgent)提供规划、执行与经验复用；[Open-AutoGLM项目](https://github.com/zai-org/Open-AutoGLM)以逐轮截图对话和手机操作指令组织执行。这些功能并非互斥，不能仅凭设计侧重推断成绩。MobiAgent本机仅测执行环节，未启用外层规划和经验记忆。

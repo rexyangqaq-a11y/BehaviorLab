@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-10-23T08:59:56.851973+00:00",
+  "output": "output\\report_background_20261023\\用户行为仿真系统_v0.4汇报_框架与测试集说明版_20261023.pptx",
+  "sha256": "9fedd1d017ec4f0cb2aa8f8c462b8f1700a1c26392991d7079805ebbe4964a88",
+  "edited_slides": [
+    3
+  ],
+  "changed_parts": [
+    "ppt/slides/slide3.xml",
+    "ppt/notesSlides/notesSlide3.xml"
+  ],
+  "other_eight_slides_and_unrelated_parts_identical": true,
+  "source_preserved": true,
+  "pages": 9,
+  "changes": {
+    "frameworks": "replace shared loop description with design emphasis and disclose MobiAgent execution-only test",
+    "datasets": "replace environment/scoring columns with source background and paper examples; distinguish full MobileWorld201 from report subset117"
+  },
+  "sources": [
+    "https://midscenejs.com/reference/",
+    "https://github.com/IPADS-SAI/MobiAgent",
+    "https://github.com/zai-org/Open-AutoGLM",
+    "https://arxiv.org/html/2512.19432v1",
+    "https://www.preprints.org/manuscript/202603.1313"
+  ],
+  "checks": {
+    "changed_page_statically_reviewed": 3,
+    "text_fit_warnings": 0,
+    "matrix_cells_checked": 36,
+    "passed_performance_samples_checked": 6,
+    "package_integrity": "passed",
+    "artifact_import": "passed",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "phone_commands": 0,
+    "model_calls": 0,
+    "historical_results_changed": false,
+    "application_code_changed": false,
+    "remote_push_or_upload": false
+  }
+}
