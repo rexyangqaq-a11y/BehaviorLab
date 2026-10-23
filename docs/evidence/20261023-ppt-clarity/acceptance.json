@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-10-23T08:35:23.873885+00:00",
+  "output": "output\\report_clarity_20261023\\用户行为仿真系统_v0.4汇报_汇报逻辑修订版_20261023.pptx",
+  "sha256": "f101aec51036a9819424ce5a847549477e2a8ff14a2ed5908b1430d6fb3fdcab",
+  "edited_slides": [
+    3,
+    5,
+    7
+  ],
+  "changed_parts": [
+    "ppt/slides/slide3.xml",
+    "ppt/notesSlides/notesSlide3.xml",
+    "ppt/slides/slide5.xml",
+    "ppt/slides/slide7.xml"
+  ],
+  "other_six_slides_and_unrelated_parts_identical": true,
+  "source_preserved": true,
+  "pages": 9,
+  "changes": {
+    "page3": "replace selection rationale with plain execution principles; detail dataset scope, execution environment and success definition",
+    "page5": "summarize final outcomes and candidate implications, remove retest discussion",
+    "page7": "explain performance differences through concrete examples and corresponding improvements, remove technical timing breakdown from visible slide"
+  },
+  "checks": {
+    "changed_pages_statically_reviewed": [
+      3,
+      5,
+      7
+    ],
+    "text_fit_warnings": 0,
+    "matrix_cells_checked": 36,
+    "passed_performance_samples_checked": 6,
+    "package_integrity": "passed",
+    "artifact_import": "passed",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "phone_commands": 0,
+    "model_calls": 0,
+    "historical_results_changed": false,
+    "application_code_changed": false,
+    "remote_push_or_upload": false
+  }
+}
