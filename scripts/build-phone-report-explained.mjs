@@ -14,23 +14,23 @@ export async function buildExplainedReport(p,summary,audit){
  const fs=['midscene','mobiagent','autoglm'],fl={midscene:'Midscene',mobiagent:'MobiAgent',autoglm:'AutoGLM'},models=['qwen3.8-flash','qwen3.7-plus','deepseek-v4.1-flash-1017'],ids=['HM-CALC-001','HM-STOR-001','HM-TB-001','HM-XHS-001'];
  const row=(f,id)=>audit.rows.find(r=>r.framework===f&&r.model===models[1]&&r.case_id===id);
 
- page('一  下层操作模块','实际架构：我们把开源框架、模型接口和鸿蒙手机接起来','我们实现测试与接入层，开源框架组织操作步骤，大模型看图决定下一步，HDC把操作送到真实手机。','源码：src/phone-lab.mjs、scripts/phone-lab-worker.mjs、integrations/adapters/midscene.mjs、integrations/adapters/python-native.mjs、integrations/phone-frameworks.py、src/gui-trial-transport.mjs、src/phone-device.mjs、src/phone-evidence.mjs。模型API节点概括统一运输层和所配置的外部服务。');
+ page('一  下层操作模块','实际架构：复用框架的鸿蒙能力，补充测试接入与过程记录','框架已有HDC控制能力。我们补充工作台、模型与设备转接、执行检查和记录，手机操作仍由框架决策。','源码：src/phone-lab.mjs、scripts/phone-lab-worker.mjs、integrations/adapters/midscene.mjs、integrations/adapters/python-native.mjs、integrations/phone-frameworks.py、src/gui-trial-transport.mjs、src/phone-device.mjs、src/phone-evidence.mjs。Midscene保留原生HarmonyAgent与HarmonyDevice动作实现，我们包装动作前后检查/记录并接管HDC命令留证和截图。MobiAgent/Open-AutoGLM保留选定决策循环，将设备I/O经本机Python-Node转接接入共用会话；共用会话仍复用Midscene的Harmony设备/HDC能力，未另造点击滑动引擎。Python输入前复用旧位置与Windows中文通信错误是我们接入引入的问题，不是修复上游框架的鸿蒙能力。AutoGLM图片过大来自既有2MiB入口限制，改同尺寸JPEG并校正MIME；去除answer包装用于固定客户端回复兼容。分支内改动影响对应组合，共用输入影响两个Python框架，共用截图/记录/保护也可能改变各框架观察与耗时，不宣称无干扰。Mobi经验/记忆关闭、外层启动调度未纳入。测试对象是框架＋模型＋本机接入变体，不是原封不动的原生框架榜单。模型API节点概括统一运输层和所配置的外部服务。');
  module('测试工作台〔我们实现〕','任务、起点、框架、模型选择\n单项运行、组合评估、结果筛选',30,144,315,112);
  module('任务执行器〔我们实现〕','下发任务，保存本次配置\n管理队列、限额、停止与异常',394,144,420,112);
  route([[345,198],[394,198]],C.blue);
  module('大模型API服务','Qwen / DeepSeek等图片接口\n输入：任务、当前图、必要历史\n输出：判断、动作或结束说明',876,144,374,144,C.purple,C.purpleBg);
- box(30,305,784,167,C.greenBg,C.green);txt('开源框架〔每次选一个，保留各自原有操作循环〕',44,314,755,33,24,true,C.green);
- const entries=[['Midscene','JavaScript直接调用\n官方Harmony接口'],['MobiAgent','Python运行原有循环\n本机接入手机与模型'],['Open-AutoGLM','Python运行原有循环\n本机接入手机与模型']];
+ box(30,305,784,167,C.greenBg,C.green);txt('开源框架〔保留操作循环，设备接入方式不同〕',44,314,755,33,24,true,C.green);
+ const entries=[['Midscene','原生Harmony接口执行\n外加检查、截图和记录'],['MobiAgent','原有循环决定动作\n我们转接设备调用'],['Open-AutoGLM','原有循环决定动作\n我们转接设备调用']];
  entries.forEach(([a,b],i)=>{const x=45+i*254;txt(a,x,356,240,31,23,true,C.green);txt(b,x,397,238,59,20);if(i<2)box(x+242,357,1,94,C.line,C.line,0);});
  route([[604,256],[604,305]],C.blue);txt('① 指定任务与约束',618,266,196,30,18,false,C.blue);
  route([[814,366],[853,366],[853,213],[876,213]],C.purple);txt('② 发截图和上下文',878,312,310,28,20,true,C.purple);
  route([[1218,288],[1218,422],[814,422]],C.purple,true);txt('③ 返回下一步操作',877,377,310,29,20,true,C.purple);
- module('统一手机控制〔我们实现〕','检查操作范围与重复点击，转换点击/滑动/输入指令\nHDC是华为手机调试工具；同一入口负责截图与执行',30,526,784,112,C.blue,C.blueBg);
+ module('设备接入与执行记录〔我们补充〕','复用现有HDC能力，统一限额、权限检查、动作与截图记录\n补充本机转接及兼容处理，并保留各框架的接入差异',30,526,784,112,C.blue,C.blueBg);
  module('鸿蒙真机','HOP-AL10\n真实APP与屏幕变化',876,526,374,112,C.green,C.greenBg);
- route([[320,472],[320,526]],C.green);txt('④ 执行动作',45,484,258,29,19,true,C.green);
+ route([[320,472],[320,526]],C.green);txt('④ 沿各自路径执行',45,484,258,29,19,true,C.green);
  route([[673,526],[673,472]],C.blue,true);txt('⑥ 新图回到框架继续判断',383,484,431,29,19,false,C.blue);
  route([[814,553],[876,553]],C.blue);route([[876,610],[814,610]],C.blue,true);txt('⑤ 操作 / 新图',903,476,330,30,19,true,C.blue);
- txt('全程自动记录输入、版本、回复、动作、截图与用量；结束后观察方核对任务结果。主仿真流程的真实闭环尚待集成。',31,646,1218,31,18,false,C.muted);
+ txt('测的是“框架＋模型＋本机接入”组合。输入、图片与记录方式会影响结果，不能直接当作原框架能力排名。',31,646,1218,31,18,false,C.muted);
 
  page('一  下层操作模块','完整时序：下发任务、循环操作、结束后核对','实线表示请求或操作，虚线表示返回。记录由执行器和接入层自动完成，最终审核由观察方在结果页进行。','角色合并说明：模型API含统一HTTP转发与所配置模型服务。手机控制含HDC设备接口。审核不是框架循环中的独立服务，也没有额外自动评审模型。保存本次任务/配置属于下发过程，不是冻结手机的专门动作。');
  const xs=[102,310,518,726,934,1160],names=['工作台','任务执行器','开源框架','模型API','手机控制','鸿蒙手机'];

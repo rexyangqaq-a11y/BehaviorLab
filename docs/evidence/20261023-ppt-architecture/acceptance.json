@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-23T06:48:03.059761+00:00",
+  "output": "output\\report_architecture_20261023\\用户行为仿真系统_v0.4汇报_接入职责修订版_20261023.pptx",
+  "sha256": "ebd196f93ad3ac78618d828175286f32884aa28dae9cae74d8bcf546b2d17ad4",
+  "changed_parts": [
+    "ppt/slides/slide1.xml",
+    "ppt/notesSlides/notesSlide1.xml"
+  ],
+  "other_eight_slides_and_all_other_parts_identical": true,
+  "source_preserved": true,
+  "page_count": 9,
+  "content": [
+    "existing Harmony/HDC capability explicitly reused",
+    "Midscene native device path versus Python adapter path",
+    "local checks, limits, permissions and recording labelled as additions",
+    "adapter/observation changes may affect outcomes",
+    "local bugs and framework-specific scope explained in notes"
+  ],
+  "checks": {
+    "first_page_static_preview": "reviewed",
+    "text_fit_warnings": 0,
+    "package_integrity": "passed",
+    "layout_findings": 0,
+    "artifact_import": "passed",
+    "native_objects_editable": "structurally_preserved",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "device_commands": 0,
+    "model_calls": 0,
+    "historical_results_changed": false,
+    "application_code_changed": false,
+    "remote_push_or_upload": false
+  }
+}
