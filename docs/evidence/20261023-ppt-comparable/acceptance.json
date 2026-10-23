@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-23T06:35:43.284632+00:00",
+  "output": "output\\report_comparable_20261023\\用户行为仿真系统_v0.4汇报_公开评测对齐版_20261023.pptx",
+  "sha256": "665bfb50e3634f0e06c344deea11a1f10556d0c868c6a43ba553c14a055479bf",
+  "changed_parts": [
+    "ppt/slides/slide3.xml",
+    "ppt/notesSlides/notesSlide3.xml"
+  ],
+  "other_eight_slides_and_all_other_parts_identical": true,
+  "page_count": 9,
+  "source_preserved": true,
+  "checks": {
+    "third_page_static_preview": "reviewed",
+    "font_fit_warnings": 0,
+    "native_tables_on_changed_page": 2,
+    "native_model_labels_checked": true,
+    "public_metric": "whole_task_success_only",
+    "public_scores": [
+      "78.63% MobileWorld",
+      "53.8% MobiFlow base",
+      "16.7% same MobiFlow base"
+    ],
+    "same_testset_for_all_three": false,
+    "mobiflow_source": "2026-03-17 preprint section 5.1, table 3",
+    "local_qwen37_pass_counts": [
+      3,
+      2,
+      3
+    ],
+    "package_integrity": "passed",
+    "artifact_import": "passed",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "model_calls": 0,
+    "phone_commands": 0,
+    "historical_results_changed": false,
+    "application_changed": false,
+    "pushed_or_uploaded": false
+  }
+}
