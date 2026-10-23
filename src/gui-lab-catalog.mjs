@@ -1,8 +1,8 @@
 export const GUI_LAB_VERSION = '0.4.0-preview.1';
 export const GUI_CANDIDATES = [
-  { id: 'midscene', name: 'Midscene', language: 'Node.js', package: '@midscene/harmony', version: '1.16.0', source: 'https://github.com/web-infra-dev/midscene', path: '官方 Harmony / HDC', stage: 'sdk_contract', note: '隔离验证样例，未选为正式框架；尚无真机和模型闭环。' },
-  { id: 'mobiagent', name: 'MobiAgent', language: 'Python', source: 'https://github.com/IPADS-SAI/MobiAgent', path: '官方 Harmony 分支', stage: 'source_review', note: '资料比较候选，未安装；具体系统兼容性待实测。' },
-  { id: 'autoglm', name: 'Open-AutoGLM', language: 'Python', source: 'https://github.com/zai-org/Open-AutoGLM', path: '官方 HDC 路径', stage: 'source_review', note: '单步循环基线候选，未安装；模型动作协议待核对。' },
+  { id: 'midscene', name: 'Midscene', language: 'Node.js', package: '@midscene/harmony', version: '1.16.0', source: 'https://github.com/web-infra-dev/midscene', path: '官方 Harmony / HDC', stage: 'real_framework', note: '已局部部署；独立真机页有一题助手核对通过，最终框架未定。本页仍只运行 Mock。' },
+  { id: 'mobiagent', name: 'MobiAgent', language: 'Python', source: 'https://github.com/IPADS-SAI/MobiAgent', path: '官方 Harmony 分支', stage: 'sdk_contract', note: '已固定源码与局部环境，原生循环离线契约通过；真实 GUI 及模型组合待测。本页仍为 Mock。' },
+  { id: 'autoglm', name: 'Open-AutoGLM', language: 'Python', source: 'https://github.com/zai-org/Open-AutoGLM', path: '官方 HDC 路径', stage: 'sdk_contract', note: '已固定源码与局部环境，原生单步循环离线契约通过；真实 GUI 与现有模型动作协议待测。本页仍为 Mock。' },
 ];
 
 // Project-owned engineering fixtures, not imported benchmark tasks or scores.

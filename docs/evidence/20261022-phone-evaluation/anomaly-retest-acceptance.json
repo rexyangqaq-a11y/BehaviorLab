@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-22T06:43:34.780Z",
+  "evaluation_id": "evaluation_20261022_b14102b7-e102-4744-b9a3-bc1d99ef014b",
+  "retention_policy": "Four confirmed abnormal originals replaced per user instruction; minimal usage summary remains",
+  "retested_cells": 4,
+  "retest_requests": 25,
+  "request_cap_per_attempt": 15,
+  "automatic_retries": 0,
+  "results": {
+    "passed": 16,
+    "partial": 10,
+    "failed": 10
+  },
+  "files_removed": [
+    "phone_7671b50d-7e56-4966-9042-7eb8abe12404",
+    "phone_ab96bc35-afe0-498f-974a-94ff6424a472",
+    "phone_b8183b69-1379-45cb-974d-4a7cf7cf7f38",
+    "phone_4aa98236-0f1f-4b7c-be34-24889ac63073"
+  ],
+  "already_retested_integration_diagnostics_removed": 6,
+  "total_original_records_removed": 10,
+  "retained_matrix_runs": 36,
+  "retained_images": 1486
+}

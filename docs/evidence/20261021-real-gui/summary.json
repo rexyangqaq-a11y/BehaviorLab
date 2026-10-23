@@ -1,0 +1,99 @@
+{
+  "kind": "real_gui_trial_summary",
+  "total_tokens": 30560,
+  "agent_actions": 4,
+  "device": {
+    "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+    "model": "HOP-AL10",
+    "original_image": {
+      "height": 1828,
+      "width": 2584
+    },
+    "os_fullname": "OpenHarmony-7.0.0.38",
+    "settings_version": "7.0.0.330",
+    "api": 26,
+    "submitted_image": {
+      "height": 914,
+      "width": 1292
+    },
+    "hdc_version": "3.2.0f"
+  },
+  "task_duration_ms": 41918,
+  "model": "qwen3.7-plus",
+  "startup_failures_before_trial": 2,
+  "sdk_version": "1.16.0",
+  "service": "user_explicit_token_plan",
+  "credentials_found_in_retained_files": 0,
+  "trial_framework": "midscene",
+  "date": "2026-10-21",
+  "gui_task_passed": false,
+  "run_duration_including_final_observation_ms": 42613,
+  "http_statuses": [
+    200,
+    200,
+    200,
+    200
+  ],
+  "model_family": "qwen3",
+  "provider_approval": "not_claimed",
+  "stop_reason": "local_request_budget_exhausted_before_fifth_send",
+  "model_usage": {
+    "requests": 4,
+    "retries": 0,
+    "known_input_tokens": 29819,
+    "known_output_tokens": 741,
+    "unknown_usage_requests": 0,
+    "cache_and_reasoning": [
+      {
+        "id": "model_1",
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_2",
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_3",
+        "cached_input_tokens": 5760,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_4",
+        "cached_input_tokens": 5760,
+        "reasoning_output_tokens": null
+      }
+    ],
+    "fees": null,
+    "credits": null
+  },
+  "task_id": "HM-SYS-001",
+  "assets": {
+    "unique_hashes": 23,
+    "capture_commands": 19,
+    "model_images": 4,
+    "records": 33
+  },
+  "integrity_audit": "passed",
+  "final_framework": null,
+  "raw_directory": "output/device_validation_20261021/midscene-HM-SYS-001-execution",
+  "reason": "Model assumed About entry was at the bottom, scrolled four times; final screen remained NearLink/Bluetooth",
+  "actions": "Scroll only",
+  "classification": "partial",
+  "physical_actions": 4,
+  "raw_evidence_git_ignored": true,
+  "main_application_real_mode": false,
+  "user_review": "pending",
+  "post_run_fixes": "Repeat-action guard and explicit blocked-call event; offline only; no real rerun",
+  "not_mock": true,
+  "actual_gui_trials": 1,
+  "schema_version": 1,
+  "milestones": {
+    "M3": "failed",
+    "M2": "partial",
+    "M1": "passed"
+  },
+  "startup_failure_requests": 0,
+  "cached_input_tokens": 11520
+}

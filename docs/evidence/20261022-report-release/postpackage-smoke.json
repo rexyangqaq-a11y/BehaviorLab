@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-22T12:23:51.840Z",
+  "final_zip": "output/BehaviorLab-Phone-Windows-x64-20261022.zip",
+  "current_source_files_identical": 81,
+  "offline_doctor": "passed",
+  "actual_cmd_entries": [
+    "03_CHECK.cmd",
+    "01_START.cmd --port 4440 --no-browser",
+    "02_STOP.cmd"
+  ],
+  "browser_url": "http://127.0.0.1:4440/phone-lab#test",
+  "version": "0.4-preview.6",
+  "browser_proof": "portable-final.png",
+  "temporary_server": "stopped",
+  "original_server": "http://127.0.0.1:4317",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "second_physical_computer": "not_verified"
+}

@@ -1,0 +1,14 @@
+✔ text probe sends one bounded non-thinking request, preserves usage and cannot claim image or GUI verification (28.1618ms)
+✔ probe failures never retry or expose credentials; absent usage remains unknown and other destinations are rejected (0.9888ms)
+✔ preflight reads only public configuration fields, preserves the database and omits credentials (29.1675ms)
+✔ missing HDC cannot invoke tools or create a GUI result; explicit missing path does not fall back (5.9734ms)
+✔ only explicit trial confirmation clears its gate, with no final framework or runtime execution (26.0831ms)
+✔ tool replacement proves only the probe contract: version/list argv, no retries, raw serial omitted and failures unknown (5.3163ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185.7242

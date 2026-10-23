@@ -1,0 +1,8 @@
+// Fixed allowlist. Never load a module path supplied by a browser or task.
+export const FRAMEWORK_REGISTRY = Object.freeze([
+  {id:'midscene',name:'Midscene',version:'1.16.0',variant:'HarmonyAgent / family adapter',source:'https://github.com/web-infra-dev/midscene',adapter:'midscene',sourceFiles:['integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs']},
+  {id:'mobiagent',name:'MobiAgent',version:'4ee794021bb34a8de4d00c52ca8fa6f0065a45ff',variant:'native task_in_app / e2e qwen_json / no memory or experience',source:'https://github.com/IPADS-SAI/MobiAgent',adapter:'python-native',checkout:'MobiAgent',sourceFiles:['.runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py','.runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py','.runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py']},
+  {id:'autoglm',name:'Open-AutoGLM',version:'86f55382982fb054e8fc98ca80609dff8a2cdc3c',variant:'native PhoneAgent.step / original action parser / HDC bridge',source:'https://github.com/zai-org/Open-AutoGLM',adapter:'python-native',checkout:'Open-AutoGLM',sourceFiles:['.runtime/frameworks/Open-AutoGLM/phone_agent/agent.py','.runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py','.runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py','.runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py']},
+].map(f=>Object.freeze({...f,sourceFiles:Object.freeze(f.sourceFiles)})));
+export const PHONE_FRAMEWORKS=Object.freeze(FRAMEWORK_REGISTRY.map(({id,name,version,variant,source})=>Object.freeze({id,name,version,variant,source})));
+export function frameworkSpec(id){const spec=FRAMEWORK_REGISTRY.find(f=>f.id===id);if(!spec)throw Error('Unknown phone framework: '+id);return spec;}

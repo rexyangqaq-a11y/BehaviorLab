@@ -1,0 +1,4238 @@
+{
+  "generated_at": "2026-10-22T06:49:34.218Z",
+  "evaluation_id": "evaluation_20261022_b14102b7-e102-4744-b9a3-bc1d99ef014b",
+  "status": "assessment_complete",
+  "phase": "stage4",
+  "planned_unique_cells": 36,
+  "selection": {
+    "service_id": "aliyun_qwen3_8_flash",
+    "model": "qwen3.8-flash",
+    "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+    "scope": "one_home_calculator_task",
+    "basis": "independently_passed_then_fewer_requests_then_shorter_duration",
+    "provisional": true,
+    "final_framework": null
+  },
+  "final_framework": null,
+  "policy": {
+    "start": "Same phone, launcher page, orientation and usable state; dynamic clock, suggestions and recent-app ordering may vary. Framework opens app and performs every in-task action.",
+    "repeated_cells": "Reuse existing identical framework/model/case cell; no automatic retries.",
+    "limits": {
+      "max_requests": 15,
+      "max_actions": 40,
+      "max_seconds": 600,
+      "max_output_tokens": 512,
+      "automatic_retries": 0,
+      "max_payload_bytes": 2097152,
+      "max_text_chars": 90000,
+      "max_images": 2,
+      "thinking": false
+    },
+    "batch_total_request_limit": null,
+    "judgment": "Real screenshots and actions independently examined; framework finish/HTTP200 is insufficient. User review pending.",
+    "sensitive_fields": "No credentials, raw screen text, device serial or account names in this summary."
+  },
+  "totals": {
+    "unique_cells": 36,
+    "real_runs": 36,
+    "started_model_calls": 331,
+    "verdicts": {
+      "passed": 16,
+      "partial": 10,
+      "failed": 10
+    },
+    "engineering_statuses": {
+      "ended": 23,
+      "failed": 13
+    },
+    "known_input_tokens": 1818302,
+    "known_output_tokens": 43050,
+    "unknown_usage_requests": 0
+  },
+  "integration_diagnostics": {
+    "totals": {
+      "unique_cells": 6,
+      "real_runs": 6,
+      "started_model_calls": 6,
+      "known_input_tokens": 16345,
+      "known_output_tokens": 762,
+      "unknown_usage_requests": 0
+    },
+    "retention": "removed_after_completed_retest_per_user",
+    "rows": []
+  },
+  "retained_attempts": {
+    "unique_cells": 36,
+    "real_runs": 36,
+    "started_model_calls": 331,
+    "verdicts": {
+      "passed": 16,
+      "partial": 10,
+      "failed": 10
+    },
+    "engineering_statuses": {
+      "ended": 23,
+      "failed": 13
+    },
+    "known_input_tokens": 1818302,
+    "known_output_tokens": 43050,
+    "unknown_usage_requests": 0
+  },
+  "overwritten_abnormal_usage": {
+    "runs": 4,
+    "requests": 36,
+    "known_input_tokens": 110603,
+    "known_output_tokens": 2916,
+    "unknown_usage_requests": 0
+  },
+  "all_current_campaign_attempts": {
+    "unique_cells": 36,
+    "real_runs": 46,
+    "started_model_calls": 373,
+    "verdicts": {
+      "passed": 16,
+      "partial": 10,
+      "failed": 10
+    },
+    "engineering_statuses": {
+      "ended": 23,
+      "failed": 13
+    },
+    "known_input_tokens": 1945250,
+    "known_output_tokens": 46728,
+    "unknown_usage_requests": 0,
+    "verdict_scope": "retained_records_only; abnormal originals removed per user"
+  },
+  "anomaly_retests": {
+    "status": "complete",
+    "count": 4,
+    "policy": "Original abnormal run directories replaced after independent review per user instruction",
+    "at": "2026-10-22T06:29:30.966Z"
+  },
+  "record_audit": {
+    "generated_at": "2026-10-22T06:47:52.245Z",
+    "runs": 36,
+    "images": 1486,
+    "issue_runs": 0
+  },
+  "protocol_amendments": [
+    {
+      "at": "2026-10-22T02:18:32.856Z",
+      "change": "python_bridge_utf8_and_answer_wrapper_v2",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "affected_frameworks": [
+        "mobiagent",
+        "autoglm"
+      ],
+      "invalidated_run_ids": [
+        "phone_52cb0da1-7411-41b1-8e62-35c94fb23908",
+        "phone_fafa138c-b6e7-48da-9325-2897613db264",
+        "phone_31e7ffe6-403c-441d-9ef5-5f48ee9af346",
+        "phone_1e948078-972f-4097-a951-fbdb92466501",
+        "phone_820b9077-d4fc-4396-859a-cb90a2695073",
+        "phone_b00c1d06-c702-43cc-baab-7cff6bb5530e"
+      ],
+      "old_reuse": [
+        {
+          "phase": "stage4",
+          "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+          "run_id": "phone_52cb0da1-7411-41b1-8e62-35c94fb23908"
+        },
+        {
+          "phase": "stage4",
+          "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+          "run_id": "phone_fafa138c-b6e7-48da-9325-2897613db264"
+        }
+      ],
+      "retained_midscene": "Python bridge was not executed by Midscene. All existing Midscene cells, including failures, remain frozen and reusable. Home/task/limits/transport/device sources unchanged.",
+      "verification": "output/phone-evaluation-20261022/native-unicode-before.json and native-unicode-after.json; real calls 0 in both offline contracts."
+    },
+    {
+      "at": "2026-10-22T02:46:14.800Z",
+      "change": "logical_home_recent_membership_relaxed_v3",
+      "user_instruction": "不用完全一致；计算器同组合不用重做",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "prior_run_starts_revalidated": [
+        "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+        "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207",
+        "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539",
+        "phone_704281e1-466c-476b-9f17-52b394e378c9",
+        "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5",
+        "phone_b88adaba-f429-40f1-a536-090e042ea4c7",
+        "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+        "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+        "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf",
+        "phone_507202c2-cf54-4915-979b-b15217dd17d8",
+        "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19",
+        "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085",
+        "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f",
+        "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3",
+        "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431",
+        "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+        "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c"
+      ],
+      "zero_call_preblocks_revalidated": 19,
+      "unchanged": "Task instructions, acceptance, device, versions, orientation, framework operation code and limits unchanged; derive references from ORIGINAL saved baselines, not later phone state.",
+      "previous_finished_at": "2026-10-22T02:40:40.076Z"
+    },
+    {
+      "at": "2026-10-22T03:08:48.489Z",
+      "change": "deny_new_system_permissions_v1",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899"
+      },
+      "retained_real_runs": 24,
+      "scope": "Existing outcomes and the observed temporary clipboard grant remain in records. Remaining cells get an explicit denial instruction and a fresh layout check before non-navigation actions. Only framework clicks on the deny control are permitted while a system permission dialog is visible; no observer handles the popup.",
+      "performance": "Permission-check duration is recorded and remains part of execution time. Do not pool different source/protocol versions into one timing group.",
+      "task_instruction_and_limits_unchanged": true
+    }
+  ],
+  "by_framework": {
+    "midscene": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 123,
+      "verdicts": {
+        "passed": 6,
+        "partial": 5,
+        "failed": 1
+      },
+      "engineering_statuses": {
+        "ended": 7,
+        "failed": 5
+      },
+      "known_input_tokens": 1271411,
+      "known_output_tokens": 20800,
+      "unknown_usage_requests": 0
+    },
+    "mobiagent": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 116,
+      "verdicts": {
+        "passed": 3,
+        "failed": 5,
+        "partial": 4
+      },
+      "engineering_statuses": {
+        "failed": 8,
+        "ended": 4
+      },
+      "known_input_tokens": 243331,
+      "known_output_tokens": 14802,
+      "unknown_usage_requests": 0
+    },
+    "autoglm": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 92,
+      "verdicts": {
+        "failed": 4,
+        "passed": 7,
+        "partial": 1
+      },
+      "engineering_statuses": {
+        "ended": 12
+      },
+      "known_input_tokens": 303560,
+      "known_output_tokens": 7448,
+      "unknown_usage_requests": 0
+    }
+  },
+  "by_model": {
+    "qwen3.8-flash": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 115,
+      "verdicts": {
+        "passed": 5,
+        "partial": 5,
+        "failed": 2
+      },
+      "engineering_statuses": {
+        "ended": 7,
+        "failed": 5
+      },
+      "known_input_tokens": 619886,
+      "known_output_tokens": 14539,
+      "unknown_usage_requests": 0
+    },
+    "qwen3.7-plus": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 106,
+      "verdicts": {
+        "passed": 8,
+        "failed": 2,
+        "partial": 2
+      },
+      "engineering_statuses": {
+        "ended": 10,
+        "failed": 2
+      },
+      "known_input_tokens": 632352,
+      "known_output_tokens": 14728,
+      "unknown_usage_requests": 0
+    },
+    "deepseek-v4.1-flash-1017": {
+      "unique_cells": 12,
+      "real_runs": 12,
+      "started_model_calls": 110,
+      "verdicts": {
+        "failed": 6,
+        "passed": 3,
+        "partial": 3
+      },
+      "engineering_statuses": {
+        "failed": 6,
+        "ended": 6
+      },
+      "known_input_tokens": 566064,
+      "known_output_tokens": 13783,
+      "unknown_usage_requests": 0
+    }
+  },
+  "by_task": {
+    "HM-CALC-001": {
+      "unique_cells": 9,
+      "real_runs": 9,
+      "started_model_calls": 109,
+      "verdicts": {
+        "passed": 3,
+        "failed": 6
+      },
+      "engineering_statuses": {
+        "ended": 5,
+        "failed": 4
+      },
+      "known_input_tokens": 649431,
+      "known_output_tokens": 14067,
+      "unknown_usage_requests": 0
+    },
+    "HM-STOR-001": {
+      "unique_cells": 9,
+      "real_runs": 9,
+      "started_model_calls": 61,
+      "verdicts": {
+        "partial": 2,
+        "passed": 5,
+        "failed": 2
+      },
+      "engineering_statuses": {
+        "failed": 3,
+        "ended": 6
+      },
+      "known_input_tokens": 274476,
+      "known_output_tokens": 8880,
+      "unknown_usage_requests": 0
+    },
+    "HM-TB-001": {
+      "unique_cells": 9,
+      "real_runs": 9,
+      "started_model_calls": 90,
+      "verdicts": {
+        "partial": 6,
+        "failed": 1,
+        "passed": 2
+      },
+      "engineering_statuses": {
+        "failed": 5,
+        "ended": 4
+      },
+      "known_input_tokens": 569713,
+      "known_output_tokens": 10435,
+      "unknown_usage_requests": 0
+    },
+    "HM-XHS-001": {
+      "unique_cells": 9,
+      "real_runs": 9,
+      "started_model_calls": 71,
+      "verdicts": {
+        "passed": 6,
+        "partial": 2,
+        "failed": 1
+      },
+      "engineering_statuses": {
+        "ended": 8,
+        "failed": 1
+      },
+      "known_input_tokens": 324682,
+      "known_output_tokens": 9668,
+      "unknown_usage_requests": 0
+    }
+  },
+  "reuse": [
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_7_plus",
+      "run_id": "phone_507202c2-cf54-4915-979b-b15217dd17d8"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_7_plus",
+      "run_id": "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_7_plus",
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage1",
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage2",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922"
+    },
+    {
+      "phase": "stage3",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_7_plus",
+      "run_id": "phone_507202c2-cf54-4915-979b-b15217dd17d8"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_7_plus",
+      "run_id": "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-CALC-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_7_plus",
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|autoglm|aliyun_qwen3_8_flash",
+      "run_id": "phone_7b8e87be-e329-444b-b0e4-9152a080d1db"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|autoglm|aliyun_qwen3_7_plus",
+      "run_id": "phone_f18746b6-72c6-4719-a3df-825cbbb56858"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-STOR-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_81b0042a-27fc-4c9b-b6fa-8356bcf091ed"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|midscene|aliyun_qwen3_7_plus",
+      "run_id": "phone_7e5520c4-2493-4c1e-a4a2-78677758754c"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "run_id": "phone_f4e36a80-290f-44a9-a587-a41d554a1466"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|mobiagent|aliyun_qwen3_8_flash",
+      "run_id": "phone_943084d5-640d-43aa-b08f-7c907e097745"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-TB-001|mobiagent|aliyun_qwen3_7_plus",
+      "run_id": "phone_b66b2b64-1435-439a-afc9-3ce089fe8bd4"
+    },
+    {
+      "phase": "stage4",
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9"
+    }
+  ],
+  "rows": [
+    {
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_8_flash",
+      "phase": "stage1",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 14,
+      "responses": 14,
+      "http_status_counts": {
+        "200": 14
+      },
+      "retries": 0,
+      "sdk_actions": 13,
+      "physical_inputs": 13,
+      "duration_ms": 136036,
+      "input_tokens": 153258,
+      "output_tokens": 1884,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_a23b1e24-9795-43dd-a362-946875787d40",
+        "sha256": "d11c5c694d62a272f4fa78288353f6ace1a879528aa05735475a5df03aebec52",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_8_flash",
+      "phase": "stage1",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 5,
+      "responses": 5,
+      "http_status_counts": {
+        "200": 5
+      },
+      "retries": 0,
+      "sdk_actions": 4,
+      "physical_inputs": 4,
+      "duration_ms": 57068,
+      "input_tokens": 49383,
+      "output_tokens": 1366,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_coordinates_out_of_range",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_5d227bb9-a21c-4161-9eae-1dbf11afe1ef",
+        "sha256": "e45d7244021cbb364a81de8727ecd42f22b4114397fd80dfb565e1ebcf8964bf",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|midscene|aliyun_qwen3_8_flash",
+      "phase": "stage1",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "32c7a5585171160b6dcdae55477b5413da56e1f18b69d3469804a06344e9f471",
+      "requests": 12,
+      "responses": 12,
+      "http_status_counts": {
+        "200": 12
+      },
+      "retries": 0,
+      "sdk_actions": 11,
+      "physical_inputs": 14,
+      "duration_ms": 136084,
+      "input_tokens": 128646,
+      "output_tokens": 1860,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_coordinates_out_of_range",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_ca03915f-eb9f-461f-9b86-a5356e87d5a7",
+        "sha256": "0341f9c9d4d261c190620c1c6d6c944da592b208e5f65d0242adf65cc2174e06",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_8_flash",
+      "phase": "stage1",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "25786edbe777207821935b4d765b76859f433c40035a35ed1c0afeb8a692234d",
+      "requests": 8,
+      "responses": 8,
+      "http_status_counts": {
+        "200": 8
+      },
+      "retries": 0,
+      "sdk_actions": 7,
+      "physical_inputs": 10,
+      "duration_ms": 90496,
+      "input_tokens": 80680,
+      "output_tokens": 1451,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_d2c90a44-1e8c-4784-930d-cb13ac7a27c6",
+        "sha256": "230469321ce13e90afca650463a7a589fba1802ac604564f46d03c675a7e1fa2",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|midscene|aliyun_qwen3_7_plus",
+      "phase": "stage2",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 14,
+      "responses": 14,
+      "http_status_counts": {
+        "200": 14
+      },
+      "retries": 0,
+      "sdk_actions": 13,
+      "physical_inputs": 13,
+      "duration_ms": 148463,
+      "input_tokens": 155580,
+      "output_tokens": 2026,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_173dfe13-8c72-489c-872a-25d8fd8d9244",
+        "sha256": "1161073059fba74f84e55fc9987397d08dfca3b1c80545001b345b9f220f598e",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage2",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 164849,
+      "input_tokens": 152489,
+      "output_tokens": 3040,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_c6f5d46e-1991-49dc-886a-e9af6ff201b7",
+        "sha256": "d217212fb0c229d6b0617f11c779077cb72a6e563a988184ac455ffbaf74013c",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|midscene|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 7,
+      "responses": 7,
+      "http_status_counts": {
+        "200": 7
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 84881,
+      "input_tokens": 70789,
+      "output_tokens": 1569,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_62a2a7c9-5655-4ba6-8bb8-f8dc14563167",
+        "sha256": "4cc22122f87fcac793eeefa0b5dcd046d41568c2cad05dd7bb73593db64dbb08",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+      "phase": "stage3",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 132169,
+      "input_tokens": 37052,
+      "output_tokens": 1817,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_3f0219e5-1262-4734-a303-f1da66f47834",
+        "sha256": "253138a71a882caa33c991f798f28c5109335367c9a07196166ecca07b862fee",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+      "phase": "stage3",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 8,
+      "responses": 8,
+      "http_status_counts": {
+        "200": 8
+      },
+      "retries": 0,
+      "sdk_actions": 7,
+      "physical_inputs": 7,
+      "duration_ms": 51931,
+      "input_tokens": 27250,
+      "output_tokens": 512,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_2ce1bd4f-eb66-43fc-9744-e864d21500da",
+        "sha256": "a3f3fdb91325b62f9bc34b38c60d568837a63888893f18e1cf7d1461f8a88ab7",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|mobiagent|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_507202c2-cf54-4915-979b-b15217dd17d8",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 142692,
+      "input_tokens": 37169,
+      "output_tokens": 1972,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_3aa34a11-953d-4cf0-87b8-b85b302ef9e8",
+        "sha256": "ca17ce050e3d6ecc4f0b327b1ed1877be0ff393cad5ff1f797d0fb59a5f0bf65",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 6,
+      "responses": 6,
+      "http_status_counts": {
+        "200": 6
+      },
+      "retries": 0,
+      "sdk_actions": 5,
+      "physical_inputs": 5,
+      "duration_ms": 56871,
+      "input_tokens": 8926,
+      "output_tokens": 763,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_or_action_protocol",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_c56a2088-66b6-4983-a733-7873a9361495",
+        "sha256": "a94c9a3c23d08fc79d68a66beb942dafca2dad0eaeabd503a817f4a26025f886",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|autoglm|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 126135,
+      "input_tokens": 58743,
+      "output_tokens": 1797,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_d6656fa6-27c9-41ca-8208-f7060608f345",
+        "sha256": "241600d8b9c266980ea9ce6c74fcc2f420bfc1b5454196219e667db3acaa6fbe",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-CALC-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-CALC-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6708140766777098dfc8929a43b70d823f00e53ee151e15217019480a039f0f5",
+      "requests": 7,
+      "responses": 7,
+      "http_status_counts": {
+        "200": 7
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 57332,
+      "input_tokens": 18964,
+      "output_tokens": 256,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.calculator",
+          "version_name": "17.1.0.12",
+          "version_code": 170100012
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "06a44b634d10d70ec8b79941bf28fa4d8eead2274ee117bc03ccdd810279f1c7",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_3e0dd1a9-ca2f-481b-896d-a6f08120ba59",
+        "sha256": "dabc8ddc72451526a0edb11a7535b094e130acb10e39a29fb02f6166cf6e7063",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 5,
+      "responses": 5,
+      "http_status_counts": {
+        "200": 5
+      },
+      "retries": 0,
+      "sdk_actions": 4,
+      "physical_inputs": 4,
+      "duration_ms": 59316,
+      "input_tokens": 43783,
+      "output_tokens": 1274,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_5065bb03-bf89-4969-b90f-305eb830d1ea",
+        "sha256": "fde54b2e65fd1c8a1e664fd071142965a9d87e0d9aefde6ae31dd21ef83c53b9",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 8,
+      "responses": 8,
+      "http_status_counts": {
+        "200": 8
+      },
+      "retries": 0,
+      "sdk_actions": 7,
+      "physical_inputs": 7,
+      "duration_ms": 65005,
+      "input_tokens": 17358,
+      "output_tokens": 1180,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_or_action_protocol",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_da6083d8-fcae-49a8-803e-fc89f4baf5ee",
+        "sha256": "418ebdcbde8b1e5428d7e9ca39b4ae76fc80a33d7793ac2f4cfc0b8e32683325",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|mobiagent|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 6,
+      "responses": 6,
+      "http_status_counts": {
+        "200": 6
+      },
+      "retries": 0,
+      "sdk_actions": 5,
+      "physical_inputs": 5,
+      "duration_ms": 59647,
+      "input_tokens": 12620,
+      "output_tokens": 943,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_edde8e95-2dff-4477-ab7c-866f0afe2f83",
+        "sha256": "e7d966bd137f770ac37bc90d12060af7c32625a3616b81712827c07dd248a497",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c",
+      "protocol": "phone-lab-v4-logical-home-v2",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "b494aa9bf5a33fa47db7aa2d48a506c8075ff6bf75975300ab567d6b21f455a4",
+      "requests": 8,
+      "responses": 8,
+      "http_status_counts": {
+        "200": 8
+      },
+      "retries": 0,
+      "sdk_actions": 7,
+      "physical_inputs": 7,
+      "duration_ms": 76759,
+      "input_tokens": 12240,
+      "output_tokens": 837,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_or_action_protocol",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_c5b4b499-2ce2-4299-86c4-b2705243b4d8",
+        "sha256": "e352bac7aece61748400f923c0f1878b0939cf93275ba8da9346aa1520d4f513",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|autoglm|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_7b8e87be-e329-444b-b0e4-9152a080d1db",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "880d9fe221230f664693875f7e79afe9c59e9f1a9fecb4d004ca47bccb0acd76",
+      "requests": 2,
+      "responses": 2,
+      "http_status_counts": {
+        "200": 2
+      },
+      "retries": 0,
+      "sdk_actions": 1,
+      "physical_inputs": 1,
+      "duration_ms": 11828,
+      "input_tokens": 6203,
+      "output_tokens": 137,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_5c0c72b9-42a0-43b8-bd2c-5f287ac9f7b3",
+        "sha256": "ee773eaf1fbf4619bd219e32d19f2081473b47cd9e696a0bad93cbcbbfd5dad6",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|autoglm|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_f18746b6-72c6-4719-a3df-825cbbb56858",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "880d9fe221230f664693875f7e79afe9c59e9f1a9fecb4d004ca47bccb0acd76",
+      "requests": 5,
+      "responses": 5,
+      "http_status_counts": {
+        "200": 5
+      },
+      "retries": 0,
+      "sdk_actions": 4,
+      "physical_inputs": 4,
+      "duration_ms": 42436,
+      "input_tokens": 16310,
+      "output_tokens": 678,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_23b98b70-b943-47fd-9198-276d8d42b04f",
+        "sha256": "c764f44b15dcad2c8066f675e299cf6d1a2fac0508512e27eb939c63a241f8ff",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-STOR-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-STOR-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_81b0042a-27fc-4c9b-b6fa-8356bcf091ed",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "880d9fe221230f664693875f7e79afe9c59e9f1a9fecb4d004ca47bccb0acd76",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 131577,
+      "input_tokens": 45790,
+      "output_tokens": 896,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.huawei.hmos.settings",
+          "version_name": "7.0.0.330",
+          "version_code": 700000330
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "ce55772ea95a3decb688b034041990d1a7ab16a9a47520bc0e2911d94c70efb9",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_05e70b8e-420f-4096-a047-f19ec1d503cc",
+        "sha256": "bb6608fb68e7e7336cc3385de912ca197920a6e74a75356ee0ed3d1813ca879a",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|midscene|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_7e5520c4-2493-4c1e-a4a2-78677758754c",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": "temporary_clipboard_grant",
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 13,
+      "physical_inputs": 13,
+      "duration_ms": 169035,
+      "input_tokens": 166761,
+      "output_tokens": 2155,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_c126d1fb-db5f-4de5-ac8d-999f77a2bbdf",
+        "sha256": "45ce8f432f8dd8e8cfb34da7e47ad13456ed8009d63b5e721c3551f3f8782798",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_f4e36a80-290f-44a9-a587-a41d554a1466",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 13,
+      "physical_inputs": 13,
+      "duration_ms": 161257,
+      "input_tokens": 147729,
+      "output_tokens": 1794,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_aadcc22d-477d-4252-8932-2f0e04419fb8",
+        "sha256": "4a669ac62ebadef5053ffae86ee61a008f9452f2fc061eebcb449282746b1467",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|mobiagent|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_943084d5-640d-43aa-b08f-7c907e097745",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 14,
+      "physical_inputs": 14,
+      "duration_ms": 127284,
+      "input_tokens": 35059,
+      "output_tokens": 1491,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_ac2d04be-5c02-476c-8aae-831021c5c84a",
+        "sha256": "a4cc9796a089bef91dc243eb9b96f0518fff3afc41d5ea51a2b5a2a9ba85eb25",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|mobiagent|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_b66b2b64-1435-439a-afc9-3ce089fe8bd4",
+      "protocol": "phone-lab-v5-logical-home-v3",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": null,
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 5,
+      "responses": 5,
+      "http_status_counts": {
+        "200": 5
+      },
+      "retries": 0,
+      "sdk_actions": 3,
+      "physical_inputs": 3,
+      "duration_ms": 46359,
+      "input_tokens": 9808,
+      "output_tokens": 602,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_56091514-c0e0-4766-84ec-1e5d52f0ca87",
+        "sha256": "7638f473171b0878ec968b30fd0a0956520f483f9ba36b570f089cedc1297088",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_b71dbdb6-8cc3-4807-a999-ba2304fd2e4b",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 7,
+      "responses": 7,
+      "http_status_counts": {
+        "200": 7
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 79345,
+      "input_tokens": 10960,
+      "output_tokens": 893,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": "model_or_action_protocol",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_d01365e8-7eef-4561-b7d5-e795b1981f94",
+        "sha256": "e1c45677546c1829d4167a05743f0d1718752d429d18b209e6dfd43126dc7eb0",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|autoglm|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_f6b93da7-3120-4e34-8594-9389be690629",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 9,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 11,
+      "responses": 11,
+      "http_status_counts": {
+        "200": 11
+      },
+      "retries": 0,
+      "sdk_actions": 9,
+      "physical_inputs": 9,
+      "duration_ms": 101697,
+      "input_tokens": 39230,
+      "output_tokens": 957,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_8c42389c-8f93-4e7d-a68e-5e7348a143c0",
+        "sha256": "f93d85f9b9a6542681705e8b2ffb086a4878ce153fd796f579dc0fcfc7993229",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|autoglm|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_3a3d0c72-9990-4399-9a98-c59a1b9d3940",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 7,
+      "responses": 7,
+      "http_status_counts": {
+        "200": 7
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 72256,
+      "input_tokens": 23624,
+      "output_tokens": 586,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_90ecb5be-1329-469d-85e2-f129729629d5",
+        "sha256": "9f36f4346531ccf7c27a15f565d6750e4fe2727953127c6d9e81a351323936a9",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-TB-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-TB-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_104e9594-d9c0-439b-96ba-8e30ce8fa731",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 2,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "6ad87fbe03ee576d31dc02d9e5b73285dcc35c93030089534a55f3a048bc5219",
+      "requests": 3,
+      "responses": 3,
+      "http_status_counts": {
+        "200": 3
+      },
+      "retries": 0,
+      "sdk_actions": 2,
+      "physical_inputs": 2,
+      "duration_ms": 24059,
+      "input_tokens": 7896,
+      "output_tokens": 97,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.taobao.taobao4hmos",
+          "version_name": "10.68.0",
+          "version_code": 803
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "b7821a026f10fa491f7f190f9ddb7fbd73b54af77d8102180aaa36f734aff255",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_b3e0cf62-db9d-4054-a767-01a7a0750757",
+        "sha256": "a89df6b2ede10607ca99d5dc25f1c65aaf000b47bfe603927183b0f739a3989a",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|midscene|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_9833423e-9d5f-4913-b4e4-5ca2be106688",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 4,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 5,
+      "responses": 5,
+      "http_status_counts": {
+        "200": 5
+      },
+      "retries": 0,
+      "sdk_actions": 4,
+      "physical_inputs": 4,
+      "duration_ms": 66354,
+      "input_tokens": 48777,
+      "output_tokens": 957,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_e9d0b881-5c2b-42d3-ab1e-94d2032d04c9",
+        "sha256": "a7d2f0302dc2e35c64d94550ee62e1a53afa481265e97b2edb52520912298e9e",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|midscene|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "midscene",
+      "framework_version": "1.16.0",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_b12d5c11-6361-432d-a75b-67a80d78e3a6",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 5,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 8,
+      "responses": 8,
+      "http_status_counts": {
+        "200": 8
+      },
+      "retries": 0,
+      "sdk_actions": 7,
+      "physical_inputs": 7,
+      "duration_ms": 100646,
+      "input_tokens": 73536,
+      "output_tokens": 1424,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "integrations/midscene/node_modules/@midscene/harmony/dist/es/index.mjs": "f9601f3cab8956f240f46d862a9aaaee170449956876c8bef9d67a55980b8006"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_8d5631ce-a39e-4183-b273-93c7d17bda3d",
+        "sha256": "e0939d22c4decbf94d2603cb4992857e69b319d9c537fd267f36b3ff6cd03437",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|mobiagent|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_e0424521-b19d-4aa5-ba43-8d0921bea715",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "partial",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 10,
+      "responses": 10,
+      "http_status_counts": {
+        "200": 10
+      },
+      "retries": 0,
+      "sdk_actions": 9,
+      "physical_inputs": 9,
+      "duration_ms": 97685,
+      "input_tokens": 22335,
+      "output_tokens": 1293,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_e4eca6bb-eb66-476f-9272-49e92978a460",
+        "sha256": "2c2675494bea6a1121886aba49f1645cd2a4782ea142682fd94ff8a8ce1bb83c",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|mobiagent|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_538b5f4b-5e32-4a9a-8354-09b5e03c6f08",
+      "protocol": "phone-lab-v7-focused-input-jpeg-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 5,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": "Stale input coordinate changed focus and submitted suggested search rather than requested text",
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 6,
+      "responses": 6,
+      "http_status_counts": {
+        "200": 6
+      },
+      "retries": 0,
+      "sdk_actions": 5,
+      "physical_inputs": 5,
+      "duration_ms": 68432,
+      "input_tokens": 12203,
+      "output_tokens": 817,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "c45d1f50a881c7471abe38b9eebe01440e99f74981669600f6b7909d5609e6f4",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "5d4c2753079708e9b24d30dfdc5d25d3704d96223e585b721ffee743eae82da0",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_4382206d-dd63-45e5-b81f-bafa6ab46e4d",
+        "sha256": "f28210a4feb84deac46b1d5704a2a2f96a3374981b3ac9229238767c8b7273cb",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|mobiagent|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "mobiagent",
+      "framework_version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_ec30526e-22a1-4414-9371-0b28a124677f",
+      "protocol": "phone-lab-v6-readonly-permissions-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "failed",
+      "verdict": "failed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 11,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": null,
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 15,
+      "responses": 15,
+      "http_status_counts": {
+        "200": 15
+      },
+      "retries": 0,
+      "sdk_actions": 15,
+      "physical_inputs": 15,
+      "duration_ms": 170644,
+      "input_tokens": 27601,
+      "output_tokens": 2194,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [
+        {
+          "reason": "Model request budget exhausted",
+          "requests_already_sent": 15
+        }
+      ],
+      "failure_category": "request_or_resource_limit",
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/mobiagent.py": "2a49b5188e80dc95c648d7724a8917a565edc04a92be72945085feaafca621c9",
+        ".runtime/frameworks/MobiAgent/runner/mobiagent/decider_adapters/qwen.py": "eb63e853b242f5660bea83bee43ba7d5ebd1544f104b0083a81738ec1ae339a3",
+        ".runtime/frameworks/MobiAgent/prompts/decider_qwen3_e2e.py": "bee8763a10c11fe60860107cb6fdf84eed2a4019cfb46f9a5e00356e47f2a6f3"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_8eb16499-73d9-4638-8aa7-aef14b7fda87",
+        "sha256": "9501d349aa8d369d1fc36210d8219b2387e434558be475d10d5b3527b36d3980",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|autoglm|aliyun_qwen3_8_flash",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash",
+      "run_id": "phone_63ada03e-d3d7-47d9-8320-2deedf01bc98",
+      "protocol": "phone-lab-v7-focused-input-jpeg-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": "PNG model payload exceeded existing 2 MiB ceiling after only four requests",
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 7,
+      "responses": 7,
+      "http_status_counts": {
+        "200": 7
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 69431,
+      "input_tokens": 23432,
+      "output_tokens": 591,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "c45d1f50a881c7471abe38b9eebe01440e99f74981669600f6b7909d5609e6f4",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "5d4c2753079708e9b24d30dfdc5d25d3704d96223e585b721ffee743eae82da0",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_3384bf04-b1c1-44af-9804-dce3075a7aa2",
+        "sha256": "aeec529f5c873005cbf0b36631a15563b330b1fc9ff2b94435e60adffb0c753f",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|autoglm|aliyun_qwen3_7_plus",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus",
+      "run_id": "phone_6eb7b64d-7db5-4ce0-b7fa-a2c97c6248ff",
+      "protocol": "phone-lab-v7-focused-input-jpeg-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": "Stale input coordinate clicked camera instead of focused search field; PNG payload ceiling stopped run",
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 6,
+      "responses": 6,
+      "http_status_counts": {
+        "200": 6
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 65850,
+      "input_tokens": 19968,
+      "output_tokens": 626,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "c45d1f50a881c7471abe38b9eebe01440e99f74981669600f6b7909d5609e6f4",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "5d4c2753079708e9b24d30dfdc5d25d3704d96223e585b721ffee743eae82da0",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_c1897bff-6bb9-45be-9b55-ffa5a54aaeb8",
+        "sha256": "63b21fbadb25e0b9b2bda2bae70d7e0e03776731730b3ee999a3ddab1a04d820",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    },
+    {
+      "key": "HM-XHS-001|autoglm|aliyun_deepseek_v4_1_flash_1017",
+      "phase": "stage4",
+      "case_id": "HM-XHS-001",
+      "case_revision": 3,
+      "framework_id": "autoglm",
+      "framework_version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017",
+      "run_id": "phone_67711e66-8d58-4148-958a-11650a24a0c5",
+      "protocol": "phone-lab-v7-focused-input-jpeg-v1",
+      "matrix_eligible": true,
+      "exclusion_reason": null,
+      "engineering_status": "ended",
+      "verdict": "passed",
+      "reviewer": "assistant",
+      "user_review": "pending",
+      "permission_policy": {
+        "policy": "deny_new_system_permissions_v1",
+        "checks": 6,
+        "blocked_actions": 0
+      },
+      "policy_deviation": null,
+      "retested_for": "Stale input coordinate changed focus and submitted suggested search before recovery",
+      "same_start": true,
+      "comparison_key": "c9e29cfb7f30829044551eb4c03faf46ecb73374ee4729d9db1ac236aeea406d",
+      "requests": 6,
+      "responses": 6,
+      "http_status_counts": {
+        "200": 6
+      },
+      "retries": 0,
+      "sdk_actions": 6,
+      "physical_inputs": 6,
+      "duration_ms": 72830,
+      "input_tokens": 16150,
+      "output_tokens": 315,
+      "unknown_usage_requests": 0,
+      "usage_state": "final",
+      "fees": null,
+      "credits": null,
+      "effect_unknown": false,
+      "blocked_before_network": [],
+      "failure_category": null,
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "hdc_version": "Ver: 3.2.0f",
+        "device": {
+          "model": "HOP-AL10",
+          "os_fullname": "OpenHarmony-7.0.0.38",
+          "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+          "api": "26"
+        },
+        "app": {
+          "bundle": "com.xingin.xhs_hos",
+          "version_name": "9.49.3",
+          "version_code": 9493805
+        },
+        "screen": {
+          "width": 2584,
+          "height": 1828
+        }
+      },
+      "sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "c45d1f50a881c7471abe38b9eebe01440e99f74981669600f6b7909d5609e6f4",
+        "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "5d4c2753079708e9b24d30dfdc5d25d3704d96223e585b721ffee743eae82da0",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/agent.py": "ab30ed527b63d70b49deafb55a283ef02f0ab1175ce61394b0c7f776bc7170e1",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/model/client.py": "0ee2f0c4abd30e37f50c4f376d05a4446a80e7681385b9b768c9dc43a4136866",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/actions/handler.py": "a60e03946772c0f0c4073718b20bcb0e02d323ec1acc82dbbeaa102a3040905d",
+        ".runtime/frameworks/Open-AutoGLM/phone_agent/config/prompts_zh.py": "3bb0ea0a0166578cc3846ca1ad9a3bca4eff3311152ddeb714976f16148e5563"
+      },
+      "task_sha256": "58941567bb327ee49d2f5e0ce49fd222c34e2c0dec7acbefa8d0e0df83ea684d",
+      "limits": {
+        "max_requests": 15,
+        "max_actions": 40,
+        "max_seconds": 600,
+        "max_output_tokens": 512,
+        "automatic_retries": 0,
+        "max_payload_bytes": 2097152,
+        "max_text_chars": 90000,
+        "max_images": 2,
+        "thinking": false
+      },
+      "final_asset": {
+        "id": "img_5b2584c1-1d74-44af-b28b-ef0d5cef4ed8",
+        "sha256": "80c5766abed4811047deedc7ab0bddb8c2371860ef0a319e670b74eb8e559992",
+        "width": 2584,
+        "height": 1828,
+        "hash_verified": true
+      }
+    }
+  ]
+}

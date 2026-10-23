@@ -1,0 +1,13 @@
+{
+  "package": "@midscene/harmony",
+  "version": "1.16.0",
+  "status": "passed",
+  "exports": { "HarmonyAgent": "function", "HarmonyDevice": "function" },
+  "actions": ["Tap", "DoubleClick", "DragAndDrop", "LongPress", "Input", "ClearInput", "KeyboardPress", "CursorMove", "Scroll", "Swipe", "RunHdcShell", "Launch", "Terminate", "HarmonyBackButton", "HarmonyHomeButton", "HarmonyRecentAppsButton"],
+  "agent_methods": ["aiAct", "aiAssert", "destroy"],
+  "journal_order": ["intent", "fake_hdc_click", "outcome"],
+  "framework_loop_executed": false,
+  "device_io": "fake_hdc",
+  "model_calls": 0,
+  "limitation": "仅验证已安装 SDK 的动作入口与记录顺序；没有模型决策、截图或真机兼容性结果。"
+}

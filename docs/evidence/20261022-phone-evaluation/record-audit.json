@@ -1,0 +1,972 @@
+{
+  "generated_at": "2026-10-22T06:47:52.245Z",
+  "evaluation_id": "evaluation_20261022_b14102b7-e102-4744-b9a3-bc1d99ef014b",
+  "scope": "Byte hashes, full image decoding, JSONL sequence and mirrored model ledger, request/response and action/outcome pairs, input/environment/source/start snapshots; semantic visual review is separate.",
+  "runs": 36,
+  "images": 1486,
+  "requests": 331,
+  "issue_runs": 0,
+  "rows": [
+    {
+      "run_id": "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+      "case_id": "HM-CALC-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 70,
+      "requests": 14,
+      "responses": 14,
+      "actions": 13,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207",
+      "case_id": "HM-STOR-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 30,
+      "requests": 5,
+      "responses": 5,
+      "actions": 4,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "execution_stopped",
+          "reason": "XML parse error: Invalid parameters for action Scroll: locate result coordinates [560,100,1230,900] exceed normalized range [0, 1000]. shape=bbox order=xy normalizedBy=1000 limits=[1000,1000,1000,1000]"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539",
+      "case_id": "HM-TB-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 59,
+      "requests": 12,
+      "responses": 12,
+      "actions": 11,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "execution_stopped",
+          "reason": "XML parse error: Invalid parameters for action Tap: locate result coordinates [1048,918,1082,952] exceed normalized range [0, 1000]. shape=bbox order=xy normalizedBy=1000 limits=[1000,1000,1000,1000]"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_704281e1-466c-476b-9f17-52b394e378c9",
+      "case_id": "HM-XHS-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 40,
+      "requests": 8,
+      "responses": 8,
+      "actions": 7,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5",
+      "case_id": "HM-CALC-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 70,
+      "requests": 14,
+      "responses": 14,
+      "actions": 13,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_b88adaba-f429-40f1-a536-090e042ea4c7",
+      "case_id": "HM-CALC-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 78,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "AI model request failed after 0 retries (1/1 attempts). Last error: failed to call AI model service (deepseek-v4.1-flash-1017): Connection error.\nTrouble shooting: https://midscenejs.com/model-provider.html"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+      "case_id": "HM-STOR-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 39,
+      "requests": 7,
+      "responses": 7,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+      "case_id": "HM-CALC-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 63,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf",
+      "case_id": "HM-CALC-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 32,
+      "requests": 8,
+      "responses": 8,
+      "actions": 7,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "message": "<think>计算器显示\"错误\"，说明之前的操作有问题。我需要先点击\"C\"清空当前状态，然后重新输入表达式 (128 + 37) × 6。</think>",
+            "_metadata": "finish"
+          },
+          "message": "<think>计算器显示\"错误\"，说明之前的操作有问题。我需要先点击\"C\"清空当前状态，然后重新输入表达式 (128 + 37) × 6。</think>"
+        },
+        "native_steps": 8
+      }
+    },
+    {
+      "run_id": "phone_507202c2-cf54-4915-979b-b15217dd17d8",
+      "case_id": "HM-CALC-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 63,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19",
+      "case_id": "HM-CALC-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 24,
+      "requests": 6,
+      "responses": 6,
+      "actions": 5,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "framework_io_stopped",
+          "method": "action",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085",
+      "case_id": "HM-CALC-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 63,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": false,
+          "finished": true,
+          "action": null,
+          "message": "Model error: Model request budget exhausted"
+        },
+        "native_steps": 16
+      }
+    },
+    {
+      "run_id": "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f",
+      "case_id": "HM-CALC-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 28,
+      "requests": 7,
+      "responses": 7,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "framework_io_stopped",
+          "method": "action",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        }
+      ],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": false,
+          "finished": false,
+          "action": {
+            "_metadata": "do",
+            "action": "Tap",
+            "element": [
+              679,
+              492
+            ]
+          },
+          "message": "Action failed: Repeated identical action limit; stop for fresh observation and review"
+        },
+        "native_steps": 7
+      }
+    },
+    {
+      "run_id": "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3",
+      "case_id": "HM-STOR-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 27,
+      "requests": 5,
+      "responses": 5,
+      "actions": 4,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431",
+      "case_id": "HM-STOR-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 35,
+      "requests": 8,
+      "responses": 8,
+      "actions": 7,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "framework_io_stopped",
+          "method": "action",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+      "case_id": "HM-STOR-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 28,
+      "requests": 6,
+      "responses": 6,
+      "actions": 5,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c",
+      "case_id": "HM-STOR-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 32,
+      "requests": 8,
+      "responses": 8,
+      "actions": 7,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "framework_io_stopped",
+          "method": "action",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_7b8e87be-e329-444b-b0e4-9152a080d1db",
+      "case_id": "HM-STOR-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 9,
+      "requests": 2,
+      "responses": 2,
+      "actions": 1,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "message": "<think>当前页面显示的是\"关于本机\"页面，而不是\"存储\"页面。我需要返回到设置主页面，然后找到并进入\"存储\"选项。我可以看到左侧有设置菜单列表，需要向下滚动查找\"存储\"选项。</think>",
+            "_metadata": "finish"
+          },
+          "message": "<think>当前页面显示的是\"关于本机\"页面，而不是\"存储\"页面。我需要返回到设置主页面，然后找到并进入\"存储\"选项。我可以看到左侧有设置菜单列表，需要向下滚动查找\"存储\"选项。</think>"
+        },
+        "native_steps": 2
+      }
+    },
+    {
+      "run_id": "phone_f18746b6-72c6-4719-a3df-825cbbb56858",
+      "case_id": "HM-STOR-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 23,
+      "requests": 5,
+      "responses": 5,
+      "actions": 4,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "存储页面信息：已使用空间72.54 GB，总容量1 TB，使用比例7%。页面显示应用大小列表（如小红书1.71GB、抖音1.34GB等），但未显示'应用/应用和元服务所占空间'的汇总数值字段，该字段未显示。"
+          },
+          "message": "存储页面信息：已使用空间72.54 GB，总容量1 TB，使用比例7%。页面显示应用大小列表（如小红书1.71GB、抖音1.34GB等），但未显示'应用/应用和元服务所占空间'的汇总数值字段，该字段未显示。"
+        },
+        "native_steps": 5
+      }
+    },
+    {
+      "run_id": "phone_81b0042a-27fc-4c9b-b6fa-8356bcf091ed",
+      "case_id": "HM-STOR-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 64,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": false,
+          "finished": true,
+          "action": null,
+          "message": "Model error: Model request budget exhausted"
+        },
+        "native_steps": 16
+      }
+    },
+    {
+      "run_id": "phone_7e5520c4-2493-4c1e-a4a2-78677758754c",
+      "case_id": "HM-TB-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 74,
+      "requests": 15,
+      "responses": 15,
+      "actions": 13,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "AI model request failed after 0 retries (1/1 attempts). Last error: failed to call AI model service (qwen3.7-plus): Connection error.\nTrouble shooting: https://midscenejs.com/model-provider.html"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_f4e36a80-290f-44a9-a587-a41d554a1466",
+      "case_id": "HM-TB-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 74,
+      "requests": 15,
+      "responses": 15,
+      "actions": 13,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "AI model request failed after 0 retries (1/1 attempts). Last error: failed to call AI model service (deepseek-v4.1-flash-1017): Connection error.\nTrouble shooting: https://midscenejs.com/model-provider.html"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_943084d5-640d-43aa-b08f-7c907e097745",
+      "case_id": "HM-TB-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 61,
+      "requests": 15,
+      "responses": 15,
+      "actions": 14,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_b66b2b64-1435-439a-afc9-3ce089fe8bd4",
+      "case_id": "HM-TB-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 18,
+      "requests": 5,
+      "responses": 5,
+      "actions": 3,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_b71dbdb6-8cc3-4807-a999-ba2304fd2e4b",
+      "case_id": "HM-TB-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 28,
+      "requests": 7,
+      "responses": 7,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "framework_io_stopped",
+          "method": "action",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Repeated identical action limit; stop for fresh observation and review"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_f6b93da7-3120-4e34-8594-9389be690629",
+      "case_id": "HM-TB-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 42,
+      "requests": 11,
+      "responses": 11,
+      "actions": 9,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 191,
+          "id": "action_f7366097-144e-4a33-95c9-f562b40de6b8",
+          "prior_tap": {
+            "x": 1196,
+            "y": 159
+          },
+          "after_asset": "img_e751ad9c-ad45-4644-a72c-b78c7c090023"
+        }
+      ],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "已成功打开淘宝并搜索'折叠手机支架'，进入一个普通商品详情页。页面显示的商品标题为：'柔性手机支架折叠变形手机硅胶支架平板笔记本电脑通用架创意变形懒人支架旅行便携配件可折叠折叠架可...'；当前展示价格为：秒杀价¥7.78起（优惠前¥19.88起）。已保持在该商品详情页，未执行任何规格选择、加购、收藏、下单或付款操作。"
+          },
+          "message": "已成功打开淘宝并搜索'折叠手机支架'，进入一个普通商品详情页。页面显示的商品标题为：'柔性手机支架折叠变形手机硅胶支架平板笔记本电脑通用架创意变形懒人支架旅行便携配件可折叠折叠架可...'；当前展示价格为：秒杀价¥7.78起（优惠前¥19.88起）。已保持在该商品详情页，未执行任何规格选择、加购、收藏、下单或付款操作。"
+        },
+        "native_steps": 11
+      }
+    },
+    {
+      "run_id": "phone_3a3d0c72-9990-4399-9a98-c59a1b9d3940",
+      "case_id": "HM-TB-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 28,
+      "requests": 7,
+      "responses": 7,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 140,
+          "id": "action_86c41585-001e-498f-a1f2-b7724f1a1174",
+          "prior_tap": {
+            "x": 1183,
+            "y": 268
+          },
+          "after_asset": "img_5708a092-1a7b-439e-b8a5-6299e20035da"
+        }
+      ],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "商品标题：淘工厂 柔性手机支架折叠变形手机硅胶支架平板笔记本电脑用架创意变形懒人支架旅行便携配件可折叠折叠架可...；当前展示价格：秒杀价¥7.78起（优惠前¥19.88起）"
+          },
+          "message": "商品标题：淘工厂 柔性手机支架折叠变形手机硅胶支架平板笔记本电脑用架创意变形懒人支架旅行便携配件可折叠折叠架可...；当前展示价格：秒杀价¥7.78起（优惠前¥19.88起）"
+        },
+        "native_steps": 7
+      }
+    },
+    {
+      "run_id": "phone_104e9594-d9c0-439b-96ba-8e30ce8fa731",
+      "case_id": "HM-TB-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 12,
+      "requests": 3,
+      "responses": 3,
+      "actions": 2,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "message": "do(action=\"Tap\", element=[500, 83])</｜DSML｜ parameter>\n</｜DSML｜ invoke>\n</｜DSML｜ calls>",
+            "_metadata": "finish"
+          },
+          "message": "do(action=\"Tap\", element=[500, 83])</｜DSML｜ parameter>\n</｜DSML｜ invoke>\n</｜DSML｜ calls>"
+        },
+        "native_steps": 3
+      }
+    },
+    {
+      "run_id": "phone_9833423e-9d5f-4913-b4e4-5ca2be106688",
+      "case_id": "HM-XHS-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 25,
+      "requests": 5,
+      "responses": 5,
+      "actions": 4,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_b12d5c11-6361-432d-a75b-67a80d78e3a6",
+      "case_id": "HM-XHS-001",
+      "framework_id": "midscene",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 40,
+      "requests": 8,
+      "responses": 8,
+      "actions": 7,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_e0424521-b19d-4aa5-ba43-8d0921bea715",
+      "case_id": "HM-XHS-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 40,
+      "requests": 10,
+      "responses": 10,
+      "actions": 9,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_538b5f4b-5e32-4a9a-8354-09b5e03c6f08",
+      "case_id": "HM-XHS-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 24,
+      "requests": 6,
+      "responses": 6,
+      "actions": 5,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 122,
+          "id": "action_ed6a3a67-cd32-4b2e-a554-0f3ac34525c5",
+          "prior_tap": {
+            "x": 2495,
+            "y": 165
+          },
+          "after_asset": "img_6c2753a8-2a16-4e28-9f1c-ca7e622cbb6e"
+        }
+      ],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_ec30526e-22a1-4414-9371-0b28a124677f",
+      "case_id": "HM-XHS-001",
+      "framework_id": "mobiagent",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "failed",
+      "images": 63,
+      "requests": 15,
+      "responses": 15,
+      "actions": 15,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [
+        {
+          "type": "model_request_blocked",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "framework_io_stopped",
+          "method": "model",
+          "reason": "Model request budget exhausted"
+        },
+        {
+          "type": "execution_stopped",
+          "reason": "Model request budget exhausted"
+        }
+      ],
+      "input_actions": [],
+      "native_result": null
+    },
+    {
+      "run_id": "phone_63ada03e-d3d7-47d9-8320-2deedf01bc98",
+      "case_id": "HM-XHS-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_8_flash",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 28,
+      "requests": 7,
+      "responses": 7,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 140,
+          "id": "action_37609814-d89e-492b-8078-680eafd47043",
+          "prior_tap": {
+            "x": 2498,
+            "y": 160
+          },
+          "after_asset": "img_b96b94a6-ee76-412c-9887-5e67132c9d82"
+        }
+      ],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "已成功打开小红书并搜索'杭州旅游'，进入一篇普通图文笔记（非视频/广告/直播）。可见事实如下：\\n\\n【笔记标题】杭州旅游必打卡景点！\\n\\n【作者】喜欢学习资料教程的彤彤\\n\\n【正文中一条可见的出行建议】正文提到'行程松弛不赶路'，并标注了各个景点的最佳入园时间以'完美避开旅行大客流'；图片中还给出具体交通建议，例如'断桥残雪（免费，全天开放，地铁1号线）'、'灵隐寺（免费，7:30-17:15，1号线转7路公交）'等出行方式建议。\\n\\n全程未点赞、收藏、关注、评论、私信或分享，未打开广告/直播/视频，当前保持在该笔记详情页。"
+          },
+          "message": "已成功打开小红书并搜索'杭州旅游'，进入一篇普通图文笔记（非视频/广告/直播）。可见事实如下：\\n\\n【笔记标题】杭州旅游必打卡景点！\\n\\n【作者】喜欢学习资料教程的彤彤\\n\\n【正文中一条可见的出行建议】正文提到'行程松弛不赶路'，并标注了各个景点的最佳入园时间以'完美避开旅行大客流'；图片中还给出具体交通建议，例如'断桥残雪（免费，全天开放，地铁1号线）'、'灵隐寺（免费，7:30-17:15，1号线转7路公交）'等出行方式建议。\\n\\n全程未点赞、收藏、关注、评论、私信或分享，未打开广告/直播/视频，当前保持在该笔记详情页。"
+        },
+        "native_steps": 7
+      }
+    },
+    {
+      "run_id": "phone_6eb7b64d-7db5-4ce0-b7fa-a2c97c6248ff",
+      "case_id": "HM-XHS-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_qwen3_7_plus",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 26,
+      "requests": 6,
+      "responses": 6,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 140,
+          "id": "action_fa086604-abbe-485c-b8f1-76a1fa190573",
+          "prior_tap": {
+            "x": 2475,
+            "y": 138
+          },
+          "after_asset": "img_0c92f664-4bc9-4337-8e7a-92a96e0aaff5"
+        }
+      ],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "已打开小红书并搜索‘杭州旅游’，进入一篇普通图文笔记。笔记标题为‘杭州旅游必打卡景点！’，作者为‘喜欢学习资料教程的彤彤’。正文中可见的出行建议包括：‘灵隐寺（免费，7:30-17:15，1号线转7路公交）’。当前停留在该笔记详情页，未进行点赞、收藏、关注、评论、私信、分享或打开广告/直播/视频等操作。"
+          },
+          "message": "已打开小红书并搜索‘杭州旅游’，进入一篇普通图文笔记。笔记标题为‘杭州旅游必打卡景点！’，作者为‘喜欢学习资料教程的彤彤’。正文中可见的出行建议包括：‘灵隐寺（免费，7:30-17:15，1号线转7路公交）’。当前停留在该笔记详情页，未进行点赞、收藏、关注、评论、私信、分享或打开广告/直播/视频等操作。"
+        },
+        "native_steps": 6
+      }
+    },
+    {
+      "run_id": "phone_67711e66-8d58-4148-958a-11650a24a0c5",
+      "case_id": "HM-XHS-001",
+      "framework_id": "autoglm",
+      "service_id": "aliyun_deepseek_v4_1_flash_1017",
+      "matrix_eligible": true,
+      "status": "ended",
+      "images": 26,
+      "requests": 6,
+      "responses": 6,
+      "actions": 6,
+      "issues": [],
+      "warnings": [],
+      "io_stops": [],
+      "input_actions": [
+        {
+          "seq": 140,
+          "id": "action_56e1f965-f67f-412e-b78b-b2e1aa04f525",
+          "prior_tap": {
+            "x": 2506,
+            "y": 160
+          },
+          "after_asset": "img_938abbad-a3c7-4c74-841a-664c0694f5df"
+        }
+      ],
+      "native_result": {
+        "native_result": {
+          "success": true,
+          "finished": true,
+          "action": {
+            "_metadata": "finish",
+            "message": "已在小红书打开图文笔记《杭州旅游必打卡景点！》，作者为“喜欢学习资料教程的彤彤”。正文可见出行建议：西湖、灵隐寺、九溪十八涧、龙井村、河坊街、西溪湿地全部合理串联，并标注各景点最佳入园时间以避开旅行大客流。当前保持在笔记详情页，未进行任何点赞、收藏、关注、评论或分享操作。"
+          },
+          "message": "已在小红书打开图文笔记《杭州旅游必打卡景点！》，作者为“喜欢学习资料教程的彤彤”。正文可见出行建议：西湖、灵隐寺、九溪十八涧、龙井村、河坊街、西溪湿地全部合理串联，并标注各景点最佳入园时间以避开旅行大客流。当前保持在笔记详情页，未进行任何点赞、收藏、关注、评论或分享操作。"
+        },
+        "native_steps": 6
+      }
+    }
+  ]
+}

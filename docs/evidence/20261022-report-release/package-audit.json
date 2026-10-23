@@ -1,0 +1,20 @@
+{
+  "zip": "output\\BehaviorLab-Phone-Windows-x64-20261022.zip",
+  "sha256": "6f8b0519978a812c262218cd0105a10e592e47d16b22bf84cfe8f96043561fd2",
+  "zip_bytes": 168339287,
+  "uncompressed_bytes": 456528770,
+  "files": 11782,
+  "no_duplicate_zip_entries": true,
+  "zip_crc_and_all_member_hashes": "passed",
+  "all_extracted_hashes_match": true,
+  "credentials_and_device_history_included": false,
+  "extracted_to": ".build\\report_release_20261022\\中文 最终解压验收\\BehaviorLab",
+  "changed_members_refreshed_after_first_extraction": [
+    "scripts/phone-lab-worker.mjs",
+    "integrations/adapters/midscene.mjs",
+    "docs/FRAMEWORK_ADAPTER_GUIDE.md",
+    "docs/CURRENT_STATUS.md",
+    "README.md",
+    "docs/evidence/20261022-report-release/acceptance.json"
+  ]
+}

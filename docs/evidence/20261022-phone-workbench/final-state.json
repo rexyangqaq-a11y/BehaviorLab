@@ -1,0 +1,12 @@
+{
+  "version": "0.4.0-preview.3",
+  "tasks": 5,
+  "retained_runs": 38,
+  "matrix_runs": 36,
+  "passed": 16,
+  "partial": 10,
+  "failed": 10,
+  "requests": 331.0,
+  "active_batch": null,
+  "busy": null
+}

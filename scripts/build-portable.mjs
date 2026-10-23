@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { execFileSync } from 'node:child_process';
+import {packagePhoneRuntime} from './package-phone-runtime.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -17,7 +18,7 @@ function verifyDatabase(db, label) {
   requireThat(db.prepare('PRAGMA foreign_key_check').all().length === 0, `Foreign key check failed: ${label}`);
 }
 
-export async function buildPortable({ out, runtime, license, checksums, clean = false }) {
+export async function buildPortable({ out, runtime, license, checksums, clean = false, phone = false }) {
   const target = path.resolve(out);
   requireThat(!await exists(target), 'Output already exists; choose a new directory.');
   requireThat(!path.relative(root, target).startsWith(`.data${path.sep}`) && target !== path.join(root, '.data'), 'Output cannot be inside source data.');
@@ -67,11 +68,11 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
       }
     }
     await mkdir(target, { recursive: true });
-    for (const name of ['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', 'start-web.cmd']) {
+    for (const name of ['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', 'start-web.cmd']) {
       await cp(path.join(root, name), path.join(target, name), { recursive: true, errorOnExist: true, force: false });
     }
     // Use CRLF for cmd.exe, including when sources were edited with LF.
-    for (const name of ['01_START.cmd', '02_STOP.cmd', 'start-web.cmd']) {
+    for (const name of ['01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', 'start-web.cmd']) {
       const text = await readFile(path.join(target, name), 'utf8');
       await writeFile(path.join(target, name), text.replace(/\r?\n/g, '\r\n'), 'utf8');
     }
@@ -81,6 +82,9 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
     await writeFile(path.join(target, 'runtime/node.exe'), nodeBytes);
     await writeFile(path.join(target, 'runtime/NODE-LICENSE.txt'), licenseBytes);
     await writeFile(path.join(target, 'runtime/NODE-SHASUMS256.txt'), official);
+    await mkdir(path.join(target,'integrations/adapters'),{recursive:true});
+    for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});
+    const phoneRuntime=phone?await packagePhoneRuntime(root,target):null;
     await mkdir(path.join(target, '.data'));
     const runs = [];
     for (const snapshot of snapshots) {
@@ -123,10 +127,10 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
         requireThat(current === snapshot.jobText, 'Source task changed during packaging; retry while tasks are paused.');
       }
     }
-    const manifest = { format: 1, product: 'BehaviorLab v0.3', package_status: 'complete', platform: 'Windows 10/11 x64 (Intel/AMD)', created_at: new Date().toISOString(), snapshot_started_at: started,
-      contents: clean ? 'clean' : 'current-demo-snapshot', mode: 'mock', synthetic: true,
+    const manifest = { format: 2, product: 'BehaviorLab v0.4-preview.6', package_status: 'complete', platform: 'Windows 10/11 x64 (Intel/AMD)', created_at: new Date().toISOString(), snapshot_started_at: started,
+      contents: clean ? 'clean' : 'current-demo-snapshot', main_simulation_mode: 'mock', phone_workbench: phoneRuntime,
       runtime: { ...version, sha256: nodeHash, source: 'https://nodejs.org/download/release/v24.19.0/win-x64/node.exe', checksums: 'https://nodejs.org/download/release/v24.19.0/SHASUMS256.txt' },
-      users: userCount, runs, omitted: ['runtime control files', 'logs', 'old exports', 'unreferenced assets', 'build caches', 'model service settings and credentials', 'GUI lab experiment records and assets', 'candidate SDK dependencies'],
+      users: userCount, runs, omitted: ['runtime control files', 'logs', 'old exports', 'unreferenced assets', 'build caches', 'model service settings and credentials', 'GUI lab experiment records and assets', ...(phone?[]:['candidate SDK dependencies'])],
       verification: { sqlite_integrity: 'passed', foreign_keys: 'passed', referenced_asset_sha256: 'passed', source_unchanged: 'passed' } };
     await writeFile(path.join(target, 'portable-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
     return { target, users: userCount, runs: runs.length, screenshots: runs.reduce((n, run) => n + run.screenshots, 0), runtime_sha256: nodeHash };
@@ -134,7 +138,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const { values } = parseArgs({ options: { out: { type: 'string' }, runtime: { type: 'string', default: process.execPath }, license: { type: 'string' }, checksums: { type: 'string' }, clean: { type: 'boolean' } } });
+  const { values } = parseArgs({ options: { out: { type: 'string' }, runtime: { type: 'string', default: process.execPath }, license: { type: 'string' }, checksums: { type: 'string' }, clean: { type: 'boolean' }, phone:{type:'boolean'} } });
   if (!values.out || !values.license || !values.checksums) { console.error('Required: --out DIRECTORY --license NODE-LICENSE --checksums SHASUMS256.txt [--runtime NODE.EXE] [--clean]'); process.exitCode = 1; }
   else buildPortable(values).then(value => console.log(JSON.stringify(value))).catch(error => { console.error(`ERROR: ${error.message}`); process.exitCode = 1; });
 }

@@ -1,0 +1,141 @@
+{
+  "checked_at": "2026-10-22T12:17:16.994Z",
+  "release": "0.4.0-preview.6",
+  "task_wording": "下层操作模块",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "final_framework": null,
+  "deliverables": {
+    "presentation": {
+      "status": "complete",
+      "path": "output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx",
+      "slides": 20,
+      "sections": [
+        "下层操作模块实现",
+        "开源框架与三个候选理由",
+        "测试用例",
+        "测试结果与分析"
+      ],
+      "sha256": "6a8fd17cddf042bad25b72d120dafb9f9cd794c3e909614fb023bf86a112bed2",
+      "page_size_emu": {
+        "cx": "12192000",
+        "cy": "6858000"
+      },
+      "native_tables": 14,
+      "group_locks_remaining": 0,
+      "package_integrity": "passed",
+      "layout_findings": 0,
+      "first_party_import": "passed",
+      "static_slides_reviewed": 20,
+      "powerpoint_gui": "not_verified",
+      "native_png_renderer": "crashed; actual OOXML static previews used"
+    },
+    "failure_analysis": {
+      "status": "complete",
+      "path": "docs/PHONE_FAILURE_DIAGNOSIS_20261022.md",
+      "case_evidence": "failure-audit.json",
+      "coordinate_chain_checked": true,
+      "root_cause_percentages": "not_established"
+    },
+    "code_organization": {
+      "status": "complete",
+      "registry": "src/phone-framework-registry.mjs",
+      "adapters": [
+        "integrations/adapters/midscene.mjs",
+        "integrations/adapters/python-native.mjs"
+      ],
+      "guide": "docs/FRAMEWORK_ADAPTER_GUIDE.md",
+      "engineering_tests": {
+        "passed": 107,
+        "failed": 0
+      },
+      "native_contracts": [
+        {
+          "framework": "autoglm",
+          "exit": 0,
+          "native_loop": "passed",
+          "fixture_model_responses": 5,
+          "fixture_device_actions": 5,
+          "unicode_input_roundtrip": true,
+          "jpeg_mime_roundtrip": true,
+          "real_model_requests": 0,
+          "real_device_actions": 0,
+          "gui_task_result": "not_executed",
+          "error": null
+        },
+        {
+          "framework": "mobiagent",
+          "exit": 0,
+          "native_loop": "passed",
+          "fixture_model_responses": 5,
+          "fixture_device_actions": 4,
+          "unicode_input_roundtrip": true,
+          "jpeg_mime_roundtrip": null,
+          "real_model_requests": 0,
+          "real_device_actions": 0,
+          "gui_task_result": "not_executed",
+          "error": null
+        }
+      ],
+      "new_real_task_after_refactor": "not_executed"
+    },
+    "windows_package": {
+      "status": "complete",
+      "name": "BehaviorLab-Phone-Windows-x64-20261022.zip",
+      "kind": "clean / complete phone runtime",
+      "node": "24.19.0",
+      "python": "3.12.14",
+      "frameworks": 3,
+      "hdc": "3.2.0f",
+      "runtime_requires_codex": false,
+      "symlinks_required": false,
+      "personal_data_or_keys_included": false,
+      "archive_hash_and_extraction_audit": "package-audit.json",
+      "moved_path": "中文 解压验收/BehaviorLab",
+      "actual_cmd_scripts_checked": [
+        "03_CHECK.cmd",
+        "01_START.cmd --port 4438 --no-browser",
+        "02_STOP.cmd"
+      ],
+      "sdk_import": "passed",
+      "isolated_python_import": "passed",
+      "native_contracts_after_move": "passed",
+      "browser_pages": [
+        "task list / five builtins",
+        "test / three frameworks, no service, start disabled",
+        "results / zero retained records",
+        "main settings / zero services"
+      ],
+      "browser_proof": "portable-test.png",
+      "explorer_double_click": "not_verified",
+      "second_physical_computer": "not_verified",
+      "new_computer_real_gui": "not_executed"
+    }
+  },
+  "preserved_workspace": {
+    "checked_at": "2026-10-22T12:10:23.677Z",
+    "phone_runs": 39,
+    "active_simulations": 0,
+    "generating_batches": 0,
+    "lab_version": "0.4.0-preview.6",
+    "configured_services": 3,
+    "model_requests": 0,
+    "device_commands": 0
+  },
+  "historical_campaign": {
+    "matrix_cells": 36,
+    "passed": 16,
+    "partial": 10,
+    "failed": 10,
+    "usage_requests": 331,
+    "cumulative_including_removed_attempts": 373,
+    "review": "assistant assessed; user pending",
+    "changed": false
+  },
+  "pending_conditions": [
+    "New computer: configure an image-capable permitted API and authorize/unlock USB phone",
+    "PowerPoint native editing and second physical computer still need verification",
+    "Task stability, final framework selection and main-simulation integration remain incomplete"
+  ],
+  "blocking_conditions": []
+}

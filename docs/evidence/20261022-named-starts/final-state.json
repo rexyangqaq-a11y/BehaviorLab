@@ -1,0 +1,14 @@
+{
+  "version": "0.4.0-preview.5",
+  "tasks": 6,
+  "retained_runs": 39,
+  "starts": 83,
+  "campaign_runs": 36,
+  "campaign_passed": 16,
+  "campaign_partial": 10,
+  "campaign_failed": 10,
+  "busy": null,
+  "active_batch": null,
+  "new_model_calls_by_agent": 0,
+  "new_phone_commands_by_agent": 0
+}

@@ -1,0 +1,16 @@
+✔ Harmony-compatible synchronous actionSpace remains iterable with durable ordering (2.1755ms)
+✔ uncertain SDK failures remain unknown and are not replayed (0.8616ms)
+✔ rotated real screenshot replaces stale native SDK dimensions without inventing a device-input pass (2.1528ms)
+✔ unexplained fold or display size changes stop rather than guessing coordinates (0.6727ms)
+✔ third identical SDK action is refused before dispatch, while changed action resets the guard (1.534ms)
+✔ trial transport records before send, enforces output/non-thinking and saves image references without credentials (24.1476ms)
+✔ failed or unknown-usage calls block subsequent requests and are never counted as zero usage (1.0004ms)
+✔ request budget, duplicate requests, text-only requests and alternate destinations stop before network (1.3901ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165.7338

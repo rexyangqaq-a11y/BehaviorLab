@@ -1,0 +1,31 @@
+✔ persistent pause blocks capture, run and batch before any physical or model call; configuration stays readable (45.5575ms)
+✔ shared lock rejects a second operation; real evidence references detect tampering (52.6074ms)
+✔ phone interface and read-only catalog require no device; paused HTTP requests return 423 and never call hardware (198.235ms)
+✔ integration diagnostics remain readable with actual calls and source versions but are explicitly excluded from matrix scoring (18.891ms)
+✔ a batch freezes its original reference and invalid limits cannot leave a batch active (31.8198ms)
+✔ every run reports its frozen execution phone, with explicitly labelled baseline and unknown fallbacks (33.2873ms)
+✔ named task library persists edits, protects builtins and detects stale revisions (44.7938ms)
+✔ task archive is reversible and validation rejects unsafe package names and empty criteria (32.8704ms)
+✔ single and matrix plans enforce all three axes and produce the full Cartesian product (1.1015ms)
+✔ task HTTP create and edit work while paused without touching a phone or model (151.6157ms)
+✔ a revised task cannot reuse its old baseline, and invalid preparations never access hardware (28.2398ms)
+✔ manual matrix waits per cell, rejects drift, freezes task content and supports cancellation (64.4653ms)
+✔ closing a batch waiting for a manual start does not leave an unresolved queue (40.3393ms)
+✔ custom home baselines need no target package, while manual starts compare actual page content (2.1193ms)
+✔ results support new batch scopes and keep protocols, revisions and limits in separate comparison groups (0.6665ms)
+✔ task startpoint configuration persists independently and is frozen for a batch without a test-page override (82.7826ms)
+✔ a task rejects another task baseline, stale task revisions and stale configured startpoints (29.0812ms)
+✔ single-run names and task names are frozen separately, and configured starts are resolved on the server (343.282ms)
+✔ task baseline API can select existing evidence while paused and never calls the phone (81.4958ms)
+✔ a current-state start only needs a name and never resets or launches an app (50.123ms)
+✔ an old start can be reused by a different task without hardware or rewriting the original evidence (56.2691ms)
+✔ named page comparison records actual metadata while detecting page changes (0.4523ms)
+✔ named starts are checked automatically in a matrix and drift blocks without repeated operator configuration (47.6352ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1741.5125

@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-22T02:32:22.039Z",
+  "run_id": "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+  "json_http": 200,
+  "zip_http": 200,
+  "zip_bytes": 12210052,
+  "zip": {
+    "files": 183,
+    "images": 63,
+    "corrupt_file": null,
+    "required_present": true
+  },
+  "export_events": 498,
+  "export_assets": 63,
+  "review": "passed",
+  "engineering_status": "failed",
+  "real_model_calls_during_export": 0,
+  "device_commands_during_export": 0
+}

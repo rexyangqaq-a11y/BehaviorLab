@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-22",
+  "scope": "read-only trace and per-run device display",
+  "software_tests": {
+    "passed": 76,
+    "failed": 0
+  },
+  "historic_run_id": "phone_7af90ebf-6d3b-4327-a5b4-ee32da443a37",
+  "projection": {
+    "images": 48,
+    "model_requests": 10,
+    "returned_judgments": 10,
+    "exact_submitted_images": 10,
+    "images_without_links": 0,
+    "no_action_requests": [
+      "model_4",
+      "model_10"
+    ],
+    "final_image_relation": [
+      {
+        "call_id": "model_10",
+        "kind": "previous_response"
+      }
+    ]
+  },
+  "device_info": {
+    "model": "HOP-AL10",
+    "os_fullname": "OpenHarmony-7.0.0.38",
+    "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+    "api": "26",
+    "screen": {
+      "width": 2584,
+      "height": 1828
+    },
+    "app": {
+      "bundle": "com.huawei.hmos.settings",
+      "version_name": "7.0.0.330",
+      "version_code": 700000330
+    },
+    "source": "execution_environment"
+  },
+  "browser_verified": [
+    "results phone/system column",
+    "frozen execution device card",
+    "per-image judgment and reply",
+    "exact submitted-image navigation",
+    "expanded complete model response"
+  ],
+  "persisted_pause": true,
+  "new_model_requests": 0,
+  "new_device_commands": 0,
+  "original_run_hashes": {
+    "input.json": "e7ca426592ab4ace662a85a443c5ae9c7e6371f846a74cbfd6782850966b3120",
+    "environment.json": "be4f7677302ca759e9065b9119f2089e19cfdbbf737e41bd8f24288b87ae367d",
+    "events.jsonl": "156ab55367acdaa7c0f32d32e1e7bc41ce51db2f3d88ef1c4da9a94e59c55663",
+    "model-calls.jsonl": "75f791ec0ecc89a75dda674704ae815c492213fc4655eeb1b8b90f0b033cf34e",
+    "result.json": "aa458161c1c6da50c988b57c625fb9b5916a3684cdf11dc8d5a8005ae6a18abc",
+    "review.json": "3bf4cce9cbca6fe5b5719fb90a5c8f9953073bfba0946505e31990cf912fbcb2"
+  },
+  "source_sha256": {
+    "web/phone-trace.mjs": "d8fa169e6a491d1ac47c68159c2e915708d97cddc243fb7ab4c0a0b9252a0bca",
+    "web/phone-lab.mjs": "bf0586abd3149f4bf88701b1b9abdf993bc2abe2f9e6ddfec84af3adba83b210",
+    "web/phone-lab.css": "8089d7ef1a4c753c944705bd768c909411fbd7998db07ff0d78bae0e2f9c92d1",
+    "src/phone-lab.mjs": "885ac2f08a4d88e31033854bc92bfca07a45862dadf4916b2f53bde9c53d6d4f",
+    "src/web-server.mjs": "c1b9c55d1e144d86310bf99a566c8b1a704a6351f4d27a2818a5038044baf7a0",
+    "tests/phone-trace.test.mjs": "8a80bddbb293008bec8e1b0cd4c736c789c53d0d5d0dca2574aa44cf3be44fbc",
+    "tests/phone-lab.test.mjs": "70b6150171a8e73a7d84534027826466c12890b34577091477704d35cf13bc3a"
+  },
+  "limitations": [
+    "Temporal associations are labelled separately from exact submitted image references",
+    "Missing replies are not synthesized",
+    "No new real GUI evaluation performed"
+  ]
+}

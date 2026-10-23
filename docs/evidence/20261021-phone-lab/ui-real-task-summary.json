@@ -1,0 +1,146 @@
+{
+  "run_id": "phone_7af90ebf-6d3b-4327-a5b4-ee32da443a37",
+  "purpose": "first UI end-to-end acceptance, excluded from formal matrix",
+  "case_id": "HM-SYS-001",
+  "case_revision": 2,
+  "framework": {
+    "id": "midscene",
+    "name": "Midscene",
+    "version": "1.16.0",
+    "variant": "HarmonyAgent / family adapter",
+    "source": "https://github.com/web-infra-dev/midscene"
+  },
+  "model": "qwen3.8-flash",
+  "startpoint_id": "start_87a43cf2-5906-47f6-8d32-b2e08018626a",
+  "same_start": {
+    "same": true,
+    "reasons": [],
+    "reference_key": "cca4108f0ea2996c3e123568e2ccc9e49b6e1742d169771eca9121d553507678",
+    "current_key": "cca4108f0ea2996c3e123568e2ccc9e49b6e1742d169771eca9121d553507678",
+    "basis": "device_metadata_and_start_state_assertions",
+    "pixel_identical": false
+  },
+  "limits": {
+    "max_requests": 15,
+    "max_actions": 40,
+    "max_seconds": 600,
+    "max_output_tokens": 512,
+    "automatic_retries": 0,
+    "max_payload_bytes": 2097152,
+    "max_text_chars": 90000,
+    "max_images": 2,
+    "thinking": false
+  },
+  "duration_ms": 113409,
+  "model_usage": {
+    "requests": 10,
+    "retries": 0,
+    "blocked_before_network": [],
+    "known_input_tokens": 107573,
+    "known_output_tokens": 2474,
+    "unknown_usage_requests": 0,
+    "cache_and_reasoning": [
+      {
+        "id": "model_1",
+        "cached_input_tokens": 0,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_2",
+        "cached_input_tokens": 7936,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_3",
+        "cached_input_tokens": 8192,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_4",
+        "cached_input_tokens": 8448,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_5",
+        "cached_input_tokens": 8704,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_6",
+        "cached_input_tokens": 9216,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_7",
+        "cached_input_tokens": 9472,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_8",
+        "cached_input_tokens": 9984,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_9",
+        "cached_input_tokens": 10496,
+        "reasoning_output_tokens": null
+      },
+      {
+        "id": "model_10",
+        "cached_input_tokens": 11008,
+        "reasoning_output_tokens": null
+      }
+    ],
+    "fees": null,
+    "credits": null
+  },
+  "sdk_actions": 8,
+  "physical_actions": 17,
+  "observed_physical_input_commands": 17,
+  "independent_review": {
+    "reviewer": "assistant",
+    "verdict": "passed",
+    "evidence_ids": [
+      "img_0939e6fb-885a-4ad2-82a4-045d9c1db683"
+    ],
+    "user_review": "pending",
+    "basis": "Final image visibly shows HOP-AL10, HarmonyOS 7.0.0, software 7.0.0.36 SP25. Model navigated from Settings Bluetooth page to About without operator intervention."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "hdc_version": "Ver: 3.2.0f",
+    "device": {
+      "model": "HOP-AL10",
+      "os_fullname": "OpenHarmony-7.0.0.38",
+      "software_version": "HOP-AL10 7.0.0.36(SP25C00E24R4P1log)",
+      "api": "26"
+    },
+    "app": {
+      "bundle": "com.huawei.hmos.settings",
+      "version_name": "7.0.0.330",
+      "version_code": 700000330
+    },
+    "screen": {
+      "width": 2584,
+      "height": 1828
+    }
+  },
+  "final_asset": {
+    "id": "img_0939e6fb-885a-4ad2-82a4-045d9c1db683",
+    "sha256": "e74c865076688590edd2b4c0f282d08c76ccee3ed3482d3954f7d38ca563260b",
+    "width": 2584,
+    "height": 1828
+  },
+  "evidence_check": {
+    "asset_records_verified": 48,
+    "request_events": 10,
+    "response_events": 10,
+    "export_http": 200,
+    "bundle_http": 200,
+    "bundle_bytes": 7048085,
+    "credential_values_in_export": 0
+  },
+  "privacy": "Original images and full request/response/layout records remain local in ignored .data. This public summary omits account display names, serials, IMEI and credentials.",
+  "protocol_boundary": "Later identifier masking and source snapshots changed; this acceptance run does not count as a formal comparison sample."
+}

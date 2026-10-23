@@ -8,7 +8,7 @@ export function instrumentGuiDevice(device, recorder) {
     await recorder.capture(image);
     return image;
   };
-  device.actionSpace = async () => (await actions()).map(action => ({
+  const wrapActions = list => list.map(action => ({
     ...action,
     call: async (...args) => {
       // Must finish durably before entering the SDK's action implementation.
@@ -25,5 +25,11 @@ export function instrumentGuiDevice(device, recorder) {
       return output;
     },
   }));
+  // HarmonyAgent reads this synchronously during construction. Preserve the
+  // original sync/async contract instead of always returning a Promise.
+  device.actionSpace = (...args) => {
+    const list = actions(...args);
+    return list && typeof list.then === 'function' ? list.then(wrapActions) : wrapActions(list);
+  };
   return device;
 }

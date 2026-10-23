@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "revision": "2026-10-21.real-trial-partial.3",
+  "kind": "minimal_real_gui_trial_plan",
+  "status": "real_trial_executed_partial_gui_not_passed",
+  "final_framework": null,
+  "trial_framework": "midscene",
+  "trial_confirmation": {
+    "status": "user_confirmed",
+    "date": "2026-10-21",
+    "scope": "First small task only; final framework remains undecided."
+  },
+  "recommendation": {
+    "framework": "midscene",
+    "version": "1.16.0",
+    "reason": "Official NEXT/HDC path and existing Node integration; no measured superiority is claimed.",
+    "peer_candidate": "mobiagent",
+    "baseline_candidate": "autoglm",
+    "suggested_model": "qwen3.7-plus",
+    "suggested_service_id": "aliyun_qwen3_7_plus",
+    "model_status": "real_image_planning_and_scroll_executed_but_task_not_passed",
+    "service_scope": "User explicitly directed existing Token Plan for this bounded trial after receiving scope information; no provider approval or batch authorization is claimed."
+  },
+  "tasks": [
+    {
+      "id": "HM-SYS-001",
+      "revision": 1,
+      "origin": "project_owned_system_app_smoke_test",
+      "source_note": "Derived from the intent of system_read in src/gui-lab-catalog.mjs, with an independent real-attempt evidence contract. No Mock fixture or public reference trajectory is execution evidence.",
+      "status": "executed_partial_gui_not_passed",
+      "instruction": "从系统设置首页出发，进入“关于本机/关于手机”，读取页面可见的设备型号及 HarmonyOS 系统版本。保持在该页面，不修改设置；未显示的字段说明未显示。",
+      "app": "系统设置",
+      "target_platform": "Actual available HarmonyOS NEXT device; 6/7 compatibility remains unverified",
+      "initial_state": "Device unlocked, test operator opens Settings home and leaves it stable; record this manual preparation separately from Agent actions.",
+      "preconditions": [
+        "One identified HDC target with device-side debugging trust",
+        "Record actual device model, OS full build/API, HDC and Settings app versions; unavailable fields remain unknown",
+        "Save and inspect the real initial screenshot, dimensions, orientation and coordinate mapping",
+        "First-trial Midscene confirmed by user on 2026-10-21; final framework remains undecided",
+        "Explicit service/model selection for this isolated attempt, permitted service usage and bounded image/action adapter"
+      ],
+      "allowed_operations": [
+        "Screenshot",
+        "Tap navigation item",
+        "Scroll Settings list",
+        "Back if necessary"
+      ],
+      "stop_conditions": [
+        "Unexpected credential/consent/install/payment screen",
+        "Any proposed setting change or shell command",
+        "Unknown-effect action",
+        "Budget or time limit",
+        "No observable progress"
+      ],
+      "rubric": [
+        {
+          "id": "HM-SYS-001-M1",
+          "criterion": "The real initial image shows Settings home and links to this attempt."
+        },
+        {
+          "id": "HM-SYS-001-M2",
+          "criterion": "The framework decides and executes navigation; durable intent precedes each device action; before/after images are retained."
+        },
+        {
+          "id": "HM-SYS-001-M3",
+          "criterion": "The final real image shows About and readable model/system version; the reported values match that image and are cross-checked against device metadata where available."
+        }
+      ],
+      "judgement": "Assistant records per-milestone assessment and evidence references, then submits to user review. Agent completion text or HDC metadata alone cannot pass M2/M3. A manual navigation is separately labeled and cannot count as a candidate-loop success.",
+      "proposed_limits": {
+        "status": "implemented_at_transport_and_device_dispatch_for_real_trial",
+        "max_activity_attempts": 1,
+        "max_model_requests_including_planning_locating_validation": 4,
+        "max_device_actions": 6,
+        "max_output_tokens_per_request": 512,
+        "max_elapsed_seconds": 180,
+        "model_retries": 0,
+        "enable_thinking": false,
+        "archive_describer_requests": 0,
+        "context_policy": "Task plus current image and only necessary recent history. Inspect actual SDK prompt and image payload locally; freeze a serialized-payload/image-count bound before the first request. A byte bound is not an input-token guarantee.",
+        "hard_limit_note": "Request count and output limits must be enforced at the actual model transport, including internal SDK requests/retries. Action limits must be enforced at device dispatch. SDK loop count alone is insufficient."
+      },
+      "actual_initial_state": "Split Settings home with NearLink/Bluetooth category selected; operator preparation separately recorded. About page not already selected at Agent start.",
+      "result_reference": "../../output/device_validation_20261021/midscene-HM-SYS-001-execution/assessment.json"
+    },
+    {
+      "id": "GUI-004",
+      "reference": "GUI_EVALUATION_CASES_20261021.json#GUI-004",
+      "role": "conditional_followup_common_app_task",
+      "status": "deferred_not_scheduled",
+      "reason": "Only after SYS trial, verify actual Harmony QQ Music installation/version, timer availability, permitted initial state and reset. Reuse the frozen task and milestones; do not invent a pass or silently change its 30-minute timer target."
+    }
+  ],
+  "first_attempt_evidence_contract": {
+    "directory": "output/<new-unique-attempt>/; do not overwrite any previous attempt",
+    "input.json": [
+      "task ID/revision/instruction/rubric",
+      "selected trial framework/model/service",
+      "initial state and operator preparation",
+      "limits and permitted operations"
+    ],
+    "environment.json": [
+      "source revision and local diff/hash",
+      "framework/SDK/prompt/parser/transport versions",
+      "host/Node/HDC versions",
+      "device/OS build/API/Settings app version",
+      "screen dimensions/orientation",
+      "unknown fields with reasons"
+    ],
+    "events.jsonl": [
+      "real UTC timestamps and elapsed durations",
+      "model request start BEFORE send",
+      "device intent flushed BEFORE send",
+      "tool return or unknown effect",
+      "all captured images linked with phase and step",
+      "interventions and stop reasons"
+    ],
+    "screenshots/": [
+      "real image bytes",
+      "image format and dimensions",
+      "SHA-256",
+      "before/after/observation phase",
+      "capture time and step ID",
+      "original files retained locally; no raw phone images committed automatically"
+    ],
+    "model-calls.jsonl": [
+      "role/model/service and parent call",
+      "sanitized exact model input, with image bytes referenced by asset hash",
+      "response/action parser output",
+      "request/output/context settings and duration",
+      "returned usage input/output/total/cache/reasoning or null if absent",
+      "no request headers or credentials"
+    ],
+    "result.json": [
+      "running/ended/interrupted separately from business result",
+      "completed/partial/blocked/cannot_determine and reason",
+      "per-milestone evidence and assessment source",
+      "assistant initial assessment distinct from user review",
+      "actual task elapsed including waits",
+      "all requests/actions/images and known usage subtotal plus unknown-usage count",
+      "unknown fees/Credits remain null",
+      "missing evidence; final state and reset notes"
+    ],
+    "preflight_is_not_attempt": true,
+    "current_real_attempt_count": 1,
+    "current_result": "partial_gui_not_passed_user_review_pending",
+    "technical_startup_failures_before_actual_trial": {
+      "count": 2,
+      "model_requests": 0,
+      "agent_actions": 0
+    },
+    "actual_model_usage": {
+      "requests": 4,
+      "input_tokens": 29819,
+      "output_tokens": 741,
+      "total_tokens": 30560,
+      "retries": 0,
+      "fees": null,
+      "credits": null
+    }
+  }
+}

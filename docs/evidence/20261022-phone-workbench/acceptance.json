@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-22",
+  "version": "0.4.0-preview.3",
+  "url": "http://127.0.0.1:4317/phone-lab",
+  "scope": "Local task library and phone evaluation interface restructuring",
+  "software": {
+    "command": "node --test tests/*.test.mjs",
+    "passed": 97,
+    "failed": 0,
+    "evidence": "software-tests.txt",
+    "method": "Temporary data, local HTTP and offline test doubles; no phone or model calls",
+    "sandbox_note": "Initial Windows sandbox run blocked atomic rename and localhost connect. Full regression passed under normal local execution; no protection was removed."
+  },
+  "browser": {
+    "method": "Actual in-app browser interactions and screenshots at a narrow viewport",
+    "checks": [
+      "Three independent tabs: Tasks, Test, Results",
+      "Single-run execution details hidden on Tasks and Test even after opening a historical trace",
+      "Named custom task created, renamed, reloaded, archived and restored; revisions 1 through 4 observed",
+      "Task with no saved current-revision baseline cannot start",
+      "Single mode chooses one framework, service and task",
+      "Matrix mode independently selects axes; 2 frameworks x 2 services x 2 tasks displays 8 cells",
+      "Matrix choices preserved while switching main tabs and during catalog polling",
+      "Current campaign shows 36 records, passed 16, partial 10, failed 10, pending assistant review 0, requests 331",
+      "List pagination shows 12 rows and 3 pages, including second page",
+      "Framework plus model filtering returns 4 records; unmatched search displays an empty state",
+      "Comparison view contains 9 configuration rows and 36 result cells, mutually exclusive with the list",
+      "A comparison cell opens its historical run, with screenshot-linked original model replies",
+      "Detail navigation supports previous, next and return without resetting result scope",
+      "Historical execution phone model and software information visible in Judgment and Environment",
+      "Raw detail exposes JSON and image evidence export links",
+      "Unsaved review text survives switching detail tabs; draft canceled without changing review",
+      "Narrow result list uses cards with visible detail actions"
+    ],
+    "screenshots_local": [
+      "output/phone-workbench-20261022/tasks.png",
+      "output/phone-workbench-20261022/test-matrix.png",
+      "output/phone-workbench-20261022/results.png",
+      "output/phone-workbench-20261022/comparison.png"
+    ],
+    "temporary_task": {
+      "id": "task_551da14a-8524-408a-a76d-ae5a8d4a0214",
+      "executed": false,
+      "cleanup": "Only this self-created test file was removed after checking exact ID/name/revision and absence of start/run references."
+    }
+  },
+  "preserved_results": {
+    "campaign": "evaluation_20261022_b14102b7-e102-4744-b9a3-bc1d99ef014b",
+    "matrix_runs": 36,
+    "all_retained_runs": 38,
+    "passed": 16,
+    "partial": 10,
+    "failed": 10,
+    "requests_in_retained_matrix": 331,
+    "new_real_model_calls": 0,
+    "new_phone_commands": 0,
+    "historical_inputs_results_reviews_unchanged": true,
+    "final_framework": null
+  },
+  "limitations": [
+    "New v8 custom-task prompt, task revisions and manual-start matrix scheduling are offline-verified; no new real phone run was started in this UI development turn.",
+    "Software and browser acceptance do not add GUI task passes or establish framework superiority.",
+    "Existing Windows portable ZIP was not rebuilt."
+  ]
+}

@@ -28,6 +28,14 @@ async function waitFor(lab, id, predicate = s => !['running', 'stopping'].includ
   throw new Error('Lab did not reach expected state');
 }
 
+test('the legacy diagnostic entry also respects a persisted phone pause before starting any probe', async t => {
+  const root = await temporary(t), pausePath = path.join(root, 'phone-pause.json');
+  await writeFile(pausePath, JSON.stringify({ paused: true }));
+  const lab = new GuiLab(root, { pausePath });
+  try { await assert.rejects(lab.diagnostics({read(){throw Error('must not inspect configuration or probe hardware');}}), e => e.status === 423); }
+  finally { await lab.close(); }
+});
+
 test('v0.4 fixture separates target and evidence, keeps call hierarchy, image hashes, order and Mock provenance', async t => {
   const root = await temporary(t), lab = new GuiLab(root, { tickMs: 1 });
   try {

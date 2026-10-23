@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-21",
+  "timezone": "Asia/Hong_Kong",
+  "kind": "hdc_install_and_desktop_gui_entry",
+  "packages": [
+    {
+      "name": "commandline-tools-windows-x64-26.0.0.851.zip",
+      "bytes": 2722224870,
+      "sha256": "ac8d0563f47f95ca78799ea4aa494fa260bc3f7c8f2a569ac629af1794b5d71c",
+      "download_hosts": [
+        "developer.huawei.com",
+        "contentcenter-vali-drcn.dbankcdn.cn"
+      ],
+      "official_sha256_verified": false
+    },
+    {
+      "name": "devecotesting-windows-26.0.0.500.zip",
+      "bytes": 457032283,
+      "sha256": "6f04a68306ad71efd92e07002fbd2ce1a848e87d5e8af3faa25f7851078599df",
+      "download_hosts": [
+        "developer.huawei.com",
+        "contentcenter-vali-drcn.dbankcdn.cn"
+      ],
+      "official_sha256_verified": false
+    }
+  ],
+  "hdc": {
+    "version": "3.2.0f",
+    "toolchain_version": "26.0.0.105",
+    "toolchain_files": 1145,
+    "project_relative_executable": ".runtime/harmonyos-26.0.0.851/toolchains/hdc.exe",
+    "signature_status": "Valid",
+    "version_output": "Ver: 3.2.0f",
+    "final_device_list": "[Empty]",
+    "target_count": 0
+  },
+  "testing": {
+    "package_version": "26.0.0.500",
+    "installer_pe_version": "26.0.0.100",
+    "registered_version": "26.0.0.100",
+    "registered_installation_detected": true,
+    "client_launched": true,
+    "gui_entry_verified": "实用工具 → 设备投屏",
+    "uiviewer_entry_seen": true,
+    "phone_mirroring_verified": false,
+    "cloud_test_tasks_created": 0
+  },
+  "binary_checks": [
+    {
+      "file": "hdc.exe",
+      "signature_status": "Valid",
+      "signer": "CN=\"Huawei Technologies Co., Ltd.\", O=\"Huawei Technologies Co., Ltd.\", L=Shenzhen, S=Guangdong, C=CN",
+      "sha256": "0f0bf56db98bde235285c47a1a3777aa27a47e37fefd852084ff7272ab270fed"
+    },
+    {
+      "file": "libusb_shared.dll",
+      "signature_status": "Valid",
+      "signer": "CN=\"Huawei Technologies Co., Ltd.\", O=\"Huawei Technologies Co., Ltd.\", L=Shenzhen, S=Guangdong, C=CN",
+      "sha256": "8a3126c9aef4a7f413a4cb3e236be54a676e6ce2130f99c2a2fa1224647e2588"
+    },
+    {
+      "file": "devecotesting-windows-26.0.0.500.exe",
+      "signature_status": "Valid",
+      "signer": "CN=\"Huawei Technologies Co., Ltd.\", O=\"Huawei Technologies Co., Ltd.\", L=Shenzhen, S=Guangdong, C=CN",
+      "sha256": "bf19372bbc1ab1e50dab4830f591360b23b4b2f30caafd96a77b3a0c35077227"
+    }
+  ],
+  "engineering_tests": {
+    "selected": 14,
+    "normal_permissions_pass": 14,
+    "sandbox_pass": 13,
+    "sandbox_fail": 1,
+    "sandbox_failure": "Local HTTP connect EACCES; raw output retained",
+    "full_regression_rerun": false
+  },
+  "phone_baseline": {
+    "status": "blocked_before_device_read",
+    "reason": "A transient target was no longer listed at baseline start",
+    "device_metadata_verified": false
+  },
+  "real_gui": {
+    "attempts": 0,
+    "phone_actions": 0,
+    "phone_screenshots": 0,
+    "model_requests": 0,
+    "tokens": 0,
+    "status": "not_executed"
+  },
+  "limitations": [
+    "No official package checksum comparison",
+    "Client self-reported version not independently checked",
+    "Device/phone screenshot/mirroring and candidate loop unverified",
+    "Original blank-output probe must not be used as connection evidence"
+  ]
+}

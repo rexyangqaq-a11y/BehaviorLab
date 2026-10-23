@@ -1,24 +1,28 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-**交接状态（2026-10-21）**：主工作台 v0.3，验证台 v0.4-preview.1，正式 v0.4 未完成；当前暂停新增功能。最新事实以 [CURRENT_STATUS.md](docs/CURRENT_STATUS.md) 为入口，下一段对话按 [NEXT_TASK.md](docs/NEXT_TASK.md) 继续，本地源码回退见 [LOCAL_BASELINE.md](docs/LOCAL_BASELINE.md)。
+**2026-10-22 汇报与协作交付（preview.6）**：[20页汇报PPT](output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx)、[进一步失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)、[协作开发](docs/DEVELOPMENT.md)、[新增框架](docs/FRAMEWORK_ADAPTER_GUIDE.md)。框架注册/执行适配已拆分，Python路径支持整体迁移，离线工程回归107/107通过。新[Windows干净真机包](output/BehaviorLab-Phone-Windows-x64-20261022.zip)包含依赖与离线检查，不含密钥、账号或真机历史原图。当前部署以[本版文档](docs/WINDOWS_PORTABLE.md)为准，下文旧包未更新的描述属于历史。本轮零新增真实模型/手机调用，36项成绩不变，最终框架待确认。
+
+**2026-10-22 更新**：四阶段三框架 × 三模型 × 四题共 **36/36** 已执行并完成助手核对：**通过16、部分完成10、未通过10**，用户复核待定。确认4条输入/图片编码接入异常，修复后重测均通过，按用户要求覆盖旧记录；正常任务失败不重测。当前矩阵331请求，本批含诊断和已覆盖消耗累计373请求。结果支持组合筛选、每图模型回复/动作及设备版本。最新离线回归 **105/105**，不是 GUI 成绩。[实际结果与限制](docs/PHONE_EVALUATION_RESULTS_20261022.md)，[打开界面](http://127.0.0.1:4317/phone-lab)。
+
+Midscene、MobiAgent、Open-AutoGLM 已固定部署；**v0.4-preview.5 真机测试工作台**分为“任务列表、测试、结果与对比”：支持可命名的本机任务库、单项/组合三维选择及命名、任务中选择已有起点或给当前状态命名、分页列表/矩阵、每图模型回复、审核与导出，执行详情只在结果页展示。界面改版离线回归105/105及浏览器验收通过，零新增真机/模型调用，既有36单元成绩不变；新v9命名起点队列的实际真机执行待后续使用验证。用户复核待定，最终框架未定。[操作说明](docs/PHONE_LAB_GUIDE.md)，[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)，[NEXT_TASK.md](docs/NEXT_TASK.md)，[本地回退](docs/LOCAL_BASELINE.md)。
 
 当前流程见 [业务流程与用户创建 v0.3](docs/WORKSPACE_V03.md)：左侧为用户库、仿真任务、系统设置；规划、执行、观察文字和调用调试归属具体任务。用户支持辅助生成候选后审核入库，以及手动创建。
 
-继续开发按[版本计划](docs/VERSION_PLAN.md)逐版推进：**v0.4 优先完成开源下层 Agent 选型与最小验证**。现有 [v0.4-preview.1 单活动验证台](docs/V04_GUI_LAB.md)提供 7 类 Mock、环境诊断、记录与恢复，以及 Midscene SDK + 工具替身的离线契约验证。Midscene 与 MobiAgent 同等优先比较，Open-AutoGLM 为基线，未选定胜者。交接时重新运行工程回归 **46/46 通过**，见[测试记录](docs/evidence/20261021-handoff/tests.txt)。2026-10-19 的部署 ZIP 尚未包含此后的修复和新增页面，本次未重打包。
+继续开发按[版本计划](docs/VERSION_PLAN.md)逐版推进：**v0.4 优先完成开源下层 Agent 选型与最小验证**。既有 [v0.4-preview.1 单活动验证台](docs/V04_GUI_LAB.md)仍提供 7 类 Mock、环境诊断和恢复；新增真机页面与它分开。Midscene 与 MobiAgent 同等优先比较，Open-AutoGLM 为基线，未选定胜者。2026-10-21历史软件回归 **70/70 通过**，见[测试记录](docs/evidence/20261021-phone-lab/tests.txt)，均为离线替身/临时数据，不等于真机成绩。2026-10-19 的部署 ZIP 尚未包含新页面，本次未重打包。
 
 **每版必须随附独立测试用例与测试调试界面**，具体内容到对应版本开发时再设计、实现和验收，不提前展开。见[随版测试交付约定](docs/VERSION_TEST_PLAN.md)。
 
 v0.4 已将另一对话「框架对比」的循环、各层记忆、跨调用续接、百对象活动、部署及费用等映射为[15 维度、31 项验收用例](docs/V04_FRAMEWORK_TEST_CASES.md)。验证台可筛选、展开和下载，全部真实验收仍待执行；不会自动批量调用模型。
 
-第二类 [GUI 任务效果与性能用例](docs/V04_GUI_EVALUATION_CASES.md)现有 **14 条待审核初稿**（10 条公开任务复用、2 条派生、2 条未定稿长活动），已有 [Git 内冻结 JSON](docs/reference/GUI_EVALUATION_CASES_20261021.json)，但尚未接入网页执行/真实 runner/判分或审核工作流。46 项工程回归、7 类 Mock、31 项验收要求、14 条 GUI 定义属于不同集合，不能相加或混成成功率。两类测试按验证目的区分，DFX 只是常规软件工程测试的一部分。
+第二类 [GUI 任务效果与性能用例](docs/V04_GUI_EVALUATION_CASES.md)的 **14 条历史初稿**仍单独冻结、未执行。原[五题集](docs/reference/PHONE_LAB_CASES_20261021.json)保留；本轮[四个桌面起点任务](docs/reference/PHONE_HOME_EVALUATION_CASES_20261022.json)为 revision3，框架自行打开 APP，不要求动态时钟/推荐内容完全一致。四题九组合共36个唯一评估单元，每题每组合最多15请求，整批无总请求限制，零重试。工程回归、Mock、要求定义和真实样本分别统计。
 
-「系统设置 → 模型服务」可保存草稿、地址/模型/鉴权和四角色预设，密钥不回填。三个模型配置已保存，角色仍未绑定。2026-10-20 独立探针对 `qwen3.8-flash`、`qwen3.7-plus`、`deepseek-v4.1-flash-1017` 各一次短文本请求，均 HTTP 200 / OK，合计 **60 tokens**、0 重试，见[脱敏证据](docs/evidence/20261021-handoff/model-text-connectivity.json)。**这不代表图片、动作协议、框架或真机 GUI 能力已通过。** 探针结果未回写配置页，页面 `not_tested` 是现有实现边界。保存/打开配置不自动调用模型；规则见 [MODEL_CALL_POLICY.md](docs/MODEL_CALL_POLICY.md)。本次交接没有新增真实模型请求。
+「系统设置 → 模型服务」可保存草稿、地址/模型/鉴权和四角色预设，密钥不回填。三个服务已保存，角色仍未绑定。历史三次短文本合计 60 tokens；历史 qwen3.7-plus 首题 partial 保留在[原报告](docs/REAL_GUI_TRIAL_20261021.md)，本轮网页 qwen3.8-flash 成功样本另有[脱敏证据](docs/evidence/20261021-phone-lab/ui-real-task-summary.json)，两次条件不同不并成比较结果。独立试验未回写模型配置页，`not_tested` 是现有页面边界。保存/打开配置不调用模型；预算和暂停规则见 [MODEL_CALL_POLICY.md](docs/MODEL_CALL_POLICY.md)。
 
 为长期记忆研究生成上游行为序列。当前页面提供用户库、仿真任务与跨度选择、每日规划、行为序列、观察文字、调用链路及 APP 配置。**用户管理、事件调度、虚拟时钟、持久化和调用跟踪实际运行；人设补全、规划/调整、手机决策/操作、截图与描述内容仍为 Mock。** 主流程尚未接入真实模型适配器、手机或 hipyum，不包含记忆提取与检索引擎。
 
 业务基线保存在 [CODEX_PROJECT_HANDOFF.md](docs/CODEX_PROJECT_HANDOFF.md)，已确认需求与建议分级见 [REQUIREMENTS_CLARIFICATION.md](docs/REQUIREMENTS_CLARIFICATION.md)。2026-10-21 按用户要求、检查父目录归属后，在当前 `dev` 目录建立独立本地 Git 基线；未配置远程或上传。凭据、运行数据库/资产、缓存、安装依赖和 `output/` 不提交。
 
-采用 **Node.js 24 原生 ESM + SQLite + 文件资产**，本机已验证 Node v24.19.0。核心网页/Mock 无需第三方安装依赖或前端编译，不需要 npm；Midscene 1.16.0 是可选的隔离候选依赖，清单/锁文件保留，安装目录不提交。Python 不是主程序启动依赖，不能把本机 Windows 别名当成候选 Python 环境已准备好。技术栈是现有工程方案，可替换，不是用户指定要求。
+采用 **Node.js 24 原生 ESM + SQLite + 文件资产**，本机 Node v24.19.0。核心网页/Mock 无需第三方安装依赖或前端编译；真机 Midscene 1.16.0 为隔离依赖，两个 Python 候选及 ZIP 工具使用已部署的局部 Python 3.12.14。版本、安装/复查说明见[真机界面说明](docs/PHONE_LAB_GUIDE.md)。依赖、原图和凭据不提交；局部环境不等于已交付可迁移安装包。
 
 ## 运行
 
@@ -54,7 +58,7 @@ node --test tests/*.test.mjs
 
 退出码：0 为命令成功，1 为配置/运行错误或恢复需人工处理，2 为离线完整性检查失败。`run` 成功仅表示执行循环正常结束，完整状态请看 `dataset_complete` 和检查报告。
 
-历史受限 Windows 沙箱曾阻止临时文件替换或本地 HTTP；应核对执行环境，不删除恢复保护或忽略失败。交接时在正常 Windows 权限下全量 **46/46 通过**，包含真实本地进程和 HTTP，但没有使用真实模型、VLM 或手机。最早 13 项、发布时 29 项、预览时 44 项等是历史阶段数量。
+历史受限 Windows 沙箱曾阻止临时文件替换或本地 HTTP；应核对执行环境，不删除恢复保护或忽略失败。当前正常 Windows 权限下全量 **70/70 通过**，包含真实本地进程和 HTTP，测试未调用真实模型、VLM 或手机。最早 13 项、发布时 29 项、预览时 44 项、交接时 46 项等是历史阶段数量，不相加。
 
 ## 产物与边界
 

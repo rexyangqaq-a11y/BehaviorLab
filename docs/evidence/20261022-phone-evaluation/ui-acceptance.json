@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-22T06:53:53.428Z",
+  "url": "http://127.0.0.1:4317/phone-lab",
+  "browser": "in-app browser",
+  "verified": {
+    "matrix_status": "assessment_complete",
+    "matrix_progress": "36/36",
+    "all_retained_records": 38,
+    "current_evaluation_records": 36,
+    "passed_filter_records": 16,
+    "pending_review_filter_records": 0,
+    "anomaly_retest_filter_records": 4,
+    "list_and_comparison_filtered_together": true,
+    "original_abnormal_runs_removed": 10,
+    "trace_new_run": "phone_67711e66-8d58-4148-958a-11650a24a0c5",
+    "trace_model_reply_and_input_image_visible": true,
+    "historical_phone_versions_visible": true
+  },
+  "screenshots_local_only": [
+    "output/phone-evaluation-20261022/retest-filter.png"
+  ],
+  "real_model_requests_during_ui_acceptance": 0,
+  "device_commands_during_ui_acceptance": 0
+}

@@ -1,0 +1,27 @@
+✔ persistent pause blocks capture, run and batch before any physical or model call; configuration stays readable (42.1041ms)
+✔ shared lock rejects a second operation; real evidence references detect tampering (52.7599ms)
+✔ phone interface and read-only catalog require no device; paused HTTP requests return 423 and never call hardware (189.6167ms)
+✔ integration diagnostics remain readable with actual calls and source versions but are explicitly excluded from matrix scoring (13.3686ms)
+✔ a batch freezes its original reference and invalid limits cannot leave a batch active (29.9538ms)
+✔ every run reports its frozen execution phone, with explicitly labelled baseline and unknown fallbacks (25.7843ms)
+✔ named task library persists edits, protects builtins and detects stale revisions (41.2981ms)
+✔ task archive is reversible and validation rejects unsafe package names and empty criteria (35.0587ms)
+✔ single and matrix plans enforce all three axes and produce the full Cartesian product (0.6856ms)
+✔ task HTTP create and edit work while paused without touching a phone or model (168.0585ms)
+✔ a revised task cannot reuse its old baseline, and invalid preparations never access hardware (32.3201ms)
+✔ manual matrix waits per cell, rejects drift, freezes task content and supports cancellation (71.2217ms)
+✔ closing a batch waiting for a manual start does not leave an unresolved queue (50.3142ms)
+✔ custom home baselines need no target package, while manual starts compare actual page content (1.6751ms)
+✔ results support new batch scopes and keep protocols, revisions and limits in separate comparison groups (0.4479ms)
+✔ task startpoint configuration persists independently and is frozen for a batch without a test-page override (107.3626ms)
+✔ a task rejects another task baseline, stale task revisions and stale configured startpoints (42.22ms)
+✔ single-run names and task names are frozen separately, and configured starts are resolved on the server (222.1886ms)
+✔ task baseline API can select existing evidence while paused and never calls the phone (76.989ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 975.0905

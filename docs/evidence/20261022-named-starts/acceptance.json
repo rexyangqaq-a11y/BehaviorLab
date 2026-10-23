@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-22",
+  "version": "0.4.0-preview.5",
+  "url": "http://127.0.0.1:4317/phone-lab",
+  "software": {
+    "command": "node --test tests/*.test.mjs",
+    "passed": 105,
+    "failed": 0,
+    "evidence": "software-tests.txt",
+    "new_checks": [
+      "Current-state capture requires only a name; empty/oversize names fail before any device access",
+      "Recording the current state never launches an app or issues reset commands",
+      "Named points are reusable across tasks and task revisions",
+      "Legacy start reuse copies verified local image/layout evidence with source references and preserves original files",
+      "Named pages are checked automatically in a matrix; drift blocks before the next model call without operator reconfiguration",
+      "Target app versions remain separate comparison conditions",
+      "Known app packages are inferred without exposing package configuration, and stale packages are cleared when app changes"
+    ],
+    "boundary": "Temporary data, local HTTP and device doubles; these tests are not real GUI passes"
+  },
+  "browser": {
+    "performed": true,
+    "checks": [
+      "Task setting offers exactly two source modes: saved point or named current state",
+      "Current-state mode shows only the point name; existing selector is hidden",
+      "Start type, package, state-description and reset controls are absent",
+      "Empty current-state name has required-field validation",
+      "Draft point name survives polling and switching modes",
+      "Existing points display saved names and capture timestamps",
+      "Saved point preview displays an actual existing image",
+      "Test tab has no point selection, naming or recording controls",
+      "Single and matrix configuration remain usable",
+      "Browser error log empty"
+    ],
+    "screenshots_local": [
+      "output/named-starts-20261022/existing-state.png",
+      "output/named-starts-20261022/current-state.png"
+    ],
+    "boundary": "No current-state save or test start was clicked; real phone capture was verified only with offline doubles",
+    "temporary_tool_block": "Initial browser attempt was not executed because approval review hit a quota limit. A later normal retry succeeded; no approval bypass was used."
+  },
+  "preservation": {
+    "new_real_model_calls_by_agent": 0,
+    "new_phone_commands_by_agent": 0,
+    "production_settings_saved_by_agent": 0,
+    "observed_tasks": 6,
+    "observed_runs": 39,
+    "original_campaign_runs": 36,
+    "user_added_task_preserved": "大众点评查看火锅店",
+    "historical_results_rewritten": false,
+    "final_framework": null
+  },
+  "limitations": [
+    "New real execution uses phone-lab-v9-named-start-v1; older v4-v8 records remain unchanged",
+    "Named arbitrary app pages are verified against the actual current screen; naming a point does not restore an arbitrary UI state",
+    "No new real model or phone task was started for this change"
+  ]
+}

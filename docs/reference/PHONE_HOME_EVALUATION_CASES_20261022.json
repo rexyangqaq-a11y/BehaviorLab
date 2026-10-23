@@ -1,0 +1,262 @@
+{
+  "frozen_for_evaluation": "evaluation_20261022_b14102b7-e102-4744-b9a3-bc1d99ef014b",
+  "protocols": [
+    "phone-lab-v4-logical-home-v2",
+    "phone-lab-v5-logical-home-v3",
+    "phone-lab-v6-readonly-permissions-v1",
+    "phone-lab-v7-focused-input-jpeg-v1"
+  ],
+  "start_policy": "logical_home_fixed_icon_membership_v3",
+  "protocol_amendments": [
+    {
+      "at": "2026-10-22T02:18:32.856Z",
+      "change": "python_bridge_utf8_and_answer_wrapper_v2",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "df3780d06e98cbf86ea9de99e103502f531f0ca5cb8f6b0f12a4681a9b2107c3"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "affected_frameworks": [
+        "mobiagent",
+        "autoglm"
+      ],
+      "invalidated_run_ids": [
+        "phone_52cb0da1-7411-41b1-8e62-35c94fb23908",
+        "phone_fafa138c-b6e7-48da-9325-2897613db264",
+        "phone_31e7ffe6-403c-441d-9ef5-5f48ee9af346",
+        "phone_1e948078-972f-4097-a951-fbdb92466501",
+        "phone_820b9077-d4fc-4396-859a-cb90a2695073",
+        "phone_b00c1d06-c702-43cc-baab-7cff6bb5530e"
+      ],
+      "old_reuse": [
+        {
+          "phase": "stage4",
+          "key": "HM-CALC-001|mobiagent|aliyun_qwen3_8_flash",
+          "run_id": "phone_52cb0da1-7411-41b1-8e62-35c94fb23908"
+        },
+        {
+          "phase": "stage4",
+          "key": "HM-CALC-001|autoglm|aliyun_qwen3_8_flash",
+          "run_id": "phone_fafa138c-b6e7-48da-9325-2897613db264"
+        }
+      ],
+      "retained_midscene": "Python bridge was not executed by Midscene. All existing Midscene cells, including failures, remain frozen and reusable. Home/task/limits/transport/device sources unchanged.",
+      "verification": "output/phone-evaluation-20261022/native-unicode-before.json and native-unicode-after.json; real calls 0 in both offline contracts."
+    },
+    {
+      "at": "2026-10-22T02:46:14.800Z",
+      "change": "logical_home_recent_membership_relaxed_v3",
+      "user_instruction": "不用完全一致；计算器同组合不用重做",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "f58bfe914bc986270701adf6800cd644ad8a97d0fa0521e9e3132396e8a2f06d",
+        "src/phone-lab-catalog.mjs": "7c8c81da0560a9f85384fd66628cf6d3ea727a54b9dc8b7491b3b2902c3a3e90",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "prior_run_starts_revalidated": [
+        "phone_7920f9da-a512-486a-aac1-831ad20985ef",
+        "phone_bcc4ff33-359f-428d-aa70-ef7f56c7f207",
+        "phone_a61b4b75-dcab-4a6e-9550-be00abeb4539",
+        "phone_704281e1-466c-476b-9f17-52b394e378c9",
+        "phone_ff6ad609-f43e-4e41-8ad1-2e456f8e2cb5",
+        "phone_b88adaba-f429-40f1-a536-090e042ea4c7",
+        "phone_a45530c2-981b-4a1b-af83-ad23d3232997",
+        "phone_fab1173f-2a81-447b-9904-1c1e65d82922",
+        "phone_16146195-cb5c-45dd-ac3e-2188c57bd2cf",
+        "phone_507202c2-cf54-4915-979b-b15217dd17d8",
+        "phone_75847d01-7eb6-4447-ac76-b66bbf8fbc19",
+        "phone_8c301dc0-3986-4df0-8fc5-16a7489b1085",
+        "phone_322edcfb-246f-429c-9bcc-9a61c60bf81f",
+        "phone_5940bea7-3ea2-4d66-89b2-2cc1e5100fa3",
+        "phone_7c54ca3b-4ad0-49a9-97dd-cf9af513d431",
+        "phone_546bfbf0-4ec0-46f6-a065-ed4424047ce3",
+        "phone_cebf3a1c-41f8-4794-9678-fb1a029f802c"
+      ],
+      "zero_call_preblocks_revalidated": 19,
+      "unchanged": "Task instructions, acceptance, device, versions, orientation, framework operation code and limits unchanged; derive references from ORIGINAL saved baselines, not later phone state.",
+      "previous_finished_at": "2026-10-22T02:40:40.076Z"
+    },
+    {
+      "at": "2026-10-22T03:08:48.489Z",
+      "change": "deny_new_system_permissions_v1",
+      "old_sources": {
+        "scripts/phone-lab-worker.mjs": "6afec4b1dd765cb5a623ce37baf16dde4aa8273d4dbbc099c1b1509e615dd910",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7"
+      },
+      "new_sources": {
+        "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+        "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+        "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+        "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+        "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+        "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+        "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+        "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899"
+      },
+      "retained_real_runs": 24,
+      "scope": "Existing outcomes and the observed temporary clipboard grant remain in records. Remaining cells get an explicit denial instruction and a fresh layout check before non-navigation actions. Only framework clicks on the deny control are permitted while a system permission dialog is visible; no observer handles the popup.",
+      "performance": "Permission-check duration is recorded and remains part of execution time. Do not pool different source/protocol versions into one timing group.",
+      "task_instruction_and_limits_unchanged": true
+    }
+  ],
+  "case_ids": [
+    "HM-CALC-001",
+    "HM-STOR-001",
+    "HM-TB-001",
+    "HM-XHS-001"
+  ],
+  "cases": [
+    {
+      "id": "HM-CALC-001",
+      "revision": 3,
+      "name": "计算器 · 完成算式",
+      "app": "计算器",
+      "bundle": "com.huawei.hmos.calculator",
+      "instruction": "从手机桌面开始，自主找到并打开计算器，清空已有表达式，再计算 (128 + 37) × 6，并让最终计算结果显示在计算器界面。必须通过界面输入并计算，不要只在文字中给出答案。",
+      "initial_state": "手机桌面固定页面、展开横屏、固定图标布局与最近应用集合相同（最近项顺序和小组件内容动态留证），无键盘或浮窗。准备只停止目标 APP 进程并回桌面，不打开 APP、不清除账号或应用数据；框架自行打开并清空表达式。",
+      "acceptance": [
+        "通过真实 UI 输入算式",
+        "终图实际显示结果 990",
+        "无遗留的其他算式或错误状态"
+      ],
+      "reset": "home",
+      "expected": [
+        "990"
+      ],
+      "forbidden": "打开任务外应用或调用外部计算接口",
+      "origin": "project_owned_complete_task"
+    },
+    {
+      "id": "HM-STOR-001",
+      "revision": 3,
+      "name": "设置 · 查看存储占用",
+      "app": "设置",
+      "bundle": "com.huawei.hmos.settings",
+      "instruction": "从手机桌面开始，自主找到并打开系统设置，进入“存储”，读取当前已使用空间和总容量，并查看应用/应用和元服务所占空间。保持在存储页面，不执行清理或删除；未显示的字段说明未显示。",
+      "initial_state": "手机桌面同一页面、展开横屏，无键盘或浮窗；时钟、小组件和最近应用集合/顺序允许变化并截图留证。准备只停止目标 APP 进程并回桌面，不打开 APP、不清除账号或应用数据。",
+      "acceptance": [
+        "框架自主进入存储页面",
+        "已用/总容量有终图依据",
+        "应用占用可见或明确说明未显示",
+        "没有清理或删除操作"
+      ],
+      "reset": "home",
+      "expected": [
+        "存储"
+      ],
+      "forbidden": "清理、删除、卸载、修改任何配置",
+      "origin": "project_owned_complete_task"
+    },
+    {
+      "id": "HM-TB-001",
+      "revision": 3,
+      "name": "淘宝 · 搜索并查看商品",
+      "app": "淘宝",
+      "bundle": "com.taobao.taobao4hmos",
+      "instruction": "从手机桌面开始，自主找到并打开淘宝，搜索“折叠手机支架”，打开一个普通商品详情，读取页面显示的商品标题和当前展示价格。保持在该商品详情；不要选择规格、加入购物车、收藏、下单或付款。遇到广告或直播跳过。",
+      "initial_state": "手机桌面同一页面、展开横屏，无键盘或浮窗；时钟、小组件和最近应用集合/顺序允许变化并截图留证，淘宝同一已登录账号。准备只停止目标 APP 进程并回桌面，不打开 APP、不清除账号或应用数据。",
+      "acceptance": [
+        "实际搜索指定关键词",
+        "打开普通商品详情而非广告/直播",
+        "标题和展示价格来自终图；不推断优惠后价",
+        "没有购物车、收藏或交易动作"
+      ],
+      "reset": "home",
+      "expected": [],
+      "forbidden": "购买、加购、收藏、关注、支付、修改账号",
+      "origin": "project_owned_complete_task",
+      "dynamic": "商品及价格可能变化，记录执行时间与实际商品，不跨时段强求同一价格"
+    },
+    {
+      "id": "HM-XHS-001",
+      "revision": 3,
+      "name": "小红书 · 搜索并阅读笔记",
+      "app": "小红书",
+      "bundle": "com.xingin.xhs_hos",
+      "instruction": "从手机桌面开始，自主找到并打开小红书，搜索“杭州旅游”，打开一篇普通图文笔记，读取笔记标题、作者及正文中一条可见的出行建议。保持在该笔记详情。不要点赞、收藏、关注、评论、私信或分享；不要打开广告、直播或视频。",
+      "initial_state": "手机桌面同一页面、展开横屏，无键盘或浮窗；时钟、小组件和最近应用集合/顺序允许变化并截图留证，小红书同一已登录账号。准备只停止目标 APP 进程并回桌面，不打开 APP、不清除账号或应用数据。",
+      "acceptance": [
+        "实际搜索指定关键词",
+        "进入普通图文笔记详情",
+        "标题、作者和一条建议有真实图依据",
+        "没有任何互动/发布动作"
+      ],
+      "reset": "home",
+      "expected": [],
+      "forbidden": "点赞、收藏、关注、评论、私信、分享或修改账号",
+      "origin": "project_owned_complete_task",
+      "dynamic": "搜索结果会变化，固定查询/账号/起始页，记录实际笔记与时刻"
+    }
+  ],
+  "frameworks": [
+    "midscene",
+    "mobiagent",
+    "autoglm"
+  ],
+  "models": [
+    {
+      "id": "aliyun_qwen3_8_flash",
+      "model": "qwen3.8-flash"
+    },
+    {
+      "id": "aliyun_qwen3_7_plus",
+      "model": "qwen3.7-plus"
+    },
+    {
+      "id": "aliyun_deepseek_v4_1_flash_1017",
+      "model": "deepseek-v4.1-flash-1017"
+    }
+  ],
+  "limits": {
+    "max_requests": 15,
+    "max_actions": 40,
+    "max_seconds": 600,
+    "max_output_tokens": 512,
+    "automatic_retries": 0,
+    "max_payload_bytes": 2097152,
+    "max_text_chars": 90000,
+    "max_images": 2,
+    "thinking": false
+  },
+  "sources": {
+    "scripts/phone-lab-worker.mjs": "248301aa5b32a0da9f9123deb662cf8227d539ecd4fd9109c566baa0c7790900",
+    "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+    "src/phone-startpoints.mjs": "4d0adea92eb0a94b4f4f2efcbf4db3cddf008a6e425fcbf05a892ad32de29741",
+    "src/phone-lab-catalog.mjs": "9fb7de28d7fc2f2b6fde446af88ed2d6e65da4b84b60f851378679f19ffaefb0",
+    "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+    "src/gui-trial-transport.mjs": "932ec746d519129a31287bec1eed8031e30650429e07f6a79bc65a574f495117",
+    "integrations/phone-frameworks.py": "79afe6c9a9124ddf3d13070a8e66aff925ae86b441e7715d00e893ebefc952a7",
+    "src/phone-permissions.mjs": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899"
+  },
+  "final_framework": null
+}

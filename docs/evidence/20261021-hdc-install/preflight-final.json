@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "kind": "real_gui_preflight",
+  "checked_at": "2026-10-21T06:16:08.261Z",
+  "final_framework": null,
+  "trial_framework": "midscene",
+  "framework_loop_executed": false,
+  "host": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "arch": "x64",
+    "os_release": "10.0.26300"
+  },
+  "sdk": {
+    "package": "@midscene/harmony",
+    "manifest_version": "1.16.0",
+    "installed_version": "1.16.0",
+    "status": "installed_version_matches"
+  },
+  "hdc": {
+    "status": "no_targets",
+    "version": "3.2.0f",
+    "target_count": 0,
+    "target_hashes": [],
+    "commands": [
+      {
+        "args": [
+          "-v"
+        ],
+        "status": "returned",
+        "duration_ms": 49
+      },
+      {
+        "args": [
+          "list",
+          "targets"
+        ],
+        "status": "returned",
+        "duration_ms": 78
+      }
+    ]
+  },
+  "device": {
+    "model": null,
+    "os_build": null,
+    "app_versions": null,
+    "screenshot_verified": false
+  },
+  "model_configuration": {
+    "status": "read_only",
+    "revision": 3,
+    "services": [
+      {
+        "id": "aliyun_qwen3_8_flash",
+        "model": "qwen3.8-flash",
+        "protocol": "openai-chat",
+        "endpoint_host": "token-plan.cn-beijing.maas.aliyuncs.com",
+        "has_api_key": true,
+        "image_protocol_verified": false
+      },
+      {
+        "id": "aliyun_qwen3_7_plus",
+        "model": "qwen3.7-plus",
+        "protocol": "openai-chat",
+        "endpoint_host": "token-plan.cn-beijing.maas.aliyuncs.com",
+        "has_api_key": true,
+        "image_protocol_verified": false
+      },
+      {
+        "id": "aliyun_deepseek_v4_1_flash_1017",
+        "model": "deepseek-v4.1-flash-1017",
+        "protocol": "openai-chat",
+        "endpoint_host": "token-plan.cn-beijing.maas.aliyuncs.com",
+        "has_api_key": true,
+        "image_protocol_verified": false
+      }
+    ],
+    "bindings": {
+      "persona": null,
+      "planner": null,
+      "gui": null,
+      "describer": null
+    }
+  },
+  "activity_attempts": 0,
+  "gui_actions": 0,
+  "screenshots": 0,
+  "model_usage": {
+    "requests": 0,
+    "retries": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reason": "No model request code is invoked by this preflight."
+  },
+  "gui_result": {
+    "status": "not_executed",
+    "passed": false,
+    "assessment": null
+  },
+  "blockers": [
+    {
+      "id": "device_connection",
+      "owner": "environment",
+      "detail": "需要可用的 HDC 与明确的一台已授权调试设备。列设备仍不证明 GUI 兼容。"
+    },
+    {
+      "id": "device_baseline",
+      "owner": "implementation",
+      "detail": "需采集型号/系统构建、实际起始页、截图/尺寸并核对；此脚本不发送设备 shell 命令。"
+    },
+    {
+      "id": "bounded_runner",
+      "owner": "implementation",
+      "detail": "需接通候选循环、图片/动作协议、动作前记录、逐请求用量/限额、停止与独立完成核对。当前网页仍只接受 Mock。"
+    }
+  ],
+  "trial_confirmation": {
+    "status": "user_confirmed",
+    "date": "2026-10-21",
+    "scope": "First small task only; final framework remains undecided."
+  },
+  "duration_ms": 135
+}

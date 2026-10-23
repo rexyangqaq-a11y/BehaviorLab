@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-22",
+  "version": "0.4.0-preview.4",
+  "url": "http://127.0.0.1:4317/phone-lab",
+  "software": {
+    "command": "node --test tests/*.test.mjs",
+    "passed": 101,
+    "failed": 0,
+    "evidence": "software-tests.txt",
+    "new_checks": [
+      "Task-specific baseline persists across reopening and remains selected when a newer capture exists",
+      "Matrix reads and freezes configured task baseline without client startpoint overrides",
+      "Task revisions and wrong-task baselines are rejected; explicit empty config does not silently fall back",
+      "Single-run name, task name and task baseline are frozen independently; empty name defaults to task name",
+      "Isolated credential-less worker stops before creating a phone session or model transport",
+      "Baseline selection API works while paused and never accesses hardware"
+    ],
+    "boundary": "Temporary local data, offline fixtures, local HTTP; not real GUI task scores"
+  },
+  "browser": {
+    "checks": [
+      "Test tab has zero baseline selectors and zero capture/reset controls",
+      "Task detail contains start type, description, baseline selection, capture/reset and preview",
+      "Builtin task content remains readonly while its baseline selection is editable",
+      "Selecting an existing baseline persists on reload without changing task revision",
+      "Cleared task baseline disables the test start and offers navigation back to task configuration",
+      "Original calculator baseline restored after verification",
+      "Single-run test name field is visible and preserves text while switching single/matrix modes",
+      "Single/matrix naming labels change correctly",
+      "Browser error log empty"
+    ],
+    "screenshots_local": [
+      "output/task-startpoints-20261022/task-start.png",
+      "output/task-startpoints-20261022/single-test.png"
+    ],
+    "configured_task": "HM-CALC-001",
+    "task_revision_unchanged": 3,
+    "baseline_preserved": "start_b7776b8c-d270-4c36-8302-7be205a83335",
+    "baseline_storage": ".data/.phone-lab/task-startpoints.json"
+  },
+  "real_execution": {
+    "new_model_calls": 0,
+    "new_phone_commands": 0,
+    "new_production_runs": 0,
+    "retained_runs": 38,
+    "matrix_runs": 36,
+    "historical_results_changed": false,
+    "final_framework": null
+  },
+  "limitation": "New task-baseline resolution and named-run execution have offline coverage; no new real phone task was run for this UI change."
+}

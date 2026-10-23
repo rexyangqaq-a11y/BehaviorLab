@@ -1,0 +1,98 @@
+{
+  "checked_at": "2026-10-21T09:55:42.432Z",
+  "status": "deployment_verified",
+  "sdk": {
+    "package": "@midscene/harmony",
+    "version": "1.16.0"
+  },
+  "python": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "packages": {
+      "openai": "2.9.0",
+      "httpx": "0.28.1",
+      "Pillow": "12.3.0",
+      "hmdriver2": "1.4.4",
+      "uiautomator2": "3.4.1",
+      "opencv-python-headless": "5.0.0.93"
+    }
+  },
+  "sources": {
+    "mobiagent": {
+      "commit": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "source": "https://github.com/IPADS-SAI/MobiAgent",
+      "source_pinned": true
+    },
+    "autoglm": {
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "source": "https://github.com/zai-org/Open-AutoGLM",
+      "source_pinned": true
+    }
+  },
+  "native_contracts": [
+    {
+      "framework": "autoglm",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 5,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    },
+    {
+      "framework": "mobiagent",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 4,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    }
+  ],
+  "real_device_commands": 0,
+  "real_model_requests": 0,
+  "model_weights_downloaded": false,
+  "memory_service_enabled": false,
+  "final_framework": null,
+  "limitations": [
+    "Python frameworks have not yet run a real phone task",
+    "Optional MobiAgent experience import disabled; native task_in_app e2e is used instead of auto-launch/stop dispatcher",
+    "Model/action compatibility remains per-combination evaluation"
+  ],
+  "commands": [
+    {
+      "executable": "python.exe",
+      "args": [
+        "-c",
+        "import sys,json,importlib.metadata as m;import openai,cv2,hmdriver2,uiautomator2;print(json.dumps({\"python\":sys.version,\"packages\":{k:m.version(k) for k in [\"openai\",\"httpx\",\"Pillow\",\"hmdriver2\",\"uiautomator2\",\"opencv-python-headless\"]}}))"
+      ]
+    },
+    {
+      "executable": "git",
+      "args": [
+        "-C",
+        ".runtime\\frameworks\\MobiAgent",
+        "rev-parse",
+        "HEAD"
+      ]
+    },
+    {
+      "executable": "git",
+      "args": [
+        "-C",
+        ".runtime\\frameworks\\Open-AutoGLM",
+        "rev-parse",
+        "HEAD"
+      ]
+    },
+    {
+      "executable": "node.exe",
+      "args": [
+        "scripts\\phone-framework-contract.mjs"
+      ]
+    }
+  ]
+}

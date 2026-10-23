@@ -1,0 +1,22 @@
+✔ v0.4 fixture separates target and evidence, keeps call hierarchy, image hashes, order and Mock provenance (94.9804ms)
+✔ v0.4 duplicate, no-result, step-budget and stagnant fixtures never claim the requested amount (298.8887ms)
+✔ v0.4 model failure sends no action; unknown tool effect sends once and cannot be automatically resumed (72.9348ms)
+✔ v0.4 stop and reopen preserve evidence; explicit Mock resume skips completed actions (144.3894ms)
+✔ v0.4 real process crash is diagnosed after reopen and Mock unfinished steps can be resumed (197.7675ms)
+✔ SDK instrumentation blocks dispatch without a durable intent, retains every observation and marks unknown effects (0.6774ms)
+✔ v0.4 failed image retention prevents dispatch; final journal failure preserves earlier evidence and settles the runner (47.9077ms)
+✔ v0.4 API rejects real mode and external writes, exports Mock records without changing simulator data (243.985ms)
+✔ HDC empty output and failure messages never become an empty or valid device list (2.2458ms)
+✔ project HDC config remains local, cannot escape its directory and cannot override an explicit path (14.9184ms)
+✔ preflight reads only public configuration fields, preserves the database and omits credentials (29.1979ms)
+✔ missing HDC cannot invoke tools or create a GUI result; explicit missing path does not fall back (4.6353ms)
+✔ only explicit trial confirmation clears its gate, with no final framework or runtime execution (9.0145ms)
+✔ tool replacement proves only the probe contract: version/list argv, no retries, raw serial omitted and failures unknown (5.2063ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1235.6753

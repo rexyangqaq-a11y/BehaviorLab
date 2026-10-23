@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-21T10:16:49.469Z",
+  "purpose": "current offline-verified software, not historical run source hashes",
+  "files": {
+    "src/phone-lab.mjs": "54a351fd9d6a50401cb9d668d8eeb85061795b908ed85c852cf25a3eba52f3c6",
+    "src/phone-lab-catalog.mjs": "6fa5a002de2438b6eeb81fb8287f73901b0f55dfdef572f143ba0603f74d116c",
+    "src/phone-device.mjs": "27ea59fc2ca69f43b79fad796157f904189d72c5799bfb92113f1fd8df0b11a6",
+    "src/phone-startpoints.mjs": "a7a637de9d3e0b75cd5483ce6459a16a52e5023f163c0f5cf1bba05c7fffd8e8",
+    "src/phone-image-privacy.mjs": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+    "src/phone-evidence.mjs": "3ccee3d2030d90b805d409a9c5d621e6d650b3725fbfcd7b7999a8629192c047",
+    "scripts/phone-lab-worker.mjs": "f3f842ecd4b8d969aa659fd433b6c2166ddc663b841f2314f0e29d7f98855291",
+    "scripts/phone-frameworks-setup.mjs": "cc874ef6c3d8cf9756c91b2bb999b2d66a4a7d109c973eb48d5494e2c774bba7",
+    "scripts/phone-framework-contract.mjs": "624698656d77eb8539b13999db34bd5e2c6a246adfe9145e2d0f435d91a14983",
+    "integrations/phone-frameworks.py": "1d7f8b47f7b3e2486a74d749974ac0ef2a6e3031e1006c33ad03148cca1268ae",
+    "integrations/phone-frameworks-requirements.txt": "4aa22e08d13c49f5c7bcdb981467abc12e3403b13b27ef38fcf29192cca4075a",
+    "src/gui-lab.mjs": "b92c1789474266a8079a7986d942fc91b5c0b5fcd1e78273639bab1c93da3bc6",
+    "src/gui-lab-catalog.mjs": "020ffe9422a79866d14aeceb614307d0ebb68330e8d2dcecbff2961afe98c0ce",
+    "src/web-server.mjs": "b59bc56586c5464d7eb99c8b1cbbcc7f67bc45930b64a840b1c786133f72438d",
+    "web/workspace.mjs": "4922f053d95e9c05ce7f3692a17b9d241414832f4acb10d7f409def7b2a49a11",
+    "web/phone-lab.html": "6a966fe6f3db12828a334cdaecfe6ab19504d08b81a03ee5543a57b89e6e936e",
+    "web/phone-lab.css": "f802da8ecfde0ad45276ca6aeb865c404601a010d7c96d5af2602f85dccf3863",
+    "web/phone-lab.mjs": "02d13ed4da7034dd9d46f8bf165ca1758466f656d86003b26853c63b11635655",
+    "tests/gui-lab.test.mjs": "7a5e77c9ce559dbdf49aa55e79bf580143f858abc7e8a5a5ed974fdfcf959793",
+    "tests/phone-image-privacy.test.mjs": "174e0a105258c2c7005e381d6f77f942c97402e40b036f650000af771ad59d49",
+    "tests/phone-lab.test.mjs": "bbd5bf923e52bd633598f7b5b3d3985753aeaa3cf5b987be35e51b371f86ff1c",
+    "tests/phone-startpoints.test.mjs": "e422f8c86fead54555efab75eec528a16740fb824f1908e3f0a1f05ed01a3af2"
+  }
+}

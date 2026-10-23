@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-21T10:18:09.136Z",
+  "phone_pause_at": "2026-10-21T09:33:42.229Z",
+  "phone_remains_paused": true,
+  "model_requests_after_pause": 0,
+  "device_commands_after_pause": 0,
+  "run_text_files_checked": 12,
+  "credential_values_in_run_files": 0,
+  "zip": {
+    "integrity": "passed",
+    "files": 60,
+    "required_files": {
+      "input.json": true,
+      "environment.json": true,
+      "source-versions.json": true,
+      "events.jsonl": true,
+      "model-calls.jsonl": true,
+      "result.json": true,
+      "review.json": true
+    }
+  }
+}

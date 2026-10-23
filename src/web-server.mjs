@@ -17,6 +17,7 @@ import { UserLibrary } from './user-library.mjs';
 import { ModelSettings } from './model-settings.mjs';
 import { GuiLab } from './gui-lab.mjs';
 import { guiComparisonPlan } from './gui-comparison-cases.mjs';
+import { PhoneLab } from './phone-lab.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
 const publicRoot = path.join(project, 'web');
@@ -37,12 +38,13 @@ async function body(request) {
   catch { throw fail(400, 'JSON 格式无效'); }
 }
 
-export async function createDebugServer({ dataRoot = path.join(project, '.data'), port = 4317 } = {}) {
+export async function createDebugServer({ dataRoot = path.join(project, '.data'), port = 4317, phoneLabOptions } = {}) {
   await mkdir(dataRoot, { recursive: true });
   const root = await realpath(path.resolve(dataRoot));
   const library = new UserLibrary(root);
   const modelSettings = new ModelSettings(root);
   const guiLab = new GuiLab(root);
+  const phoneLab = new PhoneLab(root,phoneLabOptions);
   const children = new Map();
   const stores = new Map();
   let closing = false;
@@ -121,7 +123,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Referrer-Policy', 'no-referrer');
     response.setHeader('Cache-Control', 'no-store');
-    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
+    response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'");
     try {
       const allowedHosts = [`127.0.0.1:${localPort}`, `localhost:${localPort}`];
       if (!allowedHosts.includes(request.headers.host)) throw fail(403, '仅接受本地调试请求');
@@ -135,6 +137,44 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         const [filename, type] = staticFiles[url.pathname];
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
         response.end(await readFile(path.join(publicRoot, filename))); return;
+      }
+      const phoneFiles = { '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
+      if(request.method==='GET'&&phoneFiles[url.pathname]){
+        const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
+      }
+      if(url.pathname.startsWith('/api/phone-lab')){
+        const suffix=url.pathname.slice('/api/phone-lab'.length);
+        if(!suffix&&request.method==='GET')jsonResponse(response,200,await phoneLab.catalog(modelSettings.read()));
+        else if(suffix==='/tasks'&&request.method==='GET')jsonResponse(response,200,phoneLab.listTasks());
+        else if(suffix==='/tasks'&&request.method==='POST')jsonResponse(response,201,phoneLab.tasks.save(await body(request)));
+        else if(/^\/tasks\/(task_[a-f0-9-]{36}|HM-[A-Z]+-\d+)\/startpoint$/.test(suffix)&&request.method==='POST')jsonResponse(response,200,await phoneLab.selectTaskStart(suffix.split('/')[2],await body(request)));
+        else if(/^\/tasks\/(task_[a-f0-9-]{36}|HM-[A-Z]+-\d+)$/.test(suffix)&&request.method==='POST')jsonResponse(response,200,phoneLab.tasks.save(await body(request),suffix.split('/')[2]));
+        else if(suffix==='/pause'&&request.method==='POST'){const input=await body(request);jsonResponse(response,200,phoneLab.pause(typeof input.reason==='string'?input.reason.slice(0,500):undefined));}
+        else if(suffix==='/resume'&&request.method==='POST'){await body(request);jsonResponse(response,200,phoneLab.resume());}
+        else if(suffix==='/mirroring/open-tool'&&request.method==='POST'){const input=await body(request);if(!input||Array.isArray(input)||Object.keys(input).length)throw fail(400,'投屏工具启动不接受路径或命令参数');jsonResponse(response,200,await phoneLab.mirroring.open());}
+        else if(suffix==='/starts'&&request.method==='POST')jsonResponse(response,201,await phoneLab.captureStart(await body(request)));
+        else if(suffix==='/runs'&&request.method==='POST')jsonResponse(response,201,await phoneLab.start(await body(request),modelSettings.read()));
+        else if(suffix==='/batches'&&request.method==='POST')jsonResponse(response,201,await phoneLab.batch(await body(request),modelSettings.read()));
+        else{
+          const m=suffix.match(/^\/(runs|starts|batches)\/([a-z_0-9-]+)(?:\/(stop|continue|review|export|bundle|process|assets\/([a-z_0-9-]+)))?$/);
+          if(!m)throw fail(404,'未找到真机测试接口');
+          const [,kind,id,action,assetId]=m;
+          if(assetId&&request.method==='GET'){
+            const a=await phoneLab.asset(kind,id,assetId);response.writeHead(200,{'Content-Type':a.type});response.end(a.bytes);
+          }else if(kind==='runs'&&action==='bundle'&&request.method==='GET'){
+            const bytes=await phoneLab.bundle(id);response.writeHead(200,{'Content-Type':'application/zip','Content-Disposition':`attachment; filename="${id}-evidence.zip"`});response.end(bytes);
+          }else if(kind==='runs'&&action==='process'&&request.method==='GET'){
+            response.setHeader('Cache-Control','no-store');jsonResponse(response,200,phoneLab.processSnapshot(id,Number(url.searchParams.get('after_seq')??0)));
+          }else if(kind==='runs'&&request.method==='GET'){
+            if(action==='export')response.setHeader('Content-Disposition',`attachment; filename="${id}.json"`);
+            jsonResponse(response,200,phoneLab.snapshot(id));
+          }else if(kind==='runs'&&action==='stop'&&request.method==='POST'){await body(request);jsonResponse(response,200,phoneLab.stop(id));}
+          else if(kind==='runs'&&action==='review'&&request.method==='POST')jsonResponse(response,200,phoneLab.review(id,await body(request)));
+          else if(kind==='batches'&&action==='stop'&&request.method==='POST'){await body(request);jsonResponse(response,200,phoneLab.stopBatch(id));}
+          else if(kind==='batches'&&action==='continue'&&request.method==='POST')jsonResponse(response,200,await phoneLab.continueBatch(id,await body(request)));
+          else throw fail(405,'不支持此真机测试操作');
+        }
+        return;
       }
       if (url.pathname === '/api/system' && request.method === 'GET') {
         jsonResponse(response, 200, { apps: APP_CATALOG, modules: [
@@ -317,7 +357,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
   });
   try {
     await new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, '127.0.0.1', () => { localPort = server.address().port; resolve(); }); });
-  } catch (error) { await guiLab.close(); modelSettings.close(); library.close(); throw error; }
+  } catch (error) { await phoneLab.close(); await guiLab.close(); modelSettings.close(); library.close(); throw error; }
   return {
     server, url: `http://127.0.0.1:${localPort}`,
     async close() {
@@ -325,6 +365,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
       const jobs = [...children.values()];
       jobs.forEach(job => job.stop());
       await Promise.allSettled(jobs.map(job => job.completion));
+      await phoneLab.close();
       await guiLab.close();
       await new Promise(resolve => server.close(resolve));
       for (const store of stores.values()) store.close();

@@ -1,41 +1,44 @@
-# Windows 免安装部署
+# Windows部署与迁移（2026-10-22）
 
-交付面向 Windows 10/11、Intel/AMD x64。本机同类型环境已验证；未在另一台物理电脑实测。包内运行时为 Node.js 24.19.0，无需系统安装、npm 或 Codex。普通本地可写目录即可，当前 Mock 流程可离线运行。
+当前交付`BehaviorLab-Phone-Windows-x64-20261022.zip`，preview.6干净版，适用Windows10/11、Intel/AMD x64。主仿真仍Mock，独立真机工作台包含三框架运行入口。旧2026-10-19包不包含当前工作台。
 
-## 给使用者
+## 新电脑使用
 
-把 ZIP 完整解压到例如 `D:\BehaviorLab`，双击 `01_START.cmd`，浏览器自动打开。双击 `02_STOP.cmd` 正常停止。服务在后台运行，关闭浏览器不会停止服务；重启电脑后重新双击启动。`start-web.cmd` 保留为相同入口。
+1. 完整解压到可写本地目录，如`D:\BehaviorLab`。运行`03_CHECK.cmd`完成离线检查，再运行`01_START.cmd`打开网页。停止用`02_STOP.cmd`。
+2. 主仿真Mock可离线使用。真机前在设置中配置自己的图片模型服务/密钥，包中不带原电脑配置，也没有自动连通探针。
+3. 手机开启USB调试，数据线连接并授权新电脑，保持解锁。若系统未识别USB设备，按华为官方SDK/设备说明安装驱动。复制HDC不能替代手机授权。
+4. 打开`/phone-lab`，保存任务与起点，选择单项或组合并明确点击执行。真实执行发送所选服务的图片请求，业务结果仍需核对。
 
-默认尝试 4317；端口被其他服务占用时，系统分配空闲端口。重复启动同一个目录会打开其原地址，不会接管其他目录/程序的服务。当前地址保存在 `.runtime/desktop.json`。控制文件中的随机 token 仅用于同一目录的本机命名管道，不通过 HTTP 开放停止接口。停止脚本只联系本目录所属服务，不按端口杀进程。
+最少外部条件：受支持Windows、能识别手机的数据线/驱动、新电脑USB授权与解锁状态、允许目标用途且支持图片的API、访问该API的网络。记录保存在本机，远程API会收到该次模型输入。
 
-数据保存在 `.data`，控制文件和日志在 `.runtime`。正常停止后复制整个目录即可继续迁移；恢复后原计划、实际结果、截图与原文继续保留。不要在活动执行中直接复制 SQLite/WAL 文件。备份的副本继续运行后会分叉，不提供自动双向合并。
+## 包内内容
 
-本包只监听 `127.0.0.1`。这次交付是本机演示部署；不新增认证、远程访问或生产托管。
+- 官方Node.js24.19.0及完整许可证，哈希匹配[官方校验表](https://nodejs.org/download/release/v24.19.0/SHASUMS256.txt)。
+- Midscene1.16.0、MobiAgent4ee7940、Open-AutoGLM86f5538及运行依赖。pnpm本地链接已展开为普通目录，不要求符号链接权限。
+- 独立Python3.12.14、标准运行时和手机客户端依赖闭包，各分发包许可证随包保留。版本见`.runtime/python-phone/phone-packages.json`。不依赖Codex缓存或系统Python，无需pip在线安装。
+- HDC3.2.0f、libusb与NOTICE。来源为本机此前安装的官方SDK，已检查签名，但未取得官方压缩包独立哈希；分发清单记录本地文件哈希，不补称官方校验完成。
+- 框架源码仅复制允许目录内的Git跟踪文件，排除私有.env与字体。MobiAgent使用目标Windows自带字体。未带模型权重、经验/记忆服务。
 
-## 数据快照与包结构
+DevEco Testing投屏GUI不在本包；需要时按[官方工具安装说明](HDC_WINDOWS_SETUP.md)另装。HDC本身是命令行通道。
 
-带数据包包含当前 `.users.sqlite` 与各运行的 `state.sqlite`、所有被数据库引用且通过 SHA-256 验证的资产、非运行中的 Web 作业记录。使用 Node SQLite 在线备份 API 生成独立数据库，包含 WAL 已提交内容。打包前拒绝活动租约/作业，打包期间检测源数据库和作业记录变化；发生变化则失败，不交付该快照。源数据库只读，不停止或改写原服务。
+`03_CHECK.cmd`加载真实SDK、检查固定源码哈希，给两个原生循环注入五个固定回复和合成图，验证中文/JPEG/动作。它不调用HDC、手机或供应商，不代表GUI成功。成功后才将本机Python框架标记可用，报告位于`.runtime/phone-doctor.json`。
 
-不打包 `.runtime`、原日志、临时文件、无关截图、旧导出文件和构建缓存。旧导出包含旧目录的绝对路径，新电脑应重新导出。历史调用输入/输出保留原始内容，不批量替换证据中的旧路径。干净包从空用户库开始。两个包互相独立，任选一个解压使用。
+## 启动与迁移
 
-内置 `runtime/node.exe` 已按 [Node.js 官方 v24.19.0 校验表](https://nodejs.org/download/release/v24.19.0/SHASUMS256.txt) 核对 SHA-256；许可证为[官方完整 LICENSE](https://github.com/nodejs/node/blob/v24.19.0/LICENSE)，随运行时提供。平台基线参照 [Node.js v24.19.0 BUILDING.md](https://github.com/nodejs/node/blob/v24.19.0/BUILDING.md)，SQLite 快照实现参照[官方 backup 文档](https://nodejs.org/download/release/v24.19.0/docs/api/sqlite.html#sqlitebackupsource-db-path-options)。
+启动优先包内`runtime/node.exe`。默认4317被占用会分配空闲端口，重复启动只打开本目录服务；随机控制token只用于本机命名管道，停止不按端口杀进程。
 
-## 维护者重新打包
+新包`.data`为空，只含脱敏结果文档，不含原电脑数据库、模型密钥、华为账号、原图或真机历史。这是干净部署包，不是历史数据迁移包。需私人历史时先等待所有队列结束并正常停止，再备份原目录，不在运行中复制SQLite/WAL。已用目录包含敏感配置，只在授权电脑间私下迁移。
+
+本版本`.runtime`也保存必需框架/Python/HDC，迁移整个已用目录时保留。启动器会重新识别旧desktop等控制状态，不得按旧说明整目录删除.runtime。Python按项目相对路径定位，支持移动盘符与中文空格目录。历史证据中的旧绝对路径不批量替换，图像查看以资产相对路径为准。
+
+## 维护者构建
+
+先部署固定版本三框架，执行：
 
 ```powershell
-node scripts/build-portable.mjs --out output/BehaviorLab-Windows-x64 --runtime <node.exe路径> --license <官方LICENSE路径> --checksums <官方SHASUMS256.txt路径>
+node scripts/build-portable.mjs --out output/BehaviorLab-Phone-Windows-x64-20261022 --runtime <官方node.exe> --license <完整Node许可证> --checksums <官方SHASUMS256.txt> --clean --phone
 ```
 
-默认包含当前数据；加入 `--clean` 生成干净目录。目标目录必须不存在，拒绝覆盖。生成后将整个目标目录压缩为 ZIP。打包不依赖用户机器的 Codex 路径；分发后的启动脚本优先使用包内运行时。
+目标必须不存在。`--clean --phone`生成干净真机版；省略phone不带SDK，省略clean仍只快照Mock用户/运行，不会暗中带真机记录或模型凭据。构建不连接手机或模型。`package-phone-runtime.mjs`、`package-phone-python.py`分别收集固定源码/依赖和Python闭包；各依赖许可证随原目录保留。framework-sources.json记录提交与文件哈希，目标机器无需Git。
 
-验证覆盖：官方运行时哈希、数据库完整性/外键、资产哈希、中文和空格路径、后台启动与重复启动、端口冲突、正常停止与再次启动、迁移后新增用户并执行 Mock 闭环。具体数据量与快照时间以包内 `portable-manifest.json` 为准。通过这些验证不代表真实手机/模型已接入或合成行为的自然性已验证。
-
-交付前运行 `node --test tests/*.test.mjs`，29 项通过。测试包括真实子进程和本机 HTTP，未使用手机或模型服务。Windows 下曾在并行测试中出现 SQLite I/O 错误，已调整 Web 服务对每个运行的连接生命周期，避免在后台工作进程打开数据库时反复关闭最后一条 WAL 连接；调整后的完整并行测试通过。该验证不等于覆盖所有硬件和杀毒软件环境。
-
-## 2026-10-20 源码更新
-
-重新回归发现作业文件原子替换时的 `EPERM`：已在源码为短暂占用增加有界重试，并验证旧记录不会因失败被截断。新增三项故障注入测试后，全量 32/32 通过。具体见[开发进度与迭代清单](DEVELOPMENT_BACKLOG.md)。2026-10-19 的 ZIP 未改动，不包含该修复；新版本发布和第二台电脑的资源管理器双击等 GUI 验收仍待完成。
-
-## 2026-10-21 交接更新
-
-当前源码工程回归为 **46/46 通过**；上面的 29/32 项属于当时阶段。历史模型短文本连通通过不代表手机 GUI 能力，最新范围见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。本次仅建立本地源码 Git 基线，不含运行时、数据和安装依赖，不是新的免安装包；2026-10-19 ZIP 未重建，第二台物理电脑 GUI 验收仍未完成。
+验证范围与计数见[交付证据](evidence/20261022-report-release/acceptance.json)。本机检查包括工程回归、SDK实际加载、独立Python导入、原生离线契约、ZIP解压和中文空格目录的启动/浏览器入口。未在第二台物理电脑运行，未做新电脑真机任务，未做资源管理器双击或PowerPoint GUI实测。不能用后台或离线检查替代这些未验证范围。

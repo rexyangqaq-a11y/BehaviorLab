@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-21T10:04:29.990Z",
+  "url": "http://127.0.0.1:4317/phone-lab",
+  "persisted_pause": true,
+  "active_phone_operation": false,
+  "frameworks_available": [
+    "midscene",
+    "mobiagent",
+    "autoglm"
+  ],
+  "cases": 5,
+  "model_services": 3,
+  "formal_matrix_executed": 0,
+  "software_tests": {
+    "passed": 70,
+    "failed": 0
+  },
+  "exports": {
+    "asset_records_verified": 48,
+    "request_events": 10,
+    "response_events": 10,
+    "export_http": 200,
+    "bundle_http": 200,
+    "bundle_bytes": 7048085,
+    "credential_values_in_export": 0
+  },
+  "real_model_calls_after_pause": 0,
+  "device_commands_after_pause": 0,
+  "latest_software_check": "tests.txt",
+  "paused_legacy_diagnostic_entry": "HTTP423 before SDK/HDC probe",
+  "preview": "output/phone-lab-paused-interface.png",
+  "final_server_check_at": "2026-10-21T10:18:08.889Z",
+  "pause_http_statuses": {
+    "/api/phone-lab/starts": 423,
+    "/api/phone-lab/runs": 423,
+    "/api/phone-lab/batches": 423,
+    "/api/gui-lab/diagnostics": 423
+  },
+  "case_snapshot_matches_source": true,
+  "documentation_local_links": "passed"
+}

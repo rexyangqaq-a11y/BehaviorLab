@@ -1,0 +1,150 @@
+{
+  "version": "0.4.0-preview.2",
+  "frozen_at": "2026-10-21",
+  "cases": [
+    {
+      "id": "HM-SYS-001",
+      "revision": 2,
+      "name": "设置 · 读取关于本机",
+      "app": "设置",
+      "bundle": "com.huawei.hmos.settings",
+      "instruction": "从当前设置首页进入“关于本机/关于手机”，读取页面可见的型号代码与 HarmonyOS 系统版本。保持在关于页面，不修改设置；未显示的字段说明未显示。",
+      "initial_state": "同一台手机展开横屏；设置左侧列表在顶部、右侧为星闪和蓝牙，无浮窗、无键盘；关于本机未选中。",
+      "acceptance": [
+        "框架自主进入关于本机页面",
+        "终图可读型号代码和 HarmonyOS 版本",
+        "报告字段与真实图一致，未修改设置"
+      ],
+      "reset": "settings",
+      "expected": [
+        "关于本机",
+        "HOP-AL10"
+      ],
+      "forbidden": "修改开关、系统配置、账号操作",
+      "origin": "project_owned_complete_task"
+    },
+    {
+      "id": "HM-CALC-001",
+      "revision": 1,
+      "name": "计算器 · 完成算式",
+      "app": "计算器",
+      "bundle": "com.huawei.hmos.calculator",
+      "instruction": "在计算器中计算 (128 + 37) × 6，并让最终计算结果显示在计算器界面。必须通过界面输入并计算，不要只在文字中给出答案。",
+      "initial_state": "标准计算器，表达式为空、结果为 0，键盘可见；同一方向和窗口尺寸。",
+      "acceptance": [
+        "通过真实 UI 输入算式",
+        "终图实际显示结果 990",
+        "无遗留的其他算式或错误状态"
+      ],
+      "reset": "calculator",
+      "expected": [
+        "990"
+      ],
+      "forbidden": "打开其他应用或调用外部计算接口",
+      "origin": "project_owned_complete_task"
+    },
+    {
+      "id": "HM-STOR-001",
+      "revision": 1,
+      "name": "设置 · 查看存储占用",
+      "app": "设置",
+      "bundle": "com.huawei.hmos.settings",
+      "instruction": "从当前设置首页进入“存储”，读取当前已使用空间和总容量，并查看应用/应用和元服务所占空间。保持在存储页面，不执行清理或删除；未显示的字段说明未显示。",
+      "initial_state": "与 HM-SYS-001 相同：设置左侧列表在顶部、右侧为星闪和蓝牙，无浮窗、无键盘。",
+      "acceptance": [
+        "框架自主进入存储页面",
+        "已用/总容量有终图依据",
+        "应用占用可见或明确说明未显示",
+        "没有清理或删除操作"
+      ],
+      "reset": "settings",
+      "expected": [
+        "存储"
+      ],
+      "forbidden": "清理、删除、卸载、修改任何配置",
+      "origin": "project_owned_complete_task"
+    },
+    {
+      "id": "HM-TB-001",
+      "revision": 1,
+      "name": "淘宝 · 搜索并查看商品",
+      "app": "淘宝",
+      "bundle": "com.taobao.taobao4hmos",
+      "instruction": "在淘宝搜索“折叠手机支架”，打开一个普通商品详情，读取页面显示的商品标题和当前展示价格。保持在该商品详情；不要选择规格、加入购物车、收藏、下单或付款。遇到广告或直播跳过。",
+      "initial_state": "已登录同一账号，淘宝搜索输入页，输入框为空且已聚焦、键盘可见；无弹窗，不改搜索历史。",
+      "acceptance": [
+        "实际搜索指定关键词",
+        "打开普通商品详情而非广告/直播",
+        "标题和展示价格来自终图；不推断优惠后价",
+        "没有购物车、收藏或交易动作"
+      ],
+      "reset": "taobao_search",
+      "expected": [],
+      "forbidden": "购买、加购、收藏、关注、支付、修改账号",
+      "origin": "project_owned_complete_task",
+      "dynamic": "商品及价格可能变化，记录执行时间与实际商品，不跨时段强求同一价格"
+    },
+    {
+      "id": "HM-XHS-001",
+      "revision": 1,
+      "name": "小红书 · 搜索并阅读笔记",
+      "app": "小红书",
+      "bundle": "com.xingin.xhs_hos",
+      "instruction": "在小红书搜索“杭州旅游”，打开一篇普通图文笔记，读取笔记标题、作者及正文中一条可见的出行建议。保持在该笔记详情。不要点赞、收藏、关注、评论、私信或分享；不要打开广告、直播或视频。",
+      "initial_state": "已登录同一账号，小红书搜索输入页，输入框为空且已聚焦、键盘可见；无弹窗，不改搜索历史。",
+      "acceptance": [
+        "实际搜索指定关键词",
+        "进入普通图文笔记详情",
+        "标题、作者和一条建议有真实图依据",
+        "没有任何互动/发布动作"
+      ],
+      "reset": "xiaohongshu_search",
+      "expected": [],
+      "forbidden": "点赞、收藏、关注、评论、私信、分享或修改账号",
+      "origin": "project_owned_complete_task",
+      "dynamic": "搜索结果会变化，固定查询/账号/起始页，记录实际笔记与时刻"
+    }
+  ],
+  "frameworks": [
+    {
+      "id": "midscene",
+      "name": "Midscene",
+      "version": "1.16.0",
+      "variant": "HarmonyAgent / family adapter",
+      "source": "https://github.com/web-infra-dev/midscene"
+    },
+    {
+      "id": "mobiagent",
+      "name": "MobiAgent",
+      "version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "variant": "native task_in_app / e2e qwen_json / no memory or experience",
+      "source": "https://github.com/IPADS-SAI/MobiAgent"
+    },
+    {
+      "id": "autoglm",
+      "name": "Open-AutoGLM",
+      "version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "variant": "native PhoneAgent.step / original action parser / HDC bridge",
+      "source": "https://github.com/zai-org/Open-AutoGLM"
+    }
+  ],
+  "default_limits": {
+    "max_requests": 15,
+    "max_actions": 40,
+    "max_seconds": 600,
+    "max_output_tokens": 512,
+    "automatic_retries": 0,
+    "max_payload_bytes": 2097152,
+    "max_text_chars": 90000,
+    "max_images": 2,
+    "thinking": false
+  },
+  "batch_total_request_limit": null,
+  "formal_matrix": {
+    "cases": 5,
+    "combinations": 9,
+    "first_pass_assessments": 45,
+    "executed": 0
+  },
+  "final_framework": null
+}

@@ -31,7 +31,11 @@ async function setup(t) {
     const deadline = Date.now() + 15000;
     while (Date.now() < deadline) {
       const value = await snapshot();
-      if (!['queued', 'running', 'stopping'].includes(value.job?.status)) return value;
+      // The worker persists its terminal status just before process exit. Wait
+      // for the real process to release ownership before scheduling another job.
+      let workerAlive=false;
+      if(value.job?.pid)try{process.kill(value.job.pid,0);workerAlive=true;}catch{}
+      if (!['queued', 'running', 'stopping'].includes(value.job?.status)&&!workerAlive) return value;
       await delay(20);
     }
     assert.fail('Web job did not finish in time');

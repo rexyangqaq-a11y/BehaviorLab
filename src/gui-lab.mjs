@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 import { GUI_CANDIDATES, GUI_CASES, GUI_LAB_VERSION } from './gui-lab-catalog.mjs';
 import { guiComparisonPlan } from './gui-comparison-cases.mjs';
+import { findHdc, parseHdcTargets } from './hdc-environment.mjs';
 
 const exec = promisify(execFile);
 const project = fileURLToPath(new URL('../', import.meta.url));
@@ -22,8 +23,8 @@ function line(value, label, max = 2000) {
 }
 
 export class GuiLab {
-  constructor(root, { tickMs = 220 } = {}) {
-    this.root = root; this.tickMs = tickMs; this.running = new Map(); this.closing = false;
+  constructor(root, { tickMs = 220, pausePath = path.join(project, '.runtime/phone-lab-pause.json') } = {}) {
+    this.root = root; this.tickMs = tickMs; this.pausePath = pausePath; this.running = new Map(); this.closing = false;
     this.db = new DatabaseSync(path.join(root, '.gui-lab.sqlite'));
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA foreign_keys=ON;
       CREATE TABLE IF NOT EXISTS experiments(id TEXT PRIMARY KEY,input_json TEXT NOT NULL,status TEXT NOT NULL,created_at TEXT NOT NULL,finished_at TEXT,owner_pid INTEGER,result_json TEXT);
@@ -213,19 +214,20 @@ export class GuiLab {
     this.db.prepare('UPDATE experiments SET status=?,finished_at=?,owner_pid=NULL,result_json=? WHERE id=?').run(status, now(), JSON.stringify(result), runId);
   }
   async diagnostics(modelSettings) {
+    if (existsSync(this.pausePath) && JSON.parse(readFileSync(this.pausePath, 'utf8')).paused) throw fail(423, '手机测试已暂停，设备环境诊断也暂停；Mock 场景与记录查看仍可用。');
     let sdk = { status: 'not_installed', version: null, detail: '未安装候选依赖；主系统仍可离线运行。' };
     if (existsSync(path.join(project, 'integrations/midscene/node_modules/@midscene/harmony/package.json'))) {
       try { const { stdout } = await exec(process.execPath, [path.join(project, 'integrations/midscene/probe.mjs')], { cwd: project, windowsHide: true, timeout: 15000, maxBuffer: 64000 }); sdk = JSON.parse(stdout.trim()); }
       catch { sdk = { status: 'probe_failed', detail: 'SDK 离线契约检查失败，参见候选安装/验证说明。' }; }
     }
-    const paths = [process.env.HDC_HOME, ...(process.env.PATH ?? '').split(path.delimiter)].filter(Boolean);
-    const hdcPath = paths.map(p => path.join(p.replace(/^"|"$/g, ''), process.platform === 'win32' ? 'hdc.exe' : 'hdc')).find(p => existsSync(p));
-    let hdc = { status: 'not_found', targets: [], detail: 'PATH 与 HDC_HOME 未找到 HDC。安装 SDK 后可重新检测；不据此断言磁盘上没有工具。' };
+    const hdcPath = findHdc({ localConfigPath: path.join(project, '.runtime/device-tools.json') });
+    let hdc = { status: 'not_found', targets: [], detail: 'PATH、HDC_HOME 与本机工具配置未找到 HDC。安装 SDK 后可重新检测；不据此断言磁盘上没有工具。' };
     if (hdcPath) {
       try {
-        const { stdout } = await exec(hdcPath, ['list', 'targets'], { windowsHide: true, timeout: 8000, maxBuffer: 32000 });
-        const targets = stdout.split(/\r?\n/).map(s => s.trim()).filter(s => s && !s.startsWith('[') && !s.includes('Empty'));
-        hdc = { status: targets.length ? 'targets_listed' : 'no_targets', targets, detail: targets.length ? '仅列出设备；尚未验证截图、系统构建或操作权限。' : '未列出设备，请连接并允许调试。' };
+        const { stdout, stderr } = await exec(hdcPath, ['list', 'targets'], { windowsHide: true, timeout: 8000, maxBuffer: 32000 });
+        const parsed = parseHdcTargets(stdout, stderr), targets = parsed.targets;
+        hdc = parsed.status === 'unverified' ? { status: 'probe_failed', targets: [], detail: '未取得可核实的设备列表；退出码 0 或空输出不能证明设备数为零。' }
+          : { status: targets.length ? 'targets_listed' : 'no_targets', targets, detail: targets.length ? '仅列出设备；尚未验证截图、系统构建或操作权限。' : 'HDC 明确返回空设备列表，请连接并允许调试。' };
       } catch { hdc = { status: 'probe_failed', targets: [], detail: 'HDC 列设备失败或超时；未发送手机操作。' }; }
     }
     const settings = modelSettings.read(), service = settings.services.find(s => s.id === settings.bindings.gui);
