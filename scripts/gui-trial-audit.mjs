@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { parseArgs } from 'node:util';
 import path from 'node:path';
+import {unprotectLocalSecret} from '../src/local-secret.mjs';
 const { values } = parseArgs({ options: { dir: { type: 'string' } } });
 if (!values.dir) throw new Error('--dir required');
 const dir = path.resolve(values.dir), read = file => readFile(path.join(dir, file), 'utf8');
@@ -37,7 +38,7 @@ check(result.model_usage.known_input_tokens === responses.reduce((sum,e) => sum 
 check(result.model_usage.known_output_tokens === responses.reduce((sum,e) => sum + e.usage.output_tokens,0), 'Output usage mismatch');
 // Scan every retained file against the local credentials without printing them.
 let db, keys;
-try { db = new DatabaseSync('.data/.model-services.sqlite', { readOnly: true }); keys = db.prepare('SELECT api_key FROM model_credentials').all().map(r=>r.api_key).filter(Boolean); }
+try { db = new DatabaseSync('.data/.model-services.sqlite', { readOnly: true }); keys = db.prepare('SELECT api_key FROM model_credentials').all().map(r=>unprotectLocalSecret(r.api_key)).filter(Boolean); }
 finally { db?.close(); }
 async function scan(folder) {
   for (const item of await readdir(folder, { withFileTypes: true })) {

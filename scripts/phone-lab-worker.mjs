@@ -11,6 +11,7 @@ import {createTrialTransport} from '../src/gui-trial-transport.mjs';
 import {frameworkSpec} from '../src/phone-framework-registry.mjs';
 import {createRepeatedActionGuard} from '../src/gui-trial-action-limits.mjs';
 import {assessPermissionAction} from '../src/phone-permissions.mjs';
+import {unprotectLocalSecret} from '../src/local-secret.mjs';
 const {values}=parseArgs({options:{root:{type:'string'},id:{type:'string'}}});
 if(!/^phone_[a-f0-9-]{36}$/.test(values.id??''))throw Error('Invalid run ID');
 const project=fileURLToPath(new URL('../',import.meta.url)),dir=path.join(path.resolve(values.root),'.phone-lab/runs',values.id);
@@ -26,6 +27,7 @@ try{
   let db,service,key;
   try{db=new DatabaseSync(path.join(values.root,'.model-services.sqlite'),{readOnly:true});const row=db.prepare('SELECT document FROM model_settings WHERE id=1').get();service=JSON.parse(row.document).services.find(s=>s.id===input.service_id);key=db.prepare('SELECT api_key FROM model_credentials WHERE service_id=?').get(input.service_id)?.api_key;}
   finally{db?.close();}
+  key=unprotectLocalSecret(key);
   if(!service||service.model!==input.service.model||service.base_url!==input.service.base_url||!key)throw Error('模型配置已改变或凭据不存在，请新建测试');
   evidence=new PhoneEvidence(dir,{secrets:[key]});
   process.env.MIDSCENE_RUN_DIR=path.join(dir,'sdk-local');process.env.MIDSCENE_LANGSMITH_DEBUG='false';process.env.MIDSCENE_LANGFUSE_DEBUG='false';process.env.MIDSCENE_RECORD_MODEL_CALL='false';process.env.DEBUG='';
@@ -37,7 +39,7 @@ try{
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
   const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
-  files.push('src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
+  files.push('src/local-secret.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
   executionStarted=Date.now();evidence.phase='execution';
   await state({status:'running',phase:'execution',started_at:new Date(executionStarted).toISOString()});

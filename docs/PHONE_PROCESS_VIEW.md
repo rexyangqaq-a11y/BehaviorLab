@@ -31,4 +31,4 @@
 
 原39条运行、6任务、3服务保留，本轮没有模型调用或新增业务任务成绩。当前视频[验收记录](evidence/20261023-hoscrcpy/acceptance.json)与118/118离线工程回归分别记录。先前窗口方案的 acceptance.json 和截图仍是回退前WIP历史，不代表当前视频实现；preview.7回退验证见[历史记录](evidence/20261023-phone-process/rollback-acceptance.json)。
 
-代码均由本地Git管理，保留此前WIP与回退提交，不推送。2026-10-22的Windows干净ZIP仍为preview.6，不含当前过程页/视频，未重打包；源码构建器已补Java桥，新电脑按详细说明安装可选视频组件。
+代码均由本地Git管理，保留此前WIP与回退提交，不推送。2026-10-23的新Windows干净ZIP为preview.8，已含过程页/视频及独立Java；按[部署说明](WINDOWS_PORTABLE.md)解压并运行03_CHECK即可。2026-10-22的preview.6 ZIP保持历史版本。

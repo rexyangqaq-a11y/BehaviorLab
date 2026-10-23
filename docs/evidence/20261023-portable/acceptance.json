@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-23T06:45:51.326Z",
+  "version": "0.4.0-preview.8",
+  "package": "BehaviorLab-Phone-Windows-x64-20261023.zip",
+  "status": "completed",
+  "clean": true,
+  "source": {
+    "kind": "git-index",
+    "base_commit": "815d53977bca0d78a3109397dd750cf10524408f",
+    "index_entries_sha256": "da1856699379e6dad5beeb5551d5666a042dff81d52efac8ee95a4ec6b24d9be",
+    "files": 246
+  },
+  "includes": {
+    "node": {
+      "version": "v24.19.0",
+      "platform": "win32",
+      "arch": "x64",
+      "sha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+      "source": "https://nodejs.org/download/release/v24.19.0/win-x64/node.exe",
+      "checksums": "https://nodejs.org/download/release/v24.19.0/SHASUMS256.txt"
+    },
+    "frameworks": {
+      "mobiagent": {
+        "commit": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+        "files": 118
+      },
+      "autoglm": {
+        "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+        "files": 37
+      }
+    },
+    "python": "3.12.14",
+    "hdc": "3.2.0f",
+    "video": {
+      "backend": "HOScrcpy",
+      "sdk": {
+        "version": "1.0.18-beta",
+        "release": "v1.0.16-beta",
+        "bytes": 18442278,
+        "sha256": "2ce60b1893cc2be471a8cd7eab7e4127e41921f1f89a32a134c730ba15c8c0fd",
+        "url": "https://gitcode.com/OpenHarmonyToolkitsPlaza/HOScrcpy/releases/download/v1.0.16-beta/hosScrcpy-1.0.18-beta.jar"
+      },
+      "jre": {
+        "version": "21.0.8+9",
+        "archive": "OpenJDK21U-jre_x64_windows_hotspot_21.0.8_9.zip",
+        "sha256": "238d74ec4ec9422d416fa98805ba375eecd8bc8f971bd0c61a21051a4fe42db8",
+        "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jre_x64_windows_hotspot_21.0.8_9.zip"
+      },
+      "files": 320,
+      "paths": "project relative only",
+      "model_requests": 0,
+      "device_commands": 0
+    }
+  },
+  "offline_tests": {
+    "passed": 120,
+    "total": 120,
+    "log": "tests.txt"
+  },
+  "archive_verification": {
+    "files": 12144,
+    "zip_crc": "passed",
+    "all_zip_member_sha256": "passed",
+    "all_extracted_sha256": "passed",
+    "no_duplicate_entries": true,
+    "clean_package_without_data_or_control_files": true,
+    "unicode_space_extract_path": ".build\\portable_20261023\\中文 空格解压验收"
+  },
+  "moved_entry": {
+    "url": "http://127.0.0.1:4442",
+    "cwd": ".build\\portable_20261023\\中文 空格解压验收\\BehaviorLab",
+    "doctor": "passed",
+    "checks": [
+      {
+        "name": "Midscene",
+        "version": "1.16.0",
+        "status": "passed"
+      },
+      {
+        "name": "mobiagent",
+        "revision": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+        "files": 118,
+        "status": "passed"
+      },
+      {
+        "name": "autoglm",
+        "revision": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+        "files": 37,
+        "status": "passed"
+      },
+      {
+        "name": "HOScrcpy video",
+        "sdk": "1.0.18-beta",
+        "status": "passed",
+        "kind": "file hashes, bundled Java and SDK class loading only; no device capture"
+      }
+    ],
+    "real_model_requests": 0,
+    "real_device_commands": 0,
+    "version": "0.4.0-preview.8",
+    "frameworks_available": [
+      "midscene",
+      "mobiagent",
+      "autoglm"
+    ],
+    "tasks": 5,
+    "runs": 0,
+    "services": 0,
+    "starts": 0,
+    "video_available": true,
+    "video_state": "idle",
+    "relative_java": ".runtime/java-video/bin/java.exe",
+    "cmd_entrypoints": [
+      "03_CHECK.cmd",
+      "01_START.cmd --port 4442 --no-browser",
+      "02_STOP.cmd"
+    ],
+    "normal_stop": "passed",
+    "browser_view": "actual isolated workbench process page, video not started"
+  },
+  "privacy": {
+    "source_from_git_index": true,
+    "other_uncommitted_report_edits_excluded": true,
+    "private_users": 0,
+    "phone_runs": 0,
+    "model_services": 0,
+    "startpoints": 0,
+    "credentials_included": false,
+    "raw_phone_screenshots_included": false,
+    "local_absolute_runtime_dependency_paths": false
+  },
+  "preservation": {
+    "existing_runs": 39,
+    "existing_tasks": 6,
+    "existing_services": 3,
+    "existing_phone_metadata_hashes_unchanged": true
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "remote_pushes": 0,
+  "not_verified": [
+    "second physical computer",
+    "Explorer double-click and organization security policy",
+    "new phone GUI/video task from this portable copy",
+    "long-duration video stability"
+  ],
+  "notes": [
+    "03_CHECK executes only fixed native loop fixtures, Java version and SDK class loading. It never runs HDC or capture.",
+    "Full original extraction hashes were checked before entry testing changed local check/control state. Release evidence is added after acceptance and verified separately.",
+    "The external package-audit.json and ZIP.sha256 contain final archive identity and are outside the archive to avoid a circular checksum."
+  ]
+}

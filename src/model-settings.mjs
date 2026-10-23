@@ -1,6 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
+import {protectLocalSecret,unprotectLocalSecret} from './local-secret.mjs';
 
 export const MODEL_ROLES = [
   { id: 'persona', name: '用户生成', description: '补全固定人设，生成候选供审核' },
@@ -22,7 +23,7 @@ function text(value, label, limit, required = false) {
 /** Local configuration only. No network requests and no runtime adapter switch. */
 export class ModelSettings {
   constructor(root) {
-    // Portable builds copy only explicit user/run databases, never this file.
+    // Clean packages omit this DB; private migration builds recreate it without clear credentials.
     this.db = new DatabaseSync(path.join(root, '.model-services.sqlite'));
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
       CREATE TABLE IF NOT EXISTS model_settings(id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL, document TEXT NOT NULL);
@@ -30,6 +31,7 @@ export class ModelSettings {
     this.db.prepare('INSERT OR IGNORE INTO model_settings VALUES(1,0,?)').run(JSON.stringify({ services: [], bindings: {} }));
   }
   close() { this.db.close(); }
+  credential(id){return unprotectLocalSecret(this.db.prepare('SELECT api_key FROM model_credentials WHERE service_id=?').get(id)?.api_key);}
   read() {
     const row = this.db.prepare('SELECT * FROM model_settings WHERE id=1').get();
     const value = JSON.parse(row.document);
@@ -88,7 +90,7 @@ export class ModelSettings {
       }
       for (const { id, key } of updates) {
         if (key === null) this.db.prepare('DELETE FROM model_credentials WHERE service_id=?').run(id);
-        else this.db.prepare('INSERT INTO model_credentials VALUES(?,?) ON CONFLICT(service_id) DO UPDATE SET api_key=excluded.api_key').run(id, key);
+        else this.db.prepare('INSERT INTO model_credentials VALUES(?,?) ON CONFLICT(service_id) DO UPDATE SET api_key=excluded.api_key').run(id, protectLocalSecret(key));
       }
       this.db.prepare('UPDATE model_settings SET revision=revision+1,document=? WHERE id=1').run(JSON.stringify({ services, bindings }));
       this.db.exec('COMMIT');

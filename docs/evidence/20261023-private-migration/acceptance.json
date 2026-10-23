@@ -1,0 +1,96 @@
+{
+  "at": "2026-10-23T07:47:20.335Z",
+  "version": "0.4.0-preview.9",
+  "status": "passed",
+  "tests": {
+    "passed": 124,
+    "failed": 0
+  },
+  "packages": {
+    "clean": {
+      "archive": "output\\BehaviorLab-Phone-Windows-x64-20261023.zip",
+      "bytes": 233179280,
+      "sha256": "b57f47f2d52402f1c459d42ef5e7f5a7b28fdd4e96c86e4e26c6e31383fb2e8e",
+      "files": 12159,
+      "uncompressed_bytes": 626824507
+    },
+    "private": {
+      "archive": "output\\BehaviorLab-Phone-Windows-x64-20261023-Private.zip",
+      "bytes": 1177330415,
+      "sha256": "728d5a1eea0a5afa1c15622ff3bb3d60d299ee05c3e9476a43409c1d55248f7f",
+      "files": 17708,
+      "uncompressed_bytes": 2312557910
+    }
+  },
+  "zip_validation": {
+    "clean": {
+      "files": 12159,
+      "zip_crc": "passed while reading every member",
+      "all_zip_member_sha256": "passed",
+      "all_extracted_sha256": "passed",
+      "no_duplicate_entries": true,
+      "password_helper_absent": true,
+      "unicode_space_extract_path": ".build\\portable_20261023\\干净 中文验收9"
+    },
+    "private": {
+      "files": 17708,
+      "zip_crc": "passed while reading every member",
+      "all_zip_member_sha256": "passed",
+      "all_extracted_sha256": "passed",
+      "no_duplicate_entries": true,
+      "password_helper_absent": true,
+      "unicode_space_extract_path": ".build\\portable_20261023\\私人 中文验收9"
+    }
+  },
+  "private_entry": {
+    "url": "http://127.0.0.1:4443",
+    "version": "0.4.0-preview.9",
+    "tasks": 6,
+    "starts": 83,
+    "runs": 39,
+    "services": 3,
+    "credentials": 3,
+    "stored_key_format": "Windows CurrentUser DPAPI",
+    "wrong_password_no_writes": true,
+    "source_keys_exact_match": true,
+    "archive_history_files": 5545,
+    "history_metadata_unchanged": 1728,
+    "history_runs_readable": 39,
+    "history_run_sample_images": 39,
+    "video_available": true,
+    "video_state": "idle",
+    "frameworks_available": 3,
+    "doctor": "passed",
+    "cmd_entries": [
+      "03_CHECK.cmd",
+      "01_START.cmd"
+    ],
+    "key_import_cli": "passed using hidden stdin; manual TTY entry not exercised",
+    "model_requests": 0,
+    "device_commands": 0
+  },
+  "clean_entry": {
+    "version": "0.4.0-preview.9",
+    "runs": 0,
+    "tasks": 5,
+    "services": 0,
+    "starts": 0,
+    "video_available": true,
+    "model_requests": 0,
+    "device_commands": 0
+  },
+  "original_metadata_files_preserved": 1728,
+  "original_workbench_restored": true,
+  "test_backends_stopped": true,
+  "model_requests": 0,
+  "device_commands": 0,
+  "remote_uploads": 0,
+  "not_verified": [
+    "second physical Windows computer",
+    "manual Explorer double-click",
+    "manual hidden TTY password entry",
+    "new computer phone/video operation",
+    "provider connectivity or billing"
+  ],
+  "private_files_in_git": false
+}

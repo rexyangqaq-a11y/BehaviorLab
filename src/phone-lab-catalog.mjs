@@ -1,4 +1,4 @@
-export const PHONE_LAB_VERSION = '0.4.0-preview.8';
+export const PHONE_LAB_VERSION = '0.4.0-preview.9';
 export {PHONE_FRAMEWORKS} from './phone-framework-registry.mjs';
 export const PHONE_CASES = [
   { id: 'HM-SYS-001', revision: 2, name: '设置 · 读取关于本机', app: '设置', bundle: 'com.huawei.hmos.settings',

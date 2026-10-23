@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {phonePython} from '../src/phone-runtime-paths.mjs';
 import {FRAMEWORK_REGISTRY} from '../src/phone-framework-registry.mjs';
+import {hoscrcpyRuntime} from '../src/phone-video-runtime.mjs';
+import {verifyVideoFiles} from './package-phone-video.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const report={checked_at:new Date().toISOString(),real_model_requests:0,real_device_commands:0,checks:[],gui_result:'not_executed'};
 try{
@@ -43,6 +45,17 @@ try{
   await writeFile(configFile,JSON.stringify(config,null,2));
   const tools=JSON.parse(await readFile(path.join(root,'.runtime/device-tools.json'),'utf8'));
   if(!existsSync(path.join(root,'.runtime',tools.hdc.relative_executable)))throw Error('HDC executable missing');
+  const videoFiles=path.join(root,'.runtime/phone-video-files.json');
+  const portableFile=path.join(root,'portable-manifest.json');
+  if(existsSync(portableFile)&&JSON.parse(await readFile(portableFile,'utf8')).phone_video&&!existsSync(videoFiles))throw Error('Bundled video file manifest missing');
+  if(existsSync(videoFiles)){
+    await verifyVideoFiles(root,JSON.parse(await readFile(videoFiles,'utf8')));
+    const video=hoscrcpyRuntime(root,{verify:true});if(!video.available)throw Error('Video runtime missing: '+video.missing.join(', '));
+    execFileSync(video.java,['-version'],{windowsHide:true,stdio:['ignore','pipe','pipe']});
+    const checked=execFileSync(video.java,['-Djava.awt.headless=true','-cp',[video.sdk,video.classes].join(path.delimiter),'PhoneVideoBridge','--check'],{windowsHide:true,encoding:'utf8',timeout:30000});
+    if(!checked.includes('BEHAVIORLAB_VIDEO:check_ready'))throw Error('Video bridge load check failed');
+    report.checks.push({name:'HOScrcpy video',sdk:video.version,status:'passed',kind:'file hashes, bundled Java and SDK class loading only; no device capture'});
+  }else report.checks.push({name:'HOScrcpy video',status:'optional_not_bundled'});
   report.status='passed';report.remaining=['Configure your own model services in Settings','Enable USB debugging, connect and authorize this computer','Unlock phone, save a task start point, then explicitly start a real test'];
 }catch(error){report.status='failed';report.error=error.message;process.exitCode=1;}
 await writeFile(path.join(root,'.runtime/phone-doctor.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));

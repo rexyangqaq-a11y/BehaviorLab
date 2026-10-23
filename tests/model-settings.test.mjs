@@ -46,9 +46,10 @@ test('credential edits preserve, replace, remove and delete keys without includi
     assert.ok(!Object.hasOwn(saved.services[0], 'api_key'));
     const preserved = store.save(input(1, [service({ model: 'another-model' })]));
     assert.equal(preserved.services[0].has_api_key, true);
-    assert.equal(store.db.prepare('SELECT api_key FROM model_credentials').get().api_key, 'secret-fixture-unique-1');
+    assert.equal(store.credential('gui_service'), 'secret-fixture-unique-1');
+    if(process.platform==='win32')assert.ok(store.db.prepare('SELECT api_key FROM model_credentials').get().api_key.startsWith('win-dpapi:v1:'));
     store.save(input(2, [service({ api_key: 'secret-fixture-unique-2' })]));
-    assert.equal(store.db.prepare('SELECT api_key FROM model_credentials').get().api_key, 'secret-fixture-unique-2');
+    assert.equal(store.credential('gui_service'), 'secret-fixture-unique-2');
     const cleared = store.save(input(3, [service({ api_key: null })]));
     assert.equal(cleared.services[0].has_api_key, false);
     store.save(input(4, [service({ api_key: 'secret-fixture-unique-3' })]));
@@ -68,7 +69,7 @@ test('invalid or stale edits never overwrite a newer configuration or its creden
     assert.throws(() => store.save(input(1, [service()], { gui: 'unknown' })), { status: 400 });
     assert.throws(() => store.save(input(1, [service(), service()])), { status: 400 });
     assert.equal(store.read().revision, 1);
-    assert.equal(store.db.prepare('SELECT api_key FROM model_credentials').get().api_key, 'secret-original-fixture');
+    assert.equal(store.credential('gui_service'), 'secret-original-fixture');
     store.save(input(1, [service({ auth: 'none' })]));
     assert.equal(store.read().services[0].has_api_key, false);
   } finally { store.close(); }

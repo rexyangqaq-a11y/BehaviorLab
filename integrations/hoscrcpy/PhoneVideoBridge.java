@@ -22,6 +22,12 @@ public final class PhoneVideoBridge {
         catch (Throwable error) { status("stop_error:" + error.getClass().getSimpleName()); }
     }
     public static void main(String[] args) throws Exception {
+        if (args.length == 1 && "--check".equals(args[0])) {
+            Class.forName("com.huawei.hosscrcpy.api.HosRemoteDevice", false, PhoneVideoBridge.class.getClassLoader());
+            Class.forName("com.huawei.hosscrcpy.api.HosRemoteConfig", false, PhoneVideoBridge.class.getClassLoader());
+            System.out.println("BEHAVIORLAB_VIDEO:check_ready");
+            return;
+        }
         DataOutputStream video = new DataOutputStream(new FileOutputStream(FileDescriptor.out));
         System.setOut(System.err);
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));

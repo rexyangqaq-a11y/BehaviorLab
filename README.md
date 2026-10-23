@@ -1,5 +1,9 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+**2026-10-23 私人迁移更新（preview.9）**：[私人部署包](output/BehaviorLab-Phone-Windows-x64-20261023-Private.zip)保留真机工作台6任务、83起点、39条运行及完整截图/轨迹、3个模型服务和角色配置。API密钥用随机迁移密码认证加密，运行`04_IMPORT_KEYS.cmd`后以新电脑Windows账户加密保存。密码查看工具在ZIP外，只在原电脑同一账户下使用；见[私人迁移说明](docs/PRIVATE_MIGRATION.md)。干净ZIP同步更新为preview.9，不含私人数据。工程离线回归124/124，未调用模型或操作手机；不等于第二台物理电脑或供应商连通验证。下方preview.8为历史发布记录。
+
+**2026-10-23部署更新（preview.8）**：[新版Windows干净部署包](output/BehaviorLab-Phone-Windows-x64-20261023.zip)包含三框架、Python/HDC、四页签过程查看与HOScrcpy视频，新增独立Java运行时和预编译桥，无需另装Java或打开官方GUI。完整解压后先运行`03_CHECK.cmd`，再运行`01_START.cmd`，配置自己的模型服务和新电脑USB授权；不含本机账号、密钥或历史手机数据。[部署说明](docs/WINDOWS_PORTABLE.md)。下方旧ZIP未更新的描述为历史，本轮工程回归120/120，目标物理电脑兼容性仍需目标机检查。
+
 **2026-10-23 更新（preview.8）**：[测试过程详情](docs/PHONE_PROCESS_VIEW.md)已接入[HOScrcpy网页连续投屏](docs/HOSCRCPY_VIDEO.md)，不需要打开官方工具窗口或选窗。本机手机已验证真实H.264解码、桌面滑动同步、主动停止及离页回收；三框架带模型任务与长期稳定性尚未追加验证。原39条运行、6任务、3服务及36项成绩保留，本轮模型请求0。每轮改动按 [AGENTS.md](AGENTS.md) 提交本地 Git，无远程、无推送。旧2026-10-22部署包仍为preview.6，不含本次功能；新电脑视频组件安装见上述说明。
 
 **2026-10-22 汇报与协作交付（preview.6）**：[20页汇报PPT](output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx)、[进一步失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)、[协作开发](docs/DEVELOPMENT.md)、[新增框架](docs/FRAMEWORK_ADAPTER_GUIDE.md)。框架注册/执行适配已拆分，Python路径支持整体迁移，离线工程回归107/107通过。新[Windows干净真机包](output/BehaviorLab-Phone-Windows-x64-20261022.zip)包含依赖与离线检查，不含密钥、账号或真机历史原图。当前部署以[本版文档](docs/WINDOWS_PORTABLE.md)为准，下文旧包未更新的描述属于历史。本轮零新增真实模型/手机调用，36项成绩不变，最终框架待确认。

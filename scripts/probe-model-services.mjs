@@ -24,8 +24,8 @@ export async function runProbes({ dataRoot, output }) {
     for (const service of services) {
       report.results.push({ service_id: service.id, model: service.model, status: 'sending', started_at: new Date().toISOString() });
       await writeFile(output, JSON.stringify(report, null, 2), { flush: true });
-      const credential = store.db.prepare('SELECT api_key FROM model_credentials WHERE service_id=?').get(service.id);
-      report.results[report.results.length - 1] = await probeTextService({ ...service, api_key: credential.api_key });
+      const credential = store.credential(service.id);
+      report.results[report.results.length - 1] = await probeTextService({ ...service, api_key: credential });
       await writeFile(output, JSON.stringify(report, null, 2) + '\n', { flush: true });
       console.log(JSON.stringify(report.results.at(-1)));
     }

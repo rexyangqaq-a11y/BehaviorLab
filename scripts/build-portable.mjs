@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { execFileSync } from 'node:child_process';
 import {packagePhoneRuntime} from './package-phone-runtime.mjs';
+import {packagePhoneVideo} from './package-phone-video.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -18,9 +19,10 @@ function verifyDatabase(db, label) {
   requireThat(db.prepare('PRAGMA foreign_key_check').all().length === 0, `Foreign key check failed: ${label}`);
 }
 
-export async function buildPortable({ out, runtime, license, checksums, clean = false, phone = false }) {
+export async function buildPortable({ out, runtime, license, checksums, clean = false, phone = false, videoArchive, sourceIndex=false }) {
   const target = path.resolve(out);
   requireThat(!await exists(target), 'Output already exists; choose a new directory.');
+  requireThat(!videoArchive||phone,'Video runtime requires --phone');
   requireThat(!path.relative(root, target).startsWith(`.data${path.sep}`) && target !== path.join(root, '.data'), 'Output cannot be inside source data.');
   const executable = path.resolve(runtime);
   const version = JSON.parse(execFileSync(executable, ['-p', 'JSON.stringify({version:process.version,platform:process.platform,arch:process.arch})'], { encoding: 'utf8', windowsHide: true }));
@@ -68,11 +70,17 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
       }
     }
     await mkdir(target, { recursive: true });
-    for (const name of ['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', 'start-web.cmd']) {
-      await cp(path.join(root, name), path.join(target, name), { recursive: true, errorOnExist: true, force: false });
-    }
+    const names=['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'AGENTS.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', '04_IMPORT_KEYS.cmd', 'start-web.cmd'];
+    let sourceSnapshot={kind:'working-directory'};
+    if(sourceIndex){
+      const allowed=[...names,'integrations/phone-frameworks.py','integrations/phone-frameworks-requirements.txt','integrations/adapters','integrations/hoscrcpy'];
+      const indexed=execFileSync('git',['ls-files','-s','-z'],{cwd:root,encoding:'utf8',windowsHide:true}).split('\0').filter(Boolean).filter(row=>{const name=row.split('\t')[1];return allowed.some(p=>name===p||name.startsWith(p+'/'));});
+      requireThat(indexed.length>0&&indexed.every(row=>/^100644 [a-f0-9]+ 0\t/.test(row)),'Source index must contain regular, conflict-free files');
+      execFileSync('git',['checkout-index','--prefix='+target.replaceAll('\\','/')+'/','-z','--stdin'],{cwd:root,input:indexed.map(row=>row.split('\t')[1]).join('\0')+'\0',windowsHide:true});
+      sourceSnapshot={kind:'git-index',base_commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8',windowsHide:true}).trim(),index_entries_sha256:digest(Buffer.from(indexed.join('\0'))),files:indexed.length};
+    }else for(const name of names)await cp(path.join(root,name),path.join(target,name),{recursive:true,errorOnExist:true,force:false});
     // Use CRLF for cmd.exe, including when sources were edited with LF.
-    for (const name of ['01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', 'start-web.cmd']) {
+    for (const name of ['01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', '04_IMPORT_KEYS.cmd', 'start-web.cmd']) {
       const text = await readFile(path.join(target, name), 'utf8');
       await writeFile(path.join(target, name), text.replace(/\r?\n/g, '\r\n'), 'utf8');
     }
@@ -82,9 +90,9 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
     await writeFile(path.join(target, 'runtime/node.exe'), nodeBytes);
     await writeFile(path.join(target, 'runtime/NODE-LICENSE.txt'), licenseBytes);
     await writeFile(path.join(target, 'runtime/NODE-SHASUMS256.txt'), official);
-    await mkdir(path.join(target,'integrations/adapters'),{recursive:true});
-    for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters','hoscrcpy'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});
+    if(!sourceIndex){await mkdir(path.join(target,'integrations/adapters'),{recursive:true});for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters','hoscrcpy'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});}
     const phoneRuntime=phone?await packagePhoneRuntime(root,target):null;
+    const phoneVideo=videoArchive?await packagePhoneVideo(root,target,videoArchive):null;
     await mkdir(path.join(target, '.data'));
     const runs = [];
     for (const snapshot of snapshots) {
@@ -127,8 +135,9 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
         requireThat(current === snapshot.jobText, 'Source task changed during packaging; retry while tasks are paused.');
       }
     }
-    const manifest = { format: 2, product: 'BehaviorLab v0.4-preview.6', package_status: 'complete', platform: 'Windows 10/11 x64 (Intel/AMD)', created_at: new Date().toISOString(), snapshot_started_at: started,
-      contents: clean ? 'clean' : 'current-demo-snapshot', main_simulation_mode: 'mock', phone_workbench: phoneRuntime,
+    const versionPackage=JSON.parse(await readFile(path.join(target,'package.json'),'utf8'));
+    const manifest = { format: 3, product: 'BehaviorLab '+versionPackage.version, package_status: 'complete', platform: 'Windows 10/11 x64 (Intel/AMD)', created_at: new Date().toISOString(), snapshot_started_at: started,source:sourceSnapshot,
+      contents: clean ? 'clean' : 'current-demo-snapshot', main_simulation_mode: 'mock', phone_workbench: phoneRuntime,phone_video:phoneVideo,
       runtime: { ...version, sha256: nodeHash, source: 'https://nodejs.org/download/release/v24.19.0/win-x64/node.exe', checksums: 'https://nodejs.org/download/release/v24.19.0/SHASUMS256.txt' },
       users: userCount, runs, omitted: ['runtime control files', 'logs', 'old exports', 'unreferenced assets', 'build caches', 'model service settings and credentials', 'GUI lab experiment records and assets', ...(phone?[]:['candidate SDK dependencies'])],
       verification: { sqlite_integrity: 'passed', foreign_keys: 'passed', referenced_asset_sha256: 'passed', source_unchanged: 'passed' } };
@@ -138,7 +147,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const { values } = parseArgs({ options: { out: { type: 'string' }, runtime: { type: 'string', default: process.execPath }, license: { type: 'string' }, checksums: { type: 'string' }, clean: { type: 'boolean' }, phone:{type:'boolean'} } });
+  const { values } = parseArgs({ options: { out: { type: 'string' }, runtime: { type: 'string', default: process.execPath }, license: { type: 'string' }, checksums: { type: 'string' }, clean: { type: 'boolean' }, phone:{type:'boolean'},'video-archive':{type:'string'},'source-index':{type:'boolean'} } });
   if (!values.out || !values.license || !values.checksums) { console.error('Required: --out DIRECTORY --license NODE-LICENSE --checksums SHASUMS256.txt [--runtime NODE.EXE] [--clean]'); process.exitCode = 1; }
-  else buildPortable(values).then(value => console.log(JSON.stringify(value))).catch(error => { console.error(`ERROR: ${error.message}`); process.exitCode = 1; });
+  else buildPortable({...values,videoArchive:values['video-archive'],sourceIndex:values['source-index']}).then(value => console.log(JSON.stringify(value))).catch(error => { console.error(`ERROR: ${error.message}`); process.exitCode = 1; });
 }
