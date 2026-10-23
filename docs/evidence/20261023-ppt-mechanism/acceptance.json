@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-23T08:15:47.115060+00:00",
+  "output": "output\\report_mechanism_20261023\\用户行为仿真系统_v0.4汇报_框架原理与接入影响版_20261023.pptx",
+  "sha256": "a334ec9c4b11c08d29532b5660f5378e97e35d52ee0339140cd860baa04786e6",
+  "edited_slides": [
+    1,
+    3,
+    7
+  ],
+  "changed_parts": [
+    "ppt/slides/slide1.xml",
+    "ppt/slides/slide3.xml",
+    "ppt/notesSlides/notesSlide3.xml",
+    "ppt/slides/slide7.xml",
+    "ppt/notesSlides/notesSlide7.xml"
+  ],
+  "other_six_slides_and_unrelated_parts_identical": true,
+  "source_preserved": true,
+  "pages": 9,
+  "changes": {
+    "page1": "common screenshot/model decision/action/observe workflow; no per-framework mechanism claims in green box",
+    "page3": "remove duplicate local comparison; explain MobileWorld and MobiFlow environments and success metric",
+    "page7": "same-dimension mechanism explanation, retained performance samples, device path/inputs/screenshots/timing effects and causal boundaries"
+  },
+  "checks": {
+    "changed_pages_statically_reviewed": [
+      1,
+      3,
+      7
+    ],
+    "text_fit_warnings": 0,
+    "matrix_cells_checked": 36,
+    "passed_performance_samples_checked": 6,
+    "api_other_timing_samples_checked": 3,
+    "package_integrity": "passed",
+    "artifact_import": "passed",
+    "powerpoint_gui": "not_verified"
+  },
+  "scope": {
+    "phone_commands": 0,
+    "model_calls": 0,
+    "historical_results_changed": false,
+    "application_code_changed": false,
+    "remote_push_or_upload": false
+  }
+}
