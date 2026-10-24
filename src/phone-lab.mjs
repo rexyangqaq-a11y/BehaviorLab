@@ -1,4 +1,5 @@
 import {phonePython} from './phone-runtime-paths.mjs';
+import {PHONE_SELECTION_POLICY} from './phone-framework-registry.mjs';
 import {mkdirSync,readFileSync,writeFileSync,existsSync,readdirSync,unlinkSync,renameSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {fork,execFile} from 'node:child_process';
@@ -78,7 +79,7 @@ export class PhoneLab {
     const evaluations=this.list('evaluations','evaluation.json'),excluded=new Map(evaluations.flatMap(e=>(e.entries??[]).filter(x=>x.run_id&&x.matrix_eligible===false).map(x=>[x.run_id,x.exclusion_reason??'integration_diagnostic'])));
     const deviations=new Map(evaluations.flatMap(e=>(e.entries??[]).filter(x=>x.run_id&&x.policy_deviation).map(x=>[x.run_id,x.policy_deviation])));
     const starts=this.list('starts','start.json'),tasks=this.listTasks(starts);
-    return {version:PHONE_LAB_VERSION,final_framework:null,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
+    return {version:PHONE_LAB_VERSION,final_framework:null,selection_policy:PHONE_SELECTION_POLICY,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
       starts,runs:this.list('runs','input.json').map(i=>({...this.summary(i.id),evaluation_exclusion:excluded.get(i.id)??null,policy_deviation:deviations.get(i.id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},video:this.video.status()};
   }
   async captureStart(input={}, {taskSnapshot=null}={}){

@@ -1,6 +1,6 @@
 import {renderPhoneTrace,renderPhoneDevice} from './phone-trace.mjs';
 import {filterPhoneRuns,comparablePhoneGroups,phoneResultTotals} from './phone-results.mjs';
-import {phoneTestPlan} from './phone-test-plan.mjs';
+import {phoneTestPlan,resolvePhoneSelection} from './phone-test-plan.mjs';
 import {createProcessPanel} from './phone-process-ui.mjs';
 import {createPhoneVideoPanel} from './phone-video-ui.mjs';
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -11,6 +11,7 @@ const seconds=v=>v==null?'—':(v/1000).toFixed(1)+'s',number=v=>v==null?'—':N
 const api=async(route='',data)=>{const r=await fetch('/api/phone-lab'+route,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','X-Simulator-UI':'1'},body:JSON.stringify(data)});const value=await r.json();if(!r.ok)throw Error(value.error??'请求失败');return value;};
 function message(text,error=false){$('message').hidden=false;$('message').className=error?'error':'';$('message').textContent=text;}
 let saved={};try{saved=JSON.parse(localStorage.getItem('phone-lab-ui-v3')??'{}');}catch{}
+let savedSelection={};try{savedSelection=JSON.parse(localStorage.getItem('phone-lab-selection-v1')??'{}');}catch{}
 let catalog,mode='single',tab='tasks',editingTask=null,taskTemplate=null,multiInitialized=false,busy=false,polling=false,selectionSignature='',startsSignature='',taskSignature='';
 let resultView=saved.view==='comparison'?'comparison':'records',page=0,selectedRun=null,snapshot=null,selectedImage=null,showAllTraceImages=false,detailTab='trace',reviewEditing=false,reviewDraft=null,lastDetailSignature='';
 const multi={frameworks:new Set(),services:new Set(),tasks:new Set()};
@@ -19,6 +20,7 @@ const processPanel=createProcessPanel({api,getCatalog:()=>catalog,openResults:se
 const videoPanel=createPhoneVideoPanel({api,getCatalog:()=>catalog,message});
 function filters(){return Object.fromEntries(Object.entries(filterIds).map(([k,id])=>[k,$(id).value]));}
 function persist(){try{localStorage.setItem('phone-lab-ui-v3',JSON.stringify({filters:filters(),view:resultView,sort:$('result-sort').value,pageSize:$('page-size').value}));}catch{}}
+function persistSelection(){savedSelection={framework_id:$('framework').value,service_id:$('service').value};try{localStorage.setItem('phone-lab-selection-v1',JSON.stringify(savedSelection));}catch{}}
 const tasks=()=>catalog?.tasks??catalog?.cases??[],taskById=id=>tasks().find(t=>t.id===id),availableTasks=()=>tasks().filter(t=>!t.archived);
 const serviceLabel=s=>s.name?(s.name.includes(s.model)?s.name:s.name+' · '+s.model):s.model;
 const runTaskName=r=>r.task_name??r.task?.name??r.name;
@@ -68,7 +70,11 @@ function selectedStart(id){return catalog.starts.find(s=>s.id===taskById(id)?.st
 function syncSelection(){
   const signature=JSON.stringify([catalog.frameworks.map(f=>[f.id,f.available]),catalog.services.map(s=>[s.id,s.model,s.name,s.family,s.missing]),tasks()]);
   if(signature!==selectionSignature){
+    const preferred=resolvePhoneSelection(catalog,{framework_id:$('framework').value||savedSelection?.framework_id,service_id:$('service').value||savedSelection?.service_id});
     options('framework',catalog.frameworks.map(f=>[f.id,f.name+(!f.available?' · 未就绪':''),!f.available]));options('service',catalog.services.map(s=>[s.id,serviceLabel(s)+(!usableService(s)?' · 不可用':''),!usableService(s)]));
+    $('framework').value=preferred.framework_id;$('service').value=preferred.service_id;
+    const recommendation=catalog.selection_policy?.recommended_default;
+    $('configuration-recommendation').textContent=recommendation?`默认推荐：${frameworkName(recommendation.framework_id)} + ${recommendation.model}（本轮四题：3通过、1部分完成）。框架与模型服务均可自行选择，保留你的选择。`+(!catalog.services.some(s=>usableService(s)&&s.model.toLowerCase()===recommendation.model.toLowerCase())?' 推荐模型尚未就绪，可在模型服务中配置，或选择其他可用服务。':''):'';
     const previous=$('case').value;options('case',availableTasks().map(t=>[t.id,t.name]));if(!previous)$('case').value=availableTasks().find(t=>t.reset==='home')?.id??availableTasks()[0]?.id??'';
     for(const [axis,rows]of Object.entries({frameworks:catalog.frameworks.filter(usableFramework),services:catalog.services.filter(usableService),tasks:availableTasks()})){
       const allowed=new Set(rows.map(r=>r.id));for(const id of multi[axis])if(!allowed.has(id))multi[axis].delete(id);
@@ -200,7 +206,7 @@ document.addEventListener('click',async event=>{
     else if(b.id==='cancel-review'){reviewDraft=null;reviewEditing=false;renderJudgment();}
   }catch(e){message(e.message,true);}
 });
-document.addEventListener('change',event=>{const el=event.target;if(el.dataset.multiAxis){if(el.checked)multi[el.dataset.multiAxis].add(el.value);else multi[el.dataset.multiAxis].delete(el.value);renderPlan();}else if(['framework','service','case'].includes(el.id))renderPlan();});
+document.addEventListener('change',event=>{const el=event.target;if(el.dataset.multiAxis){if(el.checked)multi[el.dataset.multiAxis].add(el.value);else multi[el.dataset.multiAxis].delete(el.value);renderPlan();}else if(['framework','service','case'].includes(el.id)){renderPlan();if(el.id!=='case')persistSelection();}});
 for(const type of ['input','change'])$('task-form').addEventListener(type,()=>{startsSignature='';renderPreparation();});
 for(const id of ['task-search','task-origin'])$(id).addEventListener(id==='task-search'?'input':'change',renderTasks);
 for(const id of [...Object.values(filterIds),'result-sort','page-size'])$(id).addEventListener(id==='filter-search'?'input':'change',()=>{page=0;renderResults();});

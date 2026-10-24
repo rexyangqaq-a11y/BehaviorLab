@@ -1,5 +1,7 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+**2026-10-23 配置策略确认（preview.10）**：保留三个框架与现有模型接口，由用户配置组合；默认推荐Midscene + qwen3.7-plus，首次填入可用推荐，用户更改后保留。无需选定唯一框架，[选型策略已确认](docs/FRAMEWORK_SELECTION_DECISION.md)。旧历史的“最终框架未定”不覆盖此决策；能力验收与稳定性仍按实际证据记录。本次没有模型/手机调用，已交付部署ZIP仍preview.9。
+
 **2026-10-23 私人迁移更新（preview.9）**：[私人部署包](output/BehaviorLab-Phone-Windows-x64-20261023-Private.zip)保留真机工作台6任务、83起点、39条运行及完整截图/轨迹、3个模型服务和角色配置。API密钥用随机迁移密码认证加密，运行`04_IMPORT_KEYS.cmd`后以新电脑Windows账户加密保存。密码查看工具在ZIP外，只在原电脑同一账户下使用；见[私人迁移说明](docs/PRIVATE_MIGRATION.md)。干净ZIP同步更新为preview.9，不含私人数据。工程离线回归124/124，未调用模型或操作手机；不等于第二台物理电脑或供应商连通验证。下方preview.8为历史发布记录。
 
 **2026-10-23部署更新（preview.8）**：[新版Windows干净部署包](output/BehaviorLab-Phone-Windows-x64-20261023.zip)包含三框架、Python/HDC、四页签过程查看与HOScrcpy视频，新增独立Java运行时和预编译桥，无需另装Java或打开官方GUI。完整解压后先运行`03_CHECK.cmd`，再运行`01_START.cmd`，配置自己的模型服务和新电脑USB授权；不含本机账号、密钥或历史手机数据。[部署说明](docs/WINDOWS_PORTABLE.md)。下方旧ZIP未更新的描述为历史，本轮工程回归120/120，目标物理电脑兼容性仍需目标机检查。

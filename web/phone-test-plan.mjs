@@ -6,3 +6,8 @@ export function phoneTestPlan({mode='single',framework_ids=[],service_ids=[],cas
   const count=framework_ids.length*service_ids.length*case_ids.length;if(count>150)throw Error('一次组合评估最多150个测试单元');
   return {mode,count,framework_ids,service_ids,case_ids,combinations:framework_ids.flatMap(framework_id=>service_ids.map(service_id=>({framework_id,service_id})))};
 }
+// Recommendations fill empty/unavailable choices; a usable user choice always wins.
+export function resolvePhoneSelection(catalog,current={}){
+  const preferred=catalog.selection_policy?.recommended_default??{},frameworks=catalog.frameworks.filter(f=>f.available),services=catalog.services.filter(s=>s.protocol==='openai-chat'&&s.family&&!s.missing?.length);
+  return {framework_id:(frameworks.find(f=>f.id===current.framework_id)??frameworks.find(f=>f.id===preferred.framework_id)??frameworks[0])?.id??'',service_id:(services.find(s=>s.id===current.service_id)??services.find(s=>s.model.toLowerCase()===preferred.model?.toLowerCase())??services[0])?.id??''};
+}

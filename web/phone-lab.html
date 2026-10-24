@@ -3,7 +3,7 @@
 <body>
 <header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-status" class="pill">读取状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
 <main>
-  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.9 · 最终框架未定</small></div>
+  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.10 · 框架与模型可配置</small></div>
   <div id="pause-banner" class="pause-banner" hidden><div><strong>真机操作已暂停</strong><p>任务编辑与结果查看仍可使用。</p></div><button id="resume-device">恢复真机测试</button></div>
   <div id="message" role="status" hidden></div>
   <nav class="tabs" aria-label="工作台导航"><button data-tab="tasks" class="selected" aria-selected="true">任务列表</button><button data-tab="test" aria-selected="false">测试</button><button data-tab="process" aria-selected="false">测试过程详情</button><button data-tab="results" aria-selected="false">结果与对比</button></nav>
@@ -30,6 +30,7 @@
   <section id="test" class="tab" aria-label="测试" hidden>
     <div id="test-video-note" class="hint" hidden>手机投屏保持连接，启动测试后在过程页观看。<button type="button" id="test-video-stop" class="text-button">停止投屏</button></div>
     <div class="heading"><div><h2>配置测试</h2><p class="hint">按框架、模型服务、任务三个维度选择。</p></div><div class="segmented" aria-label="测试模式"><button data-test-mode="single" aria-pressed="true">单项测试</button><button data-test-mode="matrix" aria-pressed="false">组合评估</button></div></div>
+    <p id="configuration-recommendation" class="hint"></p>
     <form id="test-form">
       <div class="dimension-grid">
         <section class="card dimension"><h3><span>01</span> 框架</h3><label class="single-dimension">选择框架<select id="framework" required></select></label><div id="multi-frameworks" class="multi-dimension" hidden></div></section>

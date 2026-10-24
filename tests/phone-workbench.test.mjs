@@ -6,13 +6,22 @@ import os from 'node:os';
 import {PhoneTasks} from '../src/phone-tasks.mjs';
 import {PhoneLab} from '../src/phone-lab.mjs';
 import {startContract} from '../src/phone-startpoints.mjs';
-import {phoneTestPlan} from '../web/phone-test-plan.mjs';
+import {phoneTestPlan,resolvePhoneSelection} from '../web/phone-test-plan.mjs';
+import {PHONE_SELECTION_POLICY} from '../src/phone-framework-registry.mjs';
 import {filterPhoneRuns,comparablePhoneGroups,phoneResultTotals} from '../web/phone-results.mjs';
 import {createDebugServer} from '../src/web-server.mjs';
 import {PhoneEvidence,sha256} from '../src/phone-evidence.mjs';
 import {namedStartContract} from '../src/phone-startpoints.mjs';
 
 const definition={name:'测试任务',app:'当前应用',instruction:'打开页面并读取标题',acceptance:'打开目标页\n标题有真实截图依据',initial_state:'同一手机桌面，无键盘',forbidden:'不修改账号',reset:'home'};
+test('recommended defaults preserve user combinations and handle missing or disabled services',()=>{
+  const catalog={selection_policy:PHONE_SELECTION_POLICY,frameworks:[{id:'autoglm',available:true},{id:'midscene',available:true},{id:'mobiagent',available:true}],services:[{id:'flash',model:'qwen3.8-flash',protocol:'openai-chat',family:'qwen'},{id:'plus',model:'qwen3.7-plus',protocol:'openai-chat',family:'qwen'}]};
+  assert.deepEqual(resolvePhoneSelection(catalog),{framework_id:'midscene',service_id:'plus'});
+  assert.deepEqual(resolvePhoneSelection(catalog,{framework_id:'mobiagent',service_id:'flash'}),{framework_id:'mobiagent',service_id:'flash'});
+  catalog.services[1].missing=['API Key'];catalog.frameworks[1].available=false;
+  assert.deepEqual(resolvePhoneSelection(catalog,{framework_id:'midscene',service_id:'plus'}),{framework_id:'autoglm',service_id:'flash'});
+  catalog.services=[];assert.equal(resolvePhoneSelection(catalog).service_id,'');
+});
 const settings={services:[{id:'a',protocol:'openai-chat',model:'qwen3.8-flash'},{id:'b',protocol:'openai-chat',model:'qwen3.7-plus'}]};
 async function temporary(t){const root=await mkdtemp(path.join(os.tmpdir(),'phone-workbench-test-'));t.after(async()=>{assert.equal(path.dirname(root),os.tmpdir());assert.ok(path.basename(root).startsWith('phone-workbench-test-'));await rm(root,{recursive:true,force:true});});return root;}
 async function baseline(lab,task,key='original',id='start_00000000-0000-0000-0000-000000000001'){
@@ -53,6 +62,7 @@ test('task HTTP create and edit work while paused without touching a phone or mo
     await post('/pause',{});const res=await post('/tasks',definition);assert.equal(res.status,201);const task=await res.json();
     const edited=await post('/tasks/'+task.id,{name:'改名任务',expected_revision:1});assert.equal(edited.status,200);
     const catalog=await(await fetch(app.url+'/api/phone-lab')).json();assert.equal(catalog.tasks.length,6);assert.equal(catalog.tasks.at(-1).name,'改名任务');assert.equal(catalog.device_pause.paused,true);
+    assert.equal(catalog.selection_policy.mode,'user_configurable');assert.equal(catalog.selection_policy.status,'confirmed');assert.equal(catalog.frameworks.length,3);
     assert.equal((await post('/tasks/'+task.id,{name:'过期',expected_revision:1})).status,409);
     assert.equal((await fetch(app.url+'/phone-test-plan.mjs')).status,200);assert.equal(devices,0);assert.equal(catalog.runs.length,0);
   }finally{await app.close();}

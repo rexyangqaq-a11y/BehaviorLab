@@ -1,0 +1,34 @@
+✔ Framework entry points are fixed allowlisted modules, not client paths (1.9079ms)
+✔ Portable Python resolves from the moved project and rejects escaping paths (42.4537ms)
+✔ persistent pause blocks capture, run and batch before any physical or model call; configuration stays readable (53.1027ms)
+✔ shared lock rejects a second operation; real evidence references detect tampering (81.3286ms)
+✔ phone interface and read-only catalog require no device; paused HTTP requests return 423 and never call hardware (243.1214ms)
+✔ integration diagnostics remain readable with actual calls and source versions but are explicitly excluded from matrix scoring (41.023ms)
+✔ a batch freezes its original reference and invalid limits cannot leave a batch active (53.306ms)
+✔ every run reports its frozen execution phone, with explicitly labelled baseline and unknown fallbacks (75.6727ms)
+✔ recommended defaults preserve user combinations and handle missing or disabled services (4.8786ms)
+✔ named task library persists edits, protects builtins and detects stale revisions (72.8299ms)
+✔ task archive is reversible and validation rejects unsafe package names and empty criteria (49.1467ms)
+✔ single and matrix plans enforce all three axes and produce the full Cartesian product (0.6949ms)
+✔ task HTTP create and edit work while paused without touching a phone or model (207.6447ms)
+✔ a revised task cannot reuse its old baseline, and invalid preparations never access hardware (54.6012ms)
+✔ manual matrix waits per cell, rejects drift, freezes task content and supports cancellation (115.2781ms)
+✔ closing a batch waiting for a manual start does not leave an unresolved queue (66.7221ms)
+✔ custom home baselines need no target package, while manual starts compare actual page content (2.8913ms)
+✔ results support new batch scopes and keep protocols, revisions and limits in separate comparison groups (1.2832ms)
+✔ task startpoint configuration persists independently and is frozen for a batch without a test-page override (124.8822ms)
+✔ a task rejects another task baseline, stale task revisions and stale configured startpoints (58.1961ms)
+✔ single-run names and task names are frozen separately, and configured starts are resolved on the server (422.2418ms)
+✔ task baseline API can select existing evidence while paused and never calls the phone (123.6347ms)
+✔ a current-state start only needs a name and never resets or launches an app (94.003ms)
+✔ an old start can be reused by a different task without hardware or rewriting the original evidence (79.6897ms)
+✔ named page comparison records actual metadata while detecting page changes (0.5413ms)
+✔ named starts are checked automatically in a matrix and drift blocks without repeated operator configuration (52.6384ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2163.1064

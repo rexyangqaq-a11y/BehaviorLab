@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-24T15:15:27.362Z",
+  "version": "0.4.0-preview.10",
+  "status": "passed",
+  "selection_policy": {
+    "mode": "user_configurable",
+    "status": "confirmed",
+    "retained_frameworks": [
+      "midscene",
+      "mobiagent",
+      "autoglm"
+    ],
+    "recommended_default": {
+      "framework_id": "midscene",
+      "model": "qwen3.7-plus"
+    },
+    "unique_framework_required": false
+  },
+  "offline_tests": {
+    "targeted_passed": 26,
+    "targeted_failed": 0,
+    "final_workbench_subset_passed": 18,
+    "subset_not_added_to_total": true
+  },
+  "browser": {
+    "url": "http://127.0.0.1:4317/phone-lab#test",
+    "default_recommendation_verified": true,
+    "framework_options": 3,
+    "service_options": 3,
+    "user_choice": {
+      "framework_id": "mobiagent",
+      "model": "qwen3.8-flash"
+    },
+    "user_choice_survives_reload": true,
+    "old_tab_coexistence_verified": true,
+    "display_restored_to_recommendation": true,
+    "initial_shared_cache_overwrite_found_and_fixed": true
+  },
+  "original": {
+    "runs": 39,
+    "tasks": 6,
+    "services": 3,
+    "metadata_sha256_unchanged": 1728
+  },
+  "model_requests": 0,
+  "device_commands": 0,
+  "remote_uploads": 0,
+  "deployment_zip_updated": false,
+  "previous_zip_version": "0.4.0-preview.9",
+  "not_verified": [
+    "new GUI business tasks",
+    "stable success rate",
+    "second physical computer"
+  ]
+}

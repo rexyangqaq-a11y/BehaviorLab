@@ -1,0 +1,26 @@
+✔ recommended defaults preserve user combinations and handle missing or disabled services (2.8669ms)
+✔ named task library persists edits, protects builtins and detects stale revisions (64.8687ms)
+✔ task archive is reversible and validation rejects unsafe package names and empty criteria (38.4719ms)
+✔ single and matrix plans enforce all three axes and produce the full Cartesian product (0.6008ms)
+✔ task HTTP create and edit work while paused without touching a phone or model (170.0913ms)
+✔ a revised task cannot reuse its old baseline, and invalid preparations never access hardware (49.2697ms)
+✔ manual matrix waits per cell, rejects drift, freezes task content and supports cancellation (99.3995ms)
+✔ closing a batch waiting for a manual start does not leave an unresolved queue (53.6226ms)
+✔ custom home baselines need no target package, while manual starts compare actual page content (1.6392ms)
+✔ results support new batch scopes and keep protocols, revisions and limits in separate comparison groups (0.7369ms)
+✔ task startpoint configuration persists independently and is frozen for a batch without a test-page override (114.8161ms)
+✔ a task rejects another task baseline, stale task revisions and stale configured startpoints (51.7918ms)
+✔ single-run names and task names are frozen separately, and configured starts are resolved on the server (304.0543ms)
+✔ task baseline API can select existing evidence while paused and never calls the phone (111.9875ms)
+✔ a current-state start only needs a name and never resets or launches an app (64.9031ms)
+✔ an old start can be reused by a different task without hardware or rewriting the original evidence (72.7181ms)
+✔ named page comparison records actual metadata while detecting page changes (0.7549ms)
+✔ named starts are checked automatically in a matrix and drift blocks without repeated operator configuration (57.1082ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1433.5211

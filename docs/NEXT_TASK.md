@@ -1,5 +1,7 @@
 # 下一步：使用新版工作台复核结果与安排后续验证
 
+**2026-10-23最新决策：选型策略已确认。** 保留Midscene/MobiAgent/Open-AutoGLM与现有模型接口，用户配置组合；默认推荐Midscene + qwen3.7-plus。不再等待用户确认唯一胜出框架。下一步核销31项能力验收的已有证据与缺口、结果复核及稳定性范围；主仿真接入属于v0.5。见[决策](FRAMEWORK_SELECTION_DECISION.md)。源码preview.10，部署ZIP仍preview.9，旧历史“最终框架未定”不覆盖本决策。不自动补跑或调用模型。
+
 **2026-10-23当前部署为preview.9。** 私人版`BehaviorLab-Phone-Windows-x64-20261023-Private.zip`含6任务/83起点/39条运行及3个模型配置，密钥以迁移密码加密。先在原电脑同一Windows账户运行ZIP外的“查看迁移密码.cmd”，新电脑完整解压后03_CHECK → 04_IMPORT_KEYS → 01_START；不要先修改模型配置。干净版同日ZIP不含私人数据，跳过04。详见[私人迁移](PRIVATE_MIGRATION.md)。本轮124/124离线回归，不新增模型/手机调用或任务成绩；第二台物理电脑及供应商连通仍待目标机验证。以下preview.8/旧包为历史。
 
 **2026-10-23部署包已更新到preview.8。** 使用`BehaviorLab-Phone-Windows-x64-20261023.zip`，完整解压后03_CHECK、01_START；已带Java/HOScrcpy，不需打开官方GUI或另装Java。目标电脑仍需USB驱动/授权、解锁及自己的图片模型服务。工程回归120/120与发布验证见[验收记录](evidence/20261023-portable/acceptance.json)。未验证第二台物理电脑及其真机/视频表现；原39运行和36项成绩不变。下方“旧ZIP仍preview.6”只指历史2026-10-22包。
