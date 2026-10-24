@@ -1,6 +1,6 @@
 # 开发结构与交接
 
-2026-10-22，preview.6。主仿真内容生成仍Mock，独立phone-lab为真实GUI验证台，两条执行链尚未生产集成。不要把这个版本号解释成正式v0.4完成。
+2026-10-25交接，源码preview.10，功能基线9929ed4。v0.4按用户确认的四案例最小真实验证与离线收尾范围交接；主仿真内容生成仍Mock，独立phone-lab为真实GUI验证台，两条执行链尚未生产集成。源码/部署与未测能力以[CURRENT_STATUS.md](CURRENT_STATUS.md)为准；下文带早期日期的拆分记录不作为本轮改动声明。
 
 | 目录/模块 | 职责与修改入口 |
 |---|---|
@@ -13,6 +13,8 @@
 | `integrations/phone-frameworks.py` | Python原生循环的设备/模型RPC桥，不接收服务密钥 |
 | `src/phone-device.mjs`、`hdc-environment.mjs` | HDC与设备命令、截图、物理动作及环境探测 |
 | `src/gui-trial-transport.mjs`、`phone-evidence.mjs` | 唯一模型HTTP计量与本地证据；凭据清洗和图像资产哈希 |
+| `src/phone-action-effects.mjs`、`integrations/phone_protocol.py` | 动作不确定性、物理坐标边界、原生动作协议前置校验；不自动重放或猜测坐标单位 |
+| `src/v04-acceptance.mjs`、`web/v04-acceptance.*` | 31项要求的证据核对与允许列表内公开来源；不是31项真实通过成绩 |
 | `web/phone-lab.mjs`、`phone-results.mjs`、`phone-trace.mjs` | 四页签交互、列表/矩阵筛选、逐图模型回复与动作 |
 | `web/phone-process.mjs`、`phone-process-ui.mjs` | 只读过程轨迹、当前用例、原始回复/动作与证据图 |
 | `src/phone-video*.mjs`、`integrations/hoscrcpy/`、`web/phone-video*.mjs` | 可选后台视频会话、固定SDK桥、网页解码；与模型/业务动作分开，见[接入说明](HOSCRCPY_VIDEO.md) |
@@ -34,7 +36,7 @@ Node.js24运行`npm run web`，本机默认4317。核心Mock无需安装npm依�
 
 UI开发修改`web/`和API展示字段，避免改动历史input/result/asset。框架开发只从注册表和adapter入口接入，公共额度/设备日志放worker及统一层。用量计算集中transport，禁止另建SDK客户端绕过。设备/截图改动可能改变所有框架成绩，必须单独说明协议版本和重新验证范围。
 
-本轮将大分支移出worker、复用同一注册表并引入可迁移Python路径。原生循环、提示、限额与业务判定未借机调整。旧运行v4–v7、界面起点v9仍各自保留；新增架构入口参与源码冻结。当前版本真实运行尚未新增，离线验证不能代替该事实。
+2026-10-22曾将大分支移出worker并引入可迁移Python路径。之后的收尾增加严格协议与效果保护，新运行协议为v10，旧运行v4–v7及起点v9分别冻结。本次交接未改业务文件，新保护只有离线与原生契约验证，未追加手机任务；不能把旧真实成绩当新协议复测。
 
 ## 交接材料
 

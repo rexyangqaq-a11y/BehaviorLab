@@ -54,6 +54,9 @@ secrets.*.json
 *.pem
 *.pfx
 *.p12
+*.dpapi
+migration-password*
+model-credentials.enc.json
 
 # Editor/OS temporary files
 .DS_Store

@@ -1,60 +1,56 @@
 # 本地源码基线与恢复
 
-日期：2026-10-21。本目录此前没有 Git；已检查 `dev` 及逐级父目录、候选源码目录，没有把已有仓库重建或嵌套。
+更新：2026-10-25。仓库根为`D:\work\Memory\UserBehaGene\dev`，Git归属该目录，不是父目录仓库；本地`main`，未配置远程、不推送。早期交接保存在Git历史，不重建或改写旧提交。
 
-## 归属与基线
+## 当前基线
 
-- 仓库：`D:\work\Memory\UserBehaGene\dev\.git`，本地 `main` 分支。
-- 基线标签：`handoff-20261021`。提交标识以本机 Git 查询为准；未配置远程，没有 push。
-- 该提交由工具身份 `Codex <codex@local.invalid>` 创建，命令级指定，不修改用户全局身份。
-- 仅记录源码、网页、测试、文档、启动脚本、候选依赖清单/锁文件、示例及审查后的最小脱敏证据。
-- 本次交接前后的 49 个实现文件 SHA-256 一致；没有修改业务实现或生成材料工具代码。
+| 标识 | 用途 |
+|---|---|
+| `bc5cbd6` / `codex/preview10-before-closeout-20261025` | 收尾前、已验证用户配置与默认推荐的preview.10 |
+| `9929ed4` / `codex/v04-core-20261025` | 已有执行保护、严格协议、审核优先级及证据核对功能源码；本机133/133离线回归 |
+| `codex/v04-handoff-20261025` | 功能源码加当前README、CURRENT_STATUS、NEXT_TASK、忽略规则及交接证据；完整提交号用下方命令查询 |
 
-查询：
+源码版本号仍preview.10，已交付部署ZIP仍preview.9。Git标签不是正式0.4.0发布包，也不恢复数据库或手机状态。
 
 ```powershell
 git status --short
-git show --stat handoff-20261021
-git rev-parse handoff-20261021
-git remote -v
+git rev-parse --show-toplevel
+git rev-parse codex/v04-handoff-20261025
+git show --stat codex/v04-core-20261025
+git remote
 ```
 
-## 忽略和提交前检查
+## 本次审计与边界
 
-`.gitignore` 排除 `.data`、`.runtime`、`runtime`、`node_modules`、`.cache`、`.build`、`output`、数据库/WAL、凭据配置、压缩发布包、日志和临时文件。清单和锁文件是可复现源码的一部分，安装依赖不提交。
+本次交接不改业务实现：交接前后19个已有变更/新增业务与测试文件SHA-256一致；它们在此前开发阶段已实现，本次仅验证、提交和补文档。安装环境133项全通过，另对无数据/无依赖的干净源码副本验证129通过/4依赖测试跳过/0失败。原39运行、6任务、83起点与1728份元数据哈希保留。交接不调用真实模型、不操作手机。
 
-提交前核对过 Git 实际候选/暂存文件、禁入路径、数据库/可执行二进制标记、已保存凭据的精确内容以及常见密钥模式。输出只保留文件/问题类别或计数，不打印凭据。模式检查不能证明未知格式秘密永远不存在；以后新增文件仍须复核。
+`.gitignore`排除`.data`、`.runtime`、`runtime`、`node_modules`、缓存、`.build`、`output`、数据库/WAL、凭据配置、私钥、DPAPI密码文件、加密迁移密钥文件、日志和发布压缩包。依赖清单/锁文件保留，安装产物不提交。提交前核对实际跟踪/暂存路径、历史禁入路径和常见密钥形态；审计只输出计数/文件类别，不打印密钥。
 
-`.gitattributes` 规定源码文本规范化，Windows `.cmd` 检出为 CRLF；既有图片/PDF/PPTX 不做文本转换。本次没有修改旧 PPT 或发布包。
+只有源码、测试、文档和审查后的脱敏工程证据进入Git；真实原始截图、账户、密钥和运行SQLite均不进入基线。原开发数据库旧格式未被本次交接改写。详见[交接审计](evidence/20261025-handoff/handoff-verification.json)。
 
-## 后续开发如何回退
+## 不破坏现有工作地回退
 
-从基线创建新分支，保留原分支的后续提交：
+确认工作区改动已有保存位置后，从目标标签开新分支：
 
 ```powershell
-git switch -c next/v04-gui-evaluation handoff-20261021
+git switch -c codex/inspect-v04 codex/v04-handoff-20261025
 ```
 
-运行前确认工作区改动已有保留位置；不要用删除 `.data` 或覆盖数据库来“恢复源码”。Git 不知道在途手机动作的效果，也不恢复用户、密钥、截图或仿真进度。
+不使用`reset --hard`或删除目录“恢复源码”；不要覆盖正在使用的`.data`。Git不撤回手机在途动作，不恢复账号/图像/密钥，不自动重放任务。
 
-## 独立源码副本
+## 额外源码恢复包
 
-本地额外保留：`.build/handoff-20261021/source-baseline.bundle`。该目录被忽略，bundle 只包含已提交源码和文档，没有运行数据、凭据或安装依赖。
-
-校验或在一个**尚不存在**的新目录还原：
+交接提交完成后生成本地`.build/handoff-20261025/source-baseline.bundle`，校验并在本项目忽略目录内恢复验证。它仅包含Git源码历史及交接标签，不含未跟踪的数据/依赖/发布ZIP；不上传远程。
 
 ```powershell
-git bundle verify .build/handoff-20261021/source-baseline.bundle
-git clone .build/handoff-20261021/source-baseline.bundle D:\BehaviorLab-source-restore
+git bundle verify .build/handoff-20261025/source-baseline.bundle
+git clone .build/handoff-20261025/source-baseline.bundle D:\BehaviorLab-source-restore
 ```
 
-示例目录需使用者自行选定；本次实际恢复验证使用本项目忽略的 `.build` 子目录，不向其他位置写入。还原后需要本机 Node.js 24，模型配置不会随源码恢复。若只需本机当前副本继续开发，不必重复 clone。
+示例目标必须尚不存在，路径由使用者选择；本次实际验证只写本项目`.build`子目录。最终bundle校验记录在`.build/handoff-20261025/bundle-verification.json`。基线验证文件清单保存在交接证据中，最终提交号不写回自身，避免自引用哈希。
 
-bundle 的恢复验证结果记录在 [handoff-verification.json](evidence/20261021-handoff/handoff-verification.json)。本地完整审计文件在 `.build/handoff-20261021`；原始运行/材料仍在忽略目录，未删除或迁移。
+## 数据与依赖另行保管
 
-## 数据、依赖和发布不随源码基线自动恢复
+Git/bundle不是私人数据备份。`.data`及已使用目录只在正常停服后受控备份，不能运行中单拷SQLite而丢WAL。`.runtime`含Python、HDC和Java/HOScrcpy依赖，迁移已用目录不能整目录删除。源码恢复后需Node24，候选依赖按部署说明准备；没有候选SDK时相关测试应跳过或报告缺条件。
 
-- `.data` 可能含用户/仿真数据、模型密钥；仅在正常停止后作独立本地受控备份。不要分享完整 `.data` 或 `.runtime`，也不要只复制一个活动 SQLite 文件。
-- Midscene 是可选 SDK，锁文件保留，`node_modules` 不保留；核心 Mock 可在没有候选 SDK 时运行。
-- `output/` 中的旧 ZIP、PPT、图片和第三方研究原始轨迹不提交。现有文档生成脚本的部分原始输入只在本机，干净检出不承诺重建全部材料；核心网页与工程回归不依赖这些资料。
-- Git 基线不是新的 Windows 发布包。重新发布、迁移数据或更换机器均另立任务核对，避免把 2026-10-19 旧包当最新版。
+现有私人preview.9 ZIP包含历史截图和加密密钥，只在授权电脑间传递。ZIP外的迁移密码查看工具受原Windows账户保护，不能直接复制到新电脑解密。原始运行、报告和安装依赖仍保留原忽略目录，本次未删除或上传。

@@ -1,5 +1,7 @@
 # Windows部署与迁移（2026-10-23）
 
+2026-10-25交接说明：本页描述已交付preview.9部署包，不是最新preview.10源码发布声明；本轮未重打包。最新133项工程回归与源代码基线见[CURRENT_STATUS.md](CURRENT_STATUS.md)，下方124项等包验收数量保留当时口径。
+
 当前preview.9提供两个Windows10/11、Intel/AMD x64版本：`BehaviorLab-Phone-Windows-x64-20261023.zip`为干净版；同名`-Private.zip`为私人迁移版，保留真机工作台6任务、83起点、39条运行的完整截图/轨迹、3个模型服务与角色配置，API密钥用迁移密码加密。两版均含四页签、三框架与HOScrcpy视频；主仿真仍Mock。旧2026-10-22为preview.6，旧2026-10-19不含当前工作台，不混用旧目录覆盖新包。
 
 本包带独立Temurin21.0.8+9 JRE、固定HOScrcpy SDK1.0.18-beta、预编译视频桥及JMuxer2.1.4，无需在新电脑安装Java或打开官方GUI。Java、Python和HDC均按项目相对路径定位，不依赖原电脑的DevEco/Codex目录。视频边界见[详细说明](HOSCRCPY_VIDEO.md)：本机曾出现断流，未声称长期稳定或任意手机兼容。

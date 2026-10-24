@@ -1,92 +1,56 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-**2026-10-23 配置策略确认（preview.10）**：保留三个框架与现有模型接口，由用户配置组合；默认推荐Midscene + qwen3.7-plus，首次填入可用推荐，用户更改后保留。无需选定唯一框架，[选型策略已确认](docs/FRAMEWORK_SELECTION_DECISION.md)。旧历史的“最终框架未定”不覆盖此决策；能力验收与稳定性仍按实际证据记录。本次没有模型/手机调用，已交付部署ZIP仍preview.9。
+当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
-**2026-10-23 私人迁移更新（preview.9）**：[私人部署包](output/BehaviorLab-Phone-Windows-x64-20261023-Private.zip)保留真机工作台6任务、83起点、39条运行及完整截图/轨迹、3个模型服务和角色配置。API密钥用随机迁移密码认证加密，运行`04_IMPORT_KEYS.cmd`后以新电脑Windows账户加密保存。密码查看工具在ZIP外，只在原电脑同一账户下使用；见[私人迁移说明](docs/PRIVATE_MIGRATION.md)。干净ZIP同步更新为preview.9，不含私人数据。工程离线回归124/124，未调用模型或操作手机；不等于第二台物理电脑或供应商连通验证。下方preview.8为历史发布记录。
+## 当前能做什么
 
-**2026-10-23部署更新（preview.8）**：[新版Windows干净部署包](output/BehaviorLab-Phone-Windows-x64-20261023.zip)包含三框架、Python/HDC、四页签过程查看与HOScrcpy视频，新增独立Java运行时和预编译桥，无需另装Java或打开官方GUI。完整解压后先运行`03_CHECK.cmd`，再运行`01_START.cmd`，配置自己的模型服务和新电脑USB授权；不含本机账号、密钥或历史手机数据。[部署说明](docs/WINDOWS_PORTABLE.md)。下方旧ZIP未更新的描述为历史，本轮工程回归120/120，目标物理电脑兼容性仍需目标机检查。
+- 主系统的用户库、任务、日调度、虚拟时间、持久化、调用追踪、执行/描述队列和导出实际运行；人设补全、规划调整、主流程手机执行/截图、存档图转文内容仍为Mock。
+- 独立[真机工作台](http://127.0.0.1:4317/phone-lab)已接通三个实际框架循环和HDC，具备任务、测试、过程、结果四页签，可查看每图原始模型回复、动作、手机信息、耗时与用量。
+- 保留Midscene、MobiAgent、Open-AutoGLM及现有模型接口，由用户配置组合。默认推荐**Midscene + qwen3.7-plus**，用户改选后保留；这是四题3通过1部分完成的样本建议，不是稳定最优结论。[已确认策略](docs/FRAMEWORK_SELECTION_DECISION.md)。
+- [v0.4证据核对页](http://127.0.0.1:4317/v04-acceptance)将31项要求的证据、缺口与后续事项分别列出。新增执行保护与审核优先级做过离线验证，未追加真机任务。
+- HOScrcpy可直接在网页观看手机连续视频，不需打开官方工具；已有真实出帧证据，也存在未定位的断流，尚未证明长期稳定。[视频说明](docs/HOSCRCPY_VIDEO.md)。
 
-**2026-10-23 更新（preview.8）**：[测试过程详情](docs/PHONE_PROCESS_VIEW.md)已接入[HOScrcpy网页连续投屏](docs/HOSCRCPY_VIDEO.md)，不需要打开官方工具窗口或选窗。本机手机已验证真实H.264解码、桌面滑动同步、主动停止及离页回收；三框架带模型任务与长期稳定性尚未追加验证。原39条运行、6任务、3服务及36项成绩保留，本轮模型请求0。每轮改动按 [AGENTS.md](AGENTS.md) 提交本地 Git，无远程、无推送。旧2026-10-22部署包仍为preview.6，不含本次功能；新电脑视频组件安装见上述说明。
+**独立真机工作台尚未接入主仿真调度。** 这一接入属于v0.5；真实上层规划、存档逐图VLM及长期记忆引擎也未实现。
 
-**2026-10-22 汇报与协作交付（preview.6）**：[20页汇报PPT](output/report_release_20261022/用户行为仿真系统_下层操作与真机评估_20261022.pptx)、[进一步失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)、[协作开发](docs/DEVELOPMENT.md)、[新增框架](docs/FRAMEWORK_ADAPTER_GUIDE.md)。框架注册/执行适配已拆分，Python路径支持整体迁移，离线工程回归107/107通过。新[Windows干净真机包](output/BehaviorLab-Phone-Windows-x64-20261022.zip)包含依赖与离线检查，不含密钥、账号或真机历史原图。当前部署以[本版文档](docs/WINDOWS_PORTABLE.md)为准，下文旧包未更新的描述属于历史。本轮零新增真实模型/手机调用，36项成绩不变，最终框架待确认。
+## 测试与真实能力分别统计
 
-**2026-10-22 更新**：四阶段三框架 × 三模型 × 四题共 **36/36** 已执行并完成助手核对：**通过16、部分完成10、未通过10**，用户复核待定。确认4条输入/图片编码接入异常，修复后重测均通过，按用户要求覆盖旧记录；正常任务失败不重测。当前矩阵331请求，本批含诊断和已覆盖消耗累计373请求。结果支持组合筛选、每图模型回复/动作及设备版本。最新离线回归 **105/105**，不是 GUI 成绩。[实际结果与限制](docs/PHONE_EVALUATION_RESULTS_20261022.md)，[打开界面](http://127.0.0.1:4317/phone-lab)。
+| 类型 | 最新事实 |
+|---|---|
+| 本机安装环境工程回归 | 133/133通过，0失败、0跳过；没有真实模型/手机调用 |
+| 干净源码、无数据与依赖 | 129通过、4项依赖相关测试跳过、0失败；共133项 |
+| 已安装原生Python循环离线契约 | 两框架各5条固定回复，中文与图片/动作协议通过；不是GUI成绩 |
+| 历史短文本模型连通 | 三模型合计60 tokens；只证明当时文本接口可响应 |
+| 历史真实GUI任务 | 计算器、存储、淘宝、小红书，三框架×三模型×四题=36单元；16通过、10部分完成、10未通过，用户复核待定 |
+| 31项能力清单 | 已有证据6、范围有限13、已知缺口6、未验证2、后续事项4；不是31项全部执行或通过 |
 
-Midscene、MobiAgent、Open-AutoGLM 已固定部署；**v0.4-preview.8 真机测试工作台**分为“任务列表、测试、测试过程详情、结果与对比”：支持可命名的本机任务库、单项/组合三维选择及命名、任务中选择已有起点或给当前状态命名、实时过程观察与可选视频、分页列表/矩阵、每图模型回复、审核与导出。既有36单元成绩不变；新v9命名起点队列的实际真机执行待后续使用验证。用户复核待定，最终框架未定。[操作说明](docs/PHONE_LAB_GUIDE.md)，[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)，[NEXT_TASK.md](docs/NEXT_TASK.md)，[本地回退](docs/LOCAL_BASELINE.md)。
+历史工程回归124、26项推荐测试及18项工作台子集属于各自阶段，不能相加。矩阵331次模型请求，含诊断及被替换样本的历史累计373次；未知费用不记零。已有39运行、6任务、83起点、3服务未改。本次交接模型请求0、设备命令0。
 
-当前流程见 [业务流程与用户创建 v0.3](docs/WORKSPACE_V03.md)：左侧为用户库、仿真任务、系统设置；规划、执行、观察文字和调用调试归属具体任务。用户支持辅助生成候选后审核入库，以及手动创建。
+[最新验证证据](docs/evidence/20261025-handoff/handoff-verification.json) · [真实GUI结果](docs/PHONE_EVALUATION_RESULTS_20261022.md) · [失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)
 
-继续开发按[版本计划](docs/VERSION_PLAN.md)逐版推进：**v0.4 优先完成开源下层 Agent 选型与最小验证**。既有 [v0.4-preview.1 单活动验证台](docs/V04_GUI_LAB.md)仍提供 7 类 Mock、环境诊断和恢复；新增真机页面与它分开。Midscene 与 MobiAgent 同等优先比较，Open-AutoGLM 为基线，未选定胜者。2026-10-21历史软件回归 **70/70 通过**，见[测试记录](docs/evidence/20261021-phone-lab/tests.txt)，均为离线替身/临时数据，不等于真机成绩。2026-10-19 的部署 ZIP 尚未包含新页面，本次未重打包。
+## 启动与离线测试
 
-**每版必须随附独立测试用例与测试调试界面**，具体内容到对应版本开发时再设计、实现和验收，不提前展开。见[随版测试交付约定](docs/VERSION_TEST_PLAN.md)。
-
-v0.4 已将另一对话「框架对比」的循环、各层记忆、跨调用续接、百对象活动、部署及费用等映射为[15 维度、31 项验收用例](docs/V04_FRAMEWORK_TEST_CASES.md)。验证台可筛选、展开和下载，全部真实验收仍待执行；不会自动批量调用模型。
-
-第二类 [GUI 任务效果与性能用例](docs/V04_GUI_EVALUATION_CASES.md)的 **14 条历史初稿**仍单独冻结、未执行。原[五题集](docs/reference/PHONE_LAB_CASES_20261021.json)保留；本轮[四个桌面起点任务](docs/reference/PHONE_HOME_EVALUATION_CASES_20261022.json)为 revision3，框架自行打开 APP，不要求动态时钟/推荐内容完全一致。四题九组合共36个唯一评估单元，每题每组合最多15请求，整批无总请求限制，零重试。工程回归、Mock、要求定义和真实样本分别统计。
-
-「系统设置 → 模型服务」可保存草稿、地址/模型/鉴权和四角色预设，密钥不回填。三个服务已保存，角色仍未绑定。历史三次短文本合计 60 tokens；历史 qwen3.7-plus 首题 partial 保留在[原报告](docs/REAL_GUI_TRIAL_20261021.md)，本轮网页 qwen3.8-flash 成功样本另有[脱敏证据](docs/evidence/20261021-phone-lab/ui-real-task-summary.json)，两次条件不同不并成比较结果。独立试验未回写模型配置页，`not_tested` 是现有页面边界。保存/打开配置不调用模型；预算和暂停规则见 [MODEL_CALL_POLICY.md](docs/MODEL_CALL_POLICY.md)。
-
-为长期记忆研究生成上游行为序列。当前页面提供用户库、仿真任务与跨度选择、每日规划、行为序列、观察文字、调用链路及 APP 配置。**用户管理、事件调度、虚拟时钟、持久化和调用跟踪实际运行；人设补全、规划/调整、手机决策/操作、截图与描述内容仍为 Mock。** 主流程尚未接入真实模型适配器、手机或 hipyum，不包含记忆提取与检索引擎。
-
-业务基线保存在 [CODEX_PROJECT_HANDOFF.md](docs/CODEX_PROJECT_HANDOFF.md)，已确认需求与建议分级见 [REQUIREMENTS_CLARIFICATION.md](docs/REQUIREMENTS_CLARIFICATION.md)。2026-10-21 按用户要求、检查父目录归属后，在当前 `dev` 目录建立独立本地 Git 基线；未配置远程或上传。凭据、运行数据库/资产、缓存、安装依赖和 `output/` 不提交。
-
-采用 **Node.js 24 原生 ESM + SQLite + 文件资产**，本机 Node v24.19.0。核心网页/Mock 无需第三方安装依赖或前端编译；真机 Midscene 1.16.0 为隔离依赖，两个 Python 候选及 ZIP 工具使用已部署的局部 Python 3.12.14。版本、安装/复查说明见[真机界面说明](docs/PHONE_LAB_GUIDE.md)。依赖、原图和凭据不提交；局部环境不等于已交付可迁移安装包。
-
-## 运行
-
-### 系统网页
-
-换电脑使用见 [Windows 免安装部署](docs/WINDOWS_PORTABLE.md) 和根目录 `00_README.txt`。Windows 免安装包内带运行时；完整解压后双击 `01_START.cmd`，自动后台启动并打开浏览器，`02_STOP.cmd` 正常停止。原 `start-web.cmd` 也是同一入口。
-
-开发者也可在项目目录前台执行：
+开发环境需Node.js 24。核心Mock无需安装前端依赖或编译；真实框架依赖另行部署，安装与设备检测不会自动授予业务通过。
 
 ```powershell
-node src/web-server.mjs
-```
-
-打开 **http://127.0.0.1:4317**。先在「用户库」创建并确认人设，再「新建仿真」选择用户、1/7/30/90/365 天或自定义跨度、可用 APP。任务可生成当前日计划、推进下一活动、推进一个用户日、连续生成和暂停，并查看记忆原文与调用详情。操作详见 [业务流程 v0.3](docs/WORKSPACE_V03.md)，架构基础见 [v0.2](docs/WORKSPACE_V02.md)。原有 `.data/` 运行继续保留；schema v1 自动增量升级。端口或数据位置可用 `--port 4318 --data .data` 修改。只监听本机，无需安装前端依赖或构建。旧服务不会自动重载后端，更新代码后需重启服务。
-
-### 命令行
-
-在项目目录使用 PowerShell：
-
-```powershell
-node src/cli.mjs init --config examples/mock-run.json --data .data/demo
-node src/cli.mjs run --data .data/demo
-node src/cli.mjs status --data .data/demo
-node src/cli.mjs describe --data .data/demo --retry-failed
-node src/cli.mjs export --data .data/demo
-node src/cli.mjs check --data .data/demo
+node scripts/desktop-launcher.mjs stop
+node scripts/desktop-launcher.mjs start --port 4317 --no-browser
 node --test tests/*.test.mjs
 ```
 
-配置示例故意注入每个用户首项活动的一张图像首次描述失败。第一次 `run` 后结果应为 8 个实际活动结果、8 个反馈决定、24 张合成图像；描述为 18 成功、2 失败、4 等待前序。执行已完成，数据集尚未完整。运行 `describe --retry-failed` 后 24 张描述全部完成。4 个原计划中的剩余任务因局部调整被替代，记录保留。
+也可前台执行`node src/web-server.mjs --port 4317`，Ctrl+C停止。主入口为`http://127.0.0.1:4317`，真机工作台为`/phone-lab`，验收页为`/v04-acceptance`。后台不自动热重载：本次交接时原4317服务仍加载较早后端，需正常重启后才有新验收接口。不要删除`.data`或`.runtime`来更新源码。
 
-`init` 拒绝覆盖已有运行目录。`run` 读取保存的进度；可随时 Ctrl+C，之后对同一目录再次执行 `run`。Mock 可安全续跑；真实动作的恢复必须由执行适配器另行判断。`run --no-descriptions` 只推进执行；`describe` 单独补描述。已经成功的活动不会因描述失败重采，已经成功的原始描述不会重写。`--retry-failed` 每次补跑一次失败项，受尝试上限约束；达到上限后需检查原因，不提供强制清除错误的命令。
+已安装框架的离线原生契约：`node scripts/phone-framework-contract.mjs`；`03_CHECK.cmd`为依赖/SDK检查，不是手机任务。核心Mock示例及独立执行/描述、恢复、导出方法见[开发说明](docs/DEVELOPMENT.md)与[业务流程](docs/WORKSPACE_V03.md)。
 
-退出码：0 为命令成功，1 为配置/运行错误或恢复需人工处理，2 为离线完整性检查失败。`run` 成功仅表示执行循环正常结束，完整状态请看 `dataset_complete` 和检查报告。
+## Windows部署与私人迁移
 
-历史受限 Windows 沙箱曾阻止临时文件替换或本地 HTTP；应核对执行环境，不删除恢复保护或忽略失败。当前正常 Windows 权限下全量 **70/70 通过**，包含真实本地进程和 HTTP，测试未调用真实模型、VLM 或手机。最早 13 项、发布时 29 项、预览时 44 项、交接时 46 项等是历史阶段数量，不相加。
+已交付的[干净包](output/BehaviorLab-Phone-Windows-x64-20261023.zip)和[私人包](output/BehaviorLab-Phone-Windows-x64-20261023-Private.zip)均为**preview.9**，未包含之后的preview.10源码改动。两包包含Node、Python、HDC、三框架及Java/HOScrcpy运行依赖。
 
-## 产物与边界
+完整解压后先`03_CHECK.cmd`，再`01_START.cmd`；停止用`02_STOP.cmd`。私人包含6任务/83起点/39运行与3个模型配置：先在原电脑同一Windows账户查看ZIP外的迁移密码，新电脑启动前运行`04_IMPORT_KEYS.cmd`输入密码。密钥以迁移密码认证加密，导入后由目标Windows账户DPAPI保护；原开发数据库兼容旧格式，本次未改写。详情见[部署](docs/WINDOWS_PORTABLE.md)和[私人迁移](docs/PRIVATE_MIGRATION.md)。
 
-```text
-src/contracts.mjs          数据校验、版本、适配器契约
-src/store.mjs              SQLite 进度、关联约束、资产与审计
-src/runner.mjs             运行管理：请求、保存、调度、恢复
-src/adapters/mock.mjs      人设/上层/下层/描述器合成夹具
-src/descriptions.mjs       持久化描述队列，活动内按序处理
-src/output.mjs            可重建的 JSONL 导出与离线完整性报告
-src/cli.mjs                命令行
-tests/pipeline.test.mjs    状态恢复、隔离、顺序等关键验证
-docs/                     需求分级、架构、接口、阶段报告
-.data/<run>/state.sqlite   数据库及 WAL 文件
-.data/<run>/assets/        按用户保存的全部合成图像
-.data/<run>/export/        events.jsonl、run.json、check-report.json
-```
+私人包包含原始历史截图，只用于授权电脑间迁移。源码Git与恢复bundle不含运行数据、凭据、数据库、缓存、依赖或发布ZIP。第二台物理电脑尚未验收。
 
-每个事件是一张图像的观察记录，明确动作前/后/独立观察语义。计划与实际并列；虚拟时间只精确到活动锚点，步骤使用顺序键，不伪造秒级行为时间。真实采集时间和描述处理时间另存。导出包含全部计划版本、实际结果、调整决定、描述尝试历史和来源；资产以路径和 SHA-256 引用，交付时需保留原运行目录中的 `assets/`。
+## 下一阶段与协作
 
-状态中的 `dataset_complete` 表示流水线阶段完成，不表示每项任务达标或行为真实。导出还会验证资产字节；资产缺失/损坏时标记不完整。离线检查报告独立输出证据，绝不触发重规划。Mock 的行为自然性标为 `not_evaluated`。
+下一步仅推进**v0.5：把用户所选下层接入主调度的一个活动**，先做离线契约。用户已决定暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
 
-详细内容见 [系统页面与架构 v0.2](docs/WORKSPACE_V02.md)、[需求与工程决策](docs/BASELINE.md)、[模块契约](docs/CONTRACTS.md)。[阶段 A 报告](docs/PHASE_A_REPORT.md) 与 [旧调试台说明](docs/WEB_DEBUG.md) 是历史交付记录。交接文件原文保存在 [业务基线副本](docs/CODEX_PROJECT_HANDOFF.md)。
+每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。

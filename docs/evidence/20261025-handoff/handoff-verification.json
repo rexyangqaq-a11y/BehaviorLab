@@ -1,0 +1,132 @@
+{
+  "verified_at": "2026-10-24T16:28:46.236Z",
+  "scope": "documentation, source baseline, isolated offline verification",
+  "version": "0.4.0-preview.10",
+  "core_commit": "9929ed4871fe5e58e45103cff83e0673a48b2efd",
+  "handoff_ref": "codex/v04-handoff-20261025",
+  "business_implementation_modified": false,
+  "pre_existing_business_files_sha256_preserved": 19,
+  "tests": {
+    "installed": {
+      "total": 133,
+      "passed": 133,
+      "failed": 0,
+      "skipped": 0
+    },
+    "clean_source": {
+      "total": 133,
+      "passed": 129,
+      "failed": 0,
+      "skipped": 4,
+      "skip_reason": "Python/AutoGLM dependencies intentionally absent"
+    }
+  },
+  "native_contracts": [
+    {
+      "framework": "autoglm",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 5,
+      "unicode_input_roundtrip": true,
+      "jpeg_mime_roundtrip": true,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    },
+    {
+      "framework": "mobiagent",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 4,
+      "unicode_input_roundtrip": true,
+      "jpeg_mime_roundtrip": null,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    }
+  ],
+  "isolated_integration": {
+    "url": "http://127.0.0.1:49673",
+    "acceptance_cases": 31,
+    "all_evidence_links_readable": 12,
+    "evidence_allowlist": "passed",
+    "review_precedence": "user_decision_preserved_after_later_assistant_review",
+    "review_history_events": 3,
+    "device_factory_calls": 0,
+    "real_model_requests": 0,
+    "real_device_commands": 0
+  },
+  "browser": {
+    "acceptance_page": "passed",
+    "case_count": 31,
+    "filter_deferred_count": 4,
+    "original_workbench_returned": true,
+    "temporary_server_stopped": true,
+    "fixture_data_removed": true
+  },
+  "records": {
+    "runs": 39,
+    "tasks": 6,
+    "starts": 83,
+    "services": 3,
+    "assigned_roles": 0,
+    "metadata_files_checked": 1728,
+    "changed_metadata_files": []
+  },
+  "acceptance_inventory": {
+    "case_count": 31,
+    "counts": {
+      "evidence_linked": 6,
+      "partial": 13,
+      "known_gap": 6,
+      "unverified": 2,
+      "deferred": 4
+    },
+    "missing_evidence": [],
+    "not_a_gui_pass_count": true
+  },
+  "runtime": {
+    "reachable": true,
+    "version": "0.4.0-preview.10",
+    "runs": 39,
+    "tasks": 6,
+    "services": 3,
+    "acceptance_route_status": 404,
+    "new_review_fields_loaded": false,
+    "active_phone_task": false,
+    "active_batch": null,
+    "video_state": "idle"
+  },
+  "git": {
+    "root": "D:\\work\\Memory\\UserBehaGene\\dev",
+    "remote_count": 0,
+    "tracked_files": 286,
+    "candidate_files": 292,
+    "forbidden_tracked_paths": 0,
+    "forbidden_candidate_paths": 0,
+    "forbidden_historical_paths": 0,
+    "credential_shaped_findings": 0,
+    "ignore_cases_verified": 9
+  },
+  "model_requests": 0,
+  "device_commands": 0,
+  "remote_uploads": 0,
+  "deploy_zip_updated": false,
+  "deploy_zip_version": "0.4.0-preview.9",
+  "pending_or_not_verified": [
+    "new execution protocol on physical device",
+    "second physical computer",
+    "long video stability",
+    "object-level recovery and continuation"
+  ],
+  "post_commit_bundle": {
+    "path": ".build/handoff-20261025/source-baseline.bundle",
+    "verification_record": ".build/handoff-20261025/bundle-verification.json",
+    "performed_after_handoff_commit": true
+  },
+  "documentation_links_verified": 84
+}

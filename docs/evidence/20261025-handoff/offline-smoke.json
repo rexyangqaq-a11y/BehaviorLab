@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:49673",
+  "acceptance_cases": 31,
+  "all_evidence_links_readable": 12,
+  "evidence_allowlist": "passed",
+  "review_precedence": "user_decision_preserved_after_later_assistant_review",
+  "review_history_events": 3,
+  "device_factory_calls": 0,
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}
