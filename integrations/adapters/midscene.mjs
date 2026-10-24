@@ -9,7 +9,7 @@ export async function run({project,dir,input,service,key,session,evidence,transp
       if(control.signal.aborted||counter.value>=input.limits.max_actions)throw Error('动作或时间上限');
       await checkPermissions(a.name,a.param);
       repeatGuard(a);counter.value++;const id='sdk_action_'+counter.value;evidence.actionId=id;await session.capture('before');evidence.record({type:'action_intent',id,name:a.name,param:a.param});session.setActive(true);return id;
-    },outcome:async(id,outcome)=>{session.setActive(false);evidence.record({type:outcome.status==='returned'?'action_return':'action_unknown',id,outcome});await sleep(500);await session.capture('after',{final:control.signal.aborted});evidence.actionId=null;if(outcome.status!=='returned')control.abort('unknown_action_effect');}});
+    },outcome:async(id,outcome)=>{session.setActive(false);if(outcome.status!=='returned')session.markUnknown(id);evidence.record({type:outcome.status==='returned'?'action_return':'action_unknown',id,outcome});try{await sleep(500);await session.capture('after',{final:control.signal.aborted});}catch(error){session.markUnknown(id);throw error;}finally{evidence.actionId=null;}if(outcome.status!=='returned')control.abort('unknown_action_effect');}});
     const agent=new HarmonyAgent(device,{generateReport:false,persistExecutionDump:false,autoPrintReportMsg:false,cache:false,replanningCycleLimit:input.limits.max_requests,
       screenshotShrinkFactor:2,waitAfterAction:500,modelConfig:{MIDSCENE_MODEL_NAME:service.model,MIDSCENE_MODEL_API_KEY:key,MIDSCENE_MODEL_BASE_URL:service.base_url,
         MIDSCENE_MODEL_FAMILY:input.service.family,MIDSCENE_MODEL_STREAM_MODE:'non-stream',MIDSCENE_MODEL_RETRY_COUNT:0,MIDSCENE_MODEL_TIMEOUT:30000,MIDSCENE_MODEL_REASONING_ENABLED:'false',

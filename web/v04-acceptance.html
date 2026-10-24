@@ -1,0 +1,6 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BehaviorLab · v0.4验收</title><link rel="stylesheet" href="/phone-lab.css"><script type="module" src="/v04-acceptance.mjs"></script></head>
+<body><header><a href="/phone-lab#test">← 真机测试工作台</a></header><main>
+<div class="intro"><div><h1>v0.4 证据核对与能力边界</h1><p>沿用四案例真实全流程；新增代码按离线工程与原生契约验证。</p></div></div>
+<section class="card"><h2>本轮交付范围</h2><p>三个框架与模型接口均保留，用户自行配置；默认推荐Midscene + qwen3.7-plus。</p><p>按2026-10-24用户指令，本轮不补手机测试，不强行执行百对象任务。未验证和已知缺口分别列出，不计作通过。</p><div id="historical" class="metrics"></div><p class="hint">上方为历史GUI样本；下面为31项要求的证据核对，两类数量分别统计。助手初判待用户复核。</p></section>
+<section class="card"><h2>31项验收要求</h2><p id="summary" role="status">正在读取证据核对记录。</p><div class="form-grid"><label>证据状态<select id="status"><option value="">全部状态</option></select></label><label>维度<select id="dimension"><option value="">全部维度</option></select></label></div><p><a href="/api/v04/acceptance" download="v04-acceptance.json">下载完整核对记录 JSON</a></p></section>
+<div id="cases"></div><p id="error" role="alert"></p></main></body></html>

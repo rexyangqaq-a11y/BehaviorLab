@@ -13,6 +13,8 @@ WIRE = sys.stdout
 sys.stdout = sys.stderr
 config = json.loads(sys.stdin.readline())
 root = pathlib.Path(config['project'])
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from phone_protocol import COORDINATE_CONTRACT, with_coordinate_contract, validate_autoglm_action
 counter = 0
 def rpc(method, **args):
     global counter
@@ -23,7 +25,7 @@ def rpc(method, **args):
     if response.get('error'): raise RuntimeError(response['error'])
     return response.get('result')
 def model_response(messages, **extra):
-    return rpc('model', body={'model': config['model'], 'messages': messages, 'stream': False, **extra})
+    return rpc('model', body={'model': config['model'], 'messages': with_coordinate_contract(messages, config['framework']), 'stream': False, **extra})
 def shot(): return rpc('capture')
 def reduced(data, fmt='JPEG'):
     img=Image.open(io.BytesIO(base64.b64decode(data)))
@@ -55,6 +57,13 @@ def run_autoglm():
         # declared wrapper; keep native action parsing and raw evidence intact.
         normalized=content.replace('<answer>','').replace('</answer>','')
         thinking,parsed=self._parse_response(normalized)
+        from phone_agent.actions.handler import parse_action
+        try:
+            validated = validate_autoglm_action(parsed, parse_action)
+        except ValueError as error:
+            rpc('protocol_rejected', reason=str(error), coordinate_contract=COORDINATE_CONTRACT)
+            raise
+        rpc('protocol_validated', action=validated, coordinate_contract=COORDINATE_CONTRACT)
         rpc('parsed',action=parsed,thinking=thinking,response_normalization='answer_wrapper_removed' if normalized!=content else None)
         return ModelResponse(thinking=thinking,action=parsed,raw_content=content)
     ModelClient.request=request

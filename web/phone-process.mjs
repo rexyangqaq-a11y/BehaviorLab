@@ -12,7 +12,7 @@ export function mergeProcessSnapshot(previous,update){
   return {...update,state:update.state??(previous?.id===update.id?previous.state:null),events:ordered,assets:ordered.filter(e=>e.type==='image'&&e.asset).map(e=>e.asset)};
 }
 const phases={checking_start:'核对手机起点',execution:'框架执行中',final_observation:'采集最终依据'};
-export const processPhase=run=>processActive(run)?phases[run.state?.phase]??'等待框架执行':({ended:'框架已结束，等待业务核对',failed:'执行失败',blocked:'执行受阻',stopped:'已停止',interrupted:'执行中断，待核对'}[run?.state?.status]??'读取执行状态');
+export const processPhase=run=>processActive(run)?phases[run.state?.phase]??'等待框架执行':({ended:'框架已结束，等待业务核对',failed:'执行失败',blocked:'执行受阻',stopped:'已停止',interrupted:'执行中断，待核对',needs_attention:'动作效果未知，需人工核对；不自动重放'}[run?.state?.status]??'读取执行状态');
 const eventLabels={execution_start:'开始执行',framework_return:'框架返回',execution_stopped:'执行停止',execution_end:'执行收尾',model_request_blocked:'模型入口阻断',framework_io_stopped:'框架调用停止',permission_policy_check:'权限操作已拦截'};
 export function processSteps(run){
   const trace=buildPhoneTrace(run.events??[]),steps=[];

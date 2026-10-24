@@ -73,7 +73,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
     const names=['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'AGENTS.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', '04_IMPORT_KEYS.cmd', 'start-web.cmd'];
     let sourceSnapshot={kind:'working-directory'};
     if(sourceIndex){
-      const allowed=[...names,'integrations/phone-frameworks.py','integrations/phone-frameworks-requirements.txt','integrations/adapters','integrations/hoscrcpy'];
+      const allowed=[...names,'integrations/phone-frameworks.py','integrations/phone_protocol.py','integrations/phone-frameworks-requirements.txt','integrations/adapters','integrations/hoscrcpy'];
       const indexed=execFileSync('git',['ls-files','-s','-z'],{cwd:root,encoding:'utf8',windowsHide:true}).split('\0').filter(Boolean).filter(row=>{const name=row.split('\t')[1];return allowed.some(p=>name===p||name.startsWith(p+'/'));});
       requireThat(indexed.length>0&&indexed.every(row=>/^100644 [a-f0-9]+ 0\t/.test(row)),'Source index must contain regular, conflict-free files');
       execFileSync('git',['checkout-index','--prefix='+target.replaceAll('\\','/')+'/','-z','--stdin'],{cwd:root,input:indexed.map(row=>row.split('\t')[1]).join('\0')+'\0',windowsHide:true});
@@ -90,7 +90,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
     await writeFile(path.join(target, 'runtime/node.exe'), nodeBytes);
     await writeFile(path.join(target, 'runtime/NODE-LICENSE.txt'), licenseBytes);
     await writeFile(path.join(target, 'runtime/NODE-SHASUMS256.txt'), official);
-    if(!sourceIndex){await mkdir(path.join(target,'integrations/adapters'),{recursive:true});for(const name of ['phone-frameworks.py','phone-frameworks-requirements.txt','adapters','hoscrcpy'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});}
+    if(!sourceIndex){await mkdir(path.join(target,'integrations/adapters'),{recursive:true});for(const name of ['phone-frameworks.py','phone_protocol.py','phone-frameworks-requirements.txt','adapters','hoscrcpy'])await cp(path.join(root,'integrations',name),path.join(target,'integrations',name),{recursive:true});}
     const phoneRuntime=phone?await packagePhoneRuntime(root,target):null;
     const phoneVideo=videoArchive?await packagePhoneVideo(root,target,videoArchive):null;
     await mkdir(path.join(target, '.data'));

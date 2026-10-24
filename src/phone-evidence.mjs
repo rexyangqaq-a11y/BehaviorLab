@@ -15,7 +15,7 @@ export class PhoneEvidence {
     return JSON.parse(text);
   }
   record = event => {
-    const row=this.clean({seq:++this.seq,at:new Date().toISOString(),elapsed_ms:Date.now()-this.started,phase:this.phase,...event});
+    const row=this.clean({seq:++this.seq,at:new Date().toISOString(),elapsed_ms:Date.now()-this.started,phase:this.phase,action_id:this.actionId??null,...event});
     appendFileSync(path.join(this.dir,'events.jsonl'),JSON.stringify(row)+'\n',{flush:true});
     if(event.type?.startsWith('model_'))appendFileSync(path.join(this.dir,'model-calls.jsonl'),JSON.stringify(row)+'\n',{flush:true});
     return row;

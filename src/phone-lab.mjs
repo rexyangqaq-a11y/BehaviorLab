@@ -1,5 +1,6 @@
 import {phonePython} from './phone-runtime-paths.mjs';
 import {PHONE_SELECTION_POLICY} from './phone-framework-registry.mjs';
+import {unexpectedWorkerState} from './phone-action-effects.mjs';
 import {mkdirSync,readFileSync,writeFileSync,existsSync,readdirSync,unlinkSync,renameSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {fork,execFile} from 'node:child_process';
@@ -18,6 +19,7 @@ const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().t
 const fail=(status,message)=>Object.assign(Error(message),{status});
 const read=file=>{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}};
 const save=(file,value)=>writeFileSync(file,JSON.stringify(value,null,2),{flush:true});
+const eventsAt=dir=>{try{return readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {type:'evidence_ledger_invalid'};}});}catch(error){return error.code==='ENOENT'?[]:[{type:'evidence_ledger_invalid'}];}};
 const alive=pid=>{try{process.kill(pid,0);return true;}catch{return false;}};
 const exec=promisify(execFile);
 export function phoneRunDeviceInfo(input,environment){
@@ -124,7 +126,7 @@ export class PhoneLab {
     const limits=normalizePhoneLimits(input.limits),id='phone_'+randomUUID(),dir=this.directory('runs',id),release=this.acquire(id);
     try{
       mkdirSync(dir);
-      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v9-named-start-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
+      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v10-strict-protocol-effects-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
         evaluation_id:typeof input.evaluation_id==='string'?input.evaluation_id.slice(0,100):null,phase_id:typeof input.phase_id==='string'?input.phase_id.slice(0,60):null,
         service:{id:service.id,name:service.name,model:service.model,base_url:service.base_url,protocol:service.protocol,family:phoneModelFamily(service.model)},
         settings_revision:settings.revision,case_id:task?.id??null,case_revision:task?.revision??null,name,task_name:task?.name??'自定义任务',
@@ -132,14 +134,14 @@ export class PhoneLab {
         task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',video_observation_at_start:this.video.observation(),final_framework:null};
       save(path.join(dir,'input.json'),frozen);save(path.join(dir,'state.json'),{status:'queued',created_at:now()});
       const child=fork(path.join(project,'scripts/phone-lab-worker.mjs'),['--root',this.root,'--id',id],{cwd:project,windowsHide:true,stdio:['ignore','pipe','pipe','ipc']});
-      const completion=new Promise(resolve=>{let settled=false;const finish=error=>{if(settled)return;settled=true;const state=read(path.join(dir,'state.json'));if(error)save(path.join(dir,'state.json'),{status:'blocked',error:error.message,finished_at:now()});else if(['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),{...state,status:'interrupted',finished_at:now(),reason:'Worker exited; action effects require review, no resume/replay'});this.children.delete(id);release();resolve();};child.once('error',finish);child.once('exit',()=>finish());});
+      const completion=new Promise(resolve=>{let settled=false;const finish=error=>{if(settled)return;settled=true;const state=read(path.join(dir,'state.json'));if(error||['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),unexpectedWorkerState(state,eventsAt(dir),error));this.children.delete(id);release();resolve();};child.once('error',finish);child.once('exit',()=>finish());});
       // Worker logs are not streamed to the browser. The durable sanitized ledger
       // is the source of UI information; no provider credential is in argv/stdin.
       child.stdout.on('data',()=>{});child.stderr.on('data',()=>{});
       this.children.set(id,{child,completion});return {id,status:'queued'};
     }catch(error){release();throw error;}
   }
-  summary(id){const dir=this.directory('runs',id),input=read(path.join(dir,'input.json'));if(!input)throw fail(404,'执行记录不存在');return {...input,device_info:phoneRunDeviceInfo(input,read(path.join(dir,'environment.json'))),source_versions:read(path.join(dir,'source-versions.json')),state:read(path.join(dir,'state.json')),result:read(path.join(dir,'result.json')),review:read(path.join(dir,'review.json'))};}
+  summary(id){const dir=this.directory('runs',id),input=read(path.join(dir,'input.json'));if(!input)throw fail(404,'执行记录不存在');const legacy=read(path.join(dir,'review.json')),assistant_review=read(path.join(dir,'assistant-review.json'))??(legacy?.reviewer==='assistant'?legacy:null),user_review=read(path.join(dir,'user-review.json'))??(legacy&&legacy.reviewer!=='assistant'?legacy:null);return {...input,device_info:phoneRunDeviceInfo(input,read(path.join(dir,'environment.json'))),source_versions:read(path.join(dir,'source-versions.json')),state:read(path.join(dir,'state.json')),result:read(path.join(dir,'result.json')),assistant_review,user_review,review:user_review??assistant_review??legacy};}
   snapshot(id){const result=this.summary(id),dir=this.directory('runs',id);let events=[];try{events=readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).flatMap(line=>{try{return [JSON.parse(line)];}catch{return [];}});}catch{}return {...result,environment:read(path.join(dir,'environment.json')),start_check:read(path.join(dir,'start-check.json')),source_versions:read(path.join(dir,'source-versions.json')),events,assets:events.filter(e=>e.type==='image').map(e=>e.asset)};}
   processSnapshot(id,after=0){
     if(!Number.isSafeInteger(after)||after<0)throw fail(400,'执行轨迹游标无效');
@@ -169,7 +171,7 @@ export class PhoneLab {
     const evidenceIds=input.evidence_ids??[];if(!Array.isArray(evidenceIds)||evidenceIds.some(id=>!s.assets.some(a=>a.id===id)))throw fail(400,'证据引用无效');
     if(input.verdict==='passed'&&!evidenceIds.length)throw fail(400,'通过判定需关联实际截图');
     const row={at:now(),reviewer:input.reviewer==='assistant'?'assistant':'user',verdict:input.verdict,note:input.note,evidence_ids:evidenceIds};
-    const dir=this.directory('runs',id);new PhoneEvidence(dir).record({type:'independent_review',review:row});save(path.join(dir,'review.json'),row);return row;
+    const dir=this.directory('runs',id);new PhoneEvidence(dir).record({type:'independent_review',review:row});save(path.join(dir,row.reviewer==='assistant'?'assistant-review.json':'user-review.json'),row);save(path.join(dir,'review.json'),row.reviewer==='user'?row:s.user_review??row);return row;
   }
   async batch(input,settings){
     this.assertDeviceEnabled();

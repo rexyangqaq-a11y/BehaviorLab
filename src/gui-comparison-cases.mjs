@@ -1,4 +1,5 @@
 // Acceptance definitions derived from the user's “框架对比” chat and its
+import {v04Acceptance} from './v04-acceptance.mjs';
 // implementation comparison. They are not executable Mock algorithms or scores.
 const check = (id, name, procedure, acceptance, evidence, fixture_ids = [], pending = []) =>
   ({ id, name, procedure, acceptance, evidence, fixture_ids, pending, execution_status: 'not_run' });
@@ -130,7 +131,7 @@ export const GUI_COMPARISON_DIMENSIONS = [
 
 export function guiComparisonPlan() {
   return {
-    schema_version: 1, revision: '2026-10-20.1', source_chat: '框架对比',
+    schema_version: 1, revision: '2026-10-24.1', source_chat: '框架对比',
     source_document: 'docs/V04_GUI_IMPLEMENTATION_COMPARISON.md',
     frameworks: ['midscene', 'mobiagent', 'autoglm'],
     priority: { midscene: '同等优先深入比较', mobiagent: '同等优先深入比较', autoglm: '单步循环基线' },
@@ -141,6 +142,7 @@ export function guiComparisonPlan() {
     dimensions: GUI_COMPARISON_DIMENSIONS,
     case_count: GUI_COMPARISON_DIMENSIONS.reduce((sum, d) => sum + d.cases.length, 0),
     actual_framework_results: [],
-    note: '这是统一验收定义。现有 Mock 仅提供局部工程证据，未执行以下真实框架对比用例，不能产生候选成绩。',
+    evidence_review:v04Acceptance(GUI_COMPARISON_DIMENSIONS),
+    note: '31项统一验收定义保留；证据核对关联已有四题36组合、离线契约及已知缺口，不将其换算为31项真实GUI通过。',
   };
 }

@@ -17,6 +17,7 @@ import { UserLibrary } from './user-library.mjs';
 import { ModelSettings } from './model-settings.mjs';
 import { GuiLab } from './gui-lab.mjs';
 import { guiComparisonPlan } from './gui-comparison-cases.mjs';
+import {V04_EVIDENCE} from './v04-acceptance.mjs';
 import { PhoneLab } from './phone-lab.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
@@ -132,7 +133,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         const origins = allowedHosts.map(host => `http://${host}`);
         if (request.headers.origin && !origins.includes(request.headers.origin) || request.headers['sec-fetch-site'] === 'cross-site' || request.headers['x-simulator-ui'] !== '1') throw fail(403, '请求来源无效');
       } else if (request.method !== 'GET') throw fail(405, '不支持此 HTTP 方法');
-      const staticFiles = { '/': ['index.html', 'text/html'], '/workspace.mjs': ['workspace.mjs', 'text/javascript'], '/user-creator.mjs': ['user-creator.mjs', 'text/javascript'], '/model-settings.mjs': ['model-settings.mjs', 'text/javascript'], '/gui-lab.mjs': ['gui-lab.mjs', 'text/javascript'], '/gui-lab.css': ['gui-lab.css', 'text/css'], '/workspace.css': ['workspace.css', 'text/css'] };
+      const staticFiles = { '/v04-acceptance':['v04-acceptance.html','text/html'], '/v04-acceptance.mjs':['v04-acceptance.mjs','text/javascript'], '/': ['index.html', 'text/html'], '/workspace.mjs': ['workspace.mjs', 'text/javascript'], '/user-creator.mjs': ['user-creator.mjs', 'text/javascript'], '/model-settings.mjs': ['model-settings.mjs', 'text/javascript'], '/gui-lab.mjs': ['gui-lab.mjs', 'text/javascript'], '/gui-lab.css': ['gui-lab.css', 'text/css'], '/workspace.css': ['workspace.css', 'text/css'] };
       if (request.method === 'GET' && staticFiles[url.pathname]) {
         const [filename, type] = staticFiles[url.pathname];
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
@@ -206,6 +207,11 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
       if (url.pathname === '/api/gui-lab/comparison' && request.method === 'GET') {
         response.setHeader('Content-Disposition', 'attachment; filename="framework-comparison-cases.json"');
         jsonResponse(response, 200, guiComparisonPlan()); return;
+      }
+      if(url.pathname==='/api/v04/acceptance'&&request.method==='GET'){jsonResponse(response,200,guiComparisonPlan().evidence_review);return;}
+      if(url.pathname.startsWith('/api/v04/evidence/')&&request.method==='GET'){
+        const key=url.pathname.slice('/api/v04/evidence/'.length),item=Object.hasOwn(V04_EVIDENCE,key)?V04_EVIDENCE[key]:null;if(!item)throw fail(404,'证据不存在');
+        response.writeHead(200,{'Content-Type':item.file.endsWith('.json')?'application/json; charset=utf-8':'text/plain; charset=utf-8','Cache-Control':'no-store'});response.end(await readFile(path.join(project,item.file)));return;
       }
       if (url.pathname === '/api/gui-lab/diagnostics' && request.method === 'POST') {
         await body(request); jsonResponse(response, 200, await guiLab.diagnostics(modelSettings)); return;

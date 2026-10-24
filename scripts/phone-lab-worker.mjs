@@ -12,6 +12,7 @@ import {frameworkSpec} from '../src/phone-framework-registry.mjs';
 import {createRepeatedActionGuard} from '../src/gui-trial-action-limits.mjs';
 import {assessPermissionAction} from '../src/phone-permissions.mjs';
 import {unprotectLocalSecret} from '../src/local-secret.mjs';
+import {validatePhysicalAction} from '../src/phone-action-effects.mjs';
 const {values}=parseArgs({options:{root:{type:'string'},id:{type:'string'}}});
 if(!/^phone_[a-f0-9-]{36}$/.test(values.id??''))throw Error('Invalid run ID');
 const project=fileURLToPath(new URL('../',import.meta.url)),dir=path.join(path.resolve(values.root),'.phone-lab/runs',values.id);
@@ -39,7 +40,7 @@ try{
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
   const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
-  files.push('src/local-secret.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
+  files.push('src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
   executionStarted=Date.now();evidence.phase='execution';
   await state({status:'running',phase:'execution',started_at:new Date(executionStarted).toISOString()});
@@ -61,7 +62,7 @@ try{
     if(control.signal.aborted)throw Error('已停止');if(counter.value>=input.limits.max_actions)throw Error('动作次数上限');
     repeatGuard({name,param});counter.value++;return session.atomic(name,param,operation);
   };
-  const dispatch=async(name,p={})=>{await checkPermissions(name,p);return action(name,p,async()=>{
+  const dispatch=async(name,p={})=>{validatePhysicalAction(name,p,session.screenSize());await checkPermissions(name,p);return action(name,p,async()=>{
     const touch=session.touch;
     for(const k of ['x','y','ex','ey'])if(p[k]!==undefined&&(!Number.isFinite(p[k])||p[k]<0))throw Error('动作坐标无效');
     if(name==='tap'||name==='doubleTap'||name==='longPress')return touch[name](p.x,p.y);
@@ -84,6 +85,9 @@ try{
   evidence?.record({type:'execution_stopped',reason:error.message,effect_unknown:result.effect_unknown});
 }finally{
   clearTimeout(timer);clearInterval(watcher);
+  result.action_effects=session?.effectState()??{effect_unknown:false,unknown_action_ids:[],pending_action_ids:[]};
+  result.effect_unknown=Boolean(result.effect_unknown||result.action_effects.effect_unknown);
+  if(result.effect_unknown){result.status='needs_attention';result.reason=result.reason??'动作效果存在不确定，需人工核对；禁止自动重放';}
   result.duration_ms=executionStarted?Date.now()-executionStarted:null;result.finished_at=new Date().toISOString();result.actions=counter.value;result.physical_actions=session?.physicalActions()??0;
   result.model_usage=transport?.summary()??result.model_usage;
   result.permission_policy={policy:'deny_new_system_permissions_v1',checks:permissionChecks,blocked_actions:permissionBlocks};
