@@ -1,5 +1,7 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+2026-10-25新增任务：准备公开GitHub仓库`rexyang97/BehaviorLab`，先发布v0.4交接预览版及当时测试用例／轨迹／结果，v0.5保留开发分支。独立发布工作区和当前验证／待处理事项见[GitHub首发准备](docs/GITHUB_RELEASE_STATUS.md)；尚未上传，不把本地候选目录当成已发布下载包。
+
 当前核对：2026-10-25。源码为`0.5.0-preview.1`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
 v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推进。[头脑风暴](docs/V05_BRAINSTORM.md)及[需求基线](docs/V05_REQUIREMENTS_CLARIFICATION.md)已确认，纳入“具体活动不固化”的用户补充；[概要设计修订2](docs/V05_HIGH_LEVEL_DESIGN.md)经用户核对后进入离线实现。首轮已接通通用活动、来源冻结、证据与实际量、有界恢复和人工兜底，见[离线实现记录](docs/V05_OFFLINE_IMPLEMENTATION.md)。商品浏览仅首个案例，具体活动来自上层输入。主系统真实框架会话桥接／续接尚未完成；手机与真实模型继续暂停。
