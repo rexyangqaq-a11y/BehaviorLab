@@ -70,7 +70,7 @@ export async function buildPortable({ out, runtime, license, checksums, clean = 
       }
     }
     await mkdir(target, { recursive: true });
-    const names=['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'AGENTS.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', '04_IMPORT_KEYS.cmd', 'start-web.cmd'];
+    const names=['src', 'web', 'scripts', 'examples', 'tests', 'docs', 'package.json', 'README.md', 'CHANGELOG.md', 'AGENTS.md', 'CONTRIBUTING.md', '00_README.txt', '01_START.cmd', '02_STOP.cmd', '03_CHECK.cmd', '04_IMPORT_KEYS.cmd', 'start-web.cmd'];
     let sourceSnapshot={kind:'working-directory'};
     if(sourceIndex){
       const allowed=[...names,'integrations/phone-frameworks.py','integrations/phone_protocol.py','integrations/phone-frameworks-requirements.txt','integrations/adapters','integrations/hoscrcpy'];

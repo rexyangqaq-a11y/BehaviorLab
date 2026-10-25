@@ -1,45 +1,33 @@
-BehaviorLab 用户行为序列仿真系统 · Windows x64 · 2026-10-23 · preview.9
+BehaviorLab v0.4.0-preview.10 · Windows 10/11 x64
 
-首次部署
-1. 将新的Phone ZIP完整解压到可写的本地目录，例如D:\BehaviorLab，不要在压缩包内运行。
-2. 双击03_CHECK.cmd，等待离线检查passed。检查不会调用模型或操作手机。
-3. 私人迁移版先运行04_IMPORT_KEYS.cmd，输入在原电脑查看的迁移密码；干净版跳过此步。
-4. 双击01_START.cmd自动打开网页；02_STOP.cmd正常停止，重复启动打开同一服务。
+下载与首次部署
+1. 本目录来自Release中的Windows-x64.zip，包含Node/Python/HDC、三框架和Java视频依赖。
+2. 完整解压到可写本地目录；先运行03_CHECK.cmd，再运行01_START.cmd。
+3. 02_STOP.cmd正常停止。关闭网页不会停止后台，实际地址看启动器及.runtime/desktop.json。
+4. 本公开包没有模型账户或凭据，不需要运行04_IMPORT_KEYS.cmd。
 
-包内已有Node.js24、独立Python3.12、Midscene1.16.0、固定版本MobiAgent/Open-AutoGLM与HDC。
-新版另含独立Temurin21 Java运行时、HOScrcpy SDK1.0.18-beta和本地视频播放器。
-无需安装Codex、Java、npm、pip、Docker或模型权重。适用Windows10/11、Intel/AMD x64。
-USB驱动若未被Windows识别，仍需按华为官方SDK/设备说明安装。
+查看当时已有的测试
+打开test-archive/index.html，离线逐项查看四题×三框架×三模型的36项历史测试。
+包含用例、冻结输入、模型回复、动作、截图及结果；失败和部分完成保留。
+16通过、10部分完成、10未通过，用户复核待定；历史旧协议成绩不算新版保护的真机复测。
+历史查看不会调用模型或设备，也不会自动加入队列。
+截图和原文的公开审阅状态以test-archive/privacy-review.json为准。
 
-使用真机
-1. 私人版完成04导入后即可查看原模型配置；干净版在“系统设置 → 模型服务”配置自己的图片模型API与密钥。
-2. 手机开启USB调试，用数据线连接，在手机上允许新电脑调试并保持解锁。
-3. 打开/phone-lab，在任务中选已有起点，或给手机当前状态起名后保存。
-4. 需要投屏时，先在“测试过程详情”点击“开始投屏”，无需打开官方工具或选窗。
-5. 切到“测试”页选择框架、服务、任务并明确点击开始，投屏保持连接；过程页观看轨迹和视频。
-6. 结果页查看逐图回复、动作和审核。切到任务或结果页自动停止投屏，可主动停止或全屏观看。
-默认每题每组合15请求/40动作/600秒/每次512输出tokens，零重试，整批无总请求上限。
-保存配置、浏览页面和离线检查不发请求，实际执行才使用所选模型服务。
+新任务与范围
+主系统内容生成和执行仍Mock，真实下层尚未接入主调度。
+独立/phone-lab可以在自行配置授权设备和模型后显式启动新真机测试。
+手机需要驱动、USB调试许可并保持解锁；模型使用你的视觉API，实际调用产生费用。
+默认每组合15请求、40动作、600秒、每次512输出tokens，零自动重试；整批没有默认总请求上限。
+保存配置、看历史、离线检查不等于真实任务通过。
 
-范围与数据
-主仿真内容生成仍Mock，独立真机工作台已实际测试三框架组合，最终框架未定。
-主仿真尚未接入真实手机闭环。离线检查通过不算GUI成功。
-干净版不带原电脑私人记录；私人迁移版按用户要求带真机任务、起点、记录/截图与模型配置。
-私人版的API密钥用迁移密码认证加密，导入后按新电脑Windows当前账户加密保存。
-原电脑ZIP之外的“查看迁移密码.cmd”只在原电脑同一Windows账户下可用；请先查看密码再迁移。
-实际选择远程API执行时，会按配置发送该次模型输入；采集记录保存在本机。
+教程与维护
+部署及升级：docs/DEPLOYMENT.md
+使用与离线示例：docs/USER_GUIDE.md
+版本计划：docs/ROADMAP.md；各版说明：CHANGELOG.md
+本版测试档案：docs/RELEASE_TEST_ARCHIVE.md
+详细真机操作：docs/PHONE_LAB_GUIDE.md
+第三方组件：docs/THIRD_PARTY_COMPONENTS.md
 
-日常使用
-默认地址http://127.0.0.1:4317；被占用会分配其他端口，实际url见.runtime\desktop.json。
-关闭浏览器不会停止服务，重启电脑后重新运行01_START。问题看.runtime\server.log。
-数据在.data，依赖及控制信息在.runtime；正常停止后可备份整个已用目录。
-本版本.runtime含必需框架、Python、HDC和Java/视频SDK，不能整目录删除或在迁移时丢弃。
-已用目录包含私人配置，分享程序请使用干净ZIP，不分享已用目录。
-不要在任务运行中复制SQLite/WAL；不要用旧.data覆盖新电脑已继续运行的数据。
-仅监听127.0.0.1，不提供远程托管或多人账户。组织策略限制按组织流程处理。
-
-详细部署/验收范围：docs\WINDOWS_PORTABLE.md
-视频说明：docs\HOSCRCPY_VIDEO.md；长期稳定性及不同手机兼容性仍需使用中验证。
-私人版迁移：docs\PRIVATE_MIGRATION.md；包含历史截图，请只在本人授权电脑之间传递。
-操作指南：docs\PHONE_LAB_GUIDE.md
-协作开发：CONTRIBUTING.md、docs\DEVELOPMENT.md、docs\FRAMEWORK_ADAPTER_GUIDE.md
+数据在.data，必需依赖与控制信息在.runtime。正常停服后备份整个已用目录。
+更新使用新目录；不要删除.data/.runtime，不要把v0.5的schema3库覆盖给v0.4。
+本服务只监听127.0.0.1。第二台物理电脑、更多手机兼容及长期投屏稳定性未验收。

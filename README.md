@@ -1,5 +1,28 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+Windows本地用户行为仿真与独立手机Agent测试工作台。本分支准备发布 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。目前为发布候选，是否已上线以GitHub Release实际状态为准。
+
+[下载版本](https://github.com/rexyang97/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md)
+
+下载Assets中的 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip`，完整解压后运行 `03_CHECK.cmd`，再运行 `01_START.cmd`；停止用 `02_STOP.cmd`。Windows10/11 x64，包内带Node/Python/HDC和框架依赖。GitHub自动的Source code ZIP仅含源码。
+
+发布候选随附v0.4当时已有测试用例、36项历史矩阵的轨迹和结果，含失败记录。打开 `test-archive/index.html` 可离线逐项查看；另提供同内容的独立测试档案下载。[归档范围与公开审阅](docs/RELEASE_TEST_ARCHIVE.md)。
+
+| 功能 | 当前边界 |
+|---|---|
+| 主系统 | 用户库、任务、调度、持久化和导出实际运行；生成内容和手机闭环仍Mock |
+| 独立手机工作台 | 三框架／模型组合、起点、逐图模型回复、动作、结果与审核；需自己配置设备和模型 |
+| 历史真实测试 | 四题×三框架×三模型：16通过、10部分完成、10未通过；用户复核待定，新保护协议未真机复测 |
+| 后续开发 | v0.5接下层、v0.6真实上层、v0.7存档VLM；后续尚未完成的能力不计入本版 |
+
+源码开发需Node24：`node src/web-server.mjs --port 4317`；`node --test tests/*.test.mjs`。主Mock无需安装npm依赖。真实任务、模型费用与手机权限由使用者明确发起；查看历史不会自动执行测试。
+
+公开源码和发布包不带私人模型配置、密钥、运行数据库及无关私人任务。第三方许可证随包保留；项目自身尚未指定开源许可证。
+
+## v0.4交接历史快照
+
+以下保留2026-10-25交接时记录；其中“尚未发布”“仅本地Git”和旧ZIP说明属于当时状态，发布维护以文首及[发布流程](docs/RELEASE_PROCESS.md)为准。
+
 当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
 ## 当前能做什么
