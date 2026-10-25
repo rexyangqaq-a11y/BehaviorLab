@@ -1,23 +1,25 @@
-# 下一对话：v0.5单活动接入主仿真调度
+# 下一任务：核对v0.5需求澄清
 
 交接日期：2026-10-25。本文件只列当前指令，不复制旧执行历史；事实快照以[CURRENT_STATUS.md](CURRENT_STATUS.md)为准。
 
-本轮用户要求先头脑风暴、再需求澄清、再概要设计，现已依次形成三份讨论稿：[头脑风暴](V05_BRAINSTORM.md)、[需求澄清](V05_REQUIREMENTS_CLARIFICATION.md)、[概要设计](V05_HIGH_LEVEL_DESIGN.md)。当前分支为`codex/v05-single-activity`，业务实现尚未修改。下一轮从概要设计阶段A的统一装配／冻结／旧Mock兼容开始，不把讨论稿中的建议当作用户已确认决定。首个离线示例与人工处理范围待答复；通用2／1示例仅是暂行夹具建议。
+用户要求头脑风暴与其持续讨论确认，再写需求和概要设计，并要求固化[版本开发流程](VERSION_DEVELOPMENT_WORKFLOW.md)。重新[头脑风暴](V05_BRAINSTORM.md)已收敛，用户允许先整理需求；[需求修订2](V05_REQUIREMENTS_CLARIFICATION.md)待核对。[此前概要设计](V05_HIGH_LEVEL_DESIGN.md)暂停采用，不以其阶段A–F开始实现。当前分支`codex/v05-single-activity`，业务实现尚未修改。
 
 ## 唯一任务与完成边界
 
-从本地交接基线开始，让一个手工/Mock上层活动通过用户选择的下层适配器执行，保存实际完成量、证据与`completed/partial/blocked/needs_attention`结果；先完成**不使用手机、不调用真实模型的离线装配和故障契约**。真实上层、人设生成、存档VLM和长期记忆不在v0.5本轮范围。
+当前只核对需求修订2：收集用户意见并修订，需求获确认且用户明确进入设计后，再整理概要设计。用户单条“可以”仅对应当时的问题，不扩展为整份文档或后续阶段授权；已有明确授权不重复询问。
+
+后续v0.5版本目标保留：让一个手工/Mock上层活动通过用户选择的下层适配器执行，保存实际完成量、证据与`completed/partial/blocked/needs_attention`结果；先完成**不使用手机、不调用真实模型的离线装配和故障契约**。真实上层、人设生成、存档VLM和长期记忆不在v0.5范围。此段为后续目标，不是当前开始编码指令。
 
 必须保留：现有Mock运行可恢复；设备全局排他与任务/模型版本冻结；未知动作效果不自动重放；描述失败只补已有图而不重采活动；目标2个对象实际仅核实1个时记录实际1和partial，重复打开不累计。独立phone-lab继续可用，不将其改成主调度器。
 
 ## 必须先阅读
 
-1. 根目录`AGENTS.md`、`README.md`和本文件。
+1. 根目录`AGENTS.md`、`README.md`、本文件和[版本开发流程](VERSION_DEVELOPMENT_WORKFLOW.md)。
 2. [CURRENT_STATUS.md](CURRENT_STATUS.md)、[LOCAL_BASELINE.md](LOCAL_BASELINE.md)：版本、证据、未测能力及本地回退。
 3. [VERSION_PLAN.md](VERSION_PLAN.md)的v0.5段落、[VERSION_TEST_PLAN.md](VERSION_TEST_PLAN.md)：本版特性与测试界面要求。
 4. [FRAMEWORK_SELECTION_DECISION.md](FRAMEWORK_SELECTION_DECISION.md)、[FRAMEWORK_ADAPTER_GUIDE.md](FRAMEWORK_ADAPTER_GUIDE.md)、[DEVELOPMENT.md](DEVELOPMENT.md)：配置策略、注册/适配与公共保护。
 5. [MODEL_CALL_POLICY.md](MODEL_CALL_POLICY.md)、[PHONE_FAILURE_DIAGNOSIS_20261022.md](PHONE_FAILURE_DIAGNOSIS_20261022.md)：用量与已知错误边界。当前用户指令是不使用手机、不调用真实模型，旧批次授权不自动恢复。
-6. 本轮三份v0.5讨论稿：需求R01–R15、待实现用例T01–T17与概要设计阶段A–F；新表、接口和模块均尚未实现，人工复核范围仍待确认。
+6. 已收敛的头脑风暴B01–B09、需求修订2的R01–R15及待实现用例T01–T17。旧概要设计仅保留历史，不作为当前阶段依据；模块、数据结构和接口待后续设计。
 
 源码重点：`src/contracts.mjs`、`src/runner.mjs`、`src/store.mjs`、`src/adapters/mock.mjs`；对照`src/phone-framework-registry.mjs`、`src/phone-lab.mjs`、`scripts/phone-lab-worker.mjs`、`integrations/adapters/`、`src/phone-action-effects.mjs`和`integrations/phone_protocol.py`。主系统当前仍通过Mock适配器运行，不能把配置保存误认为已经真实装配。
 
@@ -39,7 +41,7 @@ node scripts/desktop-launcher.mjs start --port 4317 --no-browser
 
 主网页`http://127.0.0.1:4317`，真机工作台`/phone-lab`，只读验收页`/v04-acceptance`。交接时原后台未重载本轮后端，新验收接口仍404；正常重启后再核对。也可前台运行`node src/web-server.mjs --port 4317`。Node要求24，核心Mock无前端构建依赖。`.runtime`包含必要运行时/框架，不能整目录删掉。
 
-## 测试方法
+## 后续实现阶段测试参考（当前不运行）
 
 ```powershell
 node --test tests/*.test.mjs
@@ -53,6 +55,10 @@ node scripts/phone-framework-contract.mjs
 
 ## 用户已确认的决定
 
+- 开发按逐轮头脑风暴→汇总收敛→需求核对→概要设计核对→实现验证推进；当前只到需求稿待核对，旧设计暂停采用。
+- 首个离线商品活动从手机桌面开始；关键词／条件／数量由上层明确，下层自主操作，不自行放宽条件。
+- 详情及条件有证据即计浏览完成；同商品链接／ID及不同规格只计1件，跨店同款分别计；条件或身份未知不计数并继续找商品。
+- 自动核对与有界恢复优先，不能可靠继续才人工兜底；人工三态标记后显式继续／结束，标记不自动操作；达到预设上限按实际量和未决状态结束。
 - 保留Midscene/MobiAgent/Open-AutoGLM和现有模型接口，由用户配置组合；默认推荐Midscene + qwen3.7-plus，不选唯一框架，不改四角色绑定。
 - v0.4四案例36组合真实矩阵作为本轮全流程依据；正常未通过不重测，已完成计算器不为旧批次重复。仅确认接入/记录异常才考虑重测；过去覆盖原记录是用户明确授权的例外。
 - **手机暂不连接，其他手机测试暂缓，百对象不强行测试。** 不启动旧队列、视频、设备探测或模型探针。需要恢复真实执行时由用户另行明确恢复并核对当前条件。
@@ -62,10 +68,10 @@ node scripts/phone-framework-contract.mjs
 
 ## 仍待决定或待条件具备
 
-v0.5首个真实活动及目标APP/对象口径、何时恢复手机/模型与本次额度、未知效果的人工复核交互、对象身份不确定时的计数规则和正式部署包更新时间。先用已有轨迹夹具与明确的2目标/1实际示例完成离线契约，不为这些问题阻塞基础开发。
+具体APP、正式示例关键词／条件／数量、时间／调用／无进展／自动恢复上限、真实商品身份提取、何时恢复手机／模型与本次额度、正式部署包更新时间仍待细化。商品完成、规格／跨店去重、身份不明不计数及人工兜底原则已确认，不重复列为未定。后续离线用例使用合成图、固定回复和明确的2目标／1实际示例；当前先核对需求，不提前实施。
 
 hipyum准确来源/契约仍缺，但当前HDC路线已具历史真实证据，不强制改控制路径。百对象数量/SKU/跨APP去重和经验模式仍保留未定，不自动扩展为当前任务。第二台电脑、视频长期稳定性和新v10保护协议真机表现未验证。
 
-## 结束本轮时必须留下
+## 结束当前需求阶段时必须留下
 
-实现与Mock边界、对应测试/界面证据、实际未完成项、源码/部署版本差异和本地提交；同步更新CURRENT_STATUS与唯一下一步。不要只修改版本号宣布完成，不把HTTP200、文本OK、框架finish或离线契约当作真实任务通过。
+已确认结论及来源、需求待核对／确认状态、待细化项、文档核对范围和本地提交，CURRENT_STATUS与唯一下一步同步。需求未确认不进入概要设计，文档完成不宣称功能完成；后续实现阶段再交付测试／界面证据与源码／部署差异。
