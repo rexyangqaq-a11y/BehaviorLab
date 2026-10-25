@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { now, parse, SCHEMA_VERSION } from './contracts.mjs';
+import { expectedAdapterMode } from './runtime-config.mjs';
 
 function snapshot(store) {
   return store.tx(() => ({
@@ -11,6 +12,7 @@ function snapshot(store) {
     decisions: store.all('SELECT * FROM decisions ORDER BY user_id,activity_id'),
     processed: store.all('SELECT * FROM processed_texts ORDER BY id'),
     history: store.all('SELECT * FROM description_history ORDER BY id'),
+    executions: store.all('SELECT activity_id FROM execution_snapshots ORDER BY activity_id').map(r => ({ activity_id: r.activity_id, snapshot: store.executionSnapshot(r.activity_id), work: store.executionWork(r.activity_id), events: store.executionEvents(r.activity_id) })),
     rows: store.all(`SELECT s.*,st.step_index,st.action_json,st.outcome_json,st.status AS step_status,
       st.real_started_at AS action_started_at,st.real_finished_at AS action_finished_at,
       a.virtual_start,a.ordinal AS activity_ordinal,a.task_json,u.ordinal AS user_ordinal,
@@ -27,7 +29,7 @@ export function buildEvents(store) {
   const data = snapshot(store);
   const events = data.rows.map(row => ({
     schema_version: SCHEMA_VERSION, event_id: `event_${row.id}`, run_id: data.config.run_id,
-    user_id: row.user_id, mode: data.config.mode, synthetic: data.config.mode === 'mock',
+    user_id: row.user_id, mode: data.config.mode, synthetic: ['mock', 'offline'].includes(data.config.mode),
     virtual_time: row.virtual_start, virtual_timezone: data.config.virtual_timezone,
     virtual_time_precision: 'activity_anchor_with_order_only',
     order: [row.user_ordinal, row.virtual_start, row.activity_ordinal, row.step_index, row.capture_index],
@@ -53,8 +55,8 @@ export async function exportRun(store, directory) {
   const contents = events.map(event => JSON.stringify(event)).join('\n') + (events.length ? '\n' : '');
   await writeFile(path.join(output, 'events.jsonl'), contents);
   const metadata = {
-    schema_version: SCHEMA_VERSION, generated_at: now(), mode: data.config.mode, synthetic: data.config.mode === 'mock',
-    data_warning: data.config.mode === 'mock' ? 'MOCK ONLY: synthetic screen fixtures and template descriptions; no phone or model service called.' : null,
+    schema_version: SCHEMA_VERSION, generated_at: now(), mode: data.config.mode, synthetic: ['mock', 'offline'].includes(data.config.mode),
+    data_warning: data.config.mode === 'offline' ? 'OFFLINE FIXTURE: synthetic observations, fixed replies and injected tools; native framework loop not executed; no real phone/model calls.' : data.config.mode === 'mock' ? 'MOCK ONLY: synthetic screen fixtures and template descriptions; no phone or model service called.' : null,
     dataset_complete: data.complete && events.every(e => e.complete), completeness_meaning: 'All configured user-days planned, all active executions and feedback terminal, all captured images described, referenced image bytes verified. Does not imply every activity met its goal.',
     asset_root: store.directory, asset_policy: 'References only; preserve the run assets/ directory alongside state.sqlite.',
     event_count: events.length, events_sha256: createHash('sha256').update(contents).digest('hex'),
@@ -63,12 +65,13 @@ export async function exportRun(store, directory) {
     results: data.results.map(r => ({ activity_id: r.activity_id, user_id: r.user_id, actual: parse(r.result_json), saved_at: r.saved_at })),
     decisions: data.decisions.map(d => ({ decision_id: d.id, user_id: d.user_id, activity_id: d.activity_id, decision: parse(d.decision_json), context: parse(d.context_json), provenance: parse(d.provenance_json), created_at: d.created_at })),
     description_attempt_history: data.history,
+    executions: data.executions,
     virtual_clocks: store.all('SELECT * FROM virtual_clocks ORDER BY user_id'),
     schedule_days: store.all('SELECT * FROM schedule_days ORDER BY user_id,virtual_date'),
     call_spans: store.calls(),
   };
   await writeFile(path.join(output, 'run.json'), JSON.stringify(metadata, null, 2) + '\n');
-  return { output, events: events.length, dataset_complete: metadata.dataset_complete, synthetic: data.config.mode === 'mock' };
+  return { output, events: events.length, dataset_complete: metadata.dataset_complete, synthetic: metadata.synthetic };
 }
 
 /** Offline evidence report only. Never invokes planner, executor or retry code. */
@@ -84,12 +87,12 @@ export async function checkRun(store, directory) {
     try { await store.readAsset(row); }
     catch (error) { add('asset_missing_or_corrupt', [row.id, row.asset_path], error.message); }
     if (row.description_status !== 'complete') add('description_incomplete', [row.id], { status: row.description_status, error: row.error });
-    if (parse(row.provenance_json).mode !== data.config.mode) add('provenance_mismatch', [row.id], 'Adapter mode differs from run');
+    if (parse(row.provenance_json).mode !== expectedAdapterMode(data.config, 'executor')) add('provenance_mismatch', [row.id], 'Adapter mode differs from configured executor');
   }
   for (const result of data.results) if (!data.decisions.some(d => d.activity_id === result.activity_id)) add('feedback_missing', [result.activity_id], 'No upper adjustment decision saved');
   const report = {
     schema_version: SCHEMA_VERSION, rule_version: 'phase-a-integrity-v1', generated_at: now(),
-    run_id: data.config.run_id, mode: data.config.mode, synthetic: data.config.mode === 'mock',
+    run_id: data.config.run_id, mode: data.config.mode, synthetic: ['mock', 'offline'].includes(data.config.mode),
     integrity_passed: issues.length === 0, issues, event_count: events.length,
     behavior_assessment: {
       status: 'not_evaluated',

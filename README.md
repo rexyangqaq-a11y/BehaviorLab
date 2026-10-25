@@ -1,25 +1,26 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
+当前核对：2026-10-25。源码为`0.5.0-preview.1`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
-v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推进。[头脑风暴](docs/V05_BRAINSTORM.md)及[需求基线](docs/V05_REQUIREMENTS_CLARIFICATION.md)已确认，纳入“具体活动不固化”的用户补充；[概要设计修订2](docs/V05_HIGH_LEVEL_DESIGN.md)已重写，待用户核对。v0.5把下层实现部分接入整体流程，商品浏览仅首个案例。按[版本开发流程](docs/VERSION_DEVELOPMENT_WORKFLOW.md)停在设计核对，尚未修改业务实现，手机与真实模型继续暂停。
+v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推进。[头脑风暴](docs/V05_BRAINSTORM.md)及[需求基线](docs/V05_REQUIREMENTS_CLARIFICATION.md)已确认，纳入“具体活动不固化”的用户补充；[概要设计修订2](docs/V05_HIGH_LEVEL_DESIGN.md)经用户核对后进入离线实现。首轮已接通通用活动、来源冻结、证据与实际量、有界恢复和人工兜底，见[离线实现记录](docs/V05_OFFLINE_IMPLEMENTATION.md)。商品浏览仅首个案例，具体活动来自上层输入。主系统真实框架会话桥接／续接尚未完成；手机与真实模型继续暂停。
 
 ## 当前能做什么
 
-- 主系统的用户库、任务、日调度、虚拟时间、持久化、调用追踪、执行/描述队列和导出实际运行；人设补全、规划调整、主流程手机执行/截图、存档图转文内容仍为Mock。
+- 主系统的用户库、任务、日调度、虚拟时间、持久化、调用追踪、执行/描述队列和导出实际运行；旧Mock兼容，新增显式离线夹具装配、单活动调试和人工复核。真实上层、手机执行和存档VLM尚未接入。
 - 独立[真机工作台](http://127.0.0.1:4317/phone-lab)已接通三个实际框架循环和HDC，具备任务、测试、过程、结果四页签，可查看每图原始模型回复、动作、手机信息、耗时与用量。
 - 保留Midscene、MobiAgent、Open-AutoGLM及现有模型接口，由用户配置组合。默认推荐**Midscene + qwen3.7-plus**，用户改选后保留；这是四题3通过1部分完成的样本建议，不是稳定最优结论。[已确认策略](docs/FRAMEWORK_SELECTION_DECISION.md)。
 - [v0.4证据核对页](http://127.0.0.1:4317/v04-acceptance)将31项要求的证据、缺口与后续事项分别列出。新增执行保护与审核优先级做过离线验证，未追加真机任务。
 - HOScrcpy可直接在网页观看手机连续视频，不需打开官方工具；已有真实出帧证据，也存在未定位的断流，尚未证明长期稳定。[视频说明](docs/HOSCRCPY_VIDEO.md)。
 
-**独立真机工作台尚未接入主仿真调度。** 这一接入属于v0.5；真实上层规划、存档逐图VLM及长期记忆引擎也未实现。
+**主调度已接入离线执行契约，真实下层会话尚未接通。** 这一接入属于v0.5；真实上层规划、存档逐图VLM及长期记忆引擎也未实现。
 
 ## 测试与真实能力分别统计
 
 | 类型 | 最新事实 |
 |---|---|
-| 本机安装环境工程回归 | 133/133通过，0失败、0跳过；没有真实模型/手机调用 |
-| 干净源码、无数据与依赖 | 129通过、4项依赖相关测试跳过、0失败；共133项 |
+| 本机安装环境工程回归 | v0.5当前154/154通过，0失败、0跳过；没有真实模型/手机调用 |
+| v0.5网页实际操作 | 隔离4391核对商品实际量、自动恢复、人工复核与非商品条件核验；均为合成夹具 |
+| v0.4历史干净源码、无数据与依赖 | 129通过、4项依赖相关测试跳过、0失败；共133项 |
 | 已安装原生Python循环离线契约 | 两框架各5条固定回复，中文与图片/动作协议通过；不是GUI成绩 |
 | 历史短文本模型连通 | 三模型合计60 tokens；只证明当时文本接口可响应 |
 | 历史真实GUI任务 | 计算器、存储、淘宝、小红书，三框架×三模型×四题=36单元；16通过、10部分完成、10未通过，用户复核待定 |
@@ -27,7 +28,7 @@ v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推
 
 历史工程回归124、26项推荐测试及18项工作台子集属于各自阶段，不能相加。矩阵331次模型请求，含诊断及被替换样本的历史累计373次；未知费用不记零。已有39运行、6任务、83起点、3服务未改。本次交接模型请求0、设备命令0。
 
-[最新验证证据](docs/evidence/20261025-handoff/handoff-verification.json) · [真实GUI结果](docs/PHONE_EVALUATION_RESULTS_20261022.md) · [失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)
+[v0.5验证记录](docs/V05_OFFLINE_IMPLEMENTATION.md) · [v0.4交接证据](docs/evidence/20261025-handoff/handoff-verification.json) · [真实GUI结果](docs/PHONE_EVALUATION_RESULTS_20261022.md) · [失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)
 
 ## 启动与离线测试
 
@@ -39,7 +40,7 @@ node scripts/desktop-launcher.mjs start --port 4317 --no-browser
 node --test tests/*.test.mjs
 ```
 
-也可前台执行`node src/web-server.mjs --port 4317`，Ctrl+C停止。主入口为`http://127.0.0.1:4317`，真机工作台为`/phone-lab`，验收页为`/v04-acceptance`。后台不自动热重载：本次交接时原4317服务仍加载较早后端，需正常重启后才有新验收接口。不要删除`.data`或`.runtime`来更新源码。
+也可前台执行`node src/web-server.mjs --port 4317`，Ctrl+C停止。主入口为`http://127.0.0.1:4317`，真机工作台为`/phone-lab`，验收页为`/v04-acceptance`。后台不自动热重载：原4317服务没有重启，不会自动加载v0.5源码；本轮使用独立4391及临时数据验证。使用新源码前备份运行库，再正常重启，schema升级至3。不要删除`.data`或`.runtime`来更新源码。
 
 已安装框架的离线原生契约：`node scripts/phone-framework-contract.mjs`；`03_CHECK.cmd`为依赖/SDK检查，不是手机任务。核心Mock示例及独立执行/描述、恢复、导出方法见[开发说明](docs/DEVELOPMENT.md)与[业务流程](docs/WORKSPACE_V03.md)。
 
@@ -53,6 +54,6 @@ node --test tests/*.test.mjs
 
 ## 下一阶段与协作
 
-当前唯一下一步为核对**v0.5概要设计修订2**，确认并明确实施范围后再编写代码。本版接入通用活动执行，APP、目标、条件与工作量来自上层计划／任务输入；商品浏览只验证计数、去重和恢复，固定操作序列限于离线夹具。暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
+当前处于v0.5实现与验证阶段，唯一下一步为补齐原生框架会话桥接／安全续接的离线契约，真实执行仍暂停。已确认的需求和进入实施授权无需重复询问。通用目标来自上层，固定步骤限于合成夹具；尚未宣称v0.5整体完成。详见[下一任务](docs/NEXT_TASK.md)。
 
 每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。

@@ -1,0 +1,28 @@
+{
+  "syntax_files": 20,
+  "markdown_files": 11,
+  "local_links": 112,
+  "missing_links": [],
+  "source_sha256": {
+    "scripts/phone-lab-worker.mjs": "1a2d66f048656a70cda2710268907599c84f54efd33f0343756b59fc30bd6e44",
+    "scripts/web-worker.mjs": "807e6ec278e2d5164b8ea27b8264ab211d4fe8b35f32352b43b5181d33dc1057",
+    "src/cli.mjs": "8669b4f9eda2c9183e6079afabc7eb5f5dae3baf4f24df724459759a95744a6e",
+    "src/contracts.mjs": "4ff508d34e7d3656a5fdfd0de133433bbdf3d9a556838e6cd66a2c557ef195f9",
+    "src/output.mjs": "1ec545152696bcfac85b835a304ff03145bf4344b58d6a20a95e81cc7f90cf37",
+    "src/phone-lab.mjs": "1cb91bda22bfa320e67c7fceb299bc922b1b0aa6667ab0efbbe17d1487f7fb21",
+    "src/scheduler.mjs": "f112f7ddde11a7a5e92d5172cc3733f060a58a20daa85cd99cbb35ff8248f659",
+    "src/store.mjs": "31e494ad912783e7d4cc57878c8857bca722e342e6a3fe801c001335342444b7",
+    "src/web-server.mjs": "ab3aaebe9e00d5cc483b7d03a996626a4739ad1773cae920231c5813c0f0f6a9",
+    "tests/product.test.mjs": "18c24e26a82a9a402c12410806ab543ce542359981eb96d472859c0c0903d62c",
+    "web/workspace.mjs": "1057f05984ed1c239c333216c8f73a7a61cb2f9ee725a96fdafb52eae6afb3e1",
+    "src/adapters/offline.mjs": "cbd4fd9d4a5c553ff5773249ca35dc323e4de8aadbad4b9862bb6caf2cd7afa1",
+    "src/device-lease.mjs": "effe119ae755e39badb43e6114c0df781f7ab2825140ecce4515284c752dbd2f",
+    "src/execution-review.mjs": "acd746a5132a666feb56c5a138e1a22e7695a832d390bb6fc88e0ccb5419e058",
+    "src/framework-runtime.mjs": "370636cbadcc905f48d1d1b96c373d9d6ca1d4400307e2385ff0e326f988a190",
+    "src/offline-scenarios.mjs": "17009627a63c3c1c23a366778574c02cc37f2db62cc4e10a2e92f99459a8e825",
+    "src/runtime-assembly.mjs": "541d6f1c865bb24d3331c47b0f86a6d92f807ab8fd51f5bc3e0ec2c3934576fa",
+    "src/runtime-config.mjs": "a80f277371b1ea49cf147a0f623c7960506532442dca1c71560d84d7ab8a3c7a",
+    "tests/v05-runtime.test.mjs": "42225d0e6bd9d18278dc7c9624ebd728b12f01ffa921487cd1c930f297d250ce",
+    "web/v05-runtime.mjs": "cf9bbf33a1049d2861e712fc8015c7f23b61b690304d0a2feb889c41bad6a795"
+  }
+}

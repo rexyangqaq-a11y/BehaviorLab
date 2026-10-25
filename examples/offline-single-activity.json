@@ -1,0 +1,35 @@
+{
+  "run_id": "offline_single_activity",
+  "mode": "offline",
+  "virtual_start_date": "2026-01-01",
+  "virtual_end_date": "2026-01-01",
+  "virtual_timezone": "Asia/Hong_Kong",
+  "users": [{ "user_id": "offline_user", "requirements": { "note": "合成工程数据，不访问手机或模型" } }],
+  "apps": [{ "app_id": "fixture_shop", "capabilities": ["fixture_observations"] }],
+  "runtime": {
+    "revision": 1,
+    "planner": { "source": "manual" },
+    "executor": { "source": "offline_fixture", "framework_id": "midscene", "fixture_id": "observations_v1" }
+  },
+  "mock": { "execution_delay_ms": 0, "description_delay_ms": 0, "description_fail_once": false },
+  "activities": [{
+    "activity_id": "browse_products",
+    "user_id": "offline_user",
+    "virtual_date": "2026-01-01",
+    "virtual_start": "2026-01-01T09:00",
+    "app_id": "fixture_shop",
+    "goal": "搜索双肩包，浏览2件价格不超过200元的商品；离线合成案例",
+    "workload": { "object_count": 2 },
+    "end_condition": "目标达到，或合成轨迹结束／限额触发",
+    "completion": { "kind": "objects", "unit": "product", "identity_fields": ["shop_id", "product_id"], "conditions": [{ "field": "price", "op": "lte", "value": 200 }] },
+    "fixture": { "events": [
+      { "type": "observe", "page": "phone_home", "fields": {} },
+      { "type": "action", "name": "launch", "parameters": { "app": "fixture_shop" }, "raw_response": "FIXED REPLY: open the supplied app" },
+      { "type": "action", "name": "search", "parameters": { "text": "双肩包" }, "raw_response": "FIXED REPLY: search the supplied keyword" },
+      { "type": "observe", "page": "detail", "identity": { "shop_id": "shop_a", "product_id": "product_a", "variant": "red" }, "fields": { "price": 159 } },
+      { "type": "observe", "page": "detail", "identity": { "shop_id": "shop_a", "product_id": "product_a", "variant": "blue" }, "fields": { "price": 159 } },
+      { "type": "observe", "page": "detail", "identity": { "shop_id": "shop_b", "product_id": "product_b" }, "fields": { "price": 249 } },
+      { "type": "observe", "page": "detail", "identity": { "shop_id": "shop_c", "product_id": "product_c" }, "fields": {} }
+    ], "recovery": [] }
+  }]
+}

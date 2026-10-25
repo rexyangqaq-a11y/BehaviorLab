@@ -132,7 +132,7 @@ test('Version 1 databases migrate additively without removing existing user/conf
   await initialize(store, config, createMockAdapters(config)); const users = store.users();
   store.db.exec('DROP TABLE call_spans; DROP TABLE schedule_days; DROP TABLE virtual_clocks; DROP TABLE run_controls; PRAGMA user_version=1;'); store.close();
   store = openExisting(dir);
-  try { assert.deepEqual(store.users(), users); assert.equal(store.get('PRAGMA user_version').user_version, 2); assert.equal(store.calls().length, 0); } finally { store.close(); }
+  try { assert.deepEqual(store.users(), users); assert.equal(store.get('PRAGMA user_version').user_version, 3); assert.equal(store.calls().length, 0); } finally { store.close(); }
 });
 test('Legacy completed records reconstruct virtual progress without inventing events', async t => {
   const f = await engine(t, { users: [{ user_id: 'alice', requirements: { interests: ['徒步'] } }], virtual_end_date: '2026-01-01' });

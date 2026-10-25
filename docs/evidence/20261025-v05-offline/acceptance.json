@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-25",
+  "version": "0.5.0-preview.1",
+  "branch": "codex/v05-single-activity",
+  "baseline": "codex/v04-handoff-20261025",
+  "stage": "implementation_and_validation",
+  "scope": "first offline integration; v0.5 remains in progress",
+  "full_regression": {"tests": 154, "passed": 154, "failed": 0, "skipped": 0, "log": "tests.txt"},
+  "earlier_entry_regression": {"tests": 25, "passed": 25, "failed": 0, "skipped": 0, "log": "tests-entry-final.txt", "counting": "subset; not additive; before adding schema-v2 test"},
+  "main_execution": {"source": "offline_fixture", "framework_choices": ["midscene", "mobiagent", "autoglm"], "native_loop_executed": false, "real_model_requests": 0, "real_device_commands": 0},
+  "separate_native_contract": {
+    "method": "temporary copy of existing script with only project/import/output paths adjusted; historical output logs preserved",
+    "temporary_script": ".build/v05-native/contract.mjs",
+    "results": [
+      {"framework": "autoglm", "exit": 0, "native_loop": "passed", "fixture_model_responses": 5, "fixture_device_actions": 5, "unicode_input_roundtrip": true, "jpeg_mime_roundtrip": true, "real_model_requests": 0, "real_device_actions": 0, "gui_task_result": "not_executed"},
+      {"framework": "mobiagent", "exit": 0, "native_loop": "passed", "fixture_model_responses": 5, "fixture_device_actions": 4, "unicode_input_roundtrip": true, "jpeg_mime_roundtrip": null, "real_model_requests": 0, "real_device_actions": 0, "gui_task_result": "not_executed"}
+    ],
+    "does_not_prove": ["main scheduler native-loop integration", "native session continuation", "new Midscene native-loop contract", "real GUI task success"]
+  },
+  "browser_verification": {
+    "url": "http://127.0.0.1:4391",
+    "data": ".build/v05-ui-20261025",
+    "data_kind": "synthetic only",
+    "checks": ["create, plan and execute single fixture", "target 2 actual 1 partial with duplicate/rejected/unverified evidence", "unknown review saves without actions", "unknown end preserves attention and count", "synthetic occurred review then end retains actual count", "framework/scenario selection survives reload", "automatic observation recovery completes target 1", "non-product condition activity completes 1 condition"],
+    "screenshots": ["review-ui.png", "main-ui.png", "non-product-ui.png"],
+    "automatic_recovery_run": "offline_mvnqfsc3",
+    "non_product_run": "offline_mvnqgzo9",
+    "note": "earlier review screenshot predates final feedback/day/job-state fixes; final automated web integration verifies those fixes"
+  },
+  "migration": {"schema": 3, "tested_temporary_schema_versions": [1, 2], "private_database_opened_or_migrated": false},
+  "existing_4317_restarted": false,
+  "release_package_updated": false,
+  "remote_uploads": 0,
+  "remaining": ["native main-session bridge and safe continuation", "real-device shared-namespace arbitration verification", "real app identity extraction", "formal real execution limits and budget", "real end-to-end acceptance"],
+  "process_test_limit": "dead recorded parent PID plus actual live child tests arbitration; Windows orphan survival topology was not demonstrated"
+}

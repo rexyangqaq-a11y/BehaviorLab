@@ -1,0 +1,33 @@
+✔ offline main assembly selects midscene, preserves evidence and actual count (not native-loop proof) (319.5166ms)
+✔ offline main assembly selects mobiagent, preserves evidence and actual count (not native-loop proof) (274.327ms)
+✔ offline main assembly selects autoglm, preserves evidence and actual count (not native-loop proof) (272.4674ms)
+✔ activity parameters and non-product completion do not select a fixed shopping script (123.7314ms)
+✔ cross-shop same product counts separately, variants do not, and target changes are honored (165.1112ms)
+✔ snapshot and adapter/source changes are rejected before further execution (234.976ms)
+✔ automatic recovery observes a known effect and never repeats the dispatched action (130.0142ms)
+✔ unresolvable effects retain known progress and do not submit feedback or execute the next activity (123.72ms)
+✔ restart after dispatch resumes via observation, not action replay (176.1416ms)
+✔ limits stop with actual progress and unknown service/fixture inputs fail closed (118.3123ms)
+✔ old mock runs, current activity guard and description-only retries preserve execution facts (260.5102ms)
+✔ CLI uses the same offline assembly and exports explicit synthetic provenance (600.6925ms)
+✔ review is revisioned and zero-action; unknown effects can end the debug session without false terminal results (116.8288ms)
+✔ explicit continued or ended reviews retain progress and do not replay old actions or execute later activities (356.694ms)
+✔ shared device arbitration blocks phone-lab and offline contenders before tools run (117.1771ms)
+✔ web worker exposes the same offline plan, execution evidence, static entry and current-activity guard (2343.2654ms)
+✔ dead recorded parent does not free a lease with a live worker; proven-dead pair can be reclaimed (195.704ms)
+✔ before-dispatch interruption, evidence corruption and failed storage never authorize replay (276.316ms)
+✔ result-before-feedback interruption commits feedback once; model errors preserve raw replies and tool rejection sends nothing (299.5049ms)
+✔ legacy or damaged device locks remain blocked when child ownership cannot be proven (103.9749ms)
+✔ Web API runs the actual Mock pipeline, exposes isolated evidence, assets, export and offline report (1701.2654ms)
+✔ Web interruption drill records an actual worker exit, releases controls and resumes without duplicates (1583.0037ms)
+✔ Web stop preserves journals; concurrent jobs are rejected and execution can resume (4455.227ms)
+✔ Web split stages preserve failures until retry and never relabel incomplete data as complete (1752.9184ms)
+✔ Web API protects local writes, rejects traversal and duplicate IDs, and does not execute arbitrary commands (170.6839ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9923.9255

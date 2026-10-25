@@ -35,6 +35,12 @@ CREATE TABLE IF NOT EXISTS call_spans(id TEXT PRIMARY KEY, trace_id TEXT NOT NUL
 CREATE INDEX IF NOT EXISTS call_trace_order ON call_spans(trace_id,started_at);
 `;
 
+const executionSchema = `
+CREATE TABLE IF NOT EXISTS execution_snapshots(activity_id TEXT PRIMARY KEY, user_id TEXT NOT NULL, fingerprint TEXT NOT NULL, document_json TEXT NOT NULL, created_at TEXT NOT NULL, FOREIGN KEY(activity_id,user_id) REFERENCES activities(id,user_id));
+CREATE TABLE IF NOT EXISTS activity_work_state(activity_id TEXT PRIMARY KEY, user_id TEXT NOT NULL, revision INTEGER NOT NULL, document_json TEXT NOT NULL, updated_at TEXT NOT NULL, FOREIGN KEY(activity_id,user_id) REFERENCES activities(id,user_id));
+CREATE TABLE IF NOT EXISTS execution_events(activity_id TEXT NOT NULL, user_id TEXT NOT NULL, sequence INTEGER NOT NULL, event_json TEXT NOT NULL, created_at TEXT NOT NULL, PRIMARY KEY(activity_id,sequence), FOREIGN KEY(activity_id,user_id) REFERENCES activities(id,user_id));
+`;
+
 export class Store {
   constructor(directory) {
     this.directory = path.resolve(directory);
@@ -42,10 +48,11 @@ export class Store {
     this.db = new DatabaseSync(path.join(this.directory, 'state.sqlite'));
     this.db.exec('PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000; PRAGMA journal_mode=WAL;');
     const version = this.db.prepare('PRAGMA user_version').get().user_version;
-    ensure([0, 1, SCHEMA_VERSION].includes(version), `Unsupported schema version ${version}; migration required`);
+    ensure([0, 1, 2, SCHEMA_VERSION].includes(version), `Unsupported schema version ${version}; migration required`);
     if (version < SCHEMA_VERSION) this.tx(() => {
       if (version === 0) this.db.exec(schema);
       this.db.exec(schedulingSchema);
+      this.db.exec(executionSchema);
       this.run('UPDATE runs SET schema_version=?', SCHEMA_VERSION);
       this.db.exec(`PRAGMA user_version=${SCHEMA_VERSION}`);
     });
@@ -118,6 +125,33 @@ export class Store {
     return plan.tasks.find(t => this.get('SELECT activity_id FROM results WHERE activity_id=?', t.activity_id) && !this.get('SELECT id FROM decisions WHERE activity_id=?', t.activity_id));
   }
   result(activityId) { return parse(this.get('SELECT result_json FROM results WHERE activity_id=?', activityId)?.result_json); }
+  executionSnapshot(activityId) { return parse(this.get('SELECT document_json FROM execution_snapshots WHERE activity_id=?', activityId)?.document_json); }
+  freezeExecution(task, snapshot) {
+    return this.tx(() => {
+      ensure(this.activity(task.activity_id).user_id === task.user_id, 'Snapshot user mismatch');
+      const saved = this.executionSnapshot(task.activity_id);
+      if (saved) { ensure(saved.fingerprint === snapshot.fingerprint, 'Frozen execution configuration/source mismatch'); return saved; }
+      ensure(this.activity(task.activity_id).status === 'pending', 'Snapshot required before execution');
+      this.run('INSERT INTO execution_snapshots VALUES(?,?,?,?,?)', task.activity_id, task.user_id, snapshot.fingerprint, json(snapshot), now());
+      return snapshot;
+    });
+  }
+  executionWork(activityId) {
+    const row = this.get('SELECT * FROM activity_work_state WHERE activity_id=?', activityId);
+    return row ? { revision: row.revision, ...parse(row.document_json) } : { revision: 0, phase: 'pending', data: null };
+  }
+  executionEvents(activityId) { return this.all('SELECT * FROM execution_events WHERE activity_id=? ORDER BY sequence', activityId).map(r => ({ sequence: r.sequence, ...parse(r.event_json) })); }
+  writeExecutionWork(task, work, event) {
+    ensure(this.activity(task.activity_id).user_id === task.user_id, 'Work user mismatch');
+    ensure(['pending', 'executing', 'needs_attention'].includes(this.activity(task.activity_id).status), 'Cannot mutate terminal execution');
+    const prior = this.executionWork(task.activity_id);
+    ensure(work.revision === prior.revision, 'Execution revision conflict');
+    const revision = prior.revision + 1;
+    this.run('INSERT INTO activity_work_state VALUES(?,?,?,?,?) ON CONFLICT(activity_id) DO UPDATE SET revision=excluded.revision,document_json=excluded.document_json,updated_at=excluded.updated_at', task.activity_id, task.user_id, revision, json({ phase: work.phase, data: work.data }), now());
+    this.run('INSERT INTO execution_events VALUES(?,?,?,?,?)', task.activity_id, task.user_id, revision, json(event), now());
+    return { revision, phase: work.phase, data: structuredClone(work.data) };
+  }
+  saveExecutionWork(task, work, event) { return this.tx(() => this.writeExecutionWork(task, work, event)); }
   setClock(userId, date, virtualTime, phase) {
     const prior = this.get('SELECT * FROM virtual_clocks WHERE user_id=?', userId);
     ensure(!prior || prior.virtual_time <= virtualTime, 'Virtual clock cannot move backwards');
@@ -250,13 +284,14 @@ export class Store {
     });
     return id;
   }
-  finishStep(task, stepId, outcome) {
+  finishStep(task, stepId, outcome, checkpoint) {
     this.tx(() => {
       const step = this.get('SELECT * FROM steps WHERE id=? AND activity_id=? AND user_id=?', stepId, task.activity_id, task.user_id);
       ensure(step, 'Step/user association mismatch');
       ensure(this.activity(task.activity_id).status === 'executing', 'Cannot change completed execution');
       if (step.status === 'completed') { ensure(step.outcome_json === json(outcome), 'Conflicting step outcome'); return; }
       this.run("UPDATE steps SET status='completed',outcome_json=?,real_finished_at=? WHERE id=?", json(outcome), now(), stepId);
+      if (checkpoint) this.writeExecutionWork(task, checkpoint.work, checkpoint.event);
     });
   }
   saveResult(task, attemptId, result, provenance) {
@@ -264,6 +299,8 @@ export class Store {
     this.tx(() => {
       ensure(this.activity(task.activity_id).status === 'executing', 'Execution is not active');
       ensure(this.steps(attemptId).every(s => s.status === 'completed'), 'Unresolved action intent; executor recovery required');
+      const work = this.executionWork(task.activity_id);
+      if (work.revision) this.writeExecutionWork(task, { ...work, phase: result.status }, { type: 'result_saved', status: result.status, completed_count: result.completed_count });
       this.run('INSERT INTO results VALUES(?,?,?,?,?)', task.activity_id, task.user_id, attemptId, json({ ...result, provenance }), now());
       this.run('UPDATE activities SET status=? WHERE id=?', result.status, task.activity_id);
       this.run('UPDATE attempts SET status=?,finished_at=? WHERE id=?', result.status, result.real_finished_at, attemptId);
@@ -289,11 +326,12 @@ export class Store {
     return this.run("UPDATE descriptions SET status='pending' WHERE status='failed' AND attempts<?", max).changes;
   }
   nextDescription() {
+    const eligible = this.config().mode === 'offline' ? "'completed','partial','blocked','needs_attention'" : "'completed','partial','blocked'";
     // A failed/incomplete predecessor blocks this activity only, never other activities.
     const row = this.get(`SELECT s.*,st.step_index,a.task_json,d.attempts FROM screenshots s
       JOIN descriptions d ON d.screenshot_id=s.id JOIN steps st ON st.id=s.step_id
       JOIN activities a ON a.id=s.activity_id JOIN users u ON u.id=s.user_id
-      WHERE d.status='pending' AND a.status IN ('completed','partial','blocked')
+      WHERE d.status='pending' AND a.status IN (${eligible})
       AND NOT EXISTS(SELECT 1 FROM screenshots p JOIN steps ps ON ps.id=p.step_id JOIN descriptions pd ON pd.screenshot_id=p.id
         WHERE p.activity_id=s.activity_id AND (ps.step_index<st.step_index OR (ps.step_index=st.step_index AND p.capture_index<s.capture_index)) AND pd.status<>'complete')
       ORDER BY u.ordinal,a.virtual_start,a.ordinal,st.step_index,s.capture_index LIMIT 1`);
@@ -356,7 +394,7 @@ export class Store {
     const config = this.config();
     const counts = table => this.all(`SELECT status,COUNT(*) AS count FROM ${table} GROUP BY status`);
     return {
-      run_id: config.run_id, mode: config.mode, synthetic: config.mode === 'mock',
+      run_id: config.run_id, mode: config.mode, synthetic: ['mock', 'offline'].includes(config.mode),
       activities: counts('activities'), descriptions: counts('descriptions'),
       results: this.get('SELECT COUNT(*) AS n FROM results').n,
       decisions: this.get('SELECT COUNT(*) AS n FROM decisions').n,

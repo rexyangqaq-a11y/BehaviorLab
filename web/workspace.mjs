@@ -1,6 +1,7 @@
 import { creatorView, startCreator, setupCreator } from './user-creator.mjs';
 import { modelSettingsView, setupModelSettings } from './model-settings.mjs';
 import { guiLabView, setupGuiLab } from './gui-lab.mjs';
+import { offlineExecutionView, offlineCreationPanel, setupOfflineRuntime } from './v05-runtime.mjs';
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 const pretty = value => esc(JSON.stringify(value, null, 2));
@@ -24,7 +25,7 @@ names.unplanned = '待规划';
 const actionNames = { run: '行为生成', next_activity: '下一活动', next_day: '推进一个用户日', plan_next: '当日规划', retry_descriptions: '文字补生成', describe: '待处理文字生成', export: '数据导出', check: '完整性检查', pipeline: '生成、补齐与导出', interrupt: '中断演练' };
 const moduleNames = { runtime: '事件调度', users: '用户管理', upper_planner: '上层规划', lower_executor: '手机执行', records: '图像记录', describer: '图像转文字' };
 const phaseBadge = status => `<span class="tag ${esc(status)}">${esc(names[status] ?? status)}</span>`;
-const sourceBadge = mode => `<span class="tag ${['system', 'user'].includes(mode) ? 'live' : 'mock'}">${mode === 'system' ? '系统执行' : mode === 'user' ? '手动设定' : 'Mock'}</span>`;
+const sourceBadge = mode => `<span class="tag ${['system', 'user'].includes(mode) ? 'live' : 'mock'}">${mode === 'system' ? '系统执行' : mode === 'user' ? '手动设定' : ['offline', 'offline_fixture'].includes(mode) ? '离线夹具' : 'Mock'}</span>`;
 let saved;
 try { saved = localStorage.getItem('behaviorlab_product_run'); } catch { /* optional preference */ }
 views.task = ['运行总览', 'SIMULATION WORKSPACE', '按虚拟用户日推进，执行与逐图文字独立保存。'];
@@ -32,8 +33,9 @@ views.create_users = ['创建虚拟用户', 'CREATE VIRTUAL USERS', '先明确�
 views.users[0] = '用户库'; views.simulations[0] = '仿真任务'; views.apps[0] = '系统设置';
 views.apps = ['系统设置', 'SYSTEM SETTINGS', '配置模型服务与角色预设，查看 APP 能力范围和实际接入状态。'];
 views.gui_lab = ['下层 Agent 验证', 'GUI FRAMEWORK LAB', 'v0.4 独立用例与调试入口；候选选型和真机效果仍待验证。'];
-const taskViews = ['task', 'plans', 'sequence', 'memories', 'calls'];
-const tabNames = { task: '运行总览', plans: '行为规划', sequence: '执行记录', memories: '生成记忆', calls: '调用调试' };
+views.v05 = ['单活动调试', 'V0.5 OFFLINE INTEGRATION', '查看通用活动输入、完成证据与恢复；离线夹具不表示真实手机成绩。'];
+const taskViews = ['task', 'plans', 'sequence', 'memories', 'calls', 'v05'];
+const tabNames = { task: '运行总览', plans: '行为规划', sequence: '执行记录', memories: '生成记忆', calls: '调用调试', v05: '单活动调试' };
 const state = { view: 'simulations', system: { apps: [], modules: [] }, library: { users: [], calls: [], batches: [] }, runs: [], run: saved, snapshot: null, user: '', date: '', app: '', trace: '', history: false, memoryStatus: 'complete', page: 1, connected: true, loading: true, polling: false, submitting: false, filtersByView: {}, librarySearch: '', libraryGroup: '', selectedUsers: new Set(), creator: null };
 let pollTimer, toastTimer, navigationMarkup = '', refreshPromise = Promise.resolve();
 async function api(route, body) {
@@ -60,7 +62,7 @@ const route = suffix => `/api/runs/${encodeURIComponent(state.run)}${suffix ?? '
 const screenshotUrl = id => route(`/screens/${encodeURIComponent(id)}`);
 function empty(title, text, action, buttonText = '新建仿真任务') { return `<div class="empty"><div class="empty-symbol">${icon('sequence')}</div><h3>${title}</h3><div>${text}</div>${action ? `<button class="button primary" data-action="${action}">${buttonText}</button>` : ''}</div>`; }
 function stat(label, value, note, symbol) { return `<section class="stat"><div class="stat-label">${label}${icon(symbol)}</div><div class="stat-number">${value}</div><div class="stat-note">${note}</div></section>`; }
-function titleStatus(s) { if (active(s.job)) return 'running'; if (s.status.dataset_complete) return 'completed'; if (s.job?.status === 'paused' || s.status.pause_requested) return 'paused'; if (s.status.interrupted_activities.length) return 'interrupted'; return s.status.results ? 'ready' : s.plans.length ? 'planned' : 'unplanned'; }
+function titleStatus(s) { if (active(s.job)) return 'running'; if (s.status.interrupted_activities.some(a => a.status === 'needs_attention')) return 'needs_attention'; if (s.status.dataset_complete) return 'completed'; if (s.job?.status === 'paused' || s.status.pause_requested) return 'paused'; if (s.status.interrupted_activities.length) return 'interrupted'; return s.status.results ? 'ready' : s.plans.length ? 'planned' : 'unplanned'; }
 function head() {
   const [title, eyebrow, subtitle] = views[state.view];
   const action = state.view === 'users' ? '<button class="button primary" data-action="new-users">＋ 创建用户</button>' : state.view === 'simulations' ? '<button class="button primary" data-action="new-simulation">＋ 新建仿真</button>' : state.view === 'apps' ? '<button class="button" data-action="integration-info">真实接入资料</button>' : state.view === 'plans' ? `<button class="button primary" data-job="plan_next" ${busy() || !state.run ? 'disabled' : ''}>${icon('plans')} 生成当前日计划</button>` : '';
@@ -82,7 +84,7 @@ function render() {
   if (state.loading) { $('#main').innerHTML = '<div class="loading">正在读取工作空间…</div>'; return; }
   const needsRun = taskViews.includes(state.view);
   if (needsRun && !state.snapshot) { $('#main').innerHTML = '<div class="loading">正在读取此任务…</div>'; return; }
-  const body = ({ task: taskOverview, create_users: creatorView, users: usersView, simulations, plans, sequence, memories, calls, apps: appsView, gui_lab: guiLabView }[state.view])();
+  const body = (state.view === 'simulations' ? offlineCreationPanel() : '') + ({ task: taskOverview, create_users: creatorView, users: usersView, simulations, plans, sequence, memories, calls, apps: appsView, gui_lab: guiLabView, v05: () => offlineExecutionView(state.snapshot, busy()) }[state.view])();
   $('#main').innerHTML = (needsRun ? taskHeader() : '') + head() + (state.view === 'calls' ? traceFilter() : '') + body;
 }
 function taskHeader() {
@@ -304,6 +306,7 @@ $('#simulation-form').addEventListener('submit', async event => {
 setupCreator({ api, render: () => { if (state.view === 'create_users') render(); }, saved: async result => { state.selectedUsers = new Set(result.user_ids); state.libraryGroup = ''; state.librarySearch = ''; await refresh(); navigate('users'); toast(`已确认 ${result.user_ids.length} 位用户，可用已选用户创建仿真`); } });
 setupModelSettings({ api, redraw: () => { if (state.view === 'apps') render(); }, toast });
 setupGuiLab({ api, redraw: () => { if (state.view === 'gui_lab') render(); }, toast });
+setupOfflineRuntime({ api, snapshot: () => state.snapshot, busy, refresh, selectRun, toast, submitting: value => { state.submitting = value; render(); } });
 async function readRoute() {
   const parts = location.hash.slice(2).split('/');
   if (parts[0] === 'tasks' && parts[1]) {

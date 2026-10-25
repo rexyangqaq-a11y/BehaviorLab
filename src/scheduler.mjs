@@ -4,7 +4,7 @@ import { traced } from './tracing.mjs';
 
 export async function initialize(store, input, adapters) {
   const config = normalizeConfig(input);
-  assertAdapters(adapters, config.mode);
+  assertAdapters(adapters, config);
   const personas = [];
   for (const user of config.users) {
     const persona = user.persona_snapshot
@@ -43,14 +43,21 @@ function completeDay(store, user, date) {
   });
 }
 async function executeActivity(store, user, task, executor, hooks, root) {
+  const releaseDevice = executor.acquire?.({ directory: store.directory });
+  try {
+  if (executor.snapshot) store.freezeExecution(task, executor.snapshot(task, store.activity(task.activity_id).plan_id));
   store.setDay(user.user_id, task.virtual_date, 'running'); store.setClock(user.user_id, task.virtual_date, task.virtual_start, 'executing');
-  await traced(store, childCall(root, { module: 'lower_executor', operation: 'activity.execute', ...executor.provenance, user_id: user.user_id, activity_id: task.activity_id, virtual_date: task.virtual_date, input: { task, persona: user.persona } }), async call => {
+  return await traced(store, childCall(root, { module: 'lower_executor', operation: 'activity.execute', ...executor.provenance, user_id: user.user_id, activity_id: task.activity_id, virtual_date: task.virtual_date, input: { task, persona: user.persona } }), async call => {
     const provenance = { ...executor.provenance, call_id: call.id, trace_id: call.trace_id };
     const attempt = store.beginAttempt(task, provenance);
     const recorder = {
       beginStep: intent => store.beginStep(task, attempt.id, intent),
       capture: (stepId, capture) => traced(store, childCall(call, { module: 'records', operation: 'screenshot.persist', mode: 'system', user_id: task.user_id, activity_id: task.activity_id, virtual_date: task.virtual_date, input: { step_id: stepId, phase: capture.phase, capture_index: capture.capture_index, source_mode: executor.provenance.mode } }), () => store.capture(task, attempt.id, stepId, capture, provenance)),
-      finishStep: (stepId, outcome) => store.finishStep(task, stepId, outcome),
+      finishStep: (stepId, outcome, checkpoint) => store.finishStep(task, stepId, outcome, checkpoint),
+      steps: () => store.steps(attempt.id),
+      work: () => store.executionWork(task.activity_id),
+      checkpoint: (work, event) => store.saveExecutionWork(task, work, event),
+      validateEvidence: async () => { for (const shot of store.all('SELECT * FROM screenshots WHERE attempt_id=?', attempt.id)) await store.readAsset(shot); },
     };
     const context = { task: structuredClone(task), persona: structuredClone(user.persona), attempt_id: attempt.id,
       real_started_at: attempt.started_at, previous_steps: store.steps(attempt.id), recorder,
@@ -59,19 +66,27 @@ async function executeActivity(store, user, task, executor, hooks, root) {
       const recovery = await traced(store, childCall(call, { module: 'lower_executor', operation: 'activity.recover', ...executor.provenance, user_id: user.user_id, activity_id: task.activity_id, input: { previous_steps: context.previous_steps } }), () => executor.recover(context));
       if (recovery?.kind !== 'resume') {
         const reason = recovery?.reason ?? 'Executor did not authorize safe resume'; store.markNeedsAttention(task, reason);
+        if (executor.provenance.mode === 'offline_fixture') return { kind: 'needs_attention', reason };
         throw new Error(`Activity ${task.activity_id} needs attention: ${reason}`);
       }
       store.audit('execution_recovery_authorized', task.user_id, task.activity_id, { recovery, provenance });
     }
     const result = await executor.execute(context);
+    if (result?.kind === 'needs_attention') {
+      store.markNeedsAttention(task, result.reason);
+      store.setClock(task.user_id, task.virtual_date, task.virtual_start, 'needs_attention');
+      return result;
+    }
     store.saveResult(task, attempt.id, result, provenance); store.setClock(task.user_id, task.virtual_date, task.virtual_start, 'awaiting_feedback');
     await hooks.afterResult?.({ task, result });
     return result;
   });
+  } finally { releaseDevice?.(); }
 }
-async function executeAll(store, adapters, hooks, root, { maxActivities, maxUserDays }) {
+async function executeAll(store, adapters, hooks, root, { maxActivities, maxUserDays, feedbackOnly }) {
   let executed = 0; let completedDays = 0;
   const yielded = reason => ({ reason, executed_activities: executed, completed_user_days: completedDays, paused: reason === 'pause_requested' });
+  if (feedbackOnly && !store.get('SELECT r.activity_id FROM results r LEFT JOIN decisions d ON d.activity_id=r.activity_id WHERE d.id IS NULL LIMIT 1')) return yielded('feedback_only');
   for (const user of store.users()) for (const date of dates(store.config())) {
     if (store.get('SELECT status FROM schedule_days WHERE user_id=? AND virtual_date=?', user.user_id, date)?.status === 'complete') continue;
     let plan = store.latestPlan(user.user_id, date);
@@ -89,20 +104,27 @@ async function executeAll(store, adapters, hooks, root, { maxActivities, maxUser
           store.setClock(user.user_id, date, feedback.virtual_start, 'ready');
           await hooks.afterDecision?.({ task: feedback, decision }); return decision;
         });
+        if (feedbackOnly) {
+          if (dayEnded(store, store.latestPlan(user.user_id, date))) { completeDay(store, user, date); completedDays++; }
+          return yielded('feedback_only');
+        }
         continue;
       }
+      if (feedbackOnly) return yielded('feedback_only');
       const next = plan.tasks.find(t => ['pending', 'executing', 'needs_attention'].includes(store.activity(t.activity_id).status));
       if (!next) { completeDay(store, user, date); completedDays++; break; }
       if (store.pauseRequested()) return yielded('pause_requested');
       if (executed >= maxActivities || completedDays >= maxUserDays) return yielded('budget_reached');
       ensure(store.activity(next.activity_id).status !== 'needs_attention', `Activity ${next.activity_id} awaits operator/executor recovery policy; no action replay performed`);
-      await executeActivity(store, user, next, adapters.executor, hooks, root); executed++;
+      const outcome = await executeActivity(store, user, next, adapters.executor, hooks, root);
+      if (outcome?.kind === 'needs_attention') return yielded('needs_attention');
+      executed++;
     }
   }
   return yielded('interval_complete');
 }
 export async function prepareNextDay(store, adapters) {
-  assertAdapters(adapters, store.config().mode);
+  assertAdapters(adapters, store.config());
   const release = store.acquireLease('execution');
   try {
     store.recoverCalls();
@@ -117,17 +139,25 @@ export async function prepareNextDay(store, adapters) {
     });
   } finally { release(); }
 }
-export async function runSimulation(store, adapters, { describe = true, maxActivities = Infinity, maxUserDays = Infinity, ...hooks } = {}) {
-  assertAdapters(adapters, store.config().mode);
+export async function runSimulation(store, adapters, { describe = true, maxActivities = Infinity, maxUserDays = Infinity, expectedActivityId = null, feedbackOnly = false, ...hooks } = {}) {
+  assertAdapters(adapters, store.config());
+  if (store.config().mode === 'offline') {
+    const saved = JSON.parse(store.get('SELECT provenance_json FROM runs').provenance_json);
+    ensure(JSON.stringify(saved.executor) === JSON.stringify(adapters.executor.provenance), 'Frozen run adapter/source mismatch');
+  }
   ensure(maxActivities > 0 && maxUserDays > 0, 'Advance budgets must be positive');
   const release = store.acquireLease('execution');
   let advancement;
   try {
+    if (expectedActivityId) {
+      const current = store.all("SELECT id FROM activities WHERE status IN ('pending','executing','needs_attention') ORDER BY (SELECT ordinal FROM users WHERE users.id=activities.user_id),virtual_start,ordinal LIMIT 1")[0];
+      ensure(current?.id === expectedActivityId, 'Current activity changed; refresh before executing');
+    }
     store.recoverCalls(); store.requestPause(false);
     advancement = await traced(store, { module: 'runtime', operation: 'schedule.advance', mode: 'system', input: { describe, max_activities: Number.isFinite(maxActivities) ? maxActivities : null, max_user_days: Number.isFinite(maxUserDays) ? maxUserDays : null } }, async root => {
       let done = false;
       const worker = describe ? backgroundDescriptions(store, adapters.describer, () => done, { ...hooks, traceParent: root }) : Promise.resolve();
-      const execution = (async () => { try { return await executeAll(store, adapters, hooks, root, { maxActivities, maxUserDays }); } finally { done = true; } })();
+      const execution = (async () => { try { return await executeAll(store, adapters, hooks, root, { maxActivities, maxUserDays, feedbackOnly }); } finally { done = true; } })();
       const results = await Promise.allSettled([execution, worker]);
       const failure = results.find(r => r.status === 'rejected'); if (failure) throw failure.reason;
       return results[0].value;

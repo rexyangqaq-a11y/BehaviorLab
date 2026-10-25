@@ -8,8 +8,11 @@ import { spawn } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { normalizeConfig, safeId, ensure, parse, now, validDate } from './contracts.mjs';
 import { Store, openExisting } from './store.mjs';
-import { initialize } from './runner.mjs';
+import { initialize, runSimulation } from './runner.mjs';
 import { createMockAdapters } from './adapters/mock.mjs';
+import { createRuntimeAdapters } from './runtime-assembly.mjs';
+import { reviewExecution, resolveExecution } from './execution-review.mjs';
+import { offlineScenario } from './offline-scenarios.mjs';
 import { buildEvents } from './output.mjs';
 import { ACTIONS, ACTIVE_JOBS, readJob, writeJob, isAlive } from './web-jobs.mjs';
 import { APP_CATALOG } from './app-catalog.mjs';
@@ -78,21 +81,22 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
   async function createRun(input) {
     let config;
     try { config = normalizeConfig(input); } catch (error) { throw fail(400, error.message); }
+    const adapters = createRuntimeAdapters(config);
     if (config.run_id.length > 64 || config.users.some(u => u.user_id.length > 40)) throw fail(400, '运行 ID 最多 64 字符，用户 ID 最多 40 字符');
     const directory = path.join(root, config.run_id);
     try { await mkdir(directory); } catch (error) { if (error.code === 'EEXIST') throw fail(409, '运行 ID 已存在；已有数据不会覆盖'); throw error; }
     const store = new Store(directory);
-    try { await initialize(store, config, createMockAdapters(config)); } finally { store.close(); }
+    try { await initialize(store, config, adapters); } finally { store.close(); }
     return { id: config.run_id, synthetic: true };
   }
-  function startJob(directory, action) {
+  function startJob(directory, action, expectedActivityId = null) {
     if (closing) throw fail(503, '调试服务正在关闭');
     if (!ACTIONS.includes(action)) throw fail(400, '未知操作');
     const previous = effectiveJob(directory);
     if (children.has(directory) || previous && ACTIVE_JOBS.includes(previous.status)) throw fail(409, '此运行已有任务，请等待或先停止');
     const externalWorkers = withStore(directory, s => s.status().workers.filter(w => isAlive(w.pid)));
     if (externalWorkers.length) throw fail(409, '此运行正在被命令行或其他进程使用');
-    const job = { id: randomUUID(), action, status: 'queued', pid: null, created_at: now(), stages: [], synthetic: true };
+    const job = { id: randomUUID(), action, expected_activity_id: expectedActivityId, status: 'queued', pid: null, created_at: now(), stages: [], synthetic: true };
     writeJob(directory, job);
     const child = spawn(process.execPath, [path.join(project, 'scripts/web-worker.mjs'), directory, job.id], { cwd: project, windowsHide: true, stdio: ['ignore', 'ignore', 'pipe'] });
     let stderr = '';
@@ -134,6 +138,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         if (request.headers.origin && !origins.includes(request.headers.origin) || request.headers['sec-fetch-site'] === 'cross-site' || request.headers['x-simulator-ui'] !== '1') throw fail(403, '请求来源无效');
       } else if (request.method !== 'GET') throw fail(405, '不支持此 HTTP 方法');
       const staticFiles = { '/v04-acceptance':['v04-acceptance.html','text/html'], '/v04-acceptance.mjs':['v04-acceptance.mjs','text/javascript'], '/': ['index.html', 'text/html'], '/workspace.mjs': ['workspace.mjs', 'text/javascript'], '/user-creator.mjs': ['user-creator.mjs', 'text/javascript'], '/model-settings.mjs': ['model-settings.mjs', 'text/javascript'], '/gui-lab.mjs': ['gui-lab.mjs', 'text/javascript'], '/gui-lab.css': ['gui-lab.css', 'text/css'], '/workspace.css': ['workspace.css', 'text/css'] };
+      staticFiles['/v05-runtime.mjs'] = ['v05-runtime.mjs', 'text/javascript'];
       if (request.method === 'GET' && staticFiles[url.pathname]) {
         const [filename, type] = staticFiles[url.pathname];
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
@@ -277,8 +282,9 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         } catch (error) { throw fail(error.status ?? 400, error.message); }
         return;
       }
-      if (url.pathname === '/api/template' && request.method === 'GET') {
-        const config = JSON.parse(await readFile(path.join(project, 'examples/mock-run.json'), 'utf8'));
+      if (['/api/template', '/api/v05/template'].includes(url.pathname) && request.method === 'GET') {
+        let config = JSON.parse(await readFile(path.join(project, url.pathname === '/api/v05/template' ? 'examples/offline-single-activity.json' : 'examples/mock-run.json'), 'utf8'));
+        if (url.pathname === '/api/v05/template') { try { config = offlineScenario(config, url.searchParams.get('scenario') ?? 'product_partial'); } catch (error) { throw fail(400, error.message); } }
         config.run_id = `demo_${Date.now().toString(36)}`;
         config.mock.execution_delay_ms = 300; config.mock.description_delay_ms = 180;
         jsonResponse(response, 200, config); return;
@@ -305,6 +311,24 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
       const id = decodeURIComponent(match[1]);
       const directory = await runDirectory(id);
       const suffix = match[2] ?? '';
+      const attentionRoute = /^activities\/([a-zA-Z0-9_-]+)\/(review|resolution)$/.exec(suffix);
+      if (attentionRoute && request.method === 'POST') {
+        const input = await body(request), previous = effectiveJob(directory);
+        if (children.has(directory) || previous && ACTIVE_JOBS.includes(previous.status)) throw fail(409, '请先等待当前作业结束');
+        try {
+          const result = withStore(directory, store => attentionRoute[2] === 'review' ? reviewExecution(store, attentionRoute[1], input) : resolveExecution(store, attentionRoute[1], input));
+          if (attentionRoute[2] === 'resolution' && input.command === 'end' && result.phase !== 'needs_attention') {
+            const store = stores.get(directory);
+            await runSimulation(store, createRuntimeAdapters(store.config()), { feedbackOnly: true });
+            if (previous) {
+              const complete = store.status().descriptions.every(d => d.status === 'complete');
+              writeJob(directory, { ...previous, status: complete ? 'completed' : 'completed_with_issues', finished_at: now(), stages: [...previous.stages, { name: 'operator_end_feedback', status: 'completed', finished_at: now() }] });
+            }
+          }
+          jsonResponse(response, 200, result);
+        } catch (error) { throw fail(409, error.message); }
+        return;
+      }
       if (suffix === '' && request.method === 'GET') {
         const snapshot = withStore(directory, store => {
           const { data, events } = buildEvents(store);
@@ -315,7 +339,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
             activities: store.all('SELECT * FROM activities ORDER BY user_id,virtual_start,ordinal').map(r => decodeRow(r, ['task_json'])),
             plans: data.plans.map(r => decodeRow(r, ['tasks_json', 'context_json', 'basis_json'])),
             results: data.results.map(r => decodeRow(r, ['result_json'])), decisions: data.decisions.map(r => decodeRow(r, ['decision_json', 'context_json', 'provenance_json'])),
-            events, audit: store.all('SELECT * FROM audit ORDER BY id DESC LIMIT 300').map(r => decodeRow(r, ['payload_json'])),
+            events, executions: data.executions, audit: store.all('SELECT * FROM audit ORDER BY id DESC LIMIT 300').map(r => decodeRow(r, ['payload_json'])),
             description_history: data.history,
             calls: store.all('SELECT id,trace_id,parent_id,module,operation,mode,adapter,user_id,activity_id,virtual_date,status,started_at,finished_at,error FROM call_spans ORDER BY started_at DESC LIMIT 1000'),
             call_count: store.get('SELECT COUNT(*) AS n FROM call_spans').n,
@@ -338,8 +362,9 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         jsonResponse(response, 200, { pause_requested: true, boundary: 'after_activity_feedback' }); return;
       }
       if (suffix === 'jobs' && request.method === 'POST') {
-        const { action } = await body(request);
-        jsonResponse(response, 202, startJob(directory, action)); return;
+        const { action, expected_activity_id } = await body(request);
+        if (expected_activity_id != null) safeId(expected_activity_id, 'expected_activity_id');
+        jsonResponse(response, 202, startJob(directory, action, expected_activity_id ?? null)); return;
       }
       if (suffix === 'stop' && request.method === 'POST') {
         await body(request);

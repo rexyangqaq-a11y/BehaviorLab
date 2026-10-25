@@ -4,12 +4,12 @@ import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { normalizeConfig, ensure } from './contracts.mjs';
 import { Store, openExisting } from './store.mjs';
-import { createMockAdapters } from './adapters/mock.mjs';
+import { createRuntimeAdapters } from './runtime-assembly.mjs';
 import { initialize, runSimulation } from './runner.mjs';
 import { describeSaved } from './descriptions.mjs';
 import { exportRun, checkRun } from './output.mjs';
 
-const help = `Phase A: MOCK ONLY / synthetic fixtures, no phone or model calls.
+const help = `Mock and explicit v0.5 offline fixtures; no phone or model calls.
 Node.js 24; no package installation needed.
 
 node src/cli.mjs init --config examples/mock-run.json --data .data/demo
@@ -43,14 +43,15 @@ export async function main(argv = process.argv.slice(2)) {
     if (command === 'init') {
       ensure(values.config, '--config required');
       const config = normalizeConfig(JSON.parse(await readFile(values.config, 'utf8')));
+      const adapters = createRuntimeAdapters(config);
       store = new Store(data);
-      await initialize(store, config, createMockAdapters(config));
-      output = { initialized: true, run_id: config.run_id, mode: 'mock', synthetic: true, data };
+      await initialize(store, config, adapters);
+      output = { initialized: true, run_id: config.run_id, mode: config.mode, synthetic: true, data };
     } else {
       store = openExisting(data);
       const config = store.config();
-      const adapters = createMockAdapters(config);
-      if (command === 'run') output = await runSimulation(store, adapters, { describe: !values['no-descriptions'] });
+      const adapters = ['run', 'describe'].includes(command) ? createRuntimeAdapters(config) : null;
+      if (command === 'run') output = await runSimulation(store, adapters, { describe: !values['no-descriptions'], maxActivities: config.mode === 'offline' ? 1 : Infinity });
       if (command === 'status') output = store.status();
       if (command === 'describe') output = { processed: await describeSaved(store, adapters.describer, { retryFailed: Boolean(values['retry-failed']) }), ...store.status() };
       if (command === 'export') output = await exportRun(store, values.out ?? path.join(data, 'export'));

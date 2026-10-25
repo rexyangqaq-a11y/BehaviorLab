@@ -1,5 +1,6 @@
+import { normalizeRuntime, expectedAdapterMode, completionTarget } from './runtime-config.mjs';
 /** Runtime contracts, deliberately independent of adapters and persistence. */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 export const TERMINAL = ['completed', 'partial', 'blocked'];
 export const now = () => new Date().toISOString();
 export const json = value => JSON.stringify(value);
@@ -25,7 +26,8 @@ export function dates(config) {
 export function normalizeConfig(input) {
   const config = structuredClone(input);
   safeId(config.run_id, 'run_id');
-  ensure(config.mode === 'mock', 'Phase A CLI accepts mode=mock only; real integrations are not implemented.');
+  const runtime = normalizeRuntime(config.runtime, config.mode);
+  if (runtime) config.runtime = runtime;
   validDate(config.virtual_start_date);
   validDate(config.virtual_end_date);
   ensure(config.virtual_start_date <= config.virtual_end_date, 'Invalid virtual date range');
@@ -44,6 +46,18 @@ export function normalizeConfig(input) {
   for (const key of ['execution_delay_ms', 'description_delay_ms']) {
     ensure(Number.isFinite(config.mock[key]) && config.mock[key] >= 0, `Invalid ${key}`);
   }
+  if (config.mode === 'offline') {
+    ensure(Array.isArray(config.activities), 'Offline activities array required (empty allowed)');
+    ensure(new Set(config.activities.map(t => safeId(t.activity_id, 'activity_id'))).size === config.activities.length, 'Duplicate offline activity_id');
+    for (const task of config.activities) {
+      ensure(config.users.some(u => u.user_id === task.user_id), 'Activity user outside run');
+      ensure(task.virtual_date >= config.virtual_start_date && task.virtual_date <= config.virtual_end_date, 'Activity date outside run');
+      validateTask(task, { user_id: task.user_id, virtual_date: task.virtual_date, apps: config.apps });
+      ensure(task.completion && Array.isArray(task.fixture?.events) && task.fixture.events.length <= 1000, 'Explicit bounded offline fixture and completion rule required');
+      ensure(task.fixture.events.every(e => e && ['observe', 'action', 'model_error', 'tool_rejected'].includes(e.type)), 'Unknown offline fixture event');
+      ensure(task.fixture.recovery == null || Array.isArray(task.fixture.recovery) && task.fixture.recovery.length <= 1000, 'Invalid offline recovery observations');
+    }
+  }
   return config;
 }
 export function validateTask(task, context) {
@@ -55,7 +69,16 @@ export function validateTask(task, context) {
   ensure(task.virtual_start.slice(11, 13) <= '23' && task.virtual_start.slice(14) <= '59', 'Invalid virtual clock time');
   ensure(context.apps.some(a => a.app_id === task.app_id), 'Task app outside supplied capability list');
   ensure(typeof task.goal === 'string' && task.goal.length > 0, 'Task goal required');
-  ensure(Number.isSafeInteger(task.workload?.object_count) && task.workload.object_count > 0, 'Task needs positive object_count');
+  if (task.completion?.kind === 'conditions') {
+    ensure(Array.isArray(task.completion.conditions) && task.completion.conditions.length > 0, 'Task needs completion conditions');
+  } else ensure(Number.isSafeInteger(task.workload?.object_count) && task.workload.object_count > 0, 'Task needs positive object_count');
+  if (task.completion) {
+    ensure(['objects', 'conditions'].includes(task.completion.kind), 'Unknown completion kind');
+    ensure(Array.isArray(task.completion.conditions), 'Completion conditions required');
+    ensure(task.completion.conditions.every(c => typeof c.field === 'string' && /^[a-zA-Z0-9_]+$/.test(c.field) && ['eq', 'lte', 'gte', 'includes'].includes(c.op) && ['string', 'number', 'boolean'].includes(typeof c.value)), 'Invalid completion condition');
+    if (task.completion.kind === 'objects') ensure(Array.isArray(task.completion.identity_fields) && task.completion.identity_fields.length > 0 && task.completion.identity_fields.every(f => /^[a-zA-Z0-9_]+$/.test(f)), 'Object identity fields required');
+    ensure(task.completion.conditions.every(c => typeof c.value !== 'number' || Number.isFinite(c.value)), 'Condition number must be finite');
+  }
   ensure(typeof task.end_condition === 'string' && task.end_condition.length > 0, 'Task end_condition required');
 }
 export function validateTasks(tasks, context) {
@@ -70,7 +93,7 @@ export function validateResult(result, task) {
   ensure(typeof result.summary === 'string' && typeof result.end_reason === 'string', 'Result summary and end_reason required');
   ensure(typeof result.real_started_at === 'string' && typeof result.real_finished_at === 'string', 'Actual timestamps required');
   ensure(Date.parse(result.real_started_at) <= Date.parse(result.real_finished_at), 'Invalid actual timestamp order');
-  if (result.status === 'completed') ensure(result.completed_count >= task.workload.object_count, 'Completed result below target');
+  if (result.status === 'completed') ensure(result.completed_count >= completionTarget(task), 'Completed result below target');
 }
 /**
  * Adapter bundle (all methods may be async):
@@ -86,9 +109,10 @@ export function validateResult(result, task) {
  * belongs to the executor, NEVER to a generic automatic action-replay loop.
  */
 export function assertAdapters(bundle, mode) {
+  const config = typeof mode === 'string' ? { mode } : mode;
   for (const [name, methods] of Object.entries({ personas: ['generate'], planner: ['plan', 'adjust'], executor: ['execute', 'recover'], describer: ['describe'] })) {
     const adapter = bundle[name];
-    ensure(adapter?.provenance?.mode === mode && typeof adapter.provenance.adapter === 'string', `${name} provenance mismatch`);
+    ensure(adapter?.provenance?.mode === expectedAdapterMode(config, name) && typeof adapter.provenance.adapter === 'string', `${name} provenance mismatch`);
     methods.forEach(method => ensure(typeof adapter[method] === 'function', `${name}.${method} missing`));
   }
 }

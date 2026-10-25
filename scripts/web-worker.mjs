@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { openExisting } from '../src/store.mjs';
-import { createMockAdapters } from '../src/adapters/mock.mjs';
+import { createRuntimeAdapters } from '../src/runtime-assembly.mjs';
 import { runSimulation, prepareNextDay } from '../src/runner.mjs';
 import { describeSaved } from '../src/descriptions.mjs';
 import { exportRun, checkRun } from '../src/output.mjs';
@@ -11,7 +11,7 @@ const [directory, jobId] = process.argv.slice(2);
 let job = readJob(directory);
 if (job?.id !== jobId) throw new Error('Web job identity mismatch');
 const store = openExisting(directory);
-const adapters = createMockAdapters(store.config(), job.action === 'interrupt' ? { afterCapture: () => process.exit(73) } : {});
+const adapters = createRuntimeAdapters(store.config(), job.action === 'interrupt' ? { afterCapture: () => process.exit(73) } : {});
 const save = () => writeJob(directory, job);
 const stage = async (name, operation) => {
   const record = { name, status: 'running', started_at: now() };
@@ -36,8 +36,8 @@ try {
   let paused = false;
   if (action === 'plan_next') await stage('plan', () => prepareNextDay(store, adapters));
   if (['pipeline', 'run', 'execute', 'interrupt', 'next_activity', 'next_day'].includes(action)) {
-    const result = await stage('execute', () => runSimulation(store, adapters, { describe: !['execute', 'interrupt'].includes(action), maxActivities: action === 'next_activity' ? 1 : Infinity, maxUserDays: action === 'next_day' ? 1 : Infinity }));
-    paused = result.advancement?.paused;
+    const result = await stage('execute', () => runSimulation(store, adapters, { describe: !['execute', 'interrupt'].includes(action), maxActivities: store.config().mode === 'offline' || action === 'next_activity' ? 1 : Infinity, maxUserDays: action === 'next_day' ? 1 : Infinity, expectedActivityId: job.expected_activity_id }));
+    paused = result.advancement?.paused || result.advancement?.reason === 'needs_attention';
   }
   if (!paused && ['pipeline', 'describe', 'retry_descriptions'].includes(action)) await stage('describe', async () => ({ processed: await describeSaved(store, adapters.describer, { retryFailed: action !== 'describe' }) }));
   if (!paused && ['pipeline', 'export'].includes(action)) await stage('export', () => exportRun(store, path.join(directory, 'export')));

@@ -13,6 +13,8 @@ import {createRepeatedActionGuard} from '../src/gui-trial-action-limits.mjs';
 import {assessPermissionAction} from '../src/phone-permissions.mjs';
 import {unprotectLocalSecret} from '../src/local-secret.mjs';
 import {validatePhysicalAction} from '../src/phone-action-effects.mjs';
+import {assertDeviceLease} from '../src/device-lease.mjs';
+import {runRegisteredFramework} from '../src/framework-runtime.mjs';
 const {values}=parseArgs({options:{root:{type:'string'},id:{type:'string'}}});
 if(!/^phone_[a-f0-9-]{36}$/.test(values.id??''))throw Error('Invalid run ID');
 const project=fileURLToPath(new URL('../',import.meta.url)),dir=path.join(path.resolve(values.root),'.phone-lab/runs',values.id);
@@ -25,6 +27,9 @@ process.on('message',message=>{if(message?.type==='stop')control.abort('user_sto
 process.on('disconnect',()=>control.abort('server_disconnected'));
 try{
   if(existsSync(path.join(project,'.runtime/phone-lab-pause.json'))&&JSON.parse(await readFile(path.join(project,'.runtime/phone-lab-pause.json'),'utf8')).paused)throw Error('用户已暂停真机测试，未操作设备或调用模型');
+  if(!input.device_lease)throw Error('缺少设备所有权，未操作设备或调用模型');
+  const assertOwnership=()=>assertDeviceLease(input.device_lease.file,input.device_lease.token,process.pid);
+  for(let attempt=0;;attempt++){try{assertOwnership();break;}catch(error){if(attempt>=20)throw error;await new Promise(resolve=>setTimeout(resolve,25));}}
   let db,service,key;
   try{db=new DatabaseSync(path.join(values.root,'.model-services.sqlite'),{readOnly:true});const row=db.prepare('SELECT document FROM model_settings WHERE id=1').get();service=JSON.parse(row.document).services.find(s=>s.id===input.service_id);key=db.prepare('SELECT api_key FROM model_credentials WHERE service_id=?').get(input.service_id)?.api_key;}
   finally{db?.close();}
@@ -40,7 +45,7 @@ try{
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
   const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
-  files.push('src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
+  files.push('src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','src/device-lease.mjs','src/framework-runtime.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
   executionStarted=Date.now();evidence.phase='execution';
   await state({status:'running',phase:'execution',started_at:new Date(executionStarted).toISOString()});
@@ -52,6 +57,7 @@ try{
   const taskRules=input.task?.origin==='user_defined'?'\n\n判定要求：'+input.task.acceptance.join('；')+(input.task.forbidden?'\n禁止操作：'+input.task.forbidden:''):'';
   const prompt=input.instruction+taskRules+'\n\n操作约束：只在当前指定应用完成任务；依据当前真实截图选择入口，不套用其他手机布局。不修改账号，不执行任务未要求的交易、点赞、收藏、关注、发布或删除。不操作支付/验证码/密码页面。系统权限、剪贴板读取等新增权限弹窗一律选择“不允许/拒绝”，禁止选择“本次使用允许/始终允许”等授权按钮；本任务不需要新增权限。无法拒绝或需要人工处理时停止说明。完成后报告可见事实，不把猜测或文字答案代替界面实际结果。';
   const checkPermissions=async(name,param)=>{
+    assertOwnership();
     if(/^(?:back|home|HarmonyBackButton|HarmonyHomeButton|Scroll|Swipe)$/i.test(name))return;
     const began=Date.now(),view=await session.layout(),decision=assessPermissionAction(view.nodes,name,param);permissionChecks++;
     evidence.record({type:'permission_policy_check',policy:'deny_new_system_permissions_v1',action:name,duration_ms:Date.now()-began,...decision});
@@ -59,6 +65,7 @@ try{
   };
   const repeatGuard=createRepeatedActionGuard(3);
   const action=async(name,param,operation)=>{
+    assertOwnership();
     if(control.signal.aborted)throw Error('已停止');if(counter.value>=input.limits.max_actions)throw Error('动作次数上限');
     repeatGuard({name,param});counter.value++;return session.atomic(name,param,operation);
   };
@@ -76,8 +83,7 @@ try{
   });};
   evidence.record({type:'execution_start',instruction:prompt,limits:input.limits});
   let nativeResult;
-  const adapter=await import('../integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs');
-  nativeResult=await adapter.run({project,dir,input,service,key,session,evidence,transport,prompt,control,counter,checkPermissions,repeatGuard,dispatch,deferCleanup});
+  nativeResult=await runRegisteredFramework(input.framework_id,{project,dir,input,service,key,session,evidence,transport,prompt,control,counter,checkPermissions,repeatGuard,dispatch,deferCleanup},{source:'real_device'});
   const nativeFailure=nativeResult?.native_result?.success===false?nativeResult.native_result.message??'原生框架返回失败':null;
   result.status=permissionBlocks?'blocked':nativeFailure?'failed':'ended';result.native_result=nativeResult??null;if(permissionBlocks)result.reason='未授权的权限操作在设备执行前被拦截';else if(nativeFailure)result.reason=nativeFailure;evidence.record({type:'framework_return',native_result:nativeResult??null});
 }catch(error){

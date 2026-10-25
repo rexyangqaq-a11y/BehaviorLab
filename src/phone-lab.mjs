@@ -15,12 +15,12 @@ import {startContract,namedStartContract,compareStart,resetPhoneStart} from './p
 import {PhoneTasks} from './phone-tasks.mjs';
 import {PhoneVideo} from './phone-video.mjs';
 import {phoneTestPlan} from '../web/phone-test-plan.mjs';
+import {acquireDeviceLease} from './device-lease.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().toISOString();
 const fail=(status,message)=>Object.assign(Error(message),{status});
 const read=file=>{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}};
 const save=(file,value)=>writeFileSync(file,JSON.stringify(value,null,2),{flush:true});
 const eventsAt=dir=>{try{return readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {type:'evidence_ledger_invalid'};}});}catch(error){return error.code==='ENOENT'?[]:[{type:'evidence_ledger_invalid'}];}};
-const alive=pid=>{try{process.kill(pid,0);return true;}catch{return false;}};
 const exec=promisify(execFile);
 export function phoneRunDeviceInfo(input,environment){
   const baseline=input?.startpoint?.environment,actual=environment?.device?environment:null,record=actual??baseline;
@@ -37,7 +37,7 @@ export class PhoneLab {
   }
   directory(kind,id){if(!/^(start|phone|batch)_[a-f0-9-]{36}$/.test(id))throw fail(400,'记录 ID 无效');return path.join(this.base,kind,id);}
   list(kind,file){return readdirSync(path.join(this.base,kind)).map(id=>read(path.join(this.base,kind,id,file))).filter(Boolean).sort((a,b)=>(b.created_at??'').localeCompare(a.created_at??''));}
-  acquire(owner){const token=randomUUID();if(existsSync(this.lockPath)){const old=read(this.lockPath);if(old&&alive(old.pid))throw fail(409,'手机正在被另一项真机准备或测试占用');unlinkSync(this.lockPath);}writeFileSync(this.lockPath,JSON.stringify({token,pid:process.pid,owner}),{flag:'wx',flush:true});return ()=>{if(read(this.lockPath)?.token===token)unlinkSync(this.lockPath);};}
+  acquire(owner){return acquireDeviceLease(this.lockPath,owner);}
   assertDeviceEnabled(){if(read(this.pausePath)?.paused)throw fail(423,'真机测试已暂停；查看与编辑界面不受影响。手机可用后由测试者恢复。');}
   pause(reason='手机暂供日常使用'){save(this.pausePath,{paused:true,at:now(),reason});for(const id of this.children.keys())this.stop(id);if(this.activeBatch)this.stopBatch(this.activeBatch);void this.video.stopAll('真机操作已暂停');return read(this.pausePath);}
   resume(){save(this.pausePath,{paused:false,at:now(),reason:'测试者在界面恢复'});return read(this.pausePath);}
@@ -126,14 +126,15 @@ export class PhoneLab {
     const limits=normalizePhoneLimits(input.limits),id='phone_'+randomUUID(),dir=this.directory('runs',id),release=this.acquire(id);
     try{
       mkdirSync(dir);
-      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v10-strict-protocol-effects-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
+      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v11-device-lease-dispatch-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
         evaluation_id:typeof input.evaluation_id==='string'?input.evaluation_id.slice(0,100):null,phase_id:typeof input.phase_id==='string'?input.phase_id.slice(0,60):null,
         service:{id:service.id,name:service.name,model:service.model,base_url:service.base_url,protocol:service.protocol,family:phoneModelFamily(service.model)},
         settings_revision:settings.revision,case_id:task?.id??null,case_revision:task?.revision??null,name,task_name:task?.name??'自定义任务',
         instruction,task_sha256:sha256(instruction),instruction_overridden:Boolean(task&&instruction!==task.instruction),acceptance:task?.acceptance??(input.acceptance??'').slice(0,4000),app:task?.app??input.app??'当前应用',bundle:task?.bundle??start.environment.app?.bundle??null,
-        task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',video_observation_at_start:this.video.observation(),final_framework:null};
+        task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',video_observation_at_start:this.video.observation(),final_framework:null,device_lease:{file:this.lockPath,token:release.token}};
       save(path.join(dir,'input.json'),frozen);save(path.join(dir,'state.json'),{status:'queued',created_at:now()});
       const child=fork(path.join(project,'scripts/phone-lab-worker.mjs'),['--root',this.root,'--id',id],{cwd:project,windowsHide:true,stdio:['ignore','pipe','pipe','ipc']});
+      try{release.registerWorker(child.pid);}catch(error){child.once('exit',()=>release());child.kill();throw error;}
       const completion=new Promise(resolve=>{let settled=false;const finish=error=>{if(settled)return;settled=true;const state=read(path.join(dir,'state.json'));if(error||['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),unexpectedWorkerState(state,eventsAt(dir),error));this.children.delete(id);release();resolve();};child.once('error',finish);child.once('exit',()=>finish());});
       // Worker logs are not streamed to the browser. The durable sanitized ledger
       // is the source of UI information; no provider credential is in argv/stdin.
