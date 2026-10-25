@@ -2,6 +2,8 @@
 
 当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
+v0.5已从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`启动需求与设计阶段：[头脑风暴](docs/V05_BRAINSTORM.md) → [需求澄清](docs/V05_REQUIREMENTS_CLARIFICATION.md) → [概要设计](docs/V05_HIGH_LEVEL_DESIGN.md)。三份均为讨论稿，尚未修改业务实现；待确认项不视为用户已同意，手机与真实模型继续暂停。
+
 ## 当前能做什么
 
 - 主系统的用户库、任务、日调度、虚拟时间、持久化、调用追踪、执行/描述队列和导出实际运行；人设补全、规划调整、主流程手机执行/截图、存档图转文内容仍为Mock。
@@ -51,6 +53,6 @@ node --test tests/*.test.mjs
 
 ## 下一阶段与协作
 
-下一步仅推进**v0.5：把用户所选下层接入主调度的一个活动**，先做离线契约。用户已决定暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
+下一步仅推进**v0.5：把用户所选下层接入主调度的一个活动**，依据本轮讨论稿先实施统一装配、配置冻结和旧Mock兼容，再落实离线契约、证据台账与故障恢复。用户已决定暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
 
 每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。

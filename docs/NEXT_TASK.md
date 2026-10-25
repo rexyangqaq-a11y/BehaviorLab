@@ -2,6 +2,8 @@
 
 交接日期：2026-10-25。本文件只列当前指令，不复制旧执行历史；事实快照以[CURRENT_STATUS.md](CURRENT_STATUS.md)为准。
 
+本轮用户要求先头脑风暴、再需求澄清、再概要设计，现已依次形成三份讨论稿：[头脑风暴](V05_BRAINSTORM.md)、[需求澄清](V05_REQUIREMENTS_CLARIFICATION.md)、[概要设计](V05_HIGH_LEVEL_DESIGN.md)。当前分支为`codex/v05-single-activity`，业务实现尚未修改。下一轮从概要设计阶段A的统一装配／冻结／旧Mock兼容开始，不把讨论稿中的建议当作用户已确认决定。首个离线示例与人工处理范围待答复；通用2／1示例仅是暂行夹具建议。
+
 ## 唯一任务与完成边界
 
 从本地交接基线开始，让一个手工/Mock上层活动通过用户选择的下层适配器执行，保存实际完成量、证据与`completed/partial/blocked/needs_attention`结果；先完成**不使用手机、不调用真实模型的离线装配和故障契约**。真实上层、人设生成、存档VLM和长期记忆不在v0.5本轮范围。
@@ -15,16 +17,22 @@
 3. [VERSION_PLAN.md](VERSION_PLAN.md)的v0.5段落、[VERSION_TEST_PLAN.md](VERSION_TEST_PLAN.md)：本版特性与测试界面要求。
 4. [FRAMEWORK_SELECTION_DECISION.md](FRAMEWORK_SELECTION_DECISION.md)、[FRAMEWORK_ADAPTER_GUIDE.md](FRAMEWORK_ADAPTER_GUIDE.md)、[DEVELOPMENT.md](DEVELOPMENT.md)：配置策略、注册/适配与公共保护。
 5. [MODEL_CALL_POLICY.md](MODEL_CALL_POLICY.md)、[PHONE_FAILURE_DIAGNOSIS_20261022.md](PHONE_FAILURE_DIAGNOSIS_20261022.md)：用量与已知错误边界。当前用户指令是不使用手机、不调用真实模型，旧批次授权不自动恢复。
+6. 本轮三份v0.5讨论稿：需求R01–R15、待实现用例T01–T17与概要设计阶段A–F；新表、接口和模块均尚未实现，人工复核范围仍待确认。
 
 源码重点：`src/contracts.mjs`、`src/runner.mjs`、`src/store.mjs`、`src/adapters/mock.mjs`；对照`src/phone-framework-registry.mjs`、`src/phone-lab.mjs`、`scripts/phone-lab-worker.mjs`、`integrations/adapters/`、`src/phone-action-effects.mjs`和`integrations/phone_protocol.py`。主系统当前仍通过Mock适配器运行，不能把配置保存误认为已经真实装配。
 
 ## 基线与启动
 
-仓库根目录为`D:\work\Memory\UserBehaGene\dev`。功能源码基线`9929ed4`，标签`codex/v04-core-20261025`；完整交接标签`codex/v04-handoff-20261025`。先检查状态，保留已有用户改动；不要reset或删除数据。
+仓库根目录为`D:\work\Memory\UserBehaGene\dev`。功能源码基线`9929ed4`，标签`codex/v04-core-20261025`；完整交接标签`codex/v04-handoff-20261025`。v0.5分支已从该标签创建，不重复执行`switch -c`。先检查状态，保留已有用户改动；不要reset或删除数据。
 
 ```powershell
 git status --short
-git switch -c codex/v05-single-activity codex/v04-handoff-20261025
+git switch codex/v05-single-activity
+```
+
+本轮仅文档工作，没有重启服务。实施后需要界面／接口验证时再正常停止、启动，单纯阅读和离线契约无需操作现有服务：
+
+```powershell
 node scripts/desktop-launcher.mjs stop
 node scripts/desktop-launcher.mjs start --port 4317 --no-browser
 ```
