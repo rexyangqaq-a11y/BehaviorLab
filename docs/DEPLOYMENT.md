@@ -57,6 +57,7 @@ node --test tests/*.test.mjs
 |---|---|
 | 缺少 `runtime/node.exe` | 重新完整解压 Windows Assets 包，确认没有误下源码 ZIP |
 | 检查失败 | 先读 `.runtime/phone-doctor.json`，按缺失组件处理，不直接运行真实任务 |
+| 繁忙环境首次原生测试超时 | 先等 `03_CHECK.cmd` 完成；工程回归可用 `runtime/node.exe --test --test-concurrency=1 tests/*.test.mjs` 串行执行。发布时首轮并行有一项15秒超时，后续串行138项通过，详见 [验证范围](RELEASE_VERIFICATION.md) |
 | 端口被占用 | 查看启动器报告的实际地址；不要误操作另一个已用目录的服务 |
 | 页面能打开，手机未连接 | 主 Mock 与历史查看可用；新真机测试需驱动、调试许可与设备解锁 |
 | 模型能返回文字但动作失败 | 检查视觉与动作协议；文本连通不代表GUI任务通过 |
