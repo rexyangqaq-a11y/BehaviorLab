@@ -4,7 +4,7 @@
 
 ## 下载与校验
 
-打开 [GitHub Releases](https://github.com/rexyang97/BehaviorLab/releases)，进入 `v0.4.0-preview.10` 的 Pre-release，下载 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip` 和 `SHA256SUMS.txt`。发布完成前链接可能尚无该版本；以 Assets 实际文件为准。
+先登录有仓库权限的GitHub账户，再打开 [GitHub Releases](https://github.com/rexyangqaq-a11y/BehaviorLab/releases)，进入 `v0.4.0-preview.10` 的 Pre-release，下载 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip` 和 `SHA256SUMS.txt`。发布完成前链接可能尚无该版本；以 Assets 实际文件为准。
 
 `Source code (zip)` 是 GitHub 自动提供的源码快照，不含 Node、Python、HDC 等运行依赖。普通 Windows 用户下载命名的 Windows 包。
 
@@ -29,7 +29,7 @@ Get-FileHash .\BehaviorLab-v0.4.0-preview.10-Windows-x64.zip -Algorithm SHA256
 
 先按 [使用教程](USER_GUIDE.md) 查看历史结果和离线示例。需要新真实任务时，再连接本人授权的鸿蒙设备，启用USB调试、允许这台电脑并保持解锁；在系统设置配置自己的视觉模型 API、模型名和密钥。配置保存不等于图像／动作验证通过。
 
-发布包不含原电脑的模型账户、密钥、私人用户库或运行数据库；不需要运行 `04_IMPORT_KEYS.cmd`。历史轨迹归档只供查看，不携带可用的设备起点或模型凭据。
+私有Release按用户要求保留历史测试原图；下载者须有私有仓库权限。发布包不含原电脑的模型账户、密钥、私人用户库或运行数据库；不需要运行 `04_IMPORT_KEYS.cmd`。历史轨迹归档只供查看，不携带可用的设备起点或模型凭据。
 
 ## 从源码运行
 

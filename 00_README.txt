@@ -1,17 +1,17 @@
-BehaviorLab v0.4.0-preview.10 · Windows 10/11 x64
+﻿BehaviorLab v0.4.0-preview.10 · Windows 10/11 x64
 
 下载与首次部署
 1. 本目录来自Release中的Windows-x64.zip，包含Node/Python/HDC、三框架和Java视频依赖。
 2. 完整解压到可写本地目录；先运行03_CHECK.cmd，再运行01_START.cmd。
 3. 02_STOP.cmd正常停止。关闭网页不会停止后台，实际地址看启动器及.runtime/desktop.json。
-4. 本公开包没有模型账户或凭据，不需要运行04_IMPORT_KEYS.cmd。
+4. 本私有Release包没有模型账户或凭据，不需要运行04_IMPORT_KEYS.cmd。
 
 查看当时已有的测试
 打开test-archive/index.html，离线逐项查看四题×三框架×三模型的36项历史测试。
 包含用例、冻结输入、模型回复、动作、截图及结果；失败和部分完成保留。
 16通过、10部分完成、10未通过，用户复核待定；历史旧协议成绩不算新版保护的真机复测。
 历史查看不会调用模型或设备，也不会自动加入队列。
-截图和原文的公开审阅状态以test-archive/privacy-review.json为准。
+截图原样随私有Release分发，授权记录以test-archive/privacy-review.json为准。
 
 新任务与范围
 主系统内容生成和执行仍Mock，真实下层尚未接入主调度。

@@ -25,7 +25,7 @@ export function cleanArchiveValue(value, counts = {}) {
     .replace(/\b[A-Za-z]:[\\/](?:Users|work|Program Files)[^\r\n"<>|]*/gi, () => mark('workstation_path'));
 }
 
-export async function exportV04Archive({source, out}) {
+export async function exportV04Archive({source, out, privateRelease = false}) {
   const sourceRoot = await realpath(source), target = path.resolve(out);
   const exists = await stat(target).catch(e => {if(e.code !== 'ENOENT') throw e; return null;});
   fail(!exists, 'Choose a new archive directory; existing output is never overwritten.');
@@ -84,7 +84,7 @@ export async function exportV04Archive({source, out}) {
     const cleanInput = cleanArchiveValue(input, {});
     cases.set(input.case_id, cleanInput.task ?? {id:input.case_id,instruction:cleanInput.instruction,acceptance:cleanInput.acceptance});
     const body = cleanEvents.map(e => `<details><summary>#${e.seq} ${html(e.type)} ${html(e.name ?? e.id ?? '')}</summary>${e.type === 'image' ? `<a href="${html(e.asset.file)}"><img loading="lazy" src="${html(e.asset.file)}" alt="${html(e.asset.role)}"></a>` : ''}<pre>${html(JSON.stringify(e,null,2))}</pre></details>`).join('\n');
-    await put(base + '/index.html', style + `<title>${html(input.name)}</title><p><a href="../../index.html">返回36项矩阵</a></p><h1>${html(input.name)}</h1><p>${html(row.framework_id)} / ${html(row.model)} · ${html(row.verdict)} · 用户复核：${html(row.user_review)}</p><pre>${html(cleanInput.instruction)}</pre><p>历史真实轨迹。结构化字段已清洗，截图与自然语言原文仍需公开审阅。此页面不执行任何设备或模型操作。</p><h2>逐步轨迹（${events.length}事件，${assets.length}图）</h2>${body}`);
+    await put(base + '/index.html', style + `<title>${html(input.name)}</title><p><a href="../../index.html">返回36项矩阵</a></p><h1>${html(input.name)}</h1><p>${html(row.framework_id)} / ${html(row.model)} · ${html(row.verdict)} · 用户复核：${html(row.user_review)}</p><pre>${html(cleanInput.instruction)}</pre><p>${privateRelease ? '按用户授权随私有Release提供历史截图原样及轨迹；图中可能含账号及设备信息。' : '历史真实轨迹。结构化字段已清洗，截图与自然语言原文仍需公开审阅。'}此页面不执行任何设备或模型操作。</p><h2>逐步轨迹（${events.length}事件，${assets.length}图）</h2>${body}`);
     records.push({run_id:row.run_id,case_id:row.case_id,events:events.length,images:assets.length,requests:starts.length,verdict:row.verdict});
     images += assets.length; eventsCount += events.length; requests += starts.length;
   }
@@ -94,22 +94,22 @@ export async function exportV04Archive({source, out}) {
   }
   // Keep the v0.4 tests from the exporter checkout, not newer development tests.
   const releaseRoot = fileURLToPath(new URL('../',import.meta.url));
-  for (const name of (await readdir(path.join(releaseRoot,'tests'))).filter(n => n.endsWith('.test.mjs') && n !== 'release-archive.test.mjs')) await put('definitions/engineering-tests/' + name, await readFile(path.join(releaseRoot,'tests',name)));
+  for (const name of (await readdir(path.join(releaseRoot,'tests'))).filter(n => n.endsWith('.test.mjs') && !n.startsWith('release-'))) await put('definitions/engineering-tests/' + name, await readFile(path.join(releaseRoot,'tests',name)));
   await put('definitions/README.txt', 'Historical definitions and engineering test source. Run tests from a complete matching source/Windows package using node --test tests/*.test.mjs; this standalone archive is read-only evidence, not a separate runnable test harness. The four real GUI tasks, 31 comparison definitions, and engineering tests are different sets and must not be added together as a pass count.\n');
   for (const file of sourceChecks) fail(sha(await readFile(file.file)) === file.sha256, 'Source changed during export.');
   await putJson('summary.json', summary);
   await putJson('cases.json', [...cases.values()]);
   const table = summary.rows.map(r => `<tr><td>${html(r.case_id)}</td><td>${html(r.framework_id)}</td><td>${html(r.model)}</td><td>${html(r.verdict)}</td><td>${r.requests}</td><td><a href="runs/${r.run_id}/index.html">查看轨迹</a></td></tr>`).join('\n');
-  await put('index.html', style + '<title>v0.4历史测试档案</title><h1>v0.4历史测试档案</h1><p>2026-10-22 · 四题 × 三框架 × 三模型 · 36项：16通过／10部分完成／10未通过。用户复核待定。旧协议历史成绩，不是preview.10收尾保护的真机复测。</p><p>本地待公开审阅副本。只读查看，不会调用模型或设备。<a href="cases.json">用例JSON</a> · <a href="summary.json">完整结果</a> · <a href="manifest.json">档案清单</a> · <a href="privacy-review.json">公开审阅状态</a></p><table><thead><tr><th>任务</th><th>框架</th><th>模型</th><th>判定</th><th>请求</th><th>轨迹</th></tr></thead><tbody>' + table + '</tbody></table>');
+  await put('index.html', style + '<title>v0.4历史测试档案</title><h1>v0.4历史测试档案</h1><p>2026-10-22 · 四题 × 三框架 × 三模型 · 36项：16通过／10部分完成／10未通过。用户复核待定。旧协议历史成绩，不是preview.10收尾保护的真机复测。</p><p>' + (privateRelease ? '私有Release档案：用户已授权直接纳入历史截图，未追加图像遮盖。' : '本地待公开审阅副本。') + '只读查看，不会调用模型或设备。<a href="cases.json">用例JSON</a> · <a href="summary.json">完整结果</a> · <a href="manifest.json">档案清单</a> · <a href="privacy-review.json">分发范围</a></p><table><thead><tr><th>任务</th><th>框架</th><th>模型</th><th>判定</th><th>请求</th><th>轨迹</th></tr></thead><tbody>' + table + '</tbody></table>');
   const manifest = {format:1,version:'0.4.0-preview.10',evaluation_id:EVALUATION,runs:records.length,cases:cases.size,images,events:eventsCount,requests,verdicts:summary.totals.verdicts,source_unchanged:true,source_files_checked:sourceChecks.length,structure_verified:true,records,real_model_requests_during_export:0,real_device_commands_during_export:0};
   await putJson('manifest.json', manifest);
-  await putJson('privacy-review.json', {public_upload_approved:false,review_state:'pending_screenshot_and_natural_language_review',structured_cleaning:counts,images:'byte-identical historical evidence; not newly anonymized',omitted:['model settings and credentials database','unrelated runs and task library','raw UI layout files','SDK debug/cache files','unreferenced captures','all saved startpoint library files'],note:'Structured cleaning is not a claim that all screenshot/text personal information has been removed. Review before any public upload.'});
+  await putJson('privacy-review.json', {public_upload_approved:false,private_upload_approved:privateRelease,review_state:privateRelease?'user_authorized_private_distribution_original_images':'pending_screenshot_and_natural_language_review',user_instruction:privateRelease?'2026-10-25: include directly and make repository private':null,structured_cleaning:counts,images:'byte-identical historical evidence; not newly anonymized',omitted:['model settings and credentials database','unrelated runs and task library','raw UI layout files','SDK debug/cache files','unreferenced captures','all saved startpoint library files'],note:privateRelease?'Historical screenshots can contain account/device identifiers. User authorized inclusion in the private repository Release, not public redistribution.':'Structured cleaning is not a claim that all screenshot/text personal information has been removed. Review before any public upload.'});
   await writeFile(path.join(target, 'files.sha256.json'), JSON.stringify(files, null, 2) + '\n', {flag:'wx'});
   return {...manifest,files:files.length+1,out:target};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const {values} = parseArgs({options:{source:{type:'string',default:fileURLToPath(new URL('../',import.meta.url))},out:{type:'string'}}});
+  const {values} = parseArgs({options:{source:{type:'string',default:fileURLToPath(new URL('../',import.meta.url))},out:{type:'string'},'private-release':{type:'boolean'}}});
   fail(values.out, '--out is required; source is read-only.');
-  exportV04Archive(values).then(result => console.log(JSON.stringify(result))).catch(error => {console.error(error.message);process.exitCode=1;});
+  exportV04Archive({...values,privateRelease:values['private-release']}).then(result => console.log(JSON.stringify(result))).catch(error => {console.error(error.message);process.exitCode=1;});
 }

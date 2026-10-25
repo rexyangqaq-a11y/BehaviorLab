@@ -1,12 +1,12 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-Windows本地用户行为仿真与独立手机Agent测试工作台。本分支准备发布 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。目前为发布候选，是否已上线以GitHub Release实际状态为准。
+Windows本地用户行为仿真与独立手机Agent测试工作台。本分支提供 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。仓库和Release均为私有，需要登录有权限的GitHub账户下载。
 
-[下载版本](https://github.com/rexyang97/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md)
+[下载版本](https://github.com/rexyangqaq-a11y/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md)
 
 下载Assets中的 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip`，完整解压后运行 `03_CHECK.cmd`，再运行 `01_START.cmd`；停止用 `02_STOP.cmd`。Windows10/11 x64，包内带Node/Python/HDC和框架依赖。GitHub自动的Source code ZIP仅含源码。
 
-发布候选随附v0.4当时已有测试用例、36项历史矩阵的轨迹和结果，含失败记录。打开 `test-archive/index.html` 可离线逐项查看；另提供同内容的独立测试档案下载。[归档范围与公开审阅](docs/RELEASE_TEST_ARCHIVE.md)。
+发布包随附v0.4当时已有测试用例、36项历史矩阵的轨迹、1,486张历史原图和结果，含失败记录。按用户授权直接纳入私有Release。打开 `test-archive/index.html` 可离线逐项查看；另提供同内容的独立测试档案下载。[归档范围与分发说明](docs/RELEASE_TEST_ARCHIVE.md)。
 
 | 功能 | 当前边界 |
 |---|---|
@@ -17,7 +17,7 @@ Windows本地用户行为仿真与独立手机Agent测试工作台。本分支�
 
 源码开发需Node24：`node src/web-server.mjs --port 4317`；`node --test tests/*.test.mjs`。主Mock无需安装npm依赖。真实任务、模型费用与手机权限由使用者明确发起；查看历史不会自动执行测试。
 
-公开源码和发布包不带私人模型配置、密钥、运行数据库及无关私人任务。第三方许可证随包保留；项目自身尚未指定开源许可证。
+源码Git和发布包不带私人模型配置、密钥、运行数据库及无关私人任务。第三方许可证随包保留；项目自身尚未指定开源许可证。
 
 ## v0.4交接历史快照
 
