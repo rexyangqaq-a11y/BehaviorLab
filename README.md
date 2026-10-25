@@ -2,7 +2,7 @@
 
 Windows本地用户行为仿真与独立手机Agent测试工作台。本分支提供 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。仓库和Release均为私有，需要登录有权限的GitHub账户下载。
 
-[下载版本](https://github.com/rexyangqaq-a11y/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md)
+[下载版本](https://github.com/rexyangqaq-a11y/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md) · [发布验证记录](docs/RELEASE_PUBLICATION.md)
 
 下载Assets中的 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip`，完整解压后运行 `03_CHECK.cmd`，再运行 `01_START.cmd`；停止用 `02_STOP.cmd`。Windows10/11 x64，包内带Node/Python/HDC和框架依赖。GitHub自动的Source code ZIP仅含源码。
 

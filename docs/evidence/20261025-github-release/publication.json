@@ -1,0 +1,99 @@
+{
+  "version": "0.4.0-preview.10",
+  "release_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.10",
+  "published_at": "2026-10-25T13:03:52Z",
+  "repository": "rexyangqaq-a11y/BehaviorLab",
+  "private": true,
+  "prerelease": true,
+  "draft": false,
+  "tag_source_commit": "3f886db48034044650787ab418c7d90a854dba68",
+  "all_remote_asset_digests_match": true,
+  "all_download_sha256_match": true,
+  "assets": [
+    {
+      "digest": "sha256:1d7e9494ea9fe2a7775fc413b651c31315e7b5b92a8f7bec1e300ea0a973d935",
+      "name": "BehaviorLab-v0.4.0-preview.10-TestArchive.zip",
+      "size": 296397813,
+      "state": "uploaded"
+    },
+    {
+      "digest": "sha256:8abc0e70468877e900e1ae581af02f69b63074704a2c5880d62bbab86a10e297",
+      "name": "BehaviorLab-v0.4.0-preview.10-Windows-x64.zip",
+      "size": 530302444,
+      "state": "uploaded"
+    },
+    {
+      "digest": "sha256:9d25e86387c2b1be70410be8d71a70470541733055c19c2dede9ade0758a3e23",
+      "name": "release-manifest.json",
+      "size": 2664,
+      "state": "uploaded"
+    },
+    {
+      "digest": "sha256:c0196d65bcba10b50938a52d3ad79f90691a685e2d1fa26fea36f0ee5bc2f339",
+      "name": "SHA256SUMS.txt",
+      "size": 312,
+      "state": "uploaded"
+    }
+  ],
+  "local_extraction": {
+    "archive_source": "local-built-zips",
+    "assets_sha256_verified": [
+      {
+        "file": "BehaviorLab-v0.4.0-preview.10-Windows-x64.zip",
+        "sha256": "8abc0e70468877e900e1ae581af02f69b63074704a2c5880d62bbab86a10e297",
+        "bytes": 530302444
+      },
+      {
+        "file": "BehaviorLab-v0.4.0-preview.10-TestArchive.zip",
+        "sha256": "1d7e9494ea9fe2a7775fc413b651c31315e7b5b92a8f7bec1e300ea0a973d935",
+        "bytes": 296397813
+      }
+    ],
+    "extracted_files_sha256_verified": 14090,
+    "source_commit": "3f886db48034044650787ab418c7d90a854dba68",
+    "html_pages": 37,
+    "html_local_links_verified": 3048,
+    "extraction_directory": "中文 空格解压验证/BehaviorLab",
+    "real_model_requests": 0,
+    "real_device_commands": 0
+  },
+  "local_entry": {
+    "actual_cmd_entry": "03_CHECK.cmd",
+    "doctor": "passed",
+    "directory_with_unicode_and_spaces": true,
+    "real_model_requests": 0,
+    "real_device_commands": 0,
+    "url": "http://127.0.0.1:4399",
+    "pages": {
+      "/": 200,
+      "/phone-lab": 200,
+      "/v04-acceptance": 200
+    },
+    "frameworks": [
+      {
+        "id": "midscene",
+        "available": true
+      },
+      {
+        "id": "mobiagent",
+        "available": true
+      },
+      {
+        "id": "autoglm",
+        "available": true
+      }
+    ],
+    "saved_model_services": 0,
+    "scope": "Locally built ZIP, complete extraction, real cmd check entry, launcher and HTTP/API; GitHub download SHA256 is verified separately. Not Explorer double-click, browser interaction or second physical computer",
+    "stopped": true
+  },
+  "packaged_tests": {
+    "total": 138,
+    "passed": 138,
+    "failed": 0,
+    "skipped": 0,
+    "command": "runtime/node.exe --test --test-concurrency=1 tests/*.test.mjs"
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

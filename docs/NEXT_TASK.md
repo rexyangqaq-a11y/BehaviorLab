@@ -1,10 +1,10 @@
-# 下一对话：v0.5单活动接入主仿真调度
+# 下一任务：补齐v0.5原生会话桥接的离线契约
 
-## 2026-10-25发布分支当前任务
+## v0.4发布交接已完成
 
-当前阶段为**v0.4发布包制作与验证**。唯一下一步：完成最终附件验证并上传私有仓库Release。本次用户已确认`rexyangqaq-a11y/BehaviorLab`，授权私有仓库、v0.4首发、原样纳入历史测试截图及保留v0.5开发分支，不需重复确认。空仓库已创建并核对PRIVATE；密钥、私人配置库和无关任务继续排除。
+私有仓库[rexyangqaq-a11y/BehaviorLab](https://github.com/rexyangqaq-a11y/BehaviorLab)及[预览Release](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.10)已完成发布、实际下载校验和本机解压检查，记录见[发布交接](RELEASE_PUBLICATION.md)。用户已授权原样测试截图的私有分发，无需重问账号、私有可见性或截图纳入。
 
-不追加手机、真实模型或旧队列。先读[发布维护流程](RELEASE_PROCESS.md)、[测试档案](RELEASE_TEST_ARCHIVE.md)和[当前状态](CURRENT_STATUS.md)。v0.5已有独立开发分支，以下为v0.4交接时历史建议，不是本发布分支的实施任务。
+唯一下一步：继续v0.5开发分支已经授权的原生会话／安全续接离线契约，保留既有需求和设计基线，不恢复真实模型、手机或旧队列。下方保留原开发交接任务；本轮发布工作不继续编码。
 
 交接日期：2026-10-25。本文件只列当前指令，不复制旧执行历史；事实快照以[CURRENT_STATUS.md](CURRENT_STATUS.md)为准。
 

@@ -1,12 +1,10 @@
 # 当前状态与交接入口
 
-## 2026-10-25发布准备状态（当前）
+## 2026-10-25：v0.4私有Release已发布
 
-本分支`codex/v04-github-release`从交接标签`codex/v04-handoff-20261025`（3a2672d）建立，源码仍`0.4.0-preview.10`；用户授权私有仓库`rexyangqaq-a11y/BehaviorLab`及v0.4首发，v0.5保留开发分支。当前阶段为**发布包制作与验证**，尚未上传或发布。
+已在[`rexyangqaq-a11y/BehaviorLab`](https://github.com/rexyangqaq-a11y/BehaviorLab)发布[`v0.4.0-preview.10`](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.10)，PRIVATE／Pre-release；源码标签为`3f886db`。Windows包、36项历史测试档案、校验表和发布清单均已上传，GitHub摘要与两个实际下载的ZIP校验一致。原样截图纳入私有分发，模型密钥／私人配置库／无关任务排除。详见[发布记录](RELEASE_PUBLICATION.md)。
 
-本轮整理发布说明、版本计划、部署／使用／维护教程和历史矩阵导出工具，业务代码保持v0.4基线。36项历史测试用例、事件／模型／动作轨迹、结果及关联图像导出至新目录，不改写原始数据，不追加真实调用。用户最新要求直接纳入历史截图并将仓库设为私有；本次不追加图像遮盖，分发授权见档案`privacy-review.json`。
-
-唯一下一步：完成最终附件验证并上传私有仓库Release。用户已确认归属`rexyangqaq-a11y/BehaviorLab`，空仓库已创建并核对`PRIVATE`；尚未验证的GUI双击、另一物理电脑与新协议真机范围如实保留。发布进展见[NEXT_TASK](NEXT_TASK.md)；以下是交接历史，旧“仅本地／未重新打包”按其日期理解。
+发布交接已完成。当前开发阶段仍为v0.5实现与验证，唯一下一步是在v0.5开发分支补齐原生会话桥接／安全续接离线契约；本轮不继续功能编码，真实模型、手机与旧队列保持暂停。以下开发或v0.4交接事实按其日期理解，不能把历史“仅本地／未发布”当成当前发布状态。
 
 核对日期：2026-10-25，Asia/Hong_Kong。本文件是当前事实快照；旧日期报告保留当时口径。
 
