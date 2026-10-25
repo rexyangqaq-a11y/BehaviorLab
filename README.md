@@ -2,7 +2,7 @@
 
 当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
-v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推进。[头脑风暴](docs/V05_BRAINSTORM.md)已逐轮确认并收敛，[需求澄清修订2](docs/V05_REQUIREMENTS_CLARIFICATION.md)待用户核对；[提前生成的概要设计](docs/V05_HIGH_LEVEL_DESIGN.md)暂停采用。按[版本开发流程](docs/VERSION_DEVELOPMENT_WORKFLOW.md)，需求确认后再进入设计；尚未修改业务实现，手机与真实模型继续暂停。
+v0.5从`codex/v04-handoff-20261025`在本地分支`codex/v05-single-activity`推进。[头脑风暴](docs/V05_BRAINSTORM.md)及[需求基线](docs/V05_REQUIREMENTS_CLARIFICATION.md)已确认，纳入“具体活动不固化”的用户补充；[概要设计修订2](docs/V05_HIGH_LEVEL_DESIGN.md)已重写，待用户核对。v0.5把下层实现部分接入整体流程，商品浏览仅首个案例。按[版本开发流程](docs/VERSION_DEVELOPMENT_WORKFLOW.md)停在设计核对，尚未修改业务实现，手机与真实模型继续暂停。
 
 ## 当前能做什么
 
@@ -53,6 +53,6 @@ node --test tests/*.test.mjs
 
 ## 下一阶段与协作
 
-当前唯一下一步为核对**v0.5需求澄清修订2**，确认后再进入概要设计。本版目标仍为用户所选下层接入主调度的单活动离线契约；用户已确认首个商品浏览案例从手机桌面开始、按证据去重计数、自动核对与有界恢复优先、人工兜底。暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
+当前唯一下一步为核对**v0.5概要设计修订2**，确认并明确实施范围后再编写代码。本版接入通用活动执行，APP、目标、条件与工作量来自上层计划／任务输入；商品浏览只验证计数、去重和恢复，固定操作序列限于离线夹具。暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
 
 每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。
