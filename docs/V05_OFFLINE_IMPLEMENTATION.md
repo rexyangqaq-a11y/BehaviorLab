@@ -20,6 +20,8 @@ SQLite schema由2增量迁移至3，新增`execution_snapshots`、`activity_work
 
 ## 复现方法
 
+面向使用者的逐步操作和四种案例见[使用说明与例子教程](V05_USER_GUIDE.md)。
+
 Node.js 24，无需新依赖。使用全新临时目录，保留历史运行：
 
 ```powershell
