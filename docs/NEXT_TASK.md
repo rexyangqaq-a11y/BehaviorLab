@@ -1,10 +1,10 @@
 # 下一任务：补齐v0.5原生会话桥接的离线契约
 
-## 当前唯一下一步：完成v0.4 GitHub首发
+## v0.4发布交接已完成
 
-2026-10-25用户最新指令优先：私有仓库`BehaviorLab`，v0.4首发，直接纳入当时已有测试原图、用例、轨迹与结果，v0.5保留开发分支。当前阶段为**发布准备与验证**。CLI已登录，当前账户与初始连接器不同；用户已确认`rexyangqaq-a11y/BehaviorLab`且私有空仓库已创建，继续完成最终ZIP、校验与提交／上传。不重复询问私有可见性、截图直接纳入或首发版本。事实和恢复入口见[GITHUB_RELEASE_STATUS](GITHUB_RELEASE_STATUS.md)。
+私有仓库[rexyangqaq-a11y/BehaviorLab](https://github.com/rexyangqaq-a11y/BehaviorLab)及[预览Release](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.10)已完成发布、实际下载校验和本机解压检查，记录见[发布交接](GITHUB_RELEASE_STATUS.md)。用户已授权原样测试截图的私有分发，无需重问账号、私有可见性或截图纳入。
 
-以下原生桥接任务保留为v0.5后续开发事项，发布期间不继续编码；现有离线实施授权与已确认需求不丢失，手机和真实模型仍暂停。
+唯一下一步：继续v0.5开发分支已经授权的原生会话／安全续接离线契约，保留既有需求和设计基线，不恢复真实模型、手机或旧队列。下方保留原开发交接任务；本轮发布工作不继续编码。
 
 交接日期：2026-10-25。当前阶段是**实现与验证**，源码`0.5.0-preview.1`，分支`codex/v05-single-activity`。用户已核对概要设计并以“继续”授权离线实施；需求、设计与进入实施无需重复确认。事实以[CURRENT_STATUS](CURRENT_STATUS.md)和[首轮实现记录](V05_OFFLINE_IMPLEMENTATION.md)为准。
 

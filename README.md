@@ -1,6 +1,6 @@
 # BehaviorLab · 用户行为序列仿真系统
 
-2026-10-25新增任务：准备私有GitHub仓库`rexyangqaq-a11y/BehaviorLab`，先发布v0.4交接预览版及当时测试用例／轨迹／结果，v0.5保留开发分支。独立发布工作区和当前验证／待处理事项见[GitHub首发准备](docs/GITHUB_RELEASE_STATUS.md)；尚未上传，不把本地候选目录当成已发布下载包。
+已发布私有GitHub预览版[`v0.4.0-preview.10`](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.10)，附完整Windows依赖包和36项历史测试用例／轨迹／1,486张原图／结果，下载需仓库权限。v0.5保留开发分支；[发布与验证记录](docs/GITHUB_RELEASE_STATUS.md)。
 
 当前核对：2026-10-25。源码为`0.5.0-preview.1`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
 
@@ -60,4 +60,4 @@ node --test tests/*.test.mjs
 
 当前处于v0.5实现与验证阶段，唯一下一步为补齐原生框架会话桥接／安全续接的离线契约，真实执行仍暂停。已确认的需求和进入实施授权无需重复询问。通用目标来自上层，固定步骤限于合成夹具；尚未宣称v0.5整体完成。详见[下一任务](docs/NEXT_TASK.md)。
 
-每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。
+每轮源码/测试/文档改动都提交本地Git；本项目已按用户授权发布到私有GitHub，远端同步与Release按当前明确授权执行，不改写既有提交。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。
