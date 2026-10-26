@@ -1,0 +1,39 @@
+{
+  "version": "0.4.0-preview.11",
+  "method": "anonymous HTTP range download (first 64 KiB) plus GitHub SHA256 of entire assets",
+  "full_zip_redownload": false,
+  "assets": [
+    {
+      "name": "BehaviorLab-v0.4.0-preview.11-TestArchive.zip",
+      "bytes": 296397761,
+      "github_sha256": "9332dc637c87fceb2033d248b6be34661541157ee1e1ec759af67b4529af0be1",
+      "anonymous_http_status": 206,
+      "sample_bytes": 65536,
+      "sample_matches": true
+    },
+    {
+      "name": "BehaviorLab-v0.4.0-preview.11-Windows-x64.zip",
+      "bytes": 530324761,
+      "github_sha256": "89ee7289bced67733450a967134e7e624bebda4fedcda70902a3e7745cd59d45",
+      "anonymous_http_status": 206,
+      "sample_bytes": 65536,
+      "sample_matches": true
+    },
+    {
+      "name": "release-manifest.json",
+      "bytes": 3348,
+      "github_sha256": "21db8ccff6c78f7350501b910aae0bc83f37756c2b245928c4889b62ec109892",
+      "anonymous_http_status": 200,
+      "sample_bytes": 3348,
+      "sample_matches": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 312,
+      "github_sha256": "90fd2032e907b6f225b23c2e048a5ce629da89a4887746bf64c545163347614c",
+      "anonymous_http_status": 200,
+      "sample_bytes": 312,
+      "sample_matches": true
+    }
+  ]
+}
