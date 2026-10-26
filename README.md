@@ -1,5 +1,8 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+2026-10-26修复版：[v0.4.0-preview.11说明](docs/releases/v0.4.0-preview.11.md) · [Windows下载](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.11/BehaviorLab-v0.4.0-preview.11-Windows-x64.zip)。真机工作台直接显示历史轨迹，模型配置支持编辑区保存，内置桌面起点可在测试间自动复原。用户已审视历史图片并授权公开分发；v0.5仍在开发分支。
+
+
 Windows本地用户行为仿真与独立手机Agent测试工作台。本分支提供 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。仓库和Release均为私有，需要登录有权限的GitHub账户下载。
 
 [下载版本](https://github.com/rexyangqaq-a11y/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md) · [发布验证记录](docs/RELEASE_PUBLICATION.md)

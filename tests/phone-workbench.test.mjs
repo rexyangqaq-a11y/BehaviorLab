@@ -64,7 +64,7 @@ test('task HTTP create and edit work while paused without touching a phone or mo
     const catalog=await(await fetch(app.url+'/api/phone-lab')).json();assert.equal(catalog.tasks.length,6);assert.equal(catalog.tasks.at(-1).name,'改名任务');assert.equal(catalog.device_pause.paused,true);
     assert.equal(catalog.selection_policy.mode,'user_configurable');assert.equal(catalog.selection_policy.status,'confirmed');assert.equal(catalog.frameworks.length,3);
     assert.equal((await post('/tasks/'+task.id,{name:'过期',expected_revision:1})).status,409);
-    assert.equal((await fetch(app.url+'/phone-test-plan.mjs')).status,200);assert.equal(devices,0);assert.equal(catalog.runs.length,0);
+    assert.equal((await fetch(app.url+'/phone-test-plan.mjs')).status,200);assert.equal(devices,0);assert.equal(catalog.runs.filter(r=>!r.read_only).length,0);assert.equal(catalog.runs.length,catalog.archive?.runs??0);
   }finally{await app.close();}
 });
 

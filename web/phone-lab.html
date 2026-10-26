@@ -3,9 +3,10 @@
 <body>
 <header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-status" class="pill">读取状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
 <main>
-  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.10 · 框架与模型可配置</small></div>
+  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.11 · 框架与模型可配置</small></div>
   <div id="pause-banner" class="pause-banner" hidden><div><strong>真机操作已暂停</strong><p>任务编辑与结果查看仍可使用。</p></div><button id="resume-device">恢复真机测试</button></div>
   <div id="message" role="status" hidden></div>
+  <p id="archive-note" class="hint" hidden></p>
   <nav class="tabs" aria-label="工作台导航"><button data-tab="tasks" class="selected" aria-selected="true">任务列表</button><button data-tab="test" aria-selected="false">测试</button><button data-tab="process" aria-selected="false">测试过程详情</button><button data-tab="results" aria-selected="false">结果与对比</button></nav>
 
   <section id="tasks" class="tab" aria-label="任务列表">
@@ -34,7 +35,7 @@
     <form id="test-form">
       <div class="dimension-grid">
         <section class="card dimension"><h3><span>01</span> 框架</h3><label class="single-dimension">选择框架<select id="framework" required></select></label><div id="multi-frameworks" class="multi-dimension" hidden></div></section>
-        <section class="card dimension"><h3><span>02</span> 大模型服务</h3><label class="single-dimension">选择模型服务<select id="service" required></select></label><div id="multi-services" class="multi-dimension" hidden></div></section>
+        <section class="card dimension"><h3><span>02</span> 大模型服务</h3><label class="single-dimension">选择模型服务<select id="service" required></select></label><a id="service-status" class="hint" href="/#/settings"></a><div id="multi-services" class="multi-dimension" hidden></div></section>
         <section class="card dimension"><h3><span>03</span> 任务</h3><label class="single-dimension">选择任务<select id="case" required></select></label><div id="multi-tasks" class="multi-dimension" hidden></div><button type="button" id="manage-tasks" class="text-button">管理或新建任务 →</button></section>
       </div>
       <section class="card test-launch"><label><span id="test-name-label">测试名称（可选）</span><input id="test-name" maxlength="120" placeholder="例如：计算器 · Midscene 首次验证"></label><div id="test-plan" aria-live="polite"></div>
@@ -60,7 +61,7 @@
     <div id="result-browser">
       <div class="heading"><div><h2>结果与对比</h2><p id="evaluation-progress" class="hint"></p></div><button id="refresh">刷新结果</button></div>
       <div class="card results-controls"><div class="scope-row"><label>评估批次<select id="filter-evaluation"><option value="">全部批次</option></select></label><label>搜索<input id="filter-search" type="search" placeholder="任务名称、模型或运行 ID"></label></div>
-        <div class="results-filters"><label>框架<select id="filter-framework"><option value="">全部</option></select></label><label>模型<select id="filter-model"><option value="">全部</option></select></label><label>任务<select id="filter-task"><option value="">全部</option></select></label><label>判定<select id="filter-verdict"><option value="">全部</option><option value="passed">通过</option><option value="partial">部分完成</option><option value="failed">未通过</option><option value="blocked">受阻</option><option value="cannot_determine">无法确定</option><option value="pending_review">待核对</option></select></label></div>
+        <div class="results-filters"><label>记录来源<select id="filter-origin"><option value="">全部记录</option><option value="bundled_history">随包历史测试（只读）</option><option value="local_run">本机新测试</option></select></label><label>框架<select id="filter-framework"><option value="">全部</option></select></label><label>模型<select id="filter-model"><option value="">全部</option></select></label><label>任务<select id="filter-task"><option value="">全部</option></select></label><label>判定<select id="filter-verdict"><option value="">全部</option><option value="passed">通过</option><option value="partial">部分完成</option><option value="failed">未通过</option><option value="blocked">受阻</option><option value="cannot_determine">无法确定</option><option value="pending_review">待核对</option></select></label></div>
         <details class="advanced-filters"><summary>更多筛选与排序</summary><div class="form-grid"><label>手机型号<select id="filter-phone"><option value="">全部</option></select></label><label>执行阶段<select id="filter-phase"><option value="">全部</option><option value="single">单项测试</option><option value="matrix">组合评估</option><option value="stage1">① 单配置全任务</option><option value="stage2">② 单框架多模型</option><option value="stage3">③ 多框架最佳模型</option><option value="stage4">④ 完整矩阵新增</option><option value="anomaly_retest">接入异常重测</option><option value="historical">历史记录</option></select></label><label>排序<select id="result-sort"><option value="newest">时间由新到旧</option><option value="oldest">时间由旧到新</option><option value="duration">耗时由少到多</option><option value="requests">请求由少到多</option></select></label><label>每页条数<select id="page-size"><option value="12">12</option><option value="24">24</option><option value="50">50</option></select></label></div></details>
         <div class="button-row compact"><span id="filter-count" class="hint"></span><button id="clear-result-filters" class="quiet">清除筛选</button></div>
       </div>

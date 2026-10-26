@@ -1,5 +1,7 @@
 import {nodeCenter,sleep} from './phone-device.mjs';
 import {sha256} from './phone-evidence.mjs';
+// A preparation recipe, never a captured or verified device baseline.
+export const BUILTIN_HOME_START={id:'builtin_home',name:'手机桌面（内置，测试前自动复原）',named:true,builtin:true,prepare_on_start:true,contract:{ready:false,reset:'home'}};
 export function namedStartContract({environment,shot,nodes}){
   const home=nodes.some(n=>n.id==='SCBDesktop_Flex_Desktop');
   return {...startContract({environment:{...environment,app:null},shot,nodes,task:home?{id:null,revision:null,reset:'home',bundle:null}:null,manual:!home}),named_start:true};
