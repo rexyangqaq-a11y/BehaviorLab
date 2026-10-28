@@ -1,5 +1,12 @@
 # BehaviorLab · 用户行为序列仿真系统
 
+## 2026-10-28：preview.12工作台回迁
+
+当前阶段：已确认范围的实现与发布验证。已回迁5项工作台改动，按用户更正内置v0.5实测通用机型标定，不绑定原手机。完整Windows包171/171离线通过、依赖预检通过，新增包的真机效果未重测。详见[回迁及部署说明](docs/V04_PREVIEW12_BACKPORT.md)。
+
+唯一下一步：冻结提交并上传preview.12新Release，保留旧版与历史测试档案。以下为此前历史。
+
+
 2026-10-26修复版：[v0.4.0-preview.11说明](docs/releases/v0.4.0-preview.11.md) · [Windows下载](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.11/BehaviorLab-v0.4.0-preview.11-Windows-x64.zip)。真机工作台直接显示历史轨迹，模型配置支持编辑区保存，内置桌面起点可在测试间自动复原。用户已审视历史图片并授权公开分发；v0.5仍在开发分支。
 
 

@@ -6,6 +6,8 @@ import {mkdtemp,rm,readFile} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {PhoneVideo} from '../src/phone-video.mjs';
+import {PhoneLab} from '../src/phone-lab.mjs';
+import {readDeviceLease} from '../src/device-lease.mjs';
 import {createDebugServer} from '../src/web-server.mjs';
 import {videoPacket,VideoPacketReader,annexBUnits,MAX_VIDEO_PACKET} from '../web/phone-video-protocol.mjs';
 import {comparablePhoneGroups} from '../web/phone-results.mjs';
@@ -24,7 +26,7 @@ async function fixture(t,options={}){
   };
   const video=new PhoneVideo({project,runtime,launch,hdcResolver:()=> 'fixture-hdc',targets:async()=>['private-target'],command:async()=>({stdout:'fixture environment'}),assertEnabled:()=>{if(!enabled)throw Error('paused');},acquire:()=>{if(locked)throw Error('busy');acquired++;locked=true;return()=>{released++;locked=false;};},startTimeout:40,stopTimeout:40,...options});
   t.after(async()=>{await video.close();assert.equal(path.dirname(project),os.tmpdir());assert.ok(path.basename(project).startsWith('phone-video-test-'));await rm(project,{recursive:true,force:true});});
-  return {project,video,children,setEnabled:v=>{enabled=v;},setLocked:v=>{locked=v;},counts:()=>({acquired,released,launched})};
+  return {project,video,children,dependencies:{runtime,launch,hdcResolver:()=> 'fixture-hdc',targets:async()=>['private-target'],command:async()=>({stdout:'fixture environment'}),startTimeout:100,stopTimeout:100},setEnabled:v=>{enabled=v;},setLocked:v=>{locked=v;},counts:()=>({acquired,released,launched})};
 }
 function response(){const r=new EventEmitter();r.writableLength=0;r.chunks=[];r.writeHead=(...args)=>{r.headers=args;};r.write=data=>{r.chunks.push(data);return true;};r.end=()=>{r.ended=true;r.emit('close');};return r;}
 
@@ -40,7 +42,7 @@ test('video framing handles split/coalesced packets, heartbeats and malformed st
 
 test('status never launches hardware; viewers share one encoder, authenticate and stop on the last release',async t=>{
   const f=await fixture(t),v=f.video;assert.equal(v.status().state,'idle');assert.equal(f.counts().launched,0);
-  const [a,b]=await Promise.all([v.start(),v.start()]);assert.equal(a.id,b.id);assert.notEqual(a.token,b.token);assert.equal(f.counts().launched,1);assert.equal(f.counts().acquired,f.counts().released);
+  const [a,b]=await Promise.all([v.start(),v.start()]);assert.equal(a.id,b.id);assert.notEqual(a.token,b.token);assert.equal(f.counts().launched,1);assert.equal(f.counts().acquired-f.counts().released,1);
   const c=await v.start(),d=await v.start();await assert.rejects(v.start(),/最多/);v.stop(c);v.stop(d);
   assert.equal(v.observation().enabled,true);assert.ok(!JSON.stringify(v.status()).includes('private-target'));assert.ok(!JSON.stringify(v.status()).includes(a.token));
   assert.throws(()=>v.attach(a.id,'wrong',response()),e=>e.status===403);
@@ -51,12 +53,35 @@ test('status never launches hardware; viewers share one encoder, authenticate an
   const report=JSON.parse(await readFile(path.join(f.project,'.runtime/hoscrcpy/sessions',a.id+'.json')));assert.equal(report.cleanup,'sdk_stopped');assert.equal(report.packets,1);
 });
 
-test('pause, missing runtime and an occupied device prevent starting; startup timeout releases its lock',async t=>{
+test('pause, missing runtime and an occupied video lease prevent starting; startup timeout releases its lock',async t=>{
   const f=await fixture(t,{frames:false});f.setEnabled(false);await assert.rejects(f.video.start(),/paused/);f.setEnabled(true);
   f.setLocked(true);await assert.rejects(f.video.start(),/busy/);f.setLocked(false);
   await assert.rejects(f.video.start(),/尚未收到/);assert.equal(f.video.status().viewers,0);assert.equal(f.counts().acquired,f.counts().released);
   const unavailable=await fixture(t,{runtime:()=>({available:false,missing:['SDK']})});await assert.rejects(unavailable.video.start(),/SDK/);assert.equal(unavailable.counts().launched,0);
   const badCommand=await fixture(t,{command:async()=>{throw Error('hdc -t private-target failed');}});await assert.rejects(badCommand.video.start(),/USB授权/);assert.ok(!JSON.stringify(badCommand.video.status()).includes('private-target'));
+});
+
+test('video starts and stops while the real test lease is held; encoder exclusivity never takes the test lock',async t=>{
+  const f=await fixture(t),lockPath=path.join(f.project,'device.lock'),options={lockPath,pausePath:path.join(f.project,'pause'),videoFactory:args=>new PhoneVideo({...f.dependencies,...args,project:f.project})};
+  const lab=new PhoneLab(f.project,options),other=new PhoneLab(f.project,options);
+  t.after(async()=>{await lab.close();await other.close();});
+  const release=lab.acquire('synthetic-running-test'),ownership=readDeviceLease(lockPath);
+  try{
+    const lease=await lab.video.start();assert.equal(lab.video.status().state,'streaming');assert.deepEqual(readDeviceLease(lockPath),ownership);
+    await assert.rejects(other.video.start(),e=>e.status===409);assert.throws(()=>other.acquire('another-test'),e=>e.status===409);
+    lab.video.stop(lease);await lab.video.stopAll();assert.deepEqual(readDeviceLease(lockPath),ownership);
+    const next=await other.video.start();other.video.stop(next);await other.video.stopAll();assert.deepEqual(readDeviceLease(lockPath),ownership);
+  }finally{release();}
+  const before=await lab.video.start();const inputRelease=other.acquire('test-after-video');assert.ok(readDeviceLease(lockPath));inputRelease();lab.video.stop(before);await lab.video.stopAll();
+  assert.equal(readDeviceLease(lockPath+'.video'),null);
+});
+
+test('late cancellation from an old startup cannot stop a newer encoder',async t=>{
+  let finish;const f=await fixture(t,{targets:()=>new Promise(resolve=>finish=resolve)});
+  const first=f.video.start();const rejected=assert.rejects(first,/取消/);await f.video.stopAll();
+  f.video.targets=async()=>['private-target'];const next=await f.video.start();finish(['private-target']);await rejected;
+  assert.equal(f.video.session.id,next.id);assert.equal(f.video.status().state,'streaming');
+  f.video.stop(next);await f.video.stopAll();
 });
 
 test('fragmented SDK failure ends viewers, redacts device logs and a fresh session clears the old error',async t=>{
@@ -78,7 +103,8 @@ test('video HTTP requires explicit same-origin POST and a header lease; static/s
   const f=await fixture(t);let starts=0;const realStart=f.video.start.bind(f.video);f.video.start=()=>{starts++;return realStart();};
   const app=await createDebugServer({dataRoot:f.project,port:0,phoneLabOptions:{videoFactory:()=>f.video,lockPath:path.join(f.project,'lock'),pausePath:path.join(f.project,'pause'),deviceFactory:()=>{throw Error('no hardware');}}});
   try{const base=app.url+'/api/phone-lab/video',headers={'Content-Type':'application/json','X-Simulator-UI':'1'};
-  for(const route of ['/phone-video-ui.mjs','/phone-video-protocol.mjs','/vendor/jmuxer.min.js'])assert.equal((await fetch(app.url+route)).status,200);
+  for(const route of ['/phone-video-ui.mjs','/phone-connection-ui.mjs','/phone-video-protocol.mjs','/vendor/jmuxer.min.js'])assert.equal((await fetch(app.url+route)).status,200);
+  assert.equal((await fetch(app.url+'/phone-window-video.mjs')).status,404);
   const status=await fetch(base+'/status');assert.equal(status.headers.get('cache-control'),'no-store');assert.match(status.headers.get('content-security-policy'),/media-src 'self' blob:/);assert.equal(starts,0);
   assert.equal((await fetch(base+'/start')).status,404);assert.equal((await fetch(base+'/start',{method:'POST',body:'{}'})).status,403);
   for(const body of ['null','[]','true','1','""','{"path":"arbitrary"}'])assert.equal((await fetch(base+'/start',{method:'POST',headers,body})).status,400);

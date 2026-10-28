@@ -1,17 +1,20 @@
 # 下载、部署与更新
 
-适用版本：`0.4.0-preview.11`；Windows 10/11、Intel/AMD x64。程序监听本机 `127.0.0.1`，这是本地桌面工作台部署方式。
+本版新增连接状态、测试中独立自动投屏与洛书起点（含v0.5实测机型标定），详见[V04_PREVIEW12_BACKPORT](V04_PREVIEW12_BACKPORT.md)。
+
+
+适用版本：`0.4.0-preview.12`；Windows 10/11、Intel/AMD x64。程序监听本机 `127.0.0.1`，这是本地桌面工作台部署方式。
 
 ## 下载与校验
 
-打开 [GitHub Releases](https://github.com/rexyangqaq-a11y/BehaviorLab/releases)，进入 `v0.4.0-preview.11` 的 Pre-release，下载 `BehaviorLab-v0.4.0-preview.11-Windows-x64.zip` 和 `SHA256SUMS.txt`。发布完成前链接可能尚无该版本；以 Assets 实际文件为准。
+打开 [GitHub Releases](https://github.com/rexyangqaq-a11y/BehaviorLab/releases)，进入 `v0.4.0-preview.12` 的 Pre-release，下载 `BehaviorLab-v0.4.0-preview.12-Windows-x64.zip` 和 `SHA256SUMS.txt`。发布完成前链接可能尚无该版本；以 Assets 实际文件为准。
 
 `Source code (zip)` 是 GitHub 自动提供的源码快照，不含 Node、Python、HDC 等运行依赖。普通 Windows 用户下载命名的 Windows 包。
 
 在下载目录运行：
 
 ```powershell
-Get-FileHash .\BehaviorLab-v0.4.0-preview.11-Windows-x64.zip -Algorithm SHA256
+Get-FileHash .\BehaviorLab-v0.4.0-preview.12-Windows-x64.zip -Algorithm SHA256
 ```
 
 将结果与 `SHA256SUMS.txt` 同名行逐字符比较。另有独立历史测试档案 ZIP，内容和查看方式见 [测试档案](RELEASE_TEST_ARCHIVE.md)。

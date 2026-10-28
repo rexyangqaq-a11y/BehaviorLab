@@ -1,9 +1,15 @@
 import {nodeCenter,sleep} from './phone-device.mjs';
 import {sha256} from './phone-evidence.mjs';
+import {companionState,resetCompanionHome} from './phone-companion-start.mjs';
 // A preparation recipe, never a captured or verified device baseline.
 export const BUILTIN_HOME_START={id:'builtin_home',name:'手机桌面（内置，测试前自动复原）',named:true,builtin:true,prepare_on_start:true,contract:{ready:false,reset:'home'}};
-export function namedStartContract({environment,shot,nodes}){
+export const BUILTIN_COMPANION_START={id:'builtin_home_luoshu',name:'手机桌面＋洛书伴随态（内置，自动复原）',description:'回到手机主桌面，双击底部导航条开启伴随态，确认彩色伴随条与桌面共存后开始后续操作。包内已验证的机型、系统版本与屏幕方向可自动准备；设备或方向未验证、无法确认状态时停止测试。',named:true,builtin:true,prepare_on_start:true,contract:{ready:false,reset:'home_companion'}};
+export const BUILTIN_STARTS=[BUILTIN_HOME_START,BUILTIN_COMPANION_START];
+export const builtinStart=id=>BUILTIN_STARTS.find(s=>s.id===id);
+export function namedStartContract({environment,shot,nodes,recipeId=null}){
+  if(recipeId&&!builtinStart(recipeId))throw Error('未知的内置起点配方');
   const home=nodes.some(n=>n.id==='SCBDesktop_Flex_Desktop');
+  if(recipeId===BUILTIN_COMPANION_START.id)return {...startContract({environment:{...environment,app:null},shot,nodes,task:{id:null,revision:null,reset:'home_companion',bundle:null}}),named_start:true};
   return {...startContract({environment:{...environment,app:null},shot,nodes,task:home?{id:null,revision:null,reset:'home',bundle:null}:null,manual:!home}),named_start:true};
 }
 export function startContract({environment,shot,nodes,task,manual=false}) {
@@ -13,7 +19,7 @@ export function startContract({environment,shot,nodes,task,manual=false}) {
     device:environment.device,app:environment.app,width:shot.width,height:shot.height,reset:task?.reset??'manual',
     preparation_only:true,manual,assertions:[],texts:text};
   if(manual)contract.manual_page_signature=sha256(JSON.stringify(nodes.filter(n=>!/^\d{1,2}:\d{2}(?::\d{2})?$/.test(n.text??'')).map(n=>({id:n.id,type:n.type,text:n.text,description:n.description,bounds:n.bounds,selected:n.selected,checked:n.checked})).filter(n=>n.text||n.description||n.selected==='true'||/TextInput|TextField|EditText/.test(n.type??''))));
-  if(task?.reset==='home'){
+  if(['home','home_companion'].includes(task?.reset)){
     const icons=nodes.filter(n=>/^AppIcon_Image_/.test(n.id??'')).map(n=>({id:n.id,bounds:n.bounds}));
     // User permits dynamic launcher differences. Identify the main home page
     // by its fixed app icons; retain recent apps, positions and suggestions as
@@ -26,6 +32,12 @@ export function startContract({environment,shot,nodes,task,manual=false}) {
     contract.assertions=[{id:'system-home',passed:nodes.some(n=>n.id==='SCBDesktop_Flex_Desktop')},{id:'home-icons',passed:icons.length>0},
       {id:'no-focused-input',passed:!nodes.some(n=>/TextInput|EditText|SearchField/.test(n.type??'')&&(n.focused==='true'||n.focused===true))},
       {id:'keyboard-closed',passed:!nodes.some(n=>/KeyCanvasKeyboard|KeyboardCanvas/.test(n.id??''))}];
+    if(task.reset==='home_companion'){
+      const state=companionState(nodes);contract.recipe_id=BUILTIN_COMPANION_START.id;
+      contract.companion={name:'洛书',kind:'system_companion',active:state.active};contract.companion_marker_ids=state.marker_ids;
+      contract.preparation_policy='home_then_desktop_navigation_double_tap_v3';
+      contract.assertions.push({id:'system-companion-active',passed:state.active});
+    }
   }else if(task?.reset==='settings'){
     contract.assertions=[{id:'settings-home',passed:text.includes('设置')},{id:'bluetooth-category',passed:text.filter(t=>t==='星闪和蓝牙').length>=2},
       {id:'navigation-at-top',passed:text.some(t=>/^WLAN$/i.test(t))},{id:'about-not-open',passed:!text.some(t=>t==='关于本机'||t==='关于手机')}];
@@ -49,6 +61,7 @@ export function startContract({environment,shot,nodes,task,manual=false}) {
   // Bluetooth neighbours and suggested searches are retained, not hashed in.
   const invariant={case_id:contract.case_id,case_revision:contract.case_revision,target_sha256:contract.target_sha256,
     device:contract.device,app:contract.app,width:contract.width,height:contract.height,reset:contract.reset,assertions:contract.assertions,manual_page_signature:contract.manual_page_signature??null,home_page_signature:contract.home_page_signature??null,home_comparison_policy:contract.home_comparison_policy??null,preparation_policy:contract.preparation_policy??null};
+  if(contract.recipe_id)Object.assign(invariant,{recipe_id:contract.recipe_id,companion:contract.companion});
   contract.comparison_key=sha256(JSON.stringify(invariant));return contract;
 }
 export function compareStart(reference,current){
@@ -61,6 +74,7 @@ export function compareStart(reference,current){
 export async function resetPhoneStart(session,task){
   if(!task)throw Error('自定义起点由测试者手动摆好，系统不自动猜测复位操作');
   const {touch,layout,device}=session;
+  if(task.reset==='home_companion')return resetCompanionHome(session);
   if(task.reset==='home'){
     if(task.bundle)await session.command(['shell','aa','force-stop',task.bundle]);
     await touch.home();await sleep(500);await touch.home();await sleep(900);

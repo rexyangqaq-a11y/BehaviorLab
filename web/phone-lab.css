@@ -35,6 +35,7 @@ header{height:auto;min-height:76px;gap:20px;flex-wrap:wrap;padding:14px 4%}heade
 .process-layout{grid-template-columns:minmax(180px,.65fr) minmax(0,1.5fr) minmax(290px,1fr)}
 #process-empty{padding:16px 22px;text-align:left;font-size:12px}
 .live-video-panel{position:sticky;top:16px}.live-video-panel .heading{margin-bottom:14px}.live-video-panel .tag{font-size:10px}
+header{min-height:82px;height:auto;flex-wrap:wrap;padding-top:14px;padding-bottom:14px;gap:16px}#device-connection{font-size:11px}#check-device-connection{font-size:11px;padding:8px 10px}
 #live-video-stage{position:relative;height:435px;background:#172935;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 #live-phone-video{display:block;width:100%;height:100%;object-fit:contain}
 #live-video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:#172935;color:#b3c8d5;font-size:12px;line-height:1.9}#live-video-placeholder strong{font-size:14px;font-weight:550}#live-video-placeholder span{font-size:11px;color:#829eaf;margin-top:10px}

@@ -1,6 +1,7 @@
 // Read-only projection of the durable ledger. Never change a recorded event or
 // imply that a screenshot was submitted unless its exact asset reference says so.
 export const TRACE_IMAGE_ROLES={initial:'初始截图',before:'动作前',after:'动作后',final:'最终截图','sdk-observation':'框架观察图','framework-observation':'框架观察图',model_input:'模型实际输入图','model-screen-masked':'标识遮盖图'};
+export const isKeyPhoneImage=asset=>['initial','before','after','final'].includes(asset?.role);
 const text=v=>typeof v==='string'?v:v==null?'':JSON.stringify(v,null,2);
 const unique=values=>[...new Set(values)];
 function references(value,found=[]){
@@ -85,7 +86,7 @@ export function renderCall(call,trace,run,relations=[],{imageAttribute='image'}=
   </article>`;
 }
 export function renderPhoneTrace(run,{selectedImage=null,showAllImages=false}={}){
-  const trace=buildPhoneTrace(run.events??[]),key=trace.images.filter(i=>['initial','after','final'].includes(i.asset.role));
+  const trace=buildPhoneTrace(run.events??[]),key=trace.images.filter(i=>isKeyPhoneImage(i.asset));
   const shown=trace.images.find(i=>i.asset.id===selectedImage)??trace.images.find(i=>i.asset.id===run.result?.final_asset?.id)??key.at(-1)??trace.images.at(-1);
   if(!shown)return '<p class="empty">尚无真实图像；后续图像与模型回复将在此显示。</p>';
   const gallery=showAllImages?trace.images:key,position=gallery.findIndex(i=>i.asset.id===shown.asset.id),ids=unique(shown.links.map(l=>l.call_id));

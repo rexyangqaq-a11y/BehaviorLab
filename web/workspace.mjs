@@ -41,7 +41,7 @@ async function api(route, body) {
   const data = await response.json(); if (!response.ok) throw new Error(data.error ?? `HTTP ${response.status}`); return data;
 }
 function toast(text, error = false) { $('#toast').textContent = text; $('#toast').className = `toast${error ? ' error' : ''}`; $('#toast').hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { $('#toast').hidden = true; }, error ? 6500 : 3500); }
-const active = job => ['queued', 'running', 'stopping'].includes(job?.status);
+const active = job => Boolean(job?.worker_running) || ['queued', 'running', 'stopping'].includes(job?.status);
 const busy = () => state.submitting || active(state.snapshot?.job) || state.snapshot?.status.workers.some(w => w.alive);
 const app = id => state.system.apps.find(a => a.app_id === id) ?? { app_id: id, name: id, category: '自定义', mark: 'A', color: 'blue' };
 const persona = user => user.persona ?? user;

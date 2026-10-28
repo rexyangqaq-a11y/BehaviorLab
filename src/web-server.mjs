@@ -66,7 +66,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
       job.stages = job.stages.map(s => s.status === 'running' ? { ...s, status: 'interrupted' } : s);
       writeJob(directory, job);
     }
-    return job;
+    return job ? { ...job, worker_running: children.has(directory) } : null;
   }
   function withStore(directory, callback) {
     // Keep one connection while serving a run. Closing the last WAL connection
@@ -139,13 +139,17 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         response.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
         response.end(await readFile(path.join(publicRoot, filename))); return;
       }
-      const phoneFiles = { '/phone-video-ui.mjs':['phone-video-ui.mjs','text/javascript'], '/phone-video-protocol.mjs':['phone-video-protocol.mjs','text/javascript'], '/vendor/jmuxer.min.js':['vendor/jmuxer.min.js','text/javascript'], '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
+      const phoneFiles = { '/phone-connection-ui.mjs':['phone-connection-ui.mjs','text/javascript'], '/phone-video-ui.mjs':['phone-video-ui.mjs','text/javascript'], '/phone-video-protocol.mjs':['phone-video-protocol.mjs','text/javascript'], '/vendor/jmuxer.min.js':['vendor/jmuxer.min.js','text/javascript'], '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
       if(request.method==='GET'&&phoneFiles[url.pathname]){
         const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
       }
       if(url.pathname.startsWith('/api/phone-lab')){
         const suffix=url.pathname.slice('/api/phone-lab'.length);
         if(!suffix&&request.method==='GET')jsonResponse(response,200,await phoneLab.catalog(modelSettings.read()));
+        else if(suffix==='/connection/check'&&request.method==='POST'){
+          const input=await body(request);if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length)throw fail(400,'连接检查不接受设备、路径或命令参数');
+          jsonResponse(response,200,await phoneLab.connection.check());
+        }
         else if(suffix==='/video/status'&&request.method==='GET')jsonResponse(response,200,phoneLab.video.status());
         else if(suffix==='/video/start'&&request.method==='POST'){
           const input=await body(request);if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length)throw fail(400,'投屏启动不接受设备、路径或命令参数');

@@ -23,7 +23,7 @@ export class PhoneVideo {
     if(!s){
       const runtime=this.runtime(this.project,{verify:true});if(!runtime.available)throw fail(409,'视频组件未安装：'+runtime.missing.join('、'));
       const release=this.acquire();s={id:'video_'+randomUUID(),state:'starting',created_at:new Date().toISOString(),leases:new Map(),packets:0,bytes:0,headers:new Map(),gop:[],gopBytes:0,log:'',release};this.session=s;
-      s.started=this.open(s,runtime).finally(()=>{s.release?.();s.release=null;});
+      s.started=this.open(s,runtime);
     }
     await s.started;
     if(this.session!==s||s.state!=='streaming')throw fail(409,'投屏已停止');
@@ -40,6 +40,7 @@ export class PhoneVideo {
       if(this.session!==s||s.state!=='starting')throw Error('投屏已取消');
       const child=this.launch(runtime.java,['-Djava.awt.headless=true','-cp',[runtime.sdk,runtime.classes].join(path.delimiter),'PhoneVideoBridge'],{cwd:runtime.root,windowsHide:true,stdio:['pipe','pipe','pipe']});s.child=child;
       s.exited=new Promise(resolve=>{child.once('error',()=>resolve(-1));child.once('exit',code=>resolve(code));});
+      if(Number.isSafeInteger(child.pid))s.release?.registerWorker?.(child.pid);
       let resolveFirst,rejectFirst;const first=new Promise((resolve,reject)=>{resolveFirst=resolve;rejectFirst=reject;});
       s.rejectFirst=rejectFirst;
       const reader=new VideoPacketReader(bytes=>{
@@ -52,17 +53,17 @@ export class PhoneVideo {
         if(s.state==='starting'){s.state='streaming';resolveFirst();}
         for(const lease of [...s.leases.values()])if(lease.response){if(lease.response.writableLength>2*1024*1024)this.release(s,lease.token);else lease.response.write(packet);}
       });
-      child.stdout.on('data',bytes=>{try{reader.feed(bytes);}catch(error){rejectFirst(error);s.error='视频数据格式异常';void this.stopAll(s.error);}});
+      child.stdout.on('data',bytes=>{try{reader.feed(bytes);}catch(error){rejectFirst(error);s.error='视频数据格式异常';void this.stopAll(s.error,s);}});
       child.stderr.on('data',bytes=>{
         const text=bytes.toString().split(s.target).join('[device]');s.log=(s.log+text).slice(-32768);
         s.statusTail=(s.statusTail??'')+text;const lines=s.statusTail.split(/\r?\n/);s.statusTail=lines.pop().slice(-2000);
         if(lines.some(line=>line.startsWith('BEHAVIORLAB_VIDEO:stop_error:')))s.cleanupFailed=true;
-        if(s.state!=='stopping'&&lines.some(line=>line.startsWith('BEHAVIORLAB_VIDEO:error:'))){rejectFirst(Error('手机视频采集失败，请检查USB连接和手机解锁状态'));s.error='手机视频采集失败，请检查USB连接和手机解锁状态';void this.stopAll(s.error);}
+        if(s.state!=='stopping'&&lines.some(line=>line.startsWith('BEHAVIORLAB_VIDEO:error:'))){rejectFirst(Error('手机视频采集失败，请检查USB连接和手机解锁状态'));s.error='手机视频采集失败，请检查USB连接和手机解锁状态';void this.stopAll(s.error,s);}
       });
       child.stdin.on('error',()=>{});child.stdin.write(s.target+'\n'+hdc+'\n5861\n');
       s.exited.then(code=>{
         s.exitCode=code;rejectFirst(Error('视频后台已退出'));
-        if(s.state!=='stopping'){s.error='视频后台已退出，请重新连接';void this.stopAll(s.error);}
+        if(s.state!=='stopping'){s.error='视频后台已退出，请重新连接';void this.stopAll(s.error,s);}
       });
       const timer=setTimeout(()=>rejectFirst(Error('尚未收到手机视频帧，请保持手机解锁后重试')),this.startTimeout);
       try{await first;}finally{clearTimeout(timer);}
@@ -75,7 +76,7 @@ export class PhoneVideo {
     }catch(error){
       s.log=(s.log+'\n[bridge] '+String(error.message).split(s.target??'\0').join('[device]')).slice(-32768);
       s.error=/^(HDC未安装|需要唯一|投屏已取消|SDK返回|尚未收到|手机视频|视频后台|投屏已停止)/.test(error.message)?error.message:'手机视频连接失败，请检查HDC、USB授权和手机解锁状态';
-      await this.stopAll(s.error);throw fail(409,s.error);
+      await this.stopAll(s.error,s);throw fail(409,s.error);
     }
   }
   attach(id,token,response){
@@ -88,14 +89,13 @@ export class PhoneVideo {
   }
   release(s,token){
     const lease=s.leases.get(token);if(!lease)return;s.leases.delete(token);lease.response?.end();
-    if(!s.leases.size&&s.state==='streaming')void this.stopAll();
+    if(!s.leases.size&&s.state==='streaming')void this.stopAll(null,s);
   }
   stop(input){const s=this.session;if(!s)return {stopped:true};if(input.id!==s.id||!s.leases.has(input.token))throw fail(403,'投屏查看会话无效');this.release(s,input.token);return {stopped:true};}
-  async stopAll(reason=null){
-    const s=this.session;if(!s)return;if(s.stopping)return s.stopping;
+  async stopAll(reason=null,expected=this.session){
+    const s=this.session;if(!s||s!==expected)return;if(s.stopping)return s.stopping;
     s.state='stopping';s.rejectFirst?.(Error(reason??'投屏已停止'));clearInterval(s.timer);
     s.stopping=(async()=>{
-      let teardownRelease;try{if(!s.release)teardownRelease=this.acquire();}catch{/* An active task already holds the device lock; retain its ownership. */}
       for(const lease of s.leases.values())lease.response?.end();s.leases.clear();
       let cleanup='not_started';
       try{if(s.child){
@@ -104,7 +104,7 @@ export class PhoneVideo {
           if(code==='timeout'){s.child.kill();cleanup='requires_check';}else cleanup=code===0?'sdk_stopped':'requires_check';
         }else cleanup=s.exitCode===0?'sdk_stopped':'requires_check';
       }}catch{cleanup='requires_check';s.child?.kill();}
-      finally{s.release?.();s.release=null;teardownRelease?.();}
+      finally{s.release?.();s.release=null;}
       if(s.cleanupFailed)cleanup='requires_check';
       this.last={state:reason||cleanup==='requires_check'?'error':'idle',error:reason??(cleanup==='requires_check'?'视频进程已停止，设备端清理状态待核对':null)};
       const report={id:s.id,created_at:s.created_at,finished_at:new Date().toISOString(),...CONFIG,packets:s.packets,bytes:s.bytes,cleanup,error:this.last.error};

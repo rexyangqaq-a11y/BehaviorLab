@@ -1,4 +1,4 @@
-﻿BehaviorLab v0.4.0-preview.11 · Windows 10/11 x64
+﻿BehaviorLab v0.4.0-preview.12 · Windows 10/11 x64
 
 下载与首次部署
 1. 本目录来自Release中的Windows-x64.zip，包含Node/Python/HDC、三框架和Java视频依赖。
@@ -35,3 +35,7 @@
 preview.11: 真机工作台 -> 结果与对比，可直接查看随包36项历史测试。
 模型服务填写后请点击“保存此服务配置”；只填写而未保存不会进入测试列表。
 升级：停止旧包，备份旧目录，将旧包 .data 复制到全新解压包后启动；不要覆盖或删除旧目录。
+
+preview.12: 连接手机后自动投屏，可在顶部关闭；失败不循环重试。
+新增洛书起点，内置v0.5实测HOP-AL10指定版本／2584x1828机型标定，无需导入。
+详见 docs/V04_PREVIEW12_BACKPORT.md；旧专用标定可选05_IMPORT_STARTPOINT.cmd迁移。

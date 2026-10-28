@@ -1,8 +1,9 @@
-import {renderPhoneTrace,renderPhoneDevice} from './phone-trace.mjs';
+import {renderPhoneTrace,renderPhoneDevice,isKeyPhoneImage} from './phone-trace.mjs';
 import {filterPhoneRuns,comparablePhoneGroups,phoneResultTotals} from './phone-results.mjs';
 import {phoneTestPlan,resolvePhoneSelection} from './phone-test-plan.mjs';
 import {createProcessPanel} from './phone-process-ui.mjs';
 import {createPhoneVideoPanel} from './phone-video-ui.mjs';
+import {createPhoneConnectionPanel} from './phone-connection-ui.mjs';
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 const labels={needs_attention:'需人工核对',queued:'等待启动',running:'执行中',ended:'框架已结束',failed:'执行失败',blocked:'受阻',stopped:'已停止',interrupted:'中断待核对',stopping:'正在停止',waiting_for_start:'等待确认起点',passed:'通过',partial:'部分完成',cannot_determine:'无法确定',pending_review:'待核对'};
 const verdicts={passed:'通过',partial:'部分完成',failed:'未通过',blocked:'受阻',cannot_determine:'无法确定',pending_review:'待核对'};
@@ -18,6 +19,7 @@ const multi={frameworks:new Set(),services:new Set(),tasks:new Set()};
 const filterIds={origin:'filter-origin',framework:'filter-framework',model:'filter-model',task:'filter-task',phone:'filter-phone',verdict:'filter-verdict',phase:'filter-phase',evaluation:'filter-evaluation',search:'filter-search'};
 const processPanel=createProcessPanel({api,getCatalog:()=>catalog,openResults:selectRun,message});
 const videoPanel=createPhoneVideoPanel({api,getCatalog:()=>catalog,message});
+const connectionPanel=createPhoneConnectionPanel({api,badge:$('device-connection'),button:$('check-device-connection'),onChange:value=>videoPanel.connectionChanged(value)});
 function filters(){return Object.fromEntries(Object.entries(filterIds).map(([k,id])=>[k,$(id).value]));}
 function persist(){try{localStorage.setItem('phone-lab-ui-v3',JSON.stringify({filters:filters(),view:resultView,sort:$('result-sort').value,pageSize:$('page-size').value}));}catch{}}
 function persistSelection(){savedSelection={framework_id:$('framework').value,service_id:$('service').value};try{localStorage.setItem('phone-lab-selection-v1',JSON.stringify(savedSelection));}catch{}}
@@ -26,7 +28,7 @@ const serviceLabel=s=>s.name?(s.name.includes(s.model)?s.name:s.name+' · '+s.mo
 const runTaskName=r=>r.task_name??r.task?.name??r.name;
 const frameworkName=id=>catalog.frameworks.find(f=>f.id===id)?.name??id,serviceName=id=>{const s=catalog.services.find(s=>s.id===id);return s?serviceLabel(s):id;};
 const usableService=s=>s.protocol==='openai-chat'&&s.family&&!s.missing?.length,usableFramework=f=>f.available;
-function showTab(next,{hash=true}={}){if(!['tasks','test','process','results'].includes(next))next='tasks';tab=next;document.querySelectorAll('.tab').forEach(el=>el.hidden=el.id!==next);document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.tab===next);b.setAttribute('aria-selected',String(b.dataset.tab===next));});if(hash)history.replaceState(null,'','#'+next);processPanel.setVisible(next==='process');videoPanel.setVisible(next==='process',{keepAlive:next==='test'});if(next==='results')renderResults();}
+function showTab(next,{hash=true}={}){if(!['tasks','test','process','results'].includes(next))next='tasks';tab=next;document.querySelectorAll('.tab').forEach(el=>el.hidden=el.id!==next);document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('selected',b.dataset.tab===next);b.setAttribute('aria-selected',String(b.dataset.tab===next));});if(hash)history.replaceState(null,'','#'+next);processPanel.setVisible(next==='process');videoPanel.setVisible(next==='process',{keepAlive:true});if(next==='results')renderResults();}
 function options(id,rows,{placeholder=null}={}){const el=$(id),previous=el.value,signature=JSON.stringify([placeholder,rows]);if(el.dataset.optionsSignature!==signature){el.innerHTML=(placeholder!=null?`<option value="">${esc(placeholder)}</option>`:'')+rows.map(([value,label,disabled])=>`<option value="${esc(value)}"${disabled?' disabled':''}>${esc(label)}</option>`).join('');el.dataset.optionsSignature=signature;if(rows.some(([v,,disabled])=>v===previous&&!disabled))el.value=previous;else if(placeholder!=null)el.value='';else el.value=rows.find(([, ,disabled])=>!disabled)?.[0]??'';}}
 
 function renderTasks(){
@@ -96,15 +98,15 @@ function renderPreparation(){
   const current=$('start-mode-current').checked,disabled=busy||editingTask?.archived;
   $('existing-start-fields').hidden=current;$('current-start-fields').hidden=!current;$('task-startpoint').required=!current;$('start-name').required=current;
   for(const id of ['start-mode-existing','start-mode-current','task-startpoint','start-name'])$(id).disabled=Boolean(disabled);
-  $('preview-task-start').hidden=current||!$('task-startpoint').value||$('task-startpoint').value==='builtin_home';$('preview-task-start').disabled=Boolean(busy);
-  $('task-start-hint').textContent=current?'保存任务设置时记录当前状态。以后测试自动沿用，无需再次选择或命名。':$('task-startpoint').value==='builtin_home'?'内置手机桌面：开始测试后自动按两次 Home，记录当前手机基准；组合测试每项前复原并核对，状态不符时停止，不调用模型。不会清除应用数据。':'仅在任务设置时配置，单项测试与组合评估自动沿用。';
+  $('preview-task-start').hidden=current||!$('task-startpoint').value||catalog.starts.find(s=>s.id===$('task-startpoint').value)?.builtin;$('preview-task-start').disabled=Boolean(busy);
+  $('task-start-hint').textContent=current?'保存任务设置时记录当前状态。以后测试自动沿用，无需再次选择或命名。':$('task-startpoint').value==='builtin_home'?'内置手机桌面：开始测试后自动按两次 Home，记录当前手机基准；组合测试每项前复原并核对，状态不符时停止，不调用模型。不会清除应用数据。':catalog.starts.find(s=>s.id===$('task-startpoint').value)?.description??'仅在任务设置时配置，单项测试与组合评估自动沿用。';
   $('save-task').disabled=Boolean(busy||editingTask?.archived||current&&(catalog.device_pause?.paused||catalog.busy));
 }
 function renderPlan(){
   let plan,error;try{plan=phoneTestPlan(selection());}catch(e){error=e.message;}
   const sel=selection(),missing=sel.case_ids.filter(id=>!selectedStart(id));
   $('test-plan').innerHTML=plan?`<strong>${sel.framework_ids.length} 个框架 × ${sel.service_ids.length} 个模型 × ${sel.case_ids.length} 个任务 <span class="plan-total">${plan.count} 个测试单元</span></strong><p class="hint">每单元最多 ${number(limits().max_requests)} 次请求，顺序执行。</p>`:`<p class="hint">${esc(error)}</p>`;
-  const reason=error??(missing.length?'任务“'+missing.map(id=>taskById(id)?.name).join('、')+'”尚未配置当前版本的起点，请先到任务中配置。':catalog.device_pause?.paused?'真机操作已暂停。':catalog.active_batch_id?'组合评估尚未结束。':catalog.busy?'手机正被其他测试占用。':busy?'正在处理…':sel.case_ids.some(id=>selectedStart(id)?.builtin)?'将先自动回到当前手机桌面并记录基准，核对通过后才调用模型；请连接并解锁手机。':'将使用任务中配置的起点，可以开始。');
+  const reason=error??(missing.length?'任务“'+missing.map(id=>taskById(id)?.name).join('、')+'”尚未配置当前版本的起点，请先到任务中配置。':catalog.device_pause?.paused?'真机操作已暂停。':catalog.active_batch_id?'组合评估尚未结束。':catalog.busy?'手机正被其他测试占用。':busy?'正在处理…':sel.case_ids.some(id=>selectedStart(id)?.builtin)?'将按任务所选起点自动复原并核对，通过后才调用模型；请连接并解锁手机。':'将使用任务中配置的起点，可以开始。');
   $('configure-task-start').hidden=!missing.length;$('configure-task-start').dataset.taskId=missing[0]??'';
   $('test-readiness').textContent=reason;$('start-test').disabled=Boolean(error||missing.length||busy||catalog.device_pause?.paused||catalog.busy||catalog.active_batch_id);$('start-test').textContent=mode==='single'?'开始单项测试':`开始组合评估${plan?'（'+plan.count+'项）':''}`;
 }
@@ -185,6 +187,7 @@ document.addEventListener('click',async event=>{
     else if(b.dataset.axis){const axis=b.dataset.axis,source=axis==='frameworks'?catalog.frameworks.filter(usableFramework):axis==='services'?catalog.services.filter(usableService):availableTasks();multi[axis]=new Set(b.dataset.pick==='all'?source.map(x=>x.id):[]);selectionSignature='';startsSignature='';syncSelection();}
     else if(b.id==='preview-task-start')previewStart($('task-startpoint').value);
     else if(b.id==='close-start-dialog')$('start-dialog').close();
+    else if(b.id==='check-device-connection')await connectionPanel.check();
     else if(b.id==='pause-device'){await api('/pause',{reason:'测试者暂停使用手机'});await refreshCatalog();message('真机操作已暂停。');}
     else if(b.id==='resume-device'){await api('/resume',{});await refreshCatalog();message('已恢复测试入口，旧任务不会自动重启。');}
     else if(b.dataset.processRun){processPanel.open(b.dataset.processRun);showTab('process');}
@@ -192,8 +195,8 @@ document.addEventListener('click',async event=>{
     else if(b.id==='back-results')backResults();
     else if(b.id==='previous-run'||b.id==='next-run'){const rows=resultRows(),i=rows.findIndex(r=>r.id===selectedRun),next=rows[i+(b.id==='next-run'?1:-1)];if(next)await selectRun(next.id);}
     else if(b.dataset.detailTab)setDetailTab(b.dataset.detailTab);
-    else if(b.dataset.image){selectedImage=b.dataset.image;const image=snapshot.assets.find(a=>a.id===selectedImage);if(image&&!['initial','after','final'].includes(image.role))showAllTraceImages=true;renderTrace();}
-    else if(b.dataset.traceGallery){showAllTraceImages=b.dataset.traceGallery==='all';if(!showAllTraceImages&&!['initial','after','final'].includes(snapshot.assets.find(a=>a.id===selectedImage)?.role))selectedImage=null;renderTrace();}
+    else if(b.dataset.image){selectedImage=b.dataset.image;const image=snapshot.assets.find(a=>a.id===selectedImage);if(image&&!isKeyPhoneImage(image))showAllTraceImages=true;renderTrace();}
+    else if(b.dataset.traceGallery){showAllTraceImages=b.dataset.traceGallery==='all';if(!showAllTraceImages&&!isKeyPhoneImage(snapshot.assets.find(a=>a.id===selectedImage)))selectedImage=null;renderTrace();}
     else if(b.dataset.resultView){resultView=b.dataset.resultView;renderResults();}
     else if(b.dataset.cellFramework){$('filter-framework').value=b.dataset.cellFramework;$('filter-model').value=b.dataset.cellModel;$('filter-task').value=b.dataset.cellTask;page=0;resultView='records';renderResults();}
     else if(b.dataset.page!==undefined){page=Number(b.dataset.page);renderResults();}
@@ -216,5 +219,7 @@ $('task-form').onsubmit=async e=>{e.preventDefault();if(busy)return;$('save-task
 $('test-form').onsubmit=async e=>{e.preventDefault();if(busy)return;try{await startTest();}catch(error){message(error.message,true);}};
 document.addEventListener('submit',async e=>{if(e.target.id!=='review-form')return;e.preventDefault();try{const a=snapshot.assets.find(a=>a.id===selectedImage)??snapshot.result?.final_asset;await api('/runs/'+selectedRun+'/review',{verdict:$('verdict').value,note:$('review-note').value,evidence_ids:a?[a.id]:[]});snapshot=await api('/runs/'+selectedRun);reviewEditing=false;renderDetail();await refreshCatalog();message('独立判定已保存。');}catch(error){message(error.message,true);}});
 window.addEventListener('hashchange',()=>showTab(location.hash.slice(1),{hash:false}));
+connectionPanel.start();window.addEventListener('pagehide',()=>connectionPanel.stop());
+window.addEventListener('pageshow',event=>{if(event.persisted)connectionPanel.start();});
 try{await refreshCatalog({initial:true});showTab(location.hash.slice(1)||'tasks',{hash:false});}catch(e){message(e.message,true);}
 setInterval(async()=>{if(polling)return;polling=true;try{await refreshCatalog();if(selectedRun&&active(snapshot)){const next=await api('/runs/'+selectedRun),signature=JSON.stringify([next.state,next.events.at(-1)?.seq,next.review]);snapshot=next;if(signature!==lastDetailSignature){renderDetail();lastDetailSignature=signature;}}}catch{/* Keep form drafts and existing records visible when the local service is unavailable. */}finally{polling=false;}},3000);

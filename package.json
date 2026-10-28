@@ -1,6 +1,6 @@
 {
   "name": "user-behavior-sequence-simulator",
-  "version": "0.4.0-preview.11",
+  "version": "0.4.0-preview.12",
   "private": true,
   "type": "module",
   "description": "Resumable behavior-sequence pipeline; phase A uses explicitly synthetic adapters.",

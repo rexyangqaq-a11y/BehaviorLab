@@ -7,6 +7,14 @@ const request=(id,assetId)=>({type:'model_request_start',id,request:{messages:[{
 const response=(id,content)=>({type:'model_response',id,http_status:200,usage:{input_tokens:20,output_tokens:10},response:{choices:[{message:{content}}]}});
 const ordered=rows=>rows.map((e,i)=>({...e,seq:i+1}));
 
+test('key screenshots include both recorded before and after without inventing missing evidence',()=>{
+  const run={id:'fixture',events:ordered([image('initial','initial'),image('before','before','a1'),{type:'action_intent',id:'a1',name:'tap',before:'before'},image('after','after','a1'),image('input','model_input'),image('final','final')])};
+  const html=renderPhoneTrace(run,{selectedImage:'before'});
+  assert.match(html,/关键截图 4/);assert.match(html,/动作前 · 事件/);assert.match(html,/动作后 · 事件/);assert.match(html,/2 \/ 4/);
+  const missing=renderPhoneTrace({id:'fixture',events:ordered([image('after','after')])});
+  assert.match(missing,/关键截图 1/);assert.ok(!missing.includes('alt="动作前'));
+});
+
 test('exact asset references distinguish duplicate images; before/after and pending replies remain separate',()=>{
   const es=ordered([image('initial','initial'),image('input1','model_input'),request('model_1','input1'),response('model_1','<planning>scroll the list</planning><log>scroll</log>'),image('before1','before','action_1'),{type:'action_intent',id:'action_1',name:'Scroll'},image('after1','after','action_1'),image('input2','model_input'),request('model_2','input2')]);
   const original=structuredClone(es),t=buildPhoneTrace(es),get=id=>t.images.find(i=>i.asset.id===id);

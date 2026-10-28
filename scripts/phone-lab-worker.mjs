@@ -35,11 +35,11 @@ try{
   await state({status:'running',phase:'checking_start',started_at:new Date().toISOString()});
   session=await createPhoneDevice({evidence,signal:control.signal,limits:input.limits});
   const environment=await session.environment(input.bundle),initial=await session.capture('initial'),layout=await session.layout();
-  const current=input.startpoint.named?namedStartContract({environment,shot:initial,nodes:layout.nodes}):startContract({environment,shot:initial,nodes:layout.nodes,task:input.task,manual:!input.task||input.task.reset==='manual'});
+  const current=input.startpoint.named?namedStartContract({environment,shot:initial,nodes:layout.nodes,recipeId:input.startpoint.contract.recipe_id}):startContract({environment,shot:initial,nodes:layout.nodes,task:input.task,manual:!input.task||input.task.reset==='manual'});
   const same=compareStart(input.startpoint.contract,current);result.same_start=same;evidence.save('environment.json',{...environment,screen:{width:initial.width,height:initial.height},framework:input.framework,model:input.service.model});
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
-  const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
+  const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/phone-companion-start.mjs','integrations/phone-companion-profiles.json','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
   files.push('src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
   executionStarted=Date.now();evidence.phase='execution';

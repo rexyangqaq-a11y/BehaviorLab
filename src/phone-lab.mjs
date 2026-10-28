@@ -11,10 +11,12 @@ import {fileURLToPath} from 'node:url';
 import {PHONE_CASES,PHONE_FRAMEWORKS,PHONE_LAB_VERSION,normalizePhoneLimits,phoneModelFamily} from './phone-lab-catalog.mjs';
 import {PhoneEvidence,sha256} from './phone-evidence.mjs';
 import {createPhoneDevice,layoutNodes} from './phone-device.mjs';
-import {BUILTIN_HOME_START,startContract,namedStartContract,compareStart,resetPhoneStart} from './phone-startpoints.mjs';
+import {BUILTIN_HOME_START,BUILTIN_COMPANION_START,BUILTIN_STARTS,builtinStart,startContract,namedStartContract,compareStart,resetPhoneStart} from './phone-startpoints.mjs';
 import {PhoneTasks} from './phone-tasks.mjs';
 import {PhoneVideo} from './phone-video.mjs';
 import {phoneTestPlan} from '../web/phone-test-plan.mjs';
+import {acquireDeviceLease} from './device-lease.mjs';
+import {PhoneConnection} from './phone-connection.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().toISOString();
 const fail=(status,message)=>Object.assign(Error(message),{status});
 const read=file=>{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}};
@@ -29,13 +31,16 @@ export function phoneRunDeviceInfo(input,environment){
     app:record?.app??null,source:actual?'execution_environment':baseline?'saved_startpoint':'not_recorded'};
 }
 export class PhoneLab {
-  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json'),archiveRoot=null,videoFactory=options=>new PhoneVideo(options)}={}){
+  constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json'),archiveRoot=null,connectionFactory=()=>new PhoneConnection({configPath:path.join(project,'.runtime/device-tools.json')}),videoFactory=options=>new PhoneVideo(options)}={}){
     this.archiveRoot=archiveRoot;this.archiveManifest=archiveRoot?read(path.join(archiveRoot,'manifest.json')):null;
     this.archiveIds=new Set((this.archiveManifest?.records??[]).map(r=>r.run_id).filter(id=>/^phone_[a-f0-9-]{36}$/.test(id)));
     this.root=root;this.base=path.join(root,'.phone-lab');this.deviceFactory=deviceFactory;this.lockPath=lockPath;this.pausePath=pausePath;this.children=new Map();this.waitingBatches=new Map();this.closing=false;
     for(const dir of ['starts','runs','batches','evaluations'])mkdirSync(path.join(this.base,dir),{recursive:true});mkdirSync(path.dirname(lockPath),{recursive:true});
     this.tasks=new PhoneTasks(path.join(this.base,'tasks'));
-    this.video=videoFactory({project,assertEnabled:()=>this.assertDeviceEnabled(),acquire:()=>this.acquire('phone_video_setup')});
+    this.connection=connectionFactory();
+    // Observation owns a separate lease for the encoder's entire lifetime.
+    // Never make video setup/teardown compete with the phone input lease.
+    this.video=videoFactory({project,assertEnabled:()=>this.assertDeviceEnabled(),acquire:()=>acquireDeviceLease(this.lockPath+'.video','phone_video')});
   }
   directory(kind,id){if(!/^(start|phone|batch)_[a-f0-9-]{36}$/.test(id))throw fail(400,'记录 ID 无效');return path.join(this.base,kind,id);}
   runDirectory(id){const live=this.directory('runs',id);return existsSync(path.join(live,'input.json'))?live:this.archiveIds.has(id)?path.join(this.archiveRoot,'runs',id):live;}
@@ -50,13 +55,13 @@ export class PhoneLab {
     const configured=read(path.join(this.base,'task-startpoints.json'))?.[task.id];
     const chosen=startpointId!==undefined?startpointId:configured?configured.startpoint_id:undefined;
     if(chosen===null)return null;
-    if(chosen===BUILTIN_HOME_START.id)return structuredClone(BUILTIN_HOME_START);
+    if(builtinStart(chosen))return structuredClone(builtinStart(chosen));
     return starts.find(s=>(chosen===undefined||s.id===chosen)&&(s.named&&chosen!==undefined||s.case_id===task.id&&s.contract?.case_revision===task.revision)&&s.contract.ready)??(chosen===undefined&&task.read_only&&task.reset==='home'?structuredClone(BUILTIN_HOME_START):null);
   }
   listTasks(starts=this.list('starts','start.json')){return this.tasks.list().map(task=>{const start=this.taskStart(task,{starts});return {...task,startpoint_id:start?.id??null,startpoint_name:start?.name??null};});}
   async selectTaskStart(id,input){
     const task=this.tasks.get(id);if(input.expected_revision!==task.revision)throw fail(409,'任务版本已更新，请重新打开任务设置');
-    if(input.startpoint_id===BUILTIN_HOME_START.id)return this.configureTaskStart(id,input);
+    if(builtinStart(input.startpoint_id))return this.configureTaskStart(id,input);
     if(input.reuse&&input.startpoint_id){
       const source=read(path.join(this.directory('starts',input.startpoint_id),'start.json'));if(!source?.contract?.ready)throw fail(409,'所选起点不可用');
       if(!source.named){
@@ -89,15 +94,18 @@ export class PhoneLab {
     const deviations=new Map(evaluations.flatMap(e=>(e.entries??[]).filter(x=>x.run_id&&x.policy_deviation).map(x=>[x.run_id,x.policy_deviation])));
     const starts=this.list('starts','start.json'),tasks=this.listTasks(starts);
     return {version:PHONE_LAB_VERSION,final_framework:null,selection_policy:PHONE_SELECTION_POLICY,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
-      archive:this.archiveManifest?{runs:this.archiveIds.size,evaluation_id:this.archiveManifest.evaluation_id,read_only:true}:null,
-      starts:[structuredClone(BUILTIN_HOME_START),...starts],runs:[...new Set([...this.list('runs','input.json').map(i=>i.id),...this.archiveIds])].map(id=>({...this.summary(id),evaluation_exclusion:excluded.get(id)??null,policy_deviation:deviations.get(id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},video:this.video.status()};
+      connection:this.connection.status(),archive:this.archiveManifest?{runs:this.archiveIds.size,evaluation_id:this.archiveManifest.evaluation_id,read_only:true}:null,
+      starts:[...BUILTIN_STARTS.map(s=>structuredClone(s)),...starts],runs:[...new Set([...this.list('runs','input.json').map(i=>i.id),...this.archiveIds])].map(id=>({...this.summary(id),evaluation_exclusion:excluded.get(id)??null,policy_deviation:deviations.get(id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},video:this.video.status()};
   }
-  async prepareBuiltinHome(task){
-    const start=await this.captureStart({named:true,name:'手机桌面 · 本机自动基准',library_visible:false,reset:true},{taskSnapshot:{...task,reset:'home',bundle:null}});
-    if(!start.contract?.ready||start.contract.reset!=='home')throw fail(409,'无法核对手机桌面起点，请解锁并检查桌面布局后重试；未调用模型。');
+  async prepareBuiltinHome(task){return this.prepareBuiltinStart(task,BUILTIN_HOME_START.id);}
+  async prepareBuiltinStart(task,recipeId){
+    const recipe=builtinStart(recipeId);if(!recipe)throw fail(400,'未知的内置起点');
+    const companion=recipeId===BUILTIN_COMPANION_START.id;
+    const start=await this.captureStart({named:true,name:companion?'手机桌面＋洛书伴随态 · 本机自动基准':'手机桌面 · 本机自动基准',description:recipe.description,library_visible:false,reset:true},{taskSnapshot:{...task,reset:recipe.contract.reset,bundle:null},startRecipeId:companion?recipeId:null});
+    if(!start.contract?.ready||start.contract.reset!==recipe.contract.reset)throw fail(409,companion?'未确认手机桌面与洛书伴随态同时存在，准备已停止；未调用模型。':'无法核对手机桌面起点，请解锁并检查桌面布局后重试；未调用模型。');
     return start;
   }
-  async captureStart(input={}, {taskSnapshot=null}={}){
+  async captureStart(input={}, {taskSnapshot=null,startRecipeId=null}={}){
     this.assertDeviceEnabled();
     if(input.named&&(typeof input.name!=='string'||!input.name.trim()||input.name.trim().length>120))throw fail(400,'请为当前状态填写1–120字的起点名称');
     if(input.named&&input.reset&&!taskSnapshot)throw fail(400,'记录当前状态不会执行复位');
@@ -111,9 +119,9 @@ export class PhoneLab {
       const before=await session.layout();if(before.nodes.some(n=>/ScreenLock|keyguard/i.test(n.id??'')))throw fail(409,'手机已锁屏，请手动解锁后重新记录');
       if(input.reset)await resetPhoneStart(session,task);
       const environment=await session.environment(input.named?null:task?.bundle??input.bundle??null),shot=await session.capture('start'),view=await session.layout();
-      const contract=input.named?namedStartContract({environment,shot,nodes:view.nodes}):startContract({environment,shot,nodes:view.nodes,task,manual:!task||task.reset==='manual'});
+      const contract=input.named?namedStartContract({environment,shot,nodes:view.nodes,recipeId:startRecipeId}):startContract({environment,shot,nodes:view.nodes,task,manual:!task||task.reset==='manual'});
       const start={id,created_at:now(),name:input.name?.trim().slice(0,120)||task?.name||'自定义起点',named:Boolean(input.named),library_visible:input.library_visible!==false,case_id:input.named?null:task?.id??null,
-        description:input.description||task?.initial_state||input.name,environment,contract,asset:shot.asset,layout_file:view.file,reset_available:input.named?contract.reset==='home':Boolean(task&&task.reset!=='manual')};
+        description:input.description||task?.initial_state||input.name,environment,contract,asset:shot.asset,layout_file:view.file,reset_available:input.named?['home','home_companion'].includes(contract.reset):Boolean(task&&task.reset!=='manual')};
       evidence.save('start.json',start);return start;
     }catch(error){evidence.record({type:'preparation_blocked',error:error.message});throw error;}
     finally{release();}
@@ -128,11 +136,11 @@ export class PhoneLab {
     const task=taskSnapshot??(input.case_id?this.tasks.get(input.case_id):null);
     let startpointId=input.startpoint_id??(task?this.taskStart(task)?.id:null);
     if(!startpointId)throw fail(409,'请先在任务中配置当前版本的基准起点');
-    if(startpointId===BUILTIN_HOME_START.id){
+    if(builtinStart(startpointId)){
       const instruction=(input.instruction??task?.instruction??'').trim();if(!instruction||instruction.length>8000)throw fail(400,'任务文本需为 1–8000 字符');
       normalizePhoneLimits(input.limits);
       if(input.name!=null&&(typeof input.name!=='string'||input.name.trim().length>120))throw fail(400,'测试名称最多120字');
-      startpointId=(await this.prepareBuiltinHome(task)).id;
+      startpointId=(await this.prepareBuiltinStart(task,startpointId)).id;
     }
     const start=read(path.join(this.directory('starts',startpointId),'start.json'));
     if(!start)throw fail(404,'起点记录不存在');
@@ -222,9 +230,9 @@ export class PhoneLab {
           if(!prior)throw Error('该用例尚无已核对基准起点');
           const task=tasks[caseId];let current;
           if(prior.builtin){
-            current=await this.prepareBuiltinHome(task);prior={id:current.id,contract:current.contract,named:true,builtin:false};batch.baselines[caseId]=prior;write();
+            current=await this.prepareBuiltinStart(task,prior.id);prior={id:current.id,contract:current.contract,named:true,builtin:false};batch.baselines[caseId]=prior;write();
           }else if(prior.named){
-            const home=prior.contract.reset==='home';current=await this.captureStart({named:true,name:'执行起点核对',library_visible:false,reset:home},{taskSnapshot:{...task,reset:home?'home':'manual',bundle:null}});
+            const recipe=prior.contract.recipe_id?builtinStart(prior.contract.recipe_id):null;if(prior.contract.recipe_id&&!recipe)throw Error('起点配方不可用');const home=prior.contract.reset==='home',automatic=home||Boolean(recipe);current=await this.captureStart({named:true,name:'执行起点核对',library_visible:false,reset:automatic},{taskSnapshot:{...task,reset:recipe?.contract.reset??(home?'home':'manual'),bundle:null},startRecipeId:recipe?.id??null});
           }else if(task.reset==='manual'){
             const token=randomUUID();batch.status='waiting_for_start';batch.pending_entry={case_id:caseId,...combo,token,task_name:task.name,initial_state:task.initial_state};write();
             current=await new Promise(resolve=>this.waitingBatches.set(id,{token,task,prior,resolve}));

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BehaviorLab · 真机测试工作台</title><link rel="stylesheet" href="/phone-lab.css"><script type="module" src="/phone-lab.mjs"></script></head>
 <body>
-<header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-status" class="pill">读取状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
+<header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-connection" class="pill" role="status">手机连接尚未核对</span><button id="check-device-connection" class="quiet">检查连接</button><button id="toggle-phone-video" class="quiet" disabled>开启投屏</button><span id="device-status" class="pill">读取执行状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
 <main>
-  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.11 · 框架与模型可配置</small></div>
+  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.12 · 框架与模型可配置</small></div>
   <div id="pause-banner" class="pause-banner" hidden><div><strong>真机操作已暂停</strong><p>任务编辑与结果查看仍可使用。</p></div><button id="resume-device">恢复真机测试</button></div>
   <div id="message" role="status" hidden></div>
   <p id="archive-note" class="hint" hidden></p>
@@ -52,7 +52,7 @@
     <div class="process-layout">
       <section class="card process-timeline"><div class="heading"><h3>执行轨迹</h3><button id="process-follow" aria-pressed="true" class="quiet">跟随最新</button></div><p id="process-ledger-status" class="hint">尚无执行记录</p><div id="process-steps"></div></section>
       <section class="card process-detail" aria-label="选中步骤详情"><div id="process-step-detail"><div class="empty">开始执行后可查看模型回复、动作与对应截图。</div></div></section>
-      <aside class="card live-video-panel"><div class="heading"><h3>手机连续投屏</h3><span id="live-video-badge" class="tag">未连接</span></div><div id="live-video-stage"><video id="live-phone-video" autoplay muted playsinline></video><div id="live-video-placeholder"><strong>USB 后台直连</strong><span>点击开始投屏，直接查看手机视频。</span></div></div><p id="live-video-status" class="hint" role="status">正在读取视频组件状态。</p><div class="button-row"><button id="live-video-start" class="primary">开始投屏</button><button id="live-video-stop" disabled>停止</button><button id="live-video-fullscreen" disabled>全屏</button></div><p class="hint live-video-note">HOScrcpy · H.264 视频流 · 仅观看<br>无需打开官方工具或选择窗口。请在测试前启动投屏；切到测试页保持连接，切到任务或结果页断开。不录音、不录制、不上传。</p></aside>
+      <aside class="card live-video-panel"><div class="heading"><h3>手机连续投屏</h3><span id="live-video-badge" class="tag">未连接</span></div><div id="live-video-stage"><video id="live-phone-video" autoplay muted playsinline></video><div id="live-video-placeholder"><strong>USB 后台直连</strong><span>手机连接后自动投屏，可手动关闭。</span></div></div><p id="live-video-status" class="hint" role="status">正在读取视频组件状态。</p><div class="button-row"><button id="live-video-start" class="primary">开始投屏</button><button id="live-video-stop" disabled>停止</button><button id="live-video-fullscreen" disabled>全屏</button></div><p class="hint live-video-note">HOScrcpy · H.264 视频流 · 仅观看<br>手机连接后默认开启，测试运行中也可开启；顶部或此处可手动关闭。切换页签保持连接，离开网页或暂停真机操作时停止。连接失败后可手动重试。不录音、不录制、不上传。</p></aside>
     </div>
     <dialog id="process-image-dialog"><div class="heading"><h3>执行证据图</h3><button id="close-process-image">关闭</button></div><img id="process-image" class="screen" alt="本次执行留存的证据图"><p id="process-image-caption" class="hint"></p></dialog>
   </section>

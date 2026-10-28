@@ -35,7 +35,7 @@ async function setup(t) {
       // for the real process to release ownership before scheduling another job.
       let workerAlive=false;
       if(value.job?.pid)try{process.kill(value.job.pid,0);workerAlive=true;}catch{}
-      if (!['queued', 'running', 'stopping'].includes(value.job?.status)&&!workerAlive) return value;
+      if (!['queued', 'running', 'stopping'].includes(value.job?.status)&&!value.job?.worker_running&&!workerAlive) return value;
       await delay(20);
     }
     assert.fail('Web job did not finish in time');
