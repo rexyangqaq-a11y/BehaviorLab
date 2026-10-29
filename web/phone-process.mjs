@@ -14,7 +14,7 @@ export function mergeProcessSnapshot(previous,update){
 }
 const phases={checking_start:'核对手机起点',execution:'框架执行中',final_observation:'采集最终依据'};
 export const processPhase=run=>processActive(run)?phases[run.state?.phase]??'等待框架执行':({ended:'框架已结束，等待业务核对',failed:'执行失败',blocked:'执行受阻',stopped:'已停止',interrupted:'执行中断，待核对',needs_attention:'动作效果未知，需人工核对；不自动重放'}[run?.state?.status]??'读取执行状态');
-const eventLabels={hilog_capture_start:'开始本次测试自动HiLog',hilog_capture_end:'自动HiLog已收尾',execution_start:'开始执行',framework_return:'框架返回',execution_stopped:'执行停止',execution_end:'执行收尾',model_request_blocked:'模型入口阻断',framework_io_stopped:'框架调用停止',permission_policy_check:'权限操作已拦截'};
+const eventLabels={grounding_response_rejected:'定位坐标无效，动作未执行',grounding_recovery_requested:'重新截图并请求重新定位',grounding_recovery_returned:'收到重新定位回复，交框架核对',grounding_recovery_exhausted:'重新定位次数已用完，停止执行',hilog_capture_start:'开始本次测试自动HiLog',hilog_capture_end:'自动HiLog已收尾',execution_start:'开始执行',framework_return:'框架返回',execution_stopped:'执行停止',execution_end:'执行收尾',model_request_blocked:'模型入口阻断',framework_io_stopped:'框架调用停止',permission_policy_check:'权限操作已拦截'};
 export function processSteps(run){
   const trace=buildPhoneTrace(run.events??[]),steps=[];
   for(const call of trace.calls)steps.push({id:'model:'+call.id,seq:call.request.seq,at:call.request.at,kind:'model',title:'模型请求 #'+call.number,status:call.response?'已回复':'等待回复',call});

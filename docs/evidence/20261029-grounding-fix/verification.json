@@ -1,0 +1,17 @@
+{
+  "scope": "local-only coordinate recovery; awaiting user stability testing",
+  "frameworks": [
+    "midscene",
+    "autoglm",
+    "mobiagent"
+  ],
+  "v05_tests": 216,
+  "v04_package_tests": 203,
+  "final_targeted_tests": 18,
+  "failed": 0,
+  "skipped": 0,
+  "real_model_requests": 0,
+  "real_device_actions": 0,
+  "github_updated": false,
+  "max_corrections_per_decision": 2
+}

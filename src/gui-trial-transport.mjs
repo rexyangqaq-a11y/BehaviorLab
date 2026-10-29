@@ -95,7 +95,7 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
       throw new Error('Model transport stopped; see retained evidence', { cause: error });
     }finally{cancelDeadline();}
   };
-  return { fetch: guardedFetch, summary: () => ({ requests, retries: 0, blocked_before_network: [...blocked],
+  return { fetch: guardedFetch, canRequest:()=>!failed&&!signal?.aborted&&!limitReached(requests,maxRequests), summary: () => ({ requests, retries: 0, blocked_before_network: [...blocked],
     known_input_tokens: responses.reduce((sum, value) => sum + (value.usage.input_tokens ?? 0), 0),
     known_output_tokens: responses.reduce((sum, value) => sum + (value.usage.output_tokens ?? 0), 0),
     unknown_usage_requests: requests - responses.filter(value => value.usage.input_tokens !== null && value.usage.output_tokens !== null).length,
