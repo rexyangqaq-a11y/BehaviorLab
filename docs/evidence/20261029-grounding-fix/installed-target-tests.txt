@@ -1,0 +1,22 @@
+✔ midscene regenerates invalid coordinates before native execution and audits both requests (21.0951ms)
+✔ autoglm regenerates invalid coordinates before native execution and audits both requests (1.8285ms)
+✔ mobiagent regenerates invalid coordinates before native execution and audits both requests (1.159ms)
+✔ two correction requests maximum, never clamp invalid coordinates or report success (3.2687ms)
+✔ request budget and unknown action effects prohibit correction (1.0313ms)
+✔ HTTP errors, missing usage and network errors are never retried as grounding (1.0251ms)
+✔ Stop, screenshot failure and orientation changes cannot initiate a correction request (1.2105ms)
+✔ only declared geometry is interpreted; ordinary text, finish, permissions and malformed XML are left to native code (0.2498ms)
+✔ valid reply is returned unchanged without capture, extra requests or recovery (0.378ms)
+✔ recovery diagnostics appear in the process timeline without being counted as device actions (0.468ms)
+✔ pinned Midscene codec rejects the recorded box and accepts the regenerated box at the unchanged input size (10.1551ms)
+✔ actual HarmonyAgent keeps its native planner and executes only the regenerated Tap (1563.5349ms)
+✔ actual autoglm native loop executes only regenerated action, not the invalid action (1862.4862ms)
+✔ actual mobiagent native loop executes only regenerated action, not the invalid action (3499.2298ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7075.3574

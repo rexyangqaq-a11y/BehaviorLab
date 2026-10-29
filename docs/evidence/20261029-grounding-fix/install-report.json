@@ -1,0 +1,57 @@
+{
+  "patch": "grounding-recovery-20261029-1",
+  "installed_at": "2026-10-29T08:28:35.663Z",
+  "target": "D:\\work\\Memory\\BehaviorLab-v0.4.0-preview.13-Windows-x64\\BehaviorLab",
+  "source_commit": "f6a5de2292b24f1ecba99d389dea746cb4b477f8",
+  "scope": "local-only; online Release untouched",
+  "files": [
+    {
+      "file": "src/phone-grounding-recovery.mjs",
+      "existed": false,
+      "before_sha256": null,
+      "after_sha256": "88ac2fb73afd526c4f02242721e62e1874041327a1179ad6a3882b43c364597b"
+    },
+    {
+      "file": "src/gui-trial-transport.mjs",
+      "existed": true,
+      "before_sha256": "2de68f1585895b7dde9478d026b5b4ce881434c833f61ba6f90aeb64abe9961f",
+      "after_sha256": "2ffc5c2a820b18f87ffb2242cace33a102463b59fcab1348eab85a90e9f92db4"
+    },
+    {
+      "file": "web/phone-process.mjs",
+      "existed": true,
+      "before_sha256": "6feb7fdeec7e783542681e3846c3a634c46f57fc766e54fb7ab23bbff00f86f5",
+      "after_sha256": "d667a8c28a9c3a01322fde34a4c3369665312746a010ecac7ec4523c733c8634"
+    },
+    {
+      "file": "tests/phone-grounding-recovery.test.mjs",
+      "existed": false,
+      "before_sha256": null,
+      "after_sha256": "ac39d5bcf63a8ebbc70becaed1a45d53994e83ab4f3b63967faf36ef868359f5"
+    },
+    {
+      "file": "scripts/phone-lab-worker.mjs",
+      "existed": true,
+      "before_sha256": "6a8f480e2a19a4c8a079bc9762a32fb862f6ef0ba19269196237d33057798883",
+      "after_sha256": "25766556a99ad6a2058da5bae819c68fbc31d9a4a796d97ea1ecdabf254f5872"
+    }
+  ],
+  "backup": "D:\\work\\Memory\\BehaviorLab-v0.4.0-preview.13-Windows-x64\\BehaviorLab\\.runtime\\patch-backups\\grounding-recovery-20261029-1",
+  "configuration_hashes_unchanged": true,
+  "service_restarted": false,
+  "active_test_after_install": false,
+  "effect": "new tests after installation; old records untouched",
+  "validation": {
+    "v04_full_package_tests": 203,
+    "v05_full_tests": 216,
+    "final_targeted_tests": 18,
+    "real_phone_actions": 0,
+    "real_model_requests": 0
+  },
+  "installed_target_tests": {
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_ui": "isolated synthetic fixture: rejection, re-request and handoff displayed; no real device"
+}
