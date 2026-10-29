@@ -1,4 +1,4 @@
-export const PHONE_LAB_VERSION = '0.4.0-preview.12';
+export const PHONE_LAB_VERSION = '0.4.0-preview.13';
 export {PHONE_FRAMEWORKS} from './phone-framework-registry.mjs';
 export const PHONE_CASES = [
   { id: 'HM-SYS-001', revision: 2, name: '设置 · 读取关于本机', app: '设置', bundle: 'com.huawei.hmos.settings',
@@ -33,11 +33,13 @@ export function phoneModelFamily(model) {
   return null;
 }
 export function normalizePhoneLimits(value = {}) {
+  if(!value||typeof value!=='object'||Array.isArray(value))throw Object.assign(Error('测试限额格式无效'),{status:400});
   const result = {};
-  for (const [key, fallback, min, max] of [['max_requests',15,1,60],['max_actions',40,1,150],['max_seconds',600,20,1800],['max_output_tokens',512,128,4096]]) {
-    const n = value[key] ?? fallback;
-    if (!Number.isSafeInteger(n) || n < min || n > max) throw Object.assign(new Error(`${key} 应为 ${min}–${max} 的整数`), {status:400});
-    result[key] = n;
+  for (const key of ['max_requests','max_steps','max_actions','max_repeated_actions','max_seconds','max_output_tokens','request_timeout_seconds']) {
+    const n = value[key];
+    if(n==null||n===''||n===0){result[key]=null;continue;}
+    if (!Number.isSafeInteger(n) || n < 1) throw Object.assign(new Error(`${key} 请留空／填0表示不限制，或填写正整数`), {status:400});
+    result[key]=n;
   }
-  return { ...result, automatic_retries: 0, max_payload_bytes: 2097152, max_text_chars: 90000, max_images: 2, thinking: false };
+  return { ...result, automatic_retries: 0, max_payload_bytes: null, max_text_chars: null, max_images: null, thinking: false };
 }

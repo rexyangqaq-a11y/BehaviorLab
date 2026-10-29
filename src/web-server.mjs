@@ -140,6 +140,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         response.end(await readFile(path.join(publicRoot, filename))); return;
       }
       const phoneFiles = { '/phone-connection-ui.mjs':['phone-connection-ui.mjs','text/javascript'], '/phone-video-ui.mjs':['phone-video-ui.mjs','text/javascript'], '/phone-video-protocol.mjs':['phone-video-protocol.mjs','text/javascript'], '/vendor/jmuxer.min.js':['vendor/jmuxer.min.js','text/javascript'], '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
+      phoneFiles['/phone-image-time.mjs']=['phone-image-time.mjs','text/javascript'];phoneFiles['/phone-hilog-ui.mjs']=['phone-hilog-ui.mjs','text/javascript'];
       if(request.method==='GET'&&phoneFiles[url.pathname]){
         const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
       }
@@ -151,6 +152,16 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
           jsonResponse(response,200,await phoneLab.connection.check());
         }
         else if(suffix==='/video/status'&&request.method==='GET')jsonResponse(response,200,phoneLab.video.status());
+        else if(suffix==='/hilog/status'&&request.method==='GET')jsonResponse(response,200,phoneLab.hilog.status());
+        else if(['/hilog/start','/hilog/stop'].includes(suffix)&&request.method==='POST'){
+          const input=await body(request);if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length)throw fail(400,'日志抓取不接受设备、路径或命令参数');
+          jsonResponse(response,200,await(suffix==='/hilog/start'?phoneLab.hilog.start():phoneLab.hilog.stop()));
+        }
+        else if(/^\/hilog\/hilog_[a-f0-9-]{36}\/download$/.test(suffix)&&request.method==='GET')await phoneLab.hilog.download(suffix.split('/')[2],response);
+        else if(/^\/runs\/phone_[a-f0-9-]{36}\/hilog(?:\/download)?$/.test(suffix)&&request.method==='GET'){
+          const id=suffix.split('/')[2],logger=phoneLab.testHilog(id),state=logger.status(),record=state.current??state.recordings?.[0];
+          if(suffix.endsWith('/download')){if(!record)throw fail(404,'没有已保存的HiLog分卷');await logger.download(record.id,response);}else jsonResponse(response,200,state);
+        }
         else if(suffix==='/video/start'&&request.method==='POST'){
           const input=await body(request);if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length)throw fail(400,'投屏启动不接受设备、路径或命令参数');
           jsonResponse(response,200,await phoneLab.video.start());

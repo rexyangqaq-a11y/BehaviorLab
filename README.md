@@ -1,3 +1,14 @@
+# 当前预览版：v0.4.0-preview.13
+
+新增长任务默认不限额、模型等待调整、截图毫秒时间和手动／自动HiLog。保留工作台内36项历史轨迹与通用机型洛书标定。
+
+- [Windows完整运行包（内含历史测试）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-Windows-x64.zip)
+- [独立历史测试档案](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-TestArchive.zip)
+- [SHA256校验表](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/SHA256SUMS.txt)
+- [发布清单](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/release-manifest.json)
+
+[本版说明](docs/V04_PREVIEW13_BACKPORT.md) · [部署教程](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md)。以下旧版本内容作为历史参考。
+
 # BehaviorLab · 用户行为序列仿真系统
 
 ## 2026-10-28：preview.12工作台回迁

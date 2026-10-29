@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {syntheticHilog} from './helpers/phone-hilog-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import path from 'node:path';
@@ -8,7 +9,7 @@ import {BUILTIN_HOME_START} from '../src/phone-startpoints.mjs';
 
 async function fixture(t){
   const root=await mkdtemp(path.join(os.tmpdir(),'behavior-home-'));t.after(()=>rm(root,{recursive:true,force:true}));
-  const lab=new PhoneLab(root,{lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json'),deviceFactory:async()=>{throw Error('No real phone allowed');}});
+  const lab=new PhoneLab(root,{hilogFactory:syntheticHilog,lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json'),deviceFactory:async()=>{throw Error('No real phone allowed');}});
   return {root,lab};
 }
 const settings={services:[{id:'fixture',model:'qwen3.8-flash',protocol:'openai-chat'}]};

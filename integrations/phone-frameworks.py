@@ -3,7 +3,7 @@
 No model key enters this process. JSON RPC goes to the local Node worker, which
 enforces the shared request budget and retains actual provider responses.
 """
-import sys, json, os, io, base64, types, pathlib, traceback
+import sys, json, os, io, base64, types, pathlib, traceback, itertools
 from PIL import Image
 # Node's JSON-lines wire is UTF-8 even on Windows machines whose console code
 # page is GBK. Decoding it with the locale can corrupt valid provider JSON.
@@ -25,6 +25,7 @@ def rpc(method, **args):
     if response.get('error'): raise RuntimeError(response['error'])
     return response.get('result')
 def model_response(messages, **extra):
+    if extra.get('max_tokens') is None: extra.pop('max_tokens', None)
     return rpc('model', body={'model': config['model'], 'messages': with_coordinate_contract(messages, config['framework']), 'stream': False, **extra})
 def shot(): return rpc('capture')
 def reduced(data, fmt='JPEG'):
@@ -85,17 +86,19 @@ def run_autoglm():
         def type_text(self,text,*a,**k): return action('input',text=text)
     factory._device_factory=Bridge()
     agent=PhoneAgent(ModelConfig(base_url='http://127.0.0.1:9/unused',api_key='local-rpc-no-provider-key',model_name=config['model'],max_tokens=config['max_output_tokens']),
-        AgentConfig(max_steps=config['max_actions'],verbose=False),confirmation_callback=lambda message:False,
+        AgentConfig(max_steps=config.get('max_steps',config['max_actions']) or float('inf'),verbose=False),confirmation_callback=lambda message:False,
         takeover_callback=lambda message:(_ for _ in ()).throw(RuntimeError('Manual takeover required: '+message)))
     # This helper otherwise bypasses the device factory for Enter; route it too.
     agent.action_handler._send_keyevent=lambda key: action('enter') if key in ('66','KEYCODE_ENTER') else (_ for _ in ()).throw(RuntimeError('Unsupported key'))
-    results=[]
-    for step in range(config['max_actions']):
+    last=None;steps=0
+    limit=config.get('max_steps',config['max_actions'])
+    for step in itertools.count():
+        if limit is not None and step>=limit: break
         result=agent.step(config['task'] if step==0 else None)
         item={'success':result.success,'finished':result.finished,'action':result.action,'message':result.message}
-        results.append(item);rpc('framework_step',result=item)
+        last=item;steps+=1;rpc('framework_step',result=item)
         if not result.success or result.finished:break
-    return {'native_result':results[-1] if results else None,'native_steps':len(results)}
+    return {'native_result':last,'native_steps':steps}
 
 def run_mobiagent():
     source_root=root/'.runtime/frameworks/MobiAgent'
@@ -110,7 +113,8 @@ def run_mobiagent():
     module.__file__=str(source_file);module.__package__='runner.mobiagent'
     sys.modules[module.__name__]=module
     exec(compile(source.replace(eager,'# Optional retrieval disabled by local adapter'),str(source_file),'exec'),module.__dict__)
-    module.MAX_STEPS=config['max_actions'];module.MAX_RETRIES=1 # upstream counts attempts, not retries
+    module.MAX_STEPS=config.get('max_steps',config['max_actions']) or float('inf');module.MAX_RETRIES=1 # upstream counts attempts, not retries
+    module.API_TIMEOUT=None # Local RPC transport owns request cancellation/deadlines.
     module.DECIDER_MAX_TOKENS=config['max_output_tokens'];module.preference_extractor=None
     class Completions:
         def create(self,**kwargs):

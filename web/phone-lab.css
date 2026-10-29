@@ -42,3 +42,5 @@ header{min-height:82px;height:auto;flex-wrap:wrap;padding-top:14px;padding-botto
 #live-video-status{font-size:10px;min-height:35px;overflow-wrap:anywhere;margin:12px 0}.live-video-panel .button-row{gap:8px}.live-video-panel button{font-size:11px;padding:10px 12px}.live-video-note{font-size:10px;border-top:1px solid #e3ebf0;margin:16px 0 0;padding-top:13px}#live-video-stage:fullscreen{width:100vw;height:100vh;border-radius:0}
 @media(max-width:1150px){.process-layout{grid-template-columns:200px minmax(0,1fr)}.live-video-panel{grid-column:1/-1;position:static}#live-video-stage{height:460px}}
 @media(max-width:700px){.process-layout{grid-template-columns:1fr}.live-video-panel{grid-column:auto;grid-row:1}#live-video-stage{height:410px}}
+
+.phone-hilog-panel{margin:16px 0}.phone-hilog-panel h2{font-size:17px}.hilog-record{display:flex;gap:16px;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line,#e5e7eb)}.automatic-hilog{padding:12px 0;border-bottom:1px solid var(--line,#e5e7eb);margin-bottom:14px}.trace-inputs button small{display:block;font-size:11px;margin-top:4px}

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {syntheticHilog} from './helpers/phone-hilog-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import path from 'node:path';
@@ -22,7 +23,7 @@ function device({already=false,activate=true,permission=false,extra=[]}={}){
 }
 async function labFixture(t){
   const root=await mkdtemp(path.join(os.tmpdir(),'behavior-companion-'));
-  const lab=new PhoneLab(root,{lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause'),deviceFactory:async()=>assert.fail('No real phone allowed')});
+  const lab=new PhoneLab(root,{hilogFactory:syntheticHilog,lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause'),deviceFactory:async()=>assert.fail('No real phone allowed')});
   t.after(async()=>{await lab.close();assert.equal(path.dirname(root),os.tmpdir());assert.ok(path.basename(root).startsWith('behavior-companion-'));await rm(root,{recursive:true,force:true});});
   return {root,lab};
 }

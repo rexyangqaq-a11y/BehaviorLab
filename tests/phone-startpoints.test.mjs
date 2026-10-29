@@ -4,10 +4,11 @@ import {startContract,compareStart,resetPhoneStart} from '../src/phone-startpoin
 import {PHONE_CASES,normalizePhoneLimits} from '../src/phone-lab-catalog.mjs';
 const environment={target_sha256:'fixture-device',device:{model:'fixture',api:'26'},app:{bundle:'fixture',version_name:'1'}};
 const settings=()=>startContract({environment,shot:{width:2584,height:1828},nodes:['设置','星闪和蓝牙','WLAN','星闪和蓝牙'].map(text=>({text})),task:PHONE_CASES[0]});
-test('suite contains five complete tasks and explicit 15-request per-assessment budget',()=>{
+test('suite contains five complete tasks and optional unlimited execution limits',()=>{
   assert.equal(PHONE_CASES.length,5);assert.equal(PHONE_CASES.filter(c=>/HM-(TB|XHS)/.test(c.id)).length,2);
-  assert.equal(normalizePhoneLimits().max_requests,15);assert.equal(normalizePhoneLimits().automatic_retries,0);
-  assert.throws(()=>normalizePhoneLimits({max_requests:100}),/max_requests/);
+  assert.equal(normalizePhoneLimits().max_requests,null);assert.equal(normalizePhoneLimits().automatic_retries,0);
+  assert.equal(normalizePhoneLimits({max_requests:1000000}).max_requests,1000000);
+  assert.throws(()=>normalizePhoneLimits({max_requests:-1}),/max_requests/);
 });
 test('starting-state comparison refuses a different device, version, rotation or unmet page condition',()=>{
   const a=settings();assert.equal(a.ready,true);assert.equal(compareStart(a,settings()).same,true);

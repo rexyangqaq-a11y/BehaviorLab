@@ -3,10 +3,11 @@
 <body>
 <header><a class="brand" href="/">b· <span>BehaviorLab</span></a><a class="back" href="/#/settings">返回工作台</a><span id="device-connection" class="pill" role="status">手机连接尚未核对</span><button id="check-device-connection" class="quiet">检查连接</button><button id="toggle-phone-video" class="quiet" disabled>开启投屏</button><span id="device-status" class="pill">读取执行状态</span><button id="pause-device" class="quiet">暂停真机操作</button></header>
 <main>
-  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.12 · 框架与模型可配置</small></div>
+  <div class="intro"><div><p class="eyebrow">PHONE AGENT EVALUATION</p><h1>真机测试工作台</h1><p>管理任务，选择组合，核对每一步真实执行。</p></div><small class="version">v0.4-preview.13 · 框架与模型可配置</small></div>
   <div id="pause-banner" class="pause-banner" hidden><div><strong>真机操作已暂停</strong><p>任务编辑与结果查看仍可使用。</p></div><button id="resume-device">恢复真机测试</button></div>
   <div id="message" role="status" hidden></div>
   <p id="archive-note" class="hint" hidden></p>
+  <section class="card phone-hilog-panel" aria-label="手动HiLog抓取"><div class="heading"><div><h2>手动HiLog</h2><p id="hilog-status" class="hint" role="status">正在读取日志状态。</p></div><div class="button-row compact"><button id="hilog-start" disabled>开始抓取HiLog</button><button id="hilog-stop" disabled>停止手动抓取</button></div></div><p class="hint">与每个测试的自动日志独立，可同时抓取。关闭页面后仍会抓取，请手动停止；不限时，按32 MiB分卷保存在本机，空间不足或断开时停止。日志内时间以手机为准。</p><details><summary>手动日志记录与下载</summary><div id="hilog-records"></div></details></section>
   <nav class="tabs" aria-label="工作台导航"><button data-tab="tasks" class="selected" aria-selected="true">任务列表</button><button data-tab="test" aria-selected="false">测试</button><button data-tab="process" aria-selected="false">测试过程详情</button><button data-tab="results" aria-selected="false">结果与对比</button></nav>
 
   <section id="tasks" class="tab" aria-label="任务列表">
@@ -39,7 +40,7 @@
         <section class="card dimension"><h3><span>03</span> 任务</h3><label class="single-dimension">选择任务<select id="case" required></select></label><div id="multi-tasks" class="multi-dimension" hidden></div><button type="button" id="manage-tasks" class="text-button">管理或新建任务 →</button></section>
       </div>
       <section class="card test-launch"><label><span id="test-name-label">测试名称（可选）</span><input id="test-name" maxlength="120" placeholder="例如：计算器 · Midscene 首次验证"></label><div id="test-plan" aria-live="polite"></div>
-      <details><summary>调整单项限额</summary><div class="form-grid four"><label>模型请求上限<input id="max_requests" type="number" value="15" min="1" max="60" required></label><label>框架动作上限<input id="max_actions" type="number" value="40" min="1" max="150" required></label><label>最长耗时（秒）<input id="max_seconds" type="number" value="600" min="20" max="1800" required></label><label>每请求输出 tokens<input id="max_output_tokens" type="number" value="512" min="128" max="4096" required></label></div><p class="hint">每个任务×框架×模型单独计量，零自动重试，整批无总请求限额。一次请求可能产生多个动作，也可能只作观察。</p></details>
+      <details><summary>可选限额（默认不限，适合超长任务）</summary><div class="form-grid four"><label>模型请求上限<input id="max_requests" type="number" min="0" step="1" placeholder="不限制"></label><label>框架步数上限<input id="max_steps" type="number" min="0" step="1" placeholder="不限制"></label><label>框架动作上限<input id="max_actions" type="number" min="0" step="1" placeholder="不限制"></label><label>连续相同动作上限<input id="max_repeated_actions" type="number" min="0" step="1" placeholder="不限制"></label><label>最长耗时（秒）<input id="max_seconds" type="number" min="0" step="1" placeholder="不限制"></label><label>单次模型等待（秒）<input id="request_timeout_seconds" type="number" min="0" step="1" placeholder="不限制"></label><label>每请求输出 tokens<input id="max_output_tokens" type="number" min="0" step="1" placeholder="由模型服务决定"></label></div><p class="hint">留空或0表示不限制；也可填写正整数自行设限，没有原来的填写上限。单次模型等待以这里为准。输出 tokens 留空时沿用模型服务默认，服务端上下文和输出能力仍适用。可随时手动停止，不自动重试失败请求。</p></details>
       <p id="test-readiness" class="hint"></p><div class="button-row"><button type="submit" id="start-test" class="primary">开始单项测试</button><button type="button" id="configure-task-start" class="text-button" hidden>去任务配置起点 →</button></div><p class="hint">起点自动使用任务中的配置，执行前核对。开始后在“测试过程详情”查看实时执行，在“结果与对比”复核与判定。</p></section>
     </form>
   </section>

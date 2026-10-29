@@ -1,4 +1,5 @@
 import {buildPhoneTrace,renderCall} from './phone-trace.mjs';
+import {phoneImageTime} from './phone-image-time.mjs';
 export const processActive=run=>['queued','running','stopping'].includes(run?.state?.status);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 export function currentProcessRun(catalog,heldId=null){
@@ -13,7 +14,7 @@ export function mergeProcessSnapshot(previous,update){
 }
 const phases={checking_start:'核对手机起点',execution:'框架执行中',final_observation:'采集最终依据'};
 export const processPhase=run=>processActive(run)?phases[run.state?.phase]??'等待框架执行':({ended:'框架已结束，等待业务核对',failed:'执行失败',blocked:'执行受阻',stopped:'已停止',interrupted:'执行中断，待核对',needs_attention:'动作效果未知，需人工核对；不自动重放'}[run?.state?.status]??'读取执行状态');
-const eventLabels={execution_start:'开始执行',framework_return:'框架返回',execution_stopped:'执行停止',execution_end:'执行收尾',model_request_blocked:'模型入口阻断',framework_io_stopped:'框架调用停止',permission_policy_check:'权限操作已拦截'};
+const eventLabels={hilog_capture_start:'开始本次测试自动HiLog',hilog_capture_end:'自动HiLog已收尾',execution_start:'开始执行',framework_return:'框架返回',execution_stopped:'执行停止',execution_end:'执行收尾',model_request_blocked:'模型入口阻断',framework_io_stopped:'框架调用停止',permission_policy_check:'权限操作已拦截'};
 export function processSteps(run){
   const trace=buildPhoneTrace(run.events??[]),steps=[];
   for(const call of trace.calls)steps.push({id:'model:'+call.id,seq:call.request.seq,at:call.request.at,kind:'model',title:'模型请求 #'+call.number,status:call.response?'已回复':'等待回复',call});
@@ -35,6 +36,6 @@ export function renderProcessStep(run,projection,selected){
   if(step.kind==='action')images=trace.images.filter(i=>i.asset.action_id===step.action.id||i.asset.id===step.action.before).map(i=>i.asset);
   if(step.kind==='event')images=trace.images.filter(i=>i.asset.role===(step.event.type==='execution_start'?'initial':['execution_end','execution_stopped'].includes(step.event.type)?'final':null)).map(i=>i.asset);
   const physical=step.action?(run.events??[]).filter(e=>e.seq>step.seq&&e.seq<(step.outcome?.seq??Infinity)&&['hdc_intent','hdc_return','hdc_failed_or_unknown'].includes(e.type)):[];
-  const shots=images.length?`<div class="process-evidence-images">${images.map(a=>`<figure><a href="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" target="_blank" rel="noopener"><img loading="lazy" src="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" alt="${esc(a.role==='model_input'?'模型实际输入图':a.role==='before'?'动作前截图':a.role==='after'?'动作后截图':'执行截图')}"></a><figcaption>${esc(a.role)} · ${esc(clock(a.at))}</figcaption></figure>`).join('')}</div>`:'';
+  const shots=images.length?`<div class="process-evidence-images">${images.map(a=>`<figure><a href="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" target="_blank" rel="noopener"><img loading="lazy" src="/api/phone-lab/runs/${encodeURIComponent(run.id)}/assets/${encodeURIComponent(a.id)}" alt="${esc(a.role==='model_input'?'模型实际输入图':a.role==='before'?'动作前截图':a.role==='after'?'动作后截图':'执行截图')}"></a><figcaption>${esc(a.role)} · ${esc(phoneImageTime(run,a).text)}</figcaption></figure>`).join('')}</div>`:'';
   return `<h3>${esc(step.title)}</h3><p class="hint">${esc(clock(step.at))} · ${esc(step.status)}</p>${step.action?`<h4>实际动作参数与返回</h4><pre>${esc(JSON.stringify({name:step.action.name,param:step.action.param,outcome:step.outcome??'尚无返回'},null,2))}</pre>${physical.length?`<details><summary>动作期间的 HDC 命令与返回 · ${physical.length} 条</summary><pre>${esc(JSON.stringify(physical,null,2))}</pre></details>`:''}`:''}${step.event?`<pre>${esc(JSON.stringify(step.event,null,2))}</pre>`:''}${shots}${step.call?renderCall(step.call,trace,run,[],{imageAttribute:'process-image'}):''}`;
 }

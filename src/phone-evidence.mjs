@@ -21,10 +21,12 @@ export class PhoneEvidence {
     return row;
   };
   save(file,value,{replace=false}={}) { writeFileSync(path.join(this.dir,file),JSON.stringify(this.clean(value),null,2),{flag:replace?'w':'wx',flush:true}); }
-  image = async (bytes,mime,role) => {
+  image = async (bytes,mime,role,{capturedAt=null}={}) => {
     const dimensions=imageDimensions(bytes), id='img_'+randomUUID(),file=`assets/${id}.${dimensions.format==='jpeg'?'jpeg':'png'}`;
     writeFileSync(path.join(this.dir,file),bytes,{flag:'wx',flush:true});
-    const asset={id,file,sha256:sha256(bytes),bytes:bytes.length,...dimensions,role,action_id:this.actionId??null,at:new Date().toISOString()};
+    const at=new Date().toISOString(),asset={id,file,sha256:sha256(bytes),bytes:bytes.length,...dimensions,role,action_id:this.actionId??null,at,phase:this.phase};
+    if(capturedAt)asset.captured_at=capturedAt;
+    if(Number.isFinite(this.testStartedAt))asset.test_elapsed_ms=Math.max(0,Date.parse(capturedAt??at)-this.testStartedAt);
     this.record({type:'image',asset}); return asset;
   };
 }

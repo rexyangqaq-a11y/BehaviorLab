@@ -9,7 +9,7 @@ export async function run({project,dir,input,service,key,session,evidence,transp
     const executable=phonePython(project);
     const nativeDir=path.join(dir,'native');await mkdir(nativeDir);
     const python=spawn(executable,['-I',path.join(project,'integrations/phone-frameworks.py')],{cwd:project,windowsHide:true,stdio:['pipe','pipe','pipe']});
-    python.stdin.write(JSON.stringify({project,framework:input.framework_id,model:service.model,task:prompt,app:input.app,data_dir:nativeDir,max_actions:input.limits.max_actions,max_output_tokens:input.limits.max_output_tokens})+'\n');
+    python.stdin.write(JSON.stringify({project,framework:input.framework_id,model:service.model,task:prompt,app:input.app,data_dir:nativeDir,max_actions:input.limits.max_actions,max_steps:Object.hasOwn(input.limits,'max_steps')?input.limits.max_steps:input.limits.max_actions,max_output_tokens:input.limits.max_output_tokens})+'\n');
     python.stderr.on('data',chunk=>appendFileSync(path.join(dir,'native-console.txt'),evidence.clean(chunk.toString())));
     const onAbort=()=>python.kill();control.signal.addEventListener('abort',onAbort,{once:true});
     try{

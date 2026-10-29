@@ -1,0 +1,55 @@
+{
+  "version": "0.4.0-preview.13",
+  "source_v05_commit": "fb0d1d9",
+  "packaged_tests": {
+    "total": 189,
+    "passed": 189,
+    "failed": 0,
+    "skipped": 0
+  },
+  "doctor": "passed",
+  "browser": {
+    "kind": "isolated packaged source; synthetic device; hardware paused; no real commands",
+    "historical_records": 36,
+    "manual_hilog_start_stop": true,
+    "automatic_hilog_attachment": true,
+    "image_time_millisecond_and_elapsed": true,
+    "synthetic_fixture_shipped": false
+  },
+  "historical_archive": {
+    "runs": 36,
+    "images": 1486,
+    "events": 12063,
+    "requests": 331
+  },
+  "companion": {
+    "scope": "model_build_screen",
+    "source": "v0.5 real-device verification 2026-10-28",
+    "model": "HOP-AL10",
+    "api": "26",
+    "os_fullname": "OpenHarmony-7.0.0.47",
+    "software_version": "HOP-AL10 7.1.0.42(SP22C00E24R4P1log)",
+    "screen": {
+      "width": 2584,
+      "height": 1828
+    },
+    "navigation_center": [
+      1291,
+      1805
+    ],
+    "binding_to_original_unit": false,
+    "operation": "Home then desktop native navigation double-tap",
+    "retested_real_phone_in_this_release": false
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "limitations": [
+    "No new real-phone or video capture during release",
+    "No long-running business plus video soak test",
+    "Other units of matching model/build/screen validated by contract, not new physical multi-device tests",
+    "Second PC and Explorer double-click not tested",
+    "No multi-hour real task or sustained real HiLog throughput test"
+  ],
+  "slow_mock_model_seconds": 31,
+  "release_authorization": "User confirmed reviewed v0.5 backport and new v0.4 release on 2026-10-29"
+}

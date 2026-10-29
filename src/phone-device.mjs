@@ -10,6 +10,7 @@ import { reconcileScreenshotSize } from './gui-screenshot-coordinates.mjs';
 import { imageDimensions } from '../scripts/hdc-device-baseline.mjs';
 import {privateScreenRects,maskPrivateScreen} from './phone-image-privacy.mjs';
 import {observedAction} from './phone-action-effects.mjs';
+import {limitReached} from './phone-execution-limits.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),exec=promisify(execFile);
 export const sleep = ms => new Promise(resolve=>setTimeout(resolve,ms));
 export function layoutNodes(tree) {
@@ -24,7 +25,7 @@ export async function createPhoneDevice({evidence,signal,limits={max_actions:40}
     if(signal?.aborted&&!final)throw Error('已停止');
     const shell=args[0]==='shell'?args.slice(1).join(' '):'';
     if(/^uitest uiInput /.test(shell)&&evidence.phase==='execution'){
-      if(!actionActive)throw Error('手机动作缺少先落盘的意图');if(physical>=limits.max_actions*4)throw Error('物理输入上限');physical++;
+      if(!actionActive)throw Error('手机动作缺少先落盘的意图');if(limitReached(physical,limits.max_actions==null?null:limits.max_actions*4))throw Error('物理输入上限');physical++;
     }
     const id='hdc_'+randomUUID(),beg=Date.now();evidence.record({type:'hdc_intent',id,args,target_sha256:target?sha256(target):null});
     try{
@@ -39,10 +40,10 @@ export async function createPhoneDevice({evidence,signal,limits={max_actions:40}
   const capture=async (role='observation',{final=false,forModel=false}={})=>{
     const remote=`/data/local/tmp/behaviorlab-${randomUUID()}.jpeg`,local=path.join(evidence.dir,`capture-${randomUUID()}.jpeg`);
     await command(['shell',`snapshot_display -f ${remote}`],{final});await command(['file','recv',remote,local],{final});
-    const bytes=await readFile(local),dimensions=imageDimensions(bytes),native=await device.size();
+    const bytes=await readFile(local),capturedAt=new Date().toISOString(),dimensions=imageDimensions(bytes),native=await device.size();
     const mapping=reconcileScreenshotSize(device,dimensions,native);screen={width:dimensions.width,height:dimensions.height};if(mapping.corrected)evidence.record({type:'coordinate_basis_corrected',mapping});
-    const asset=await evidence.image(bytes,'image/jpeg',role);let submitted=bytes;
-    if(forModel){const view=await layout(),rects=privateScreenRects(view.nodes,target);if(rects.length){submitted=await maskPrivateScreen(bytes,rects);await evidence.image(submitted,'image/jpeg','model-screen-masked');evidence.record({type:'model_image_privacy',policy:'visible-identifiers-v1',rectangles:rects,original_asset:asset.id});}}
+    const asset=await evidence.image(bytes,'image/jpeg',role,{capturedAt});let submitted=bytes;
+    if(forModel){const view=await layout(),rects=privateScreenRects(view.nodes,target);if(rects.length){submitted=await maskPrivateScreen(bytes,rects);await evidence.image(submitted,'image/jpeg','model-screen-masked',{capturedAt});evidence.record({type:'model_image_privacy',policy:'visible-identifiers-v1',rectangles:rects,original_asset:asset.id});}}
     return {asset,bytes:submitted,data:'data:image/jpeg;base64,'+submitted.toString('base64'),...dimensions};
   };
   // Retain every screenshot requested by native frameworks too.

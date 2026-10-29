@@ -4,11 +4,15 @@ import {phoneTestPlan,resolvePhoneSelection} from './phone-test-plan.mjs';
 import {createProcessPanel} from './phone-process-ui.mjs';
 import {createPhoneVideoPanel} from './phone-video-ui.mjs';
 import {createPhoneConnectionPanel} from './phone-connection-ui.mjs';
+import {phoneImageTime} from './phone-image-time.mjs';
+import {createPhoneHilogPanel} from './phone-hilog-ui.mjs';
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 const labels={needs_attention:'需人工核对',queued:'等待启动',running:'执行中',ended:'框架已结束',failed:'执行失败',blocked:'受阻',stopped:'已停止',interrupted:'中断待核对',stopping:'正在停止',waiting_for_start:'等待确认起点',passed:'通过',partial:'部分完成',cannot_determine:'无法确定',pending_review:'待核对'};
 const verdicts={passed:'通过',partial:'部分完成',failed:'未通过',blocked:'受阻',cannot_determine:'无法确定',pending_review:'待核对'};
 const active=r=>['queued','running','stopping'].includes(r?.state?.status),date=v=>v&&Number.isFinite(Date.parse(v))?new Date(v).toLocaleString('zh-CN',{timeZone:'Asia/Hong_Kong',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}):'时间未知';
 const seconds=v=>v==null?'—':(v/1000).toFixed(1)+'s',number=v=>v==null?'—':Number(v).toLocaleString('zh-CN');
+const limitLabel=v=>v==null?'不限':number(v);
+const limitIds=['max_requests','max_steps','max_actions','max_repeated_actions','max_seconds','request_timeout_seconds','max_output_tokens'];
 const api=async(route='',data)=>{const r=await fetch('/api/phone-lab'+route,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','X-Simulator-UI':'1'},body:JSON.stringify(data)});const value=await r.json();if(!r.ok)throw Error(value.error??'请求失败');return value;};
 function message(text,error=false){$('message').hidden=false;$('message').className=error?'error':'';$('message').textContent=text;}
 let saved={};try{saved=JSON.parse(localStorage.getItem('phone-lab-ui-v3')??'{}');}catch{}
@@ -19,7 +23,8 @@ const multi={frameworks:new Set(),services:new Set(),tasks:new Set()};
 const filterIds={origin:'filter-origin',framework:'filter-framework',model:'filter-model',task:'filter-task',phone:'filter-phone',verdict:'filter-verdict',phase:'filter-phase',evaluation:'filter-evaluation',search:'filter-search'};
 const processPanel=createProcessPanel({api,getCatalog:()=>catalog,openResults:selectRun,message});
 const videoPanel=createPhoneVideoPanel({api,getCatalog:()=>catalog,message});
-const connectionPanel=createPhoneConnectionPanel({api,badge:$('device-connection'),button:$('check-device-connection'),onChange:value=>videoPanel.connectionChanged(value)});
+const hilogPanel=createPhoneHilogPanel({api,getCatalog:()=>catalog,message});
+const connectionPanel=createPhoneConnectionPanel({api,badge:$('device-connection'),button:$('check-device-connection'),onChange:value=>{videoPanel.connectionChanged(value);hilogPanel.connectionChanged(value);}});
 function filters(){return Object.fromEntries(Object.entries(filterIds).map(([k,id])=>[k,$(id).value]));}
 function persist(){try{localStorage.setItem('phone-lab-ui-v3',JSON.stringify({filters:filters(),view:resultView,sort:$('result-sort').value,pageSize:$('page-size').value}));}catch{}}
 function persistSelection(){savedSelection={framework_id:$('framework').value,service_id:$('service').value};try{localStorage.setItem('phone-lab-selection-v1',JSON.stringify(savedSelection));}catch{}}
@@ -67,7 +72,7 @@ async function saveTask(){
 }
 
 function selection(){return mode==='single'?{mode,framework_ids:[$('framework').value].filter(Boolean),service_ids:[$('service').value].filter(Boolean),case_ids:[$('case').value].filter(Boolean)}:{mode,framework_ids:[...multi.frameworks],service_ids:[...multi.services],case_ids:[...multi.tasks]};}
-const limits=()=>Object.fromEntries(['max_requests','max_actions','max_seconds','max_output_tokens'].map(id=>[id,Number($(id).value)]));
+const limits=()=>Object.fromEntries(limitIds.map(id=>[id,$(id).value.trim()===''?null:Number($(id).value)||null]));
 function selectedStart(id){return catalog.starts.find(s=>s.id===taskById(id)?.startpoint_id&&(s.contract?.ready||s.builtin));}
 function syncSelection(){
   const signature=JSON.stringify([catalog.frameworks.map(f=>[f.id,f.available]),catalog.services.map(s=>[s.id,s.model,s.name,s.family,s.missing]),tasks()]);
@@ -105,12 +110,12 @@ function renderPreparation(){
 function renderPlan(){
   let plan,error;try{plan=phoneTestPlan(selection());}catch(e){error=e.message;}
   const sel=selection(),missing=sel.case_ids.filter(id=>!selectedStart(id));
-  $('test-plan').innerHTML=plan?`<strong>${sel.framework_ids.length} 个框架 × ${sel.service_ids.length} 个模型 × ${sel.case_ids.length} 个任务 <span class="plan-total">${plan.count} 个测试单元</span></strong><p class="hint">每单元最多 ${number(limits().max_requests)} 次请求，顺序执行。</p>`:`<p class="hint">${esc(error)}</p>`;
+  $('test-plan').innerHTML=plan?`<strong>${sel.framework_ids.length} 个框架 × ${sel.service_ids.length} 个模型 × ${sel.case_ids.length} 个任务 <span class="plan-total">${plan.count} 个测试单元</span></strong><p class="hint">每单元模型请求${limits().max_requests==null?'不限制次数':'上限 '+number(limits().max_requests)+' 次'}，顺序执行，可随时停止。</p>`:`<p class="hint">${esc(error)}</p>`;
   const reason=error??(missing.length?'任务“'+missing.map(id=>taskById(id)?.name).join('、')+'”尚未配置当前版本的起点，请先到任务中配置。':catalog.device_pause?.paused?'真机操作已暂停。':catalog.active_batch_id?'组合评估尚未结束。':catalog.busy?'手机正被其他测试占用。':busy?'正在处理…':sel.case_ids.some(id=>selectedStart(id)?.builtin)?'将按任务所选起点自动复原并核对，通过后才调用模型；请连接并解锁手机。':'将使用任务中配置的起点，可以开始。');
   $('configure-task-start').hidden=!missing.length;$('configure-task-start').dataset.taskId=missing[0]??'';
   $('test-readiness').textContent=reason;$('start-test').disabled=Boolean(error||missing.length||busy||catalog.device_pause?.paused||catalog.busy||catalog.active_batch_id);$('start-test').textContent=mode==='single'?'开始单项测试':`开始组合评估${plan?'（'+plan.count+'项）':''}`;
 }
-function previewStart(id){const s=catalog.starts.find(s=>s.id===id);if(!s)return;$('start-preview').innerHTML=`<img class="screen" src="/api/phone-lab/starts/${s.id}/assets/${s.asset.id}" alt="已保存的手机起点"><p>${esc(s.name)} · ${esc(date(s.source_captured_at??s.created_at))}</p><p class="hint">${esc(s.environment?.device?.model??'型号未知')} · ${s.asset.width}×${s.asset.height}</p>`;$('start-dialog').showModal();}
+function previewStart(id){const s=catalog.starts.find(s=>s.id===id);if(!s)return;$('start-preview').innerHTML=`<img class="screen" src="/api/phone-lab/starts/${s.id}/assets/${s.asset.id}" alt="已保存的手机起点"><p>${esc(s.name)} · ${esc(date(s.source_captured_at??s.created_at))}</p><p class="hint">${esc(phoneImageTime(s,s.asset).text)}</p><p class="hint">${esc(s.environment?.device?.model??'型号未知')} · ${s.asset.width}×${s.asset.height}</p>`;$('start-dialog').showModal();}
 
 function resultOptions(initial=false){
   options('filter-framework',catalog.frameworks.map(f=>[f.id,f.name]),{placeholder:'全部'});
@@ -157,7 +162,7 @@ function renderDetail(){
   $('run-title').innerHTML=`<h2>${esc(r.name)}</h2>${r.read_only?'<p class="hint">随包历史真机测试 · 只读 · 旧协议成绩，用户复核待定</p>':''}<p class="hint">${r.name!==runTaskName(r)?esc(runTaskName(r))+' · ':''}${esc(r.framework.name)} / ${esc(r.service.model)} · ${date(r.created_at)} · ${esc(r.device_info?.model??'型号未知')}</p>`;
   $('monitor-actions').innerHTML=active(r)?`<button id="stop-run">停止此项</button>`:badge(r);
   const totalTokens=usage?usage.known_input_tokens+usage.known_output_tokens:responses.reduce((s,e)=>s+(e.usage?.input_tokens??0)+(e.usage?.output_tokens??0),0);
-  $('run-metrics').innerHTML=[['业务判定',verdicts[r.review?.verdict??'pending_review']],['模型请求',calls.length+' / '+r.limits.max_requests],['框架动作',r.events.filter(e=>e.type==='action_intent').length],['执行耗时',active(r)?'执行中':seconds(r.result?.duration_ms)],['已知 tokens',number(totalTokens)]].map(([label,value])=>`<div><small>${label}</small><strong>${esc(value)}</strong></div>`).join('');
+  $('run-metrics').innerHTML=[['业务判定',verdicts[r.review?.verdict??'pending_review']],['模型请求',calls.length+' / '+limitLabel(r.limits.max_requests)],['框架动作',r.events.filter(e=>e.type==='action_intent').length],['执行耗时',active(r)?'执行中':seconds(r.result?.duration_ms)],['已知 tokens',number(totalTokens)]].map(([label,value])=>`<div><small>${label}</small><strong>${esc(value)}</strong></div>`).join('');
   const rows=resultRows(),i=rows.findIndex(row=>row.id===r.id);$('previous-run').disabled=i<=0;$('next-run').disabled=i<0||i>=rows.length-1;
   if(!reviewEditing)setDetailTab(detailTab);
 }
@@ -167,7 +172,7 @@ function backResults(){selectedRun=null;snapshot=null;reviewEditing=false;$('tra
 async function refreshCatalog({initial=false}={}){
   catalog=await api();const paused=Boolean(catalog.device_pause?.paused);$('device-status').textContent=paused?'真机已暂停':catalog.busy?'手机执行中':'当前无任务';$('pause-banner').hidden=!paused;$('pause-device').disabled=paused;
   const nextTasks=JSON.stringify(tasks());if(taskSignature!==nextTasks){renderTasks();taskSignature=nextTasks;}
-  $('archive-note').hidden=!catalog.archive;$('archive-note').textContent=catalog.archive?`已加载 ${catalog.archive.runs} 项随包历史真机测试。到“结果与对比”查看截图、逐步轨迹与原始回复；历史档案只读，不会启动手机或模型。`:'';syncSelection();resultOptions(initial);renderResults();processPanel.catalogChanged();videoPanel.refresh();
+  $('archive-note').hidden=!catalog.archive;$('archive-note').textContent=catalog.archive?`已加载 ${catalog.archive.runs} 项随包历史真机测试。到“结果与对比”查看截图、逐步轨迹与原始回复；历史档案只读，不会启动手机或模型。`:'';syncSelection();resultOptions(initial);renderResults();processPanel.catalogChanged();videoPanel.refresh();hilogPanel.refresh();
 }
 async function startTest(){const plan=phoneTestPlan(selection()),name=$('test-name').value;busy=true;renderPlan();try{if(mode==='single'){const started=await api('/runs',{framework_id:plan.framework_ids[0],service_id:plan.service_ids[0],case_id:plan.case_ids[0],limits:limits(),phase_id:'single',name});await refreshCatalog();processPanel.open(started.id);showTab('process');message('已启动单项测试，过程页将跟随当前用例。');}else{const b=await api('/batches',{framework_ids:plan.framework_ids,service_ids:plan.service_ids,case_ids:plan.case_ids,limits:limits(),name});await refreshCatalog();$('filter-evaluation').value=b.id;showTab('process');message('组合评估已启动，共'+plan.count+'项；过程页可查看实时轨迹或停止。');}}finally{busy=false;startsSignature='';renderPreparation();renderPlan();}}
 
@@ -214,7 +219,7 @@ document.addEventListener('change',event=>{const el=event.target;if(el.dataset.m
 for(const type of ['input','change'])$('task-form').addEventListener(type,()=>{startsSignature='';renderPreparation();});
 for(const id of ['task-search','task-origin'])$(id).addEventListener(id==='task-search'?'input':'change',renderTasks);
 for(const id of [...Object.values(filterIds),'result-sort','page-size'])$(id).addEventListener(id==='filter-search'?'input':'change',()=>{page=0;renderResults();});
-for(const id of ['max_requests','max_actions','max_seconds','max_output_tokens'])$(id).addEventListener('input',renderPlan);
+for(const id of limitIds)$(id).addEventListener('input',renderPlan);
 $('task-form').onsubmit=async e=>{e.preventDefault();if(busy)return;$('save-task').disabled=true;try{await saveTask();}catch(error){message(error.message,true);}finally{$('save-task').disabled=Boolean(editingTask?.archived);}};
 $('test-form').onsubmit=async e=>{e.preventDefault();if(busy)return;try{await startTest();}catch(error){message(error.message,true);}};
 document.addEventListener('submit',async e=>{if(e.target.id!=='review-form')return;e.preventDefault();try{const a=snapshot.assets.find(a=>a.id===selectedImage)??snapshot.result?.final_asset;await api('/runs/'+selectedRun+'/review',{verdict:$('verdict').value,note:$('review-note').value,evidence_ids:a?[a.id]:[]});snapshot=await api('/runs/'+selectedRun);reviewEditing=false;renderDetail();await refreshCatalog();message('独立判定已保存。');}catch(error){message(error.message,true);}});

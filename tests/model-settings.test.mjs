@@ -63,7 +63,7 @@ test('invalid or stale edits never overwrite a newer configuration or its creden
   try {
     store.save(input(0, [service({ api_key: 'secret-original-fixture' })]));
     assert.throws(() => store.save(input(0, [service({ api_key: null })])), { status: 409 });
-    for (const changes of [{ base_url: 'javascript:alert(1)' }, { base_url: 'https://user:secret@host.invalid' }, { base_url: 'https://host.invalid?api_key=secret' }, { timeout_ms: 0 }, { api_key: 'secret\nheader' }]) {
+    for (const changes of [{ base_url: 'javascript:alert(1)' }, { base_url: 'https://user:secret@host.invalid' }, { base_url: 'https://host.invalid?api_key=secret' }, { timeout_ms: -1 }, { api_key: 'secret\nheader' }]) {
       assert.throws(() => store.save(input(1, [service(changes)])), { status: 400 });
     }
     assert.throws(() => store.save(input(1, [service()], { gui: 'unknown' })), { status: 400 });

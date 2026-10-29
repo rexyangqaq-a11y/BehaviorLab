@@ -13,6 +13,8 @@ import {createRepeatedActionGuard} from '../src/gui-trial-action-limits.mjs';
 import {assessPermissionAction} from '../src/phone-permissions.mjs';
 import {unprotectLocalSecret} from '../src/local-secret.mjs';
 import {validatePhysicalAction} from '../src/phone-action-effects.mjs';
+import {limitReached,scheduleDeadline} from '../src/phone-execution-limits.mjs';
+import {createPhoneModelNetwork} from '../src/phone-model-network.mjs';
 const {values}=parseArgs({options:{root:{type:'string'},id:{type:'string'}}});
 if(!/^phone_[a-f0-9-]{36}$/.test(values.id??''))throw Error('Invalid run ID');
 const project=fileURLToPath(new URL('../',import.meta.url)),dir=path.join(path.resolve(values.root),'.phone-lab/runs',values.id);
@@ -40,13 +42,15 @@ try{
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
   const files=['scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/phone-companion-start.mjs','integrations/phone-companion-profiles.json','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
-  files.push('src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
+  files.push('src/phone-hilog.mjs','web/phone-image-time.mjs','src/phone-execution-limits.mjs','src/phone-model-network.mjs','src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','src/device-lease.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
-  executionStarted=Date.now();evidence.phase='execution';
+  executionStarted=Date.now();evidence.testStartedAt=executionStarted;evidence.phase='execution';
   await state({status:'running',phase:'execution',started_at:new Date(executionStarted).toISOString()});
-  timer=setTimeout(()=>control.abort('time_limit'),input.limits.max_seconds*1000);
+  timer=scheduleDeadline(()=>control.abort('time_limit'),input.limits.max_seconds==null?null:input.limits.max_seconds*1000);
   watcher=setInterval(()=>{if(existsSync(path.join(dir,'stop.json')))control.abort('user_stop');},250);
-  transport=createTrialTransport({baseUrl:service.base_url,model:service.model,apiKey:key,signal:control.signal,
+  const network=createPhoneModelNetwork(project);deferCleanup(()=>network.close());
+  const requestTimeout=input.limits.request_timeout_seconds===undefined?(input.service.timeout_ms??service.timeout_ms??30000):input.limits.request_timeout_seconds==null?null:input.limits.request_timeout_seconds*1000;
+  transport=createTrialTransport({baseUrl:service.base_url,model:service.model,apiKey:key,signal:control.signal,fetchImpl:network.fetch,requestTimeoutMs:requestTimeout,
     record:evidence.record,saveImage:evidence.image,maxRequests:input.limits.max_requests,maxOutputTokens:input.limits.max_output_tokens,
     maxTextChars:input.limits.max_text_chars,maxImages:input.limits.max_images,maxPayloadBytes:input.limits.max_payload_bytes});
   const taskRules=input.task?.origin==='user_defined'?'\n\n判定要求：'+input.task.acceptance.join('；')+(input.task.forbidden?'\n禁止操作：'+input.task.forbidden:''):'';
@@ -57,9 +61,9 @@ try{
     evidence.record({type:'permission_policy_check',policy:'deny_new_system_permissions_v1',action:name,duration_ms:Date.now()-began,...decision});
     if(!decision.allowed){permissionBlocks++;throw Object.assign(Error(decision.reason),{policy_blocked:true,effect_unknown:false});}
   };
-  const repeatGuard=createRepeatedActionGuard(3);
+  const repeatGuard=createRepeatedActionGuard(Object.hasOwn(input.limits,'max_repeated_actions')?input.limits.max_repeated_actions??Infinity:3);
   const action=async(name,param,operation)=>{
-    if(control.signal.aborted)throw Error('已停止');if(counter.value>=input.limits.max_actions)throw Error('动作次数上限');
+    if(control.signal.aborted)throw Error('已停止');if(limitReached(counter.value,input.limits.max_actions))throw Error('动作次数上限');
     repeatGuard({name,param});counter.value++;return session.atomic(name,param,operation);
   };
   const dispatch=async(name,p={})=>{validatePhysicalAction(name,p,session.screenSize());await checkPermissions(name,p);return action(name,p,async()=>{
@@ -74,7 +78,7 @@ try{
     }
     throw Error('动作不在已接通能力中：'+name);
   });};
-  evidence.record({type:'execution_start',instruction:prompt,limits:input.limits});
+  evidence.record({type:'execution_start',started_at:new Date(executionStarted).toISOString(),instruction:prompt,limits:input.limits});
   let nativeResult;
   const adapter=await import('../integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs');
   nativeResult=await adapter.run({project,dir,input,service,key,session,evidence,transport,prompt,control,counter,checkPermissions,repeatGuard,dispatch,deferCleanup});
@@ -84,7 +88,7 @@ try{
   result.status=permissionBlocks?'blocked':control.signal.aborted?'stopped':executionStarted?'failed':'blocked';result.reason=error.message;result.effect_unknown=permissionBlocks?false:error.effect_unknown??false;
   evidence?.record({type:'execution_stopped',reason:error.message,effect_unknown:result.effect_unknown});
 }finally{
-  clearTimeout(timer);clearInterval(watcher);
+  timer?.();clearInterval(watcher);
   result.action_effects=session?.effectState()??{effect_unknown:false,unknown_action_ids:[],pending_action_ids:[]};
   result.effect_unknown=Boolean(result.effect_unknown||result.action_effects.effect_unknown);
   if(result.effect_unknown){result.status='needs_attention';result.reason=result.reason??'动作效果存在不确定，需人工核对；禁止自动重放';}

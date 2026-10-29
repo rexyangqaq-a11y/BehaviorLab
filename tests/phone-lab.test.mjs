@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {syntheticHilog} from './helpers/phone-hilog-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm,writeFile,mkdir} from 'node:fs/promises';
 import path from 'node:path';
@@ -33,7 +34,7 @@ test('phone interface and read-only catalog require no device; paused HTTP reque
   assert.equal((await fetch(app.url+'/phone-results.mjs')).status,200);
   assert.equal((await post('/pause')).status,200);
   for(const route of ['/starts','/runs','/batches'])assert.equal((await post(route)).status,423);
-  const c=await(await fetch(app.url+'/api/phone-lab')).json();assert.equal(c.cases.length,5);assert.equal(c.default_limits.max_requests,15);assert.equal(c.batch_request_limit,null);assert.equal(c.device_pause.paused,true);assert.equal(devices,0);
+  const c=await(await fetch(app.url+'/api/phone-lab')).json();assert.equal(c.cases.length,5);assert.equal(c.default_limits.max_requests,null);assert.equal(c.batch_request_limit,null);assert.equal(c.device_pause.paused,true);assert.equal(devices,0);
   assert.equal((await post('/resume')).status,200);assert.equal(devices,0);
 });
 
@@ -47,12 +48,12 @@ test('integration diagnostics remain readable with actual calls and source versi
 });
 
 test('a batch freezes its original reference and invalid limits cannot leave a batch active',async t=>{
-  const root=await setup(t),lab=new PhoneLab(root,{lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json')});
+  const root=await setup(t),lab=new PhoneLab(root,{hilogFactory:syntheticHilog,lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json')});
   const id='start_00000000-0000-0000-0000-000000000001',dir=lab.directory('starts',id);await mkdir(dir);
   await writeFile(path.join(dir,'start.json'),JSON.stringify({id,created_at:'2026-10-21',case_id:'HM-SYS-001',contract:{ready:true,case_revision:2,comparison_key:'original'}}));
   const input={case_ids:['HM-SYS-001'],combinations:[{framework_id:'midscene',service_id:'fixture-a'},{framework_id:'mobiagent',service_id:'fixture-b'}]};
   const settings={services:[{id:'fixture-a',protocol:'openai-chat',model:'qwen3.8-flash'},{id:'fixture-b',protocol:'openai-chat',model:'qwen3.7-plus'}]};
-  await assert.rejects(lab.batch({...input,limits:{max_requests:0}},settings));assert.equal(lab.activeBatch,undefined);
+  await assert.rejects(lab.batch({...input,limits:{max_requests:-1}},settings));assert.equal(lab.activeBatch,undefined);
   let captures=0,launches=0;lab.captureStart=async()=>({id:'fixture-current',contract:{ready:true,comparison_key:++captures===1?'original':'drifted'}});
   lab.start=async()=>{launches++;return {id:'fixture-run'};};lab.summary=()=>({state:{status:'ended'}});
   const batch=await lab.batch(input,settings);await lab.batchCompletion;

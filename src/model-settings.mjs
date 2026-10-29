@@ -66,14 +66,15 @@ export class ModelSettings {
         try { url = new URL(base_url); } catch { invalid('服务地址应为完整的 http:// 或 https:// 地址'); }
         if (!['http:', 'https:'].includes(url.protocol) || !url.hostname || url.username || url.password || url.search || url.hash) invalid('服务地址仅填写接口根地址，不包含密钥、查询参数或账号');
       }
-      if (!Number.isSafeInteger(source.timeout_ms) || source.timeout_ms < 5000 || source.timeout_ms > 300000) invalid('请求超时应在 5 至 300 秒之间');
+      const timeout=source.timeout_ms??0;
+      if (!Number.isSafeInteger(timeout) || timeout < 0) invalid('请求超时请填非负整数，0表示不限制');
       if (Object.hasOwn(source, 'api_key')) {
         if (source.api_key === null) updates.push({ id, key: null });
         else updates.push({ id, key: text(source.api_key, 'API Key', 4096, true) });
       }
       if (source.auth === 'none') updates.push({ id, key: null });
       return { id, name: text(source.name, '服务名称', 80, true), provider: source.provider, protocol: source.protocol,
-        base_url, model: text(source.model, '模型名称', 160), auth: source.auth, timeout_ms: source.timeout_ms };
+        base_url, model: text(source.model, '模型名称', 160), auth: source.auth, timeout_ms: timeout };
     });
     if (Object.keys(input.bindings).some(id => !MODEL_ROLES.some(role => role.id === id))) invalid('存在未知的模型角色');
     const bindings = Object.fromEntries(MODEL_ROLES.map(role => {

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import {limitReached,scheduleDeadline} from './phone-execution-limits.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const count = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
@@ -26,18 +27,18 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
     };
     if (signal?.aborted) return block('Trial stopped');
     if (failed) return block('A previous request failed or had unknown usage; automatic retry is disabled');
-    if (requests >= maxRequests) return block('Model request budget exhausted');
+    if (limitReached(requests,maxRequests)) return block('Model request budget exhausted');
     if (String(url) !== destination.href || options.method?.toUpperCase() !== 'POST') throw new Error('Unexpected model destination or method');
     if (typeof options.body !== 'string') throw new Error('Only inspectable JSON model requests are allowed');
     const body = JSON.parse(options.body);
     if (body.model !== model) throw new Error('Unexpected model; fallback is disabled');
     if (body.stream === true) throw new Error('Configure the SDK for non-stream mode before sending');
     body.stream = false;
-    body.max_tokens = maxOutputTokens;
+    if(maxOutputTokens==null||maxOutputTokens===0)delete body.max_tokens;else body.max_tokens = maxOutputTokens;
     delete body.max_completion_tokens;
     body.enable_thinking = false;
     const serialized = JSON.stringify(body);
-    if (Buffer.byteLength(serialized) > maxPayloadBytes) return block('Model payload byte limit exceeded');
+    if (maxPayloadBytes!=null&&Buffer.byteLength(serialized) > maxPayloadBytes) return block('Model payload byte limit exceeded');
     const fingerprint = hash(serialized);
     if (seen.has(fingerprint)) return block('Duplicate model request blocked; no automatic retry');
     const publicBody = structuredClone(body);
@@ -47,14 +48,14 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
       if (typeof value === 'string') {
         const match = value.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=\r\n]+)$/);
         if (match) {
-          if (++imageCount > maxImages) throw new Error('Model image count limit exceeded');
+          if (++imageCount > (maxImages??Infinity)) throw new Error('Model image count limit exceeded');
           const bytes = Buffer.from(match[2], 'base64');
           const asset = await saveImage(bytes, match[1], 'model_input');
           return `asset:${asset.file}#sha256=${asset.sha256}`;
         }
         if (/^https?:\/\//.test(value)) throw new Error('External image/resource URL not allowed in trial prompt');
         textChars += value.length;
-        if (textChars > maxTextChars) throw new Error('Model text context limit exceeded');
+        if (maxTextChars!=null&&textChars > maxTextChars) throw new Error('Model text context limit exceeded');
         return scrub(value);
       }
       if (Array.isArray(value)) return Promise.all(value.map(retain));
@@ -71,9 +72,10 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
     const id = `model_${++requests}`, started = Date.now();
     await record({ type: 'model_request_start', id, request: scrub(publicBody), serialized_sha256: fingerprint,
       serialized_bytes: Buffer.byteLength(serialized), images: imageCount, text_chars: textChars, max_retries: 0 });
+    const deadline=new AbortController(),cancelDeadline=scheduleDeadline(()=>deadline.abort(Error('Model request deadline exceeded')),requestTimeoutMs);
     try {
       const response = await fetchImpl(url, { ...options, body: serialized, redirect: 'error',
-        signal: AbortSignal.any([...(signal ? [signal] : []), ...(options.signal ? [options.signal] : []), AbortSignal.timeout(requestTimeoutMs)]) });
+        signal: AbortSignal.any([...(signal ? [signal] : []), ...(options.signal ? [options.signal] : []), deadline.signal]) });
       const raw = await response.clone().text();
       let data;
       try { data = JSON.parse(raw); } catch { data = null; }
@@ -91,7 +93,7 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
         usage: modelUsage(null), error: 'No verified response; no automatic retry.' };
       if (!responses.some(value => value.id === id)) { responses.push(entry); await record(entry); }
       throw new Error('Model transport stopped; see retained evidence', { cause: error });
-    }
+    }finally{cancelDeadline();}
   };
   return { fetch: guardedFetch, summary: () => ({ requests, retries: 0, blocked_before_network: [...blocked],
     known_input_tokens: responses.reduce((sum, value) => sum + (value.usage.input_tokens ?? 0), 0),

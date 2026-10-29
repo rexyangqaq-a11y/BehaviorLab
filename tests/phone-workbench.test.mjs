@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {syntheticHilog} from './helpers/phone-hilog-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import path from 'node:path';
@@ -28,7 +29,7 @@ async function baseline(lab,task,key='original',id='start_00000000-0000-0000-000
   const dir=lab.directory('starts',id);await mkdir(dir,{recursive:true});
   await writeFile(path.join(dir,'start.json'),JSON.stringify({id,created_at:id.endsWith('2')?'2026-10-23':'2026-10-22',case_id:task.id,environment:{device:{model:'fixture'},app:null},contract:{ready:true,case_revision:task.revision,comparison_key:key}}));return id;
 }
-function fixtureLab(root){let deviceCalls=0;const lab=new PhoneLab(root,{lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json'),deviceFactory:async()=>{deviceCalls++;throw Error('fixture must never access hardware');}});return {lab,calls:()=>deviceCalls};}
+function fixtureLab(root){let deviceCalls=0;const lab=new PhoneLab(root,{hilogFactory:syntheticHilog,lockPath:path.join(root,'lock'),pausePath:path.join(root,'pause.json'),deviceFactory:async()=>{deviceCalls++;throw Error('fixture must never access hardware');}});return {lab,calls:()=>deviceCalls};}
 
 test('named task library persists edits, protects builtins and detects stale revisions',async t=>{
   const root=await temporary(t),tasks=new PhoneTasks(root);assert.equal(tasks.list().length,5);
@@ -82,7 +83,7 @@ test('manual matrix waits per cell, rejects drift, freezes task content and supp
   let captures=0,launches=0,key='drift';const frozen=[];
   lab.captureStart=async(input,{taskSnapshot})=>{captures++;frozen.push(taskSnapshot);return {id:'fixture-current',contract:{ready:true,comparison_key:key}};};
   lab.start=async(input,services,{taskSnapshot})=>{launches++;assert.equal(taskSnapshot.revision,1);assert.equal(input.phase_id,'matrix');return {id:'fixture-run'};};lab.summary=()=>({state:{status:'ended'}});
-  const batch=await lab.batch({framework_ids:['midscene'],service_ids:['a','b'],case_ids:[task.id]},settings);assert.equal(batch.status,'waiting_for_start');assert.equal(captures,0);assert.equal(launches,0);
+  const batch=await lab.batch({framework_ids:['midscene'],service_ids:['a','b'],case_ids:[task.id]},settings);for(let i=0;i<20&&!batch.pending_entry;i++)await new Promise(resolve=>setImmediate(resolve));assert.equal(batch.status,'waiting_for_start');assert.equal(captures,0);assert.equal(launches,0);
   const firstToken=batch.pending_entry.token;
   await assert.rejects(lab.continueBatch(batch.id,{token:'stale'}),e=>e.status===409);assert.equal(captures,0);
   await assert.rejects(lab.continueBatch(batch.id,{token:firstToken}),e=>e.status===409);assert.equal(launches,0);assert.equal(batch.status,'waiting_for_start');
