@@ -1,0 +1,73 @@
+{
+  "checked_at": "2026-10-30T16:24:50.080Z",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "checks": [
+    {
+      "name": "Midscene",
+      "version": "1.16.0",
+      "status": "passed"
+    },
+    {
+      "name": "mobiagent",
+      "revision": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff",
+      "files": 118,
+      "status": "passed"
+    },
+    {
+      "name": "autoglm",
+      "revision": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "files": 37,
+      "status": "passed"
+    },
+    {
+      "name": "HOScrcpy video",
+      "sdk": "1.0.18-beta",
+      "status": "passed",
+      "kind": "file hashes, bundled Java and SDK class loading only; no device capture"
+    }
+  ],
+  "gui_result": "not_executed",
+  "python": {
+    "version": "3.12.14"
+  },
+  "native_contracts": [
+    {
+      "framework": "autoglm",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 5,
+      "unicode_input_roundtrip": true,
+      "jpeg_mime_roundtrip": true,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    },
+    {
+      "framework": "mobiagent",
+      "exit": 0,
+      "native_loop": "passed",
+      "fixture_model_responses": 5,
+      "fixture_device_actions": 4,
+      "unicode_input_roundtrip": true,
+      "jpeg_mime_roundtrip": null,
+      "real_model_requests": 0,
+      "real_device_actions": 0,
+      "gui_task_result": "not_executed",
+      "error": null
+    }
+  ],
+  "status": "passed",
+  "remaining": [
+    "Configure your own model services in Settings",
+    "Enable USB debugging, connect and authorize this computer",
+    "Unlock phone, save a task start point, then explicitly start a real test"
+  ]
+}
+
+Offline check only. No phone operation or model call was performed.
+Bundled video checks include file hashes, Java and SDK class loading.
+Report: .runtime\phone-doctor.json
+Press any key to continue . . . 

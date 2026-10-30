@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-30T16:36:15.767Z",
+  "local_links_checked": 93,
+  "missing_links": 0,
+  "requirement_ids_preserved": 25,
+  "runtime_source_unchanged_since_tested_commit": "5bb7db0",
+  "outgoing_paths_checked": 74,
+  "credential_pattern_matches": 0,
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

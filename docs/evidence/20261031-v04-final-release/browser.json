@@ -1,0 +1,24 @@
+{
+  "scope": "actual browser using the complete package web code with synthetic phone/connection/video fixtures and fresh data",
+  "version_visible": "0.4.0",
+  "bundled_task_visible": "淘宝-浏览50个商品",
+  "tasks": 6,
+  "historical_read_only_runs": 36,
+  "synthetic_runs": 2,
+  "result_records_visible": 38,
+  "corrupt_ledger_alert_line": 3,
+  "corrupt_review_button_count": 0,
+  "complete_alert_count": 0,
+  "complete_review_button_visible": true,
+  "screenshots": [
+    "tasks.png",
+    "damaged-ledger.png"
+  ],
+  "new_real_gui_task": false,
+  "temporary_tab_closed": true,
+  "stopped": true,
+  "device_factory_calls": 0,
+  "synthetic_connection_checks": 12,
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

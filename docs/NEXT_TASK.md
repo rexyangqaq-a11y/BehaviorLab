@@ -1,6 +1,6 @@
 # v0.4 下一任务
 
-2026-10-31。用户明确要求继续直至发布最终版；已恢复v0.4.0公开发布授权，不再等待旧的暂停条件。唯一下一步：完成新正式包的包内验证、冻结、上传与下载回读，直到正式Release可用。
+2026-10-31。用户明确要求继续直至发布最终版；已恢复v0.4.0公开发布授权，不再等待旧的暂停条件。正式包220/220、doctor、实际CMD启动／停止及隔离网页已通过。唯一下一步：冻结源码与ZIP，上传并下载回读，直到正式Release可用。
 
 必须阅读根AGENTS、README、CURRENT_STATUS、PRD、ARCHITECTURE、RELEASE_PROCESS、releases/v0.4.0.md、RELEASE_PUBLICATION与此前R01/R02及原生补验记录。
 
