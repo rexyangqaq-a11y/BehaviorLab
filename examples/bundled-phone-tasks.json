@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "authorized_at": "2026-10-29",
+  "description": "User explicitly requested publishing newly created task definitions; no credentials or run data.",
+  "entries": [
+    {
+      "task": {
+        "id": "task_c5937ad5-88e7-4810-b752-e93089b32684",
+        "revision": 3,
+        "name": "淘宝-浏览50个商品",
+        "instruction": "从手机桌面开始，自主找到并打开淘宝，搜索手机”，从上到下依次打开不同的五十个商品详情；每打开一个商品，下拉知道看到商品评价，再返回。操作过程中请勿打开直播商品或者广告界面（Tips：进入APP后最右上角的“X”按钮为系统自带AI的关闭按钮，非APP相关功能按钮，请勿触碰）",
+        "app": "淘宝",
+        "bundle": "com.taobao.taobao4hmos",
+        "acceptance": [
+          "打开不同的50个商品详情，下拉到评价"
+        ],
+        "initial_state": "使用任务设置中保存的起点",
+        "forbidden": "不修改账号，不进行交易、发布或互动。",
+        "reset": "manual",
+        "expected": [],
+        "origin": "user_defined",
+        "read_only": false,
+        "archived": false,
+        "created_at": "2026-10-29T07:20:14.558Z",
+        "updated_at": "2026-10-29T07:30:52.424Z"
+      },
+      "startpoint_id": "builtin_home_luoshu"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-﻿BehaviorLab v0.4.0-preview.13 · Windows 10/11 x64
+﻿BehaviorLab v0.4.0-preview.14 · Windows 10/11 x64
 
 下载与首次部署
 1. 本目录来自Release中的Windows-x64.zip，包含Node/Python/HDC、三框架和Java视频依赖。
@@ -43,3 +43,7 @@ preview.13: 连接手机后自动投屏，可在顶部关闭；失败不循环�
 preview.13: 新测试默认不限额，取消固定30秒模型等待；截图显示毫秒时间及执行累计耗时。
 顶部手动HiLog与每个新测试自动HiLog独立；详情可下载日志，32MiB分卷、低磁盘停止。
 关闭网页继续抓取，停服务结束；旧测试不补造HiLog。详见docs/V04_PREVIEW13_BACKPORT.md。
+
+preview.14：三框架增加执行前坐标恢复，每个决策最多补2次定位请求，计入原限额。
+新增可编辑任务“淘宝-浏览50个商品”，首次01_START后在任务列表显示，默认内置洛书起点；已有任务编辑保留，不自动执行。
+本版说明：docs/V04_PREVIEW14_RELEASE.md。

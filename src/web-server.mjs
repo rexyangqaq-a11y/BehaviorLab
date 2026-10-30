@@ -19,6 +19,7 @@ import { GuiLab } from './gui-lab.mjs';
 import { guiComparisonPlan } from './gui-comparison-cases.mjs';
 import {V04_EVIDENCE} from './v04-acceptance.mjs';
 import { PhoneLab } from './phone-lab.mjs';
+import {seedBundledPhoneTasks} from './phone-bundled-tasks.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
 const publicRoot = path.join(project, 'web');
@@ -39,9 +40,10 @@ async function body(request) {
   catch { throw fail(400, 'JSON 格式无效'); }
 }
 
-export async function createDebugServer({ dataRoot = path.join(project, '.data'), port = 4317, phoneLabOptions } = {}) {
+export async function createDebugServer({ dataRoot = path.join(project, '.data'), port = 4317, phoneLabOptions, seedBundledTasks = false } = {}) {
   await mkdir(dataRoot, { recursive: true });
   const root = await realpath(path.resolve(dataRoot));
+  if(seedBundledTasks)seedBundledPhoneTasks(root);
   const library = new UserLibrary(root);
   const modelSettings = new ModelSettings(root);
   const guiLab = new GuiLab(root);
@@ -413,7 +415,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const { values } = parseArgs({ options: { port: { type: 'string', default: '4317' }, data: { type: 'string' } } });
   const port = Number(values.port);
   ensure(Number.isSafeInteger(port) && port >= 1 && port <= 65535, 'Invalid port');
-  createDebugServer({ port, dataRoot: values.data }).then(app => {
+  createDebugServer({ port, dataRoot: values.data, seedBundledTasks: true }).then(app => {
     console.log(`BehaviorLab 用户行为仿真系统: ${app.url}`);
     console.log('仅监听本机；复用现有持久化流水线。Ctrl+C 停止服务，记录保留。');
     let stopping = false;

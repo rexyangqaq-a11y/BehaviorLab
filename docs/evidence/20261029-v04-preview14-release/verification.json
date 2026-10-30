@@ -1,0 +1,79 @@
+{
+  "version": "0.4.0-preview.14",
+  "source_v05_commit": "3383031",
+  "packaged_tests": {
+    "total": 207,
+    "passed": 207,
+    "failed": 0,
+    "skipped": 0
+  },
+  "doctor": "passed",
+  "browser": {
+    "kind": "isolated clean data; no real phone/model",
+    "historical_records": 36,
+    "bundled_task_visible": true,
+    "bundled_task_editable": true,
+    "target_app": "淘宝",
+    "startpoint": "builtin_home_luoshu"
+  },
+  "historical_archive": {
+    "runs": 36,
+    "images": 1486,
+    "events": 12063,
+    "requests": 331
+  },
+  "companion": {
+    "scope": "model_build_screen",
+    "source": "v0.5 real-device verification 2026-10-28",
+    "model": "HOP-AL10",
+    "api": "26",
+    "os_fullname": "OpenHarmony-7.0.0.47",
+    "software_version": "HOP-AL10 7.1.0.42(SP22C00E24R4P1log)",
+    "screen": {
+      "width": 2584,
+      "height": 1828
+    },
+    "navigation_center": [
+      1291,
+      1805
+    ],
+    "binding_to_original_unit": false,
+    "operation": "Home then desktop native navigation double-tap",
+    "retested_real_phone_in_this_release": false
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "limitations": [
+    "No new real-phone or video capture during release",
+    "No long-running business plus video soak test",
+    "Other units of matching model/build/screen validated by contract, not new physical multi-device tests",
+    "Second PC and Explorer double-click not tested",
+    "No multi-hour real task or sustained real HiLog throughput test"
+  ],
+  "slow_mock_model_seconds": 31,
+  "release_authorization": "User explicitly requested GitHub deployment update and newly created tasks on 2026-10-29",
+  "v05_tests": {
+    "total": 220,
+    "passed": 220,
+    "failed": 0,
+    "skipped": 0
+  },
+  "bundled_tasks": [
+    {
+      "id": "task_c5937ad5-88e7-4810-b752-e93089b32684",
+      "revision": 3,
+      "name": "淘宝-浏览50个商品"
+    }
+  ],
+  "grounding_recovery": {
+    "frameworks": [
+      "midscene",
+      "autoglm",
+      "mobiagent"
+    ],
+    "max_corrections_per_decision": 2,
+    "original_responses_preserved": true,
+    "counts_against_request_budget": true
+  },
+  "independent_archive_reused_from": "v0.4.0-preview.13"
+}

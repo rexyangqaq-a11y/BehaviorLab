@@ -113,8 +113,8 @@ async function serve(port) {
   const { createDebugServer } = await import('../src/web-server.mjs');
   // A different app or a different copy of BehaviorLab may already own 4317.
   let app;
-  try { app = await createDebugServer({ port }); }
-  catch (error) { if (error.code !== 'EADDRINUSE' || port === 0) throw error; app = await createDebugServer({ port: 0 }); }
+  try { app = await createDebugServer({ port, seedBundledTasks: true }); }
+  catch (error) { if (error.code !== 'EADDRINUSE' || port === 0) throw error; app = await createDebugServer({ port: 0, seedBundledTasks: true }); }
   const saved = { schema_version: 1, root, pid: process.pid, pipe, url: app.url, token: randomBytes(32).toString('hex') };
   let stopping = false;
   const response = () => ({ ok: true, root, pid: process.pid, url: app.url });

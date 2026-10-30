@@ -1,3 +1,15 @@
+# 当前预览版：v0.4.0-preview.14
+
+三框架坐标恢复与用户自建“淘宝-浏览50个商品”任务已纳入完整包；首次启动即可在任务库查看、编辑，既有任务不覆盖。
+
+- [Windows完整运行包（含你的新任务及36项历史测试）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/BehaviorLab-v0.4.0-preview.14-Windows-x64.zip)
+- [随包任务定义JSON（供查看与复用）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/BehaviorLab-v0.4.0-preview.14-BundledTasks.json)
+- [SHA256校验表](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/SHA256SUMS.txt)
+- [发布清单](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/release-manifest.json)
+- [独立历史测试档案（36项数据未变，复用preview.13附件）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-TestArchive.zip)
+
+[本版部署与使用说明](docs/V04_PREVIEW14_RELEASE.md)。以下保留此前版本说明。
+
 # 当前预览版：v0.4.0-preview.13
 
 新增长任务默认不限额、模型等待调整、截图毫秒时间和手动／自动HiLog。保留工作台内36项历史轨迹与通用机型洛书标定。
