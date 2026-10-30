@@ -1,0 +1,31 @@
+{
+  "scope": "exact bundle Python snippet with synthetic files; not installed-runtime HTTP download",
+  "checked_at": "2026-10-30T10:10:20.938Z",
+  "python_version": "Python 3.12.14",
+  "raw_ledger_unchanged": true,
+  "raw_sha256": "954e3c56f25f7f8fd4d59d2a6e34b3484ed761b5acfdbff491c68d926bca7d7f",
+  "zip_sha256": "2cd9f278d18267c5f35cd6cd9d67996d17c19a182bda8f5a6f73cfd95925cfb8",
+  "entries": [
+    "events.jsonl",
+    "assets/synthetic.png",
+    "ledger-integrity.json"
+  ],
+  "integrity": {
+    "schema_version": 1,
+    "scope": "ledger_parsing",
+    "status": "incomplete",
+    "complete": false,
+    "valid_events": 1,
+    "invalid_lines": 1,
+    "issues": [
+      {
+        "line": 2,
+        "code": "invalid_json"
+      }
+    ],
+    "issues_truncated": false,
+    "pending_tail_line": null
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

@@ -17,11 +17,14 @@ export function layoutNodes(tree) {
   const rows=[]; const walk=node=>{if(node?.attributes){const a=node.attributes;if(a.visible!=='false')rows.push(a);}for(const c of node?.children??[])walk(c);};walk(tree);return rows;
 }
 export function nodeCenter(node) {const n=node?.bounds?.match(/-?\d+/g)?.map(Number);if(n?.length!==4||n[2]<=n[0]||n[3]<=n[1])throw Error('控件坐标不可读');return [Math.round((n[0]+n[2])/2),Math.round((n[1]+n[3])/2)];}
-export async function createPhoneDevice({evidence,signal,limits={max_actions:40}}) {
+export async function createPhoneDevice({evidence,signal,limits={max_actions:40},assertInputOwnership}) {
   const executable=findHdc({localConfigPath:path.join(project,'.runtime/device-tools.json')});if(!executable)throw Error('HDC 未安装');
   let target,physical=0,actionActive=false,screen;
   const uncertain=new Set();
   const command=async (args,{global=false,final=false}={})=>{
+    // Check immediately before every tool command, including preparation I/O.
+    // Losing the lease cannot authorize an input merely because it was queued.
+    try{assertInputOwnership?.();}catch(error){throw Object.assign(error,{action_not_sent:true,effect_unknown:false});}
     if(signal?.aborted&&!final)throw Error('已停止');
     const shell=args[0]==='shell'?args.slice(1).join(' '):'';
     if(/^uitest uiInput /.test(shell)&&evidence.phase==='execution'){

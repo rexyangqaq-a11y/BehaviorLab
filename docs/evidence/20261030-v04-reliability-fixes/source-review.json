@@ -1,0 +1,2404 @@
+{
+  "schema_version": 1,
+  "scope": "v0.4 tracked source review; synthetic files only",
+  "checked_at": "2026-10-30T11:18:15.672Z",
+  "source_commit": "03e43190e270dc75ab1e8ec805eddb77fdbf40bf",
+  "working_tree_included": true,
+  "counts": {
+    "files": 171,
+    "lines": 12046,
+    "files_with_lines_over_240": 110,
+    "lines_over_240": 625
+  },
+  "files": [
+    {
+      "file": "integrations/adapters/midscene.mjs",
+      "sha256": "22423cb893ae88c42a59d8785d63988d5deac4e33c28edcb6b1b4485fcc8c5e2",
+      "lines": 27,
+      "max_line_chars": 450,
+      "lines_over_240": 1
+    },
+    {
+      "file": "integrations/adapters/python-native.mjs",
+      "sha256": "57cb94acd7ade84e207b4af2552fba0dec6f46524c5ad321c90a266802f0b4a5",
+      "lines": 46,
+      "max_line_chars": 333,
+      "lines_over_240": 1
+    },
+    {
+      "file": "integrations/hoscrcpy/PhoneVideoBridge.java",
+      "sha256": "12feb536eaeac20cb55381a67bbb7cca5347b9c356464b8a208a6d347e4767dc",
+      "lines": 84,
+      "max_line_chars": 132,
+      "lines_over_240": 0
+    },
+    {
+      "file": "integrations/midscene/probe.mjs",
+      "sha256": "404ebc39e964f543ecfcbeea62912677b7e428f294bdffbf6cbce4025e36476b",
+      "lines": 26,
+      "max_line_chars": 132,
+      "lines_over_240": 0
+    },
+    {
+      "file": "integrations/midscene/real-trial.mjs",
+      "sha256": "7bb4f134fe8d3e85e589c50003372e5c1aa63ca174b1bcb6c9b0d6f6b24c5fda",
+      "lines": 216,
+      "max_line_chars": 272,
+      "lines_over_240": 2
+    },
+    {
+      "file": "integrations/phone-frameworks.py",
+      "sha256": "d8796d4efa77c6f6908d10401e4111d27b6a5f4d642c338b7da922f2cb357442",
+      "lines": 180,
+      "max_line_chars": 173,
+      "lines_over_240": 0
+    },
+    {
+      "file": "integrations/phone_protocol.py",
+      "sha256": "5adefb0324022fea1aec3f8a0350e6c6ca894d0f074178b0a6dfcca3f56e7d61",
+      "lines": 49,
+      "max_line_chars": 199,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/build-design-materials.py",
+      "sha256": "ef1e8ce359bb1135db8edfec9af3b85794f7e35c884e892b640971cfd57369d4",
+      "lines": 116,
+      "max_line_chars": 772,
+      "lines_over_240": 4
+    },
+    {
+      "file": "scripts/build-gui-evaluation-cases.mjs",
+      "sha256": "bf7a319c94ca03bd6bf58076c28ec8431373b28b0de78da8e4aabe441baa15be",
+      "lines": 165,
+      "max_line_chars": 271,
+      "lines_over_240": 2
+    },
+    {
+      "file": "scripts/build-phone-report-dense.mjs",
+      "sha256": "3e1cd782768ba3d24274560ee0fa3d13e5892a071a32ed857cec8b72b05671b0",
+      "lines": 111,
+      "max_line_chars": 752,
+      "lines_over_240": 17
+    },
+    {
+      "file": "scripts/build-phone-report-explained.mjs",
+      "sha256": "98ea987ecf2e6a0624c2140fdabecfa4d2f1babc9c1b69901289a58b97aa08a7",
+      "lines": 98,
+      "max_line_chars": 1239,
+      "lines_over_240": 20
+    },
+    {
+      "file": "scripts/build-phone-report.mjs",
+      "sha256": "0b15cd4a8c9149188fd4e25812b9b0e79c81d35888d6e075af2bb7ed9d789f3c",
+      "lines": 70,
+      "max_line_chars": 702,
+      "lines_over_240": 13
+    },
+    {
+      "file": "scripts/build-portable.mjs",
+      "sha256": "0cafb00240666fa950d197a2c4d5ca187d8264cac0d1c39d8098b86bcbc7cbe0",
+      "lines": 154,
+      "max_line_chars": 347,
+      "lines_over_240": 6
+    },
+    {
+      "file": "scripts/desktop-launcher.mjs",
+      "sha256": "c3f10e53c2f8037ec4ef002739dc93d28b7f28badfb12fbd0f105aca29f91988",
+      "lines": 181,
+      "max_line_chars": 189,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/estimate-model-validation.mjs",
+      "sha256": "70d91e33371b06567c07afa3fb2c6809f73128e9d520ec6d4aae3097aa08bbff",
+      "lines": 93,
+      "max_line_chars": 189,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/export-gui-comparison.mjs",
+      "sha256": "3d378b2b6d929bb2247d9f0ae615bfd46ecd3a3a4e05c168604241be67d0c036",
+      "lines": 55,
+      "max_line_chars": 206,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/export-v04-release-archive.mjs",
+      "sha256": "771cfd0ee3cba71888cba8b348d86f999ead1143af2caa7947e20d9e9a2e2596",
+      "lines": 116,
+      "max_line_chars": 931,
+      "lines_over_240": 9
+    },
+    {
+      "file": "scripts/fault-worker.mjs",
+      "sha256": "f25d8970168807854e689e0a8ac629a7aefc05da6253338ff2ae8859637aeadd",
+      "lines": 17,
+      "max_line_chars": 116,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/gui-trial-audit.mjs",
+      "sha256": "2c412996fdb186bd8b47cd751d710e437536d818478259efcad2b84501dfbdc2",
+      "lines": 60,
+      "max_line_chars": 204,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/gui-trial-report.mjs",
+      "sha256": "dd000746b69ac8887ccd3c6c8f60006f1a09cbf1c667e8fc7073653e519ac6bd",
+      "lines": 27,
+      "max_line_chars": 1108,
+      "lines_over_240": 6
+    },
+    {
+      "file": "scripts/hdc-device-baseline.mjs",
+      "sha256": "664114fda9f6bdfa608edd1202116323c3736e06ffd2813d80688b440a0a38b3",
+      "lines": 124,
+      "max_line_chars": 179,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/hdc.mjs",
+      "sha256": "a32e7fb2ed9eeb77fbbd21f0212918e95cfc51b1bf4f966008c925e1e6d02960",
+      "lines": 10,
+      "max_line_chars": 145,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/hoscrcpy-setup.mjs",
+      "sha256": "aadde8a949afa256882f8705ab956ccf2b4d0c3456f2fb696f43466ab0c9b789",
+      "lines": 34,
+      "max_line_chars": 403,
+      "lines_over_240": 1
+    },
+    {
+      "file": "scripts/import-migration-keys.mjs",
+      "sha256": "35e3260814c83ddd5b7582b69fc2f4d8e12f53fb23348f735dbfb2f0c7cb8090",
+      "lines": 16,
+      "max_line_chars": 543,
+      "lines_over_240": 2
+    },
+    {
+      "file": "scripts/import-phone-calibration.mjs",
+      "sha256": "105d3587021bf3e49c466b1de42573ad00f66e77637911e47d9dae6f1eb191a6",
+      "lines": 29,
+      "max_line_chars": 422,
+      "lines_over_240": 3
+    },
+    {
+      "file": "scripts/materialize-node-packages.mjs",
+      "sha256": "5959ab191ba10da5302a5ee98d4a706d6920d36c5e7b2b224030bec031053d2b",
+      "lines": 24,
+      "max_line_chars": 293,
+      "lines_over_240": 1
+    },
+    {
+      "file": "scripts/package-phone-history.mjs",
+      "sha256": "89846344a3d321eb86421d07e660e00d57fa677361597df64d09a401ebbca84c",
+      "lines": 20,
+      "max_line_chars": 607,
+      "lines_over_240": 2
+    },
+    {
+      "file": "scripts/package-phone-python.py",
+      "sha256": "251047c9727e83dd94485e82354e604ee2d4fba5c721aa2e5b30d1c24f08d61b",
+      "lines": 37,
+      "max_line_chars": 148,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/package-phone-runtime.mjs",
+      "sha256": "124c2280d71588fa052b0c85463d05b5395380e3a8d906996b599a8a9163a47c",
+      "lines": 39,
+      "max_line_chars": 423,
+      "lines_over_240": 3
+    },
+    {
+      "file": "scripts/package-phone-video.mjs",
+      "sha256": "76a9a90c6114d30e9d95af7a34493f4362284d0b7ae74337308834e024253776",
+      "lines": 35,
+      "max_line_chars": 342,
+      "lines_over_240": 3
+    },
+    {
+      "file": "scripts/package-video-jre.py",
+      "sha256": "25805e60dd088a6d6d4a206b0b8e1ecbfdf5363f3e73de92c0f93f67f90ff30f",
+      "lines": 38,
+      "max_line_chars": 134,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/patch-report-comparison.py",
+      "sha256": "9cabf0c7feab973eaf775f2b74857c3e8e724bf49a88c919bab02a034cbde81a",
+      "lines": 25,
+      "max_line_chars": 254,
+      "lines_over_240": 1
+    },
+    {
+      "file": "scripts/phone-anomaly-retest.mjs",
+      "sha256": "6824ad6ea4bee5caff0aa43a5d227f76198bf9c2f979724e2d7808f0a0c493fa",
+      "lines": 44,
+      "max_line_chars": 600,
+      "lines_over_240": 9
+    },
+    {
+      "file": "scripts/phone-doctor.mjs",
+      "sha256": "66f18dade204daac0667ce90f58add8a4c9b9c909d5a46e62e865ec56fc86f8a",
+      "lines": 62,
+      "max_line_chars": 261,
+      "lines_over_240": 2
+    },
+    {
+      "file": "scripts/phone-evaluation-report.mjs",
+      "sha256": "6ac8822e9a26a232a701ec175b06747868d570d9abf22c8222f39d6c63e774b0",
+      "lines": 87,
+      "max_line_chars": 724,
+      "lines_over_240": 24
+    },
+    {
+      "file": "scripts/phone-evaluation.mjs",
+      "sha256": "57b0649ff5ee619364ec9aa34092c9a4e61b62b73c18de488c8970d1f5810d04",
+      "lines": 62,
+      "max_line_chars": 397,
+      "lines_over_240": 9
+    },
+    {
+      "file": "scripts/phone-failure-audit.mjs",
+      "sha256": "4760c0de6edb3801e0be76a07288726f9097dadac78c255ab3b54f0781dd32d3",
+      "lines": 21,
+      "max_line_chars": 947,
+      "lines_over_240": 2
+    },
+    {
+      "file": "scripts/phone-framework-contract.mjs",
+      "sha256": "93f95adaa014b24ca6869a0896d0cee3a1d3301085dd27f3ef7a1e904b9e5e4e",
+      "lines": 46,
+      "max_line_chars": 302,
+      "lines_over_240": 4
+    },
+    {
+      "file": "scripts/phone-frameworks-setup.mjs",
+      "sha256": "357b26b6a6c7dc4e811a83dbf652e35218016d091bbb9b933c90966aa7ae4bb4",
+      "lines": 47,
+      "max_line_chars": 319,
+      "lines_over_240": 4
+    },
+    {
+      "file": "scripts/phone-lab-worker.mjs",
+      "sha256": "cb71220b2a85c8a3f1f01f4f1356728119394004854b9aeba1a9988988c8deb9",
+      "lines": 112,
+      "max_line_chars": 485,
+      "lines_over_240": 7
+    },
+    {
+      "file": "scripts/phone-record-audit.mjs",
+      "sha256": "6d2c5a7d4bab69a44dc41cde1462d186b3e061f6e6984971eb27c42e8686f939",
+      "lines": 36,
+      "max_line_chars": 577,
+      "lines_over_240": 6
+    },
+    {
+      "file": "scripts/phone-report-trace-audit.mjs",
+      "sha256": "a8f3bd4a0a9cee38f958ffbd514218bf74b66912daeaf5cfd9c5bc098bc72f17",
+      "lines": 31,
+      "max_line_chars": 829,
+      "lines_over_240": 4
+    },
+    {
+      "file": "scripts/probe-model-services.mjs",
+      "sha256": "f4985c697d423dfd37a947bbd40aab1f180e4dcd5545670a13ced9c4caaefb40",
+      "lines": 41,
+      "max_line_chars": 241,
+      "lines_over_240": 1
+    },
+    {
+      "file": "scripts/redact-v04-release-archive.mjs",
+      "sha256": "3310e7dd979848aba3ae7d9cc6a81a13ad14377a7d1ffb014ed6d605691c8290",
+      "lines": 111,
+      "max_line_chars": 855,
+      "lines_over_240": 6
+    },
+    {
+      "file": "scripts/release-privacy.mjs",
+      "sha256": "14d7a3d024956c3abdf91266e3325685e0fe9ed75bd025bcd80000cb2217eabd",
+      "lines": 43,
+      "max_line_chars": 201,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/review-v04-source.mjs",
+      "sha256": "2a912079d92debcb958c034d22e52968fd976f0e2af124aa66b529d16f7ec749",
+      "lines": 110,
+      "max_line_chars": 98,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/v04-preflight.mjs",
+      "sha256": "9dbc1d066acd1356e221d665bdc3846d6b902d37f5e5554b8493ff5c179276da",
+      "lines": 121,
+      "max_line_chars": 172,
+      "lines_over_240": 0
+    },
+    {
+      "file": "scripts/verify-phone-report-dense.py",
+      "sha256": "cc1ada53cc0506569962b8d0fd281a8ef33f47629fe91dbceb47dc55da8e476a",
+      "lines": 143,
+      "max_line_chars": 405,
+      "lines_over_240": 3
+    },
+    {
+      "file": "scripts/web-worker.mjs",
+      "sha256": "55fc8600617454fd78a57a628573b152d1d4480963aae997c4684c1d2aaff739",
+      "lines": 52,
+      "max_line_chars": 247,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/adapters/daily-content.mjs",
+      "sha256": "9ac63ac58d82f961d88a9b2936c728c1d70c423230b1d38dd6abccfff7816020",
+      "lines": 41,
+      "max_line_chars": 245,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/adapters/mock.mjs",
+      "sha256": "fe16b3d4bb0c257b3a976c7aa2f6312685367f55d7f670eac9104e368b2f71e0",
+      "lines": 96,
+      "max_line_chars": 1373,
+      "lines_over_240": 4
+    },
+    {
+      "file": "src/app-catalog.mjs",
+      "sha256": "54d22746489211cc4785ff8fbd5b4f2fac3ae2d60964d73a88593e89044f91f8",
+      "lines": 13,
+      "max_line_chars": 171,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/cli.mjs",
+      "sha256": "998798f515b0cb803fba78b8d3e4da22563af346d62622bfda6cabdda22a144c",
+      "lines": 69,
+      "max_line_chars": 174,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/contracts.mjs",
+      "sha256": "e14ae2a9104225dc07a620d8acd9612ddcf4bf0874ec4b5513b40f212345cc79",
+      "lines": 95,
+      "max_line_chars": 165,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/descriptions.mjs",
+      "sha256": "ff5099c14fb63477760e49a82c8a4640f3a63656a30dc288655665fa4b02ed3f",
+      "lines": 46,
+      "max_line_chars": 581,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/device-lease.mjs",
+      "sha256": "effe119ae755e39badb43e6114c0df781f7ab2825140ecce4515284c752dbd2f",
+      "lines": 51,
+      "max_line_chars": 188,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/gui-comparison-cases.mjs",
+      "sha256": "7c6f4b745cad52b5ecbc5840b69946e05d5d74185c6c4eec7e6d0e79f7b27aed",
+      "lines": 149,
+      "max_line_chars": 252,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/gui-device-journal.mjs",
+      "sha256": "96ceaf26e129e6c9945c7d926403d74935def615329c7d4887d5b9c77bb60b68",
+      "lines": 36,
+      "max_line_chars": 157,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/gui-lab-catalog.mjs",
+      "sha256": "020ffe9422a79866d14aeceb614307d0ebb68330e8d2dcecbff2961afe98c0ce",
+      "lines": 18,
+      "max_line_chars": 263,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/gui-lab.mjs",
+      "sha256": "b92c1789474266a8079a7986d942fc91b5c0b5fcd1e78273639bab1c93da3bc6",
+      "lines": 246,
+      "max_line_chars": 666,
+      "lines_over_240": 2
+    },
+    {
+      "file": "src/gui-screenshot-coordinates.mjs",
+      "sha256": "511d4313052f43040a02a87a958738152249a10bf32190a5396246ee814b7a9b",
+      "lines": 13,
+      "max_line_chars": 106,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/gui-trial-action-limits.mjs",
+      "sha256": "37c972f8163d2cb038f4b3dc0a33b2a1fa66c52f199e6979581b3ea67bef3334",
+      "lines": 11,
+      "max_line_chars": 122,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/gui-trial-transport.mjs",
+      "sha256": "802b0a9ad708148becb081d55d3586a1dd3dd514119f80ac44bb97abbd2461f7",
+      "lines": 107,
+      "max_line_chars": 188,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/hdc-environment.mjs",
+      "sha256": "78391f9d092e5615f5c6975136f49968bef8bcda09515ec4a461517cf790f2e1",
+      "lines": 33,
+      "max_line_chars": 142,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/local-secret.mjs",
+      "sha256": "72e846959f12436ec6a5b297762ff302c4dfa3ac11abb67738946699c199b8e0",
+      "lines": 21,
+      "max_line_chars": 412,
+      "lines_over_240": 2
+    },
+    {
+      "file": "src/migration-credentials.mjs",
+      "sha256": "2c4c7534ebe12640ecc3573cebfbcc99f9e3ec3a397b6f4f05cc114d07aac56a",
+      "lines": 18,
+      "max_line_chars": 338,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/model-probe.mjs",
+      "sha256": "8c0fa475133536a262bba0422b7881f84e35f968c73b507438e609ce875afc49",
+      "lines": 46,
+      "max_line_chars": 251,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/model-settings.mjs",
+      "sha256": "fde1c0b44ebaf0d1ea27bbe05b5347a926987a2c50ac2f50b7e4ca34f1f1e084",
+      "lines": 104,
+      "max_line_chars": 170,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/output.mjs",
+      "sha256": "e2927eac043a3e4657c20b8ab63e18d6cd9bd2b6a64a1aebfdb9f95358d8d378",
+      "lines": 107,
+      "max_line_chars": 281,
+      "lines_over_240": 4
+    },
+    {
+      "file": "src/persona-input.mjs",
+      "sha256": "a90adfc3f4891beb721d0f7e256491ddd95734fdceb88f5b88ba8b8cbaa50d00",
+      "lines": 41,
+      "max_line_chars": 138,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-action-effects.mjs",
+      "sha256": "4905b6f173ad03f32ce87b02c1642a5b54eb5395c09697a16203a8fdaa45a6bf",
+      "lines": 37,
+      "max_line_chars": 280,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-bundled-tasks.mjs",
+      "sha256": "38466fb028da1141798b7e435e7ca6fe8f1a4ebed3826c77a9496148eaca8e52",
+      "lines": 28,
+      "max_line_chars": 241,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-companion-start.mjs",
+      "sha256": "87a65a1a144ff561c328896175a353c1cb3af6c063ce57dbf1df5e8a338953d0",
+      "lines": 104,
+      "max_line_chars": 329,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-connection.mjs",
+      "sha256": "6fe477ba4f6a50bdea3c5636f15200cc16c2b61cfd944013f681d3fd9c9665b5",
+      "lines": 24,
+      "max_line_chars": 228,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-device.mjs",
+      "sha256": "3bd2efc675af9e6fbfc8fdabb9604d7a8877e05373389af366bd3c1f580c4eaf",
+      "lines": 81,
+      "max_line_chars": 382,
+      "lines_over_240": 4
+    },
+    {
+      "file": "src/phone-evaluation-plan.mjs",
+      "sha256": "edb657078c31db41782b126a0ec15d26d29a6d5ee0c0078915c29351c46466f7",
+      "lines": 13,
+      "max_line_chars": 197,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-evidence-reader.mjs",
+      "sha256": "19f76b9a4e440a8f15565d63e92df8fad90a065e4d349c4d375acefdae0f25b9",
+      "lines": 70,
+      "max_line_chars": 116,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-evidence.mjs",
+      "sha256": "a11ed82f387d705d47a56c24f3e3407c4c162790965a070175b06ef44aa9a19d",
+      "lines": 42,
+      "max_line_chars": 165,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-execution-limits.mjs",
+      "sha256": "768cae91c680c72d9b5cc1750851935d742f67d5c7b18370eda0601dce23342e",
+      "lines": 11,
+      "max_line_chars": 177,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-framework-registry.mjs",
+      "sha256": "9879496a41b8d5930f807b4b7a588d606bf4040e1e27dbf9eeb99ffa54f071d6",
+      "lines": 10,
+      "max_line_chars": 523,
+      "lines_over_240": 4
+    },
+    {
+      "file": "src/phone-grounding-recovery.mjs",
+      "sha256": "b5483beafa409da20b474a65077089c048ac00f6e5d7271aaf1f175035f9d7fe",
+      "lines": 123,
+      "max_line_chars": 253,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-hilog.mjs",
+      "sha256": "c697dea89c3a9cebe2a365350d5e94b97542e175f5e6e81cd433877ebd272031",
+      "lines": 85,
+      "max_line_chars": 462,
+      "lines_over_240": 9
+    },
+    {
+      "file": "src/phone-image-privacy.mjs",
+      "sha256": "290dd8c50393b4f9d3394b4032c452b98d1d2fb7eccf7a40a919bb672efe2aa4",
+      "lines": 15,
+      "max_line_chars": 380,
+      "lines_over_240": 3
+    },
+    {
+      "file": "src/phone-lab-catalog.mjs",
+      "sha256": "cf8a80c2bfd33a6e6738dac0be08998ba07a4ab7ddc9f0e807b76d747b7fb263",
+      "lines": 46,
+      "max_line_chars": 152,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-lab.mjs",
+      "sha256": "f77d7f76275af271cd6f74193c7008740c00c8c0bccef267d3b017e6448737bf",
+      "lines": 342,
+      "max_line_chars": 941,
+      "lines_over_240": 26
+    },
+    {
+      "file": "src/phone-model-network.mjs",
+      "sha256": "facfd3545a2c4913c66a82b4f6783ad98049a687785e07b891ace59f88747d90",
+      "lines": 22,
+      "max_line_chars": 145,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-permissions.mjs",
+      "sha256": "0d0a7c5dae3b81332750c1462f775a43458c988fd7b702cd6b060e7acd6c9899",
+      "lines": 12,
+      "max_line_chars": 192,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-runtime-paths.mjs",
+      "sha256": "0c99ba4127da41d120ce977e2c1caeff993b297ee171e1e2052bc40596a428e8",
+      "lines": 17,
+      "max_line_chars": 177,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/phone-startpoints.mjs",
+      "sha256": "59c1b71ed3dcdb651d6570532108bebe348d297dbb727a441a1b75634de5ba92",
+      "lines": 104,
+      "max_line_chars": 369,
+      "lines_over_240": 3
+    },
+    {
+      "file": "src/phone-tasks.mjs",
+      "sha256": "81abf2bb57a34bd065f1cc48dd578d82816c1ba55abcf1a0aed7567b15c2b000",
+      "lines": 26,
+      "max_line_chars": 320,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-video-runtime.mjs",
+      "sha256": "2775208fea5d2c162dbbbe11673e9355e72a0d3f24bf8deca333f564f82be965",
+      "lines": 16,
+      "max_line_chars": 275,
+      "lines_over_240": 1
+    },
+    {
+      "file": "src/phone-video.mjs",
+      "sha256": "3ebba252f76fa84a078bf50070c7a7c33147ff519e2fc2ec14571770c8f1527e",
+      "lines": 117,
+      "max_line_chars": 336,
+      "lines_over_240": 3
+    },
+    {
+      "file": "src/phone-worker-lease.mjs",
+      "sha256": "a5dc928f942c6439b07e1532360506036f5eb877e16dc50e74b8f0e66a571ef2",
+      "lines": 60,
+      "max_line_chars": 97,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/private-migration.mjs",
+      "sha256": "1fc0023397a88fb38fee4a367aab152de0110fec90d920d2414038d435c2a06f",
+      "lines": 48,
+      "max_line_chars": 598,
+      "lines_over_240": 8
+    },
+    {
+      "file": "src/runner.mjs",
+      "sha256": "07f9c47fe79934664aaf0e8f3c21ede6c3579409950d74f88cccb9e5970a8de6",
+      "lines": 3,
+      "max_line_chars": 76,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/scheduler.mjs",
+      "sha256": "9d178afa02e6f52c60c35ee86aeab401e9661c004ac2bc0e1020a1079c9ee115",
+      "lines": 141,
+      "max_line_chars": 421,
+      "lines_over_240": 6
+    },
+    {
+      "file": "src/store.mjs",
+      "sha256": "811d9fc4c9df406fe4edd472e0cd572744a6a9f5d16bafd467c53a9d8b486c98",
+      "lines": 389,
+      "max_line_chars": 588,
+      "lines_over_240": 17
+    },
+    {
+      "file": "src/tracing.mjs",
+      "sha256": "983ca646f66a5f3e12691d4c1981413f5018df3df5f52c75b19f8d6a45744185",
+      "lines": 17,
+      "max_line_chars": 85,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/user-library.mjs",
+      "sha256": "7610f63f00ef977cfac28b75f9112d554b6f19a20afd936dec40abeafc859bc7",
+      "lines": 97,
+      "max_line_chars": 304,
+      "lines_over_240": 3
+    },
+    {
+      "file": "src/v04-acceptance.mjs",
+      "sha256": "97acff9a4e6ecd948e37f36bd584d3decdef98ee18077f379f46fc0dc7395af4",
+      "lines": 59,
+      "max_line_chars": 407,
+      "lines_over_240": 2
+    },
+    {
+      "file": "src/web-jobs.mjs",
+      "sha256": "e10c0a4a660f4784e067eb7143a4b6af316cc7ec1fe8751a5047829d5b8a2704",
+      "lines": 33,
+      "max_line_chars": 162,
+      "lines_over_240": 0
+    },
+    {
+      "file": "src/web-server.mjs",
+      "sha256": "56ed8b1c1bbb1422cc048e9d4352a231e280f6e4dee3fb1ee3c4b3ec2c500432",
+      "lines": 426,
+      "max_line_chars": 777,
+      "lines_over_240": 5
+    },
+    {
+      "file": "tests/builtin-home.test.mjs",
+      "sha256": "dcfddc33fa9cd3975561ecc3953f06f68d5d1a8ae752382d567c8b1500967a95",
+      "lines": 44,
+      "max_line_chars": 241,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/bundled-history.test.mjs",
+      "sha256": "cdc5f9e3ce34a40f06ee3912f1230d735c2c37e53c5e0c176450187bc930fce6",
+      "lines": 43,
+      "max_line_chars": 284,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/gui-device-journal.test.mjs",
+      "sha256": "c62f2c14b40cb35d6e3410bf6e95cd83911320d3db5911a196684c55d422f9b0",
+      "lines": 19,
+      "max_line_chars": 169,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/gui-lab.test.mjs",
+      "sha256": "7a5e77c9ce559dbdf49aa55e79bf580143f858abc7e8a5a5ed974fdfcf959793",
+      "lines": 214,
+      "max_line_chars": 247,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/gui-screenshot-coordinates.test.mjs",
+      "sha256": "4b7750d17a082f766232801103bfab84a52332ae1e1acbaf1dea8c92f90ac9f1",
+      "lines": 16,
+      "max_line_chars": 131,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/gui-trial-action-limits.test.mjs",
+      "sha256": "d19575d5a61ac9dc828dad9dfbf0ce058e5479d5f390a2af2cf4f8d0ea87d464",
+      "lines": 10,
+      "max_line_chars": 108,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/gui-trial-transport.test.mjs",
+      "sha256": "38368a884922ddc25fd8dc31ed62d8ab451faea11f8a78864285c5c380e22491",
+      "lines": 59,
+      "max_line_chars": 288,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/hdc-environment.test.mjs",
+      "sha256": "08d62fd3af403c8e96dc4380ebe28c0a95ddcd25e77663237f81f3ea08213494",
+      "lines": 27,
+      "max_line_chars": 188,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/helpers/phone-hilog-fixture.mjs",
+      "sha256": "f5b619da6a50751b50b475f8c3ecb088312699a6da668ca673dc015b664231ce",
+      "lines": 8,
+      "max_line_chars": 399,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/helpers/phone-input-lease-fixture.mjs",
+      "sha256": "d16c1c9be3b7daaaaa383a899371110faa3e988dc846383369de8c04a3a158c0",
+      "lines": 20,
+      "max_line_chars": 98,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/model-probe.test.mjs",
+      "sha256": "0cca2fab7db1bf49a077ee2e40a6c61b0ba9fa7ce72f4410a48f9b48956edbbf",
+      "lines": 28,
+      "max_line_chars": 219,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/model-settings.test.mjs",
+      "sha256": "22048ed4689c670fe97c1bc47508b4b2da512db389df437138342b46f499c794",
+      "lines": 96,
+      "max_line_chars": 235,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/package-video.test.mjs",
+      "sha256": "05617ea5dd18484523764915760afefdcd7d4398baf87a2148a2255caef1ef4f",
+      "lines": 19,
+      "max_line_chars": 288,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-action-effects.test.mjs",
+      "sha256": "db2f0f5caff5e54fb724ed67876647985f824774a789492dc4adba953f291076",
+      "lines": 33,
+      "max_line_chars": 245,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-bundled-tasks.test.mjs",
+      "sha256": "8feea80f4ea6f900d5ccb2fabf9725ef10cd979f4a2704f210947c10ee42240c",
+      "lines": 27,
+      "max_line_chars": 303,
+      "lines_over_240": 5
+    },
+    {
+      "file": "tests/phone-calibration-import.test.mjs",
+      "sha256": "043b2e3baeb239a9f01fb74d7945d2784fb42bb8b59652541009942f29ca4c7d",
+      "lines": 19,
+      "max_line_chars": 277,
+      "lines_over_240": 2
+    },
+    {
+      "file": "tests/phone-companion-start.test.mjs",
+      "sha256": "08e1b9901294fac5c7e7668126cc7944e5b4cc7960d92b316dc038e737786bc7",
+      "lines": 145,
+      "max_line_chars": 604,
+      "lines_over_240": 9
+    },
+    {
+      "file": "tests/phone-connection-ui.test.mjs",
+      "sha256": "d5688721f341f01491405b8442026ebae4c3aef90294414c64653c48a300b26f",
+      "lines": 17,
+      "max_line_chars": 313,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-connection.test.mjs",
+      "sha256": "47fc742cd6be6c3f7a0437bc24457a83a64133cb927c59239512e6f59b666b22",
+      "lines": 39,
+      "max_line_chars": 286,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-evaluation.test.mjs",
+      "sha256": "71c8ac70290d239d79986ba2940a51621d0b738725036c9a500babde8c87c052",
+      "lines": 25,
+      "max_line_chars": 212,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-evidence-reader.test.mjs",
+      "sha256": "88aa38939aef7df1f01fcff3020cfe50acc7ed172e0b8407c31fa1cb2c8e78dd",
+      "lines": 139,
+      "max_line_chars": 138,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-framework-registry.test.mjs",
+      "sha256": "7483d2425fa2b28535bdbb8eacdfb33899e70118860aacdb1de0a7e5e54f67a7",
+      "lines": 21,
+      "max_line_chars": 197,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-grounding-recovery.test.mjs",
+      "sha256": "ac39d5bcf63a8ebbc70becaed1a45d53994e83ab4f3b63967faf36ef868359f5",
+      "lines": 133,
+      "max_line_chars": 390,
+      "lines_over_240": 13
+    },
+    {
+      "file": "tests/phone-hilog.test.mjs",
+      "sha256": "d357e1820d5b057a2152f85c0501da61ce23fddc21d2d98c8938494c129eec92",
+      "lines": 73,
+      "max_line_chars": 400,
+      "lines_over_240": 11
+    },
+    {
+      "file": "tests/phone-image-privacy.test.mjs",
+      "sha256": "174e0a105258c2c7005e381d6f77f942c97402e40b036f650000af771ad59d49",
+      "lines": 8,
+      "max_line_chars": 138,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-image-time.test.mjs",
+      "sha256": "08833e45936a71c2f5e84f506d27cf08853d7ad767d9ef79319d0026aa1deeef",
+      "lines": 21,
+      "max_line_chars": 253,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-input-lease.test.mjs",
+      "sha256": "d89a104652b3db72209b57ffc9f1014795198002c03a1ae8a365e62fa6e92dc6",
+      "lines": 113,
+      "max_line_chars": 113,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-lab.test.mjs",
+      "sha256": "47b4770e4aa87127cd3fae9709e28ac36551d28d45c69aa1a315fe53fee7f82f",
+      "lines": 78,
+      "max_line_chars": 320,
+      "lines_over_240": 6
+    },
+    {
+      "file": "tests/phone-long-task.test.mjs",
+      "sha256": "c9420cbd64bb5b531abfc5f011f74a18e60a5ccdbf231b0fcda01efd39917389",
+      "lines": 98,
+      "max_line_chars": 375,
+      "lines_over_240": 10
+    },
+    {
+      "file": "tests/phone-permissions.test.mjs",
+      "sha256": "9ce8029dcb2d6fb1d0b9b0c4ca2554b63dd889a9195b7e621634d5f7605acff8",
+      "lines": 19,
+      "max_line_chars": 277,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-process.test.mjs",
+      "sha256": "a5b16b6d2627e9d9258ebee57cf26e6cbebb64078ac38b3f3c1721634dcc4ed9",
+      "lines": 73,
+      "max_line_chars": 255,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-protocol.test.mjs",
+      "sha256": "2aba53940dab6f26c28c227fbcb0b9f1e142196da34e2e8a917265566b45c060",
+      "lines": 33,
+      "max_line_chars": 322,
+      "lines_over_240": 3
+    },
+    {
+      "file": "tests/phone-startpoints.test.mjs",
+      "sha256": "3bc5cf46d8d7d26cd3336371014d1fc43639e7658a22af8dc15880cb14475e2d",
+      "lines": 56,
+      "max_line_chars": 194,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/phone-trace.test.mjs",
+      "sha256": "75096b3053f62243ea7e71e2c953365edf435f5d3df702348cc25deb2193ebda",
+      "lines": 58,
+      "max_line_chars": 364,
+      "lines_over_240": 3
+    },
+    {
+      "file": "tests/phone-video-ui.test.mjs",
+      "sha256": "082e2599a684404867f8566e32dae1599d5869a955d3801b7f56e2c51307dafa",
+      "lines": 55,
+      "max_line_chars": 300,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/phone-video.test.mjs",
+      "sha256": "9c87d5c881efe6c43209773df29ea50b05167bb5f712a3291f327e910658cbe0",
+      "lines": 123,
+      "max_line_chars": 374,
+      "lines_over_240": 5
+    },
+    {
+      "file": "tests/phone-workbench.test.mjs",
+      "sha256": "7bf8459018d7be06cc5895cf831bd5a7e57f1be007cd423f9e66a1eb4f0ac83d",
+      "lines": 205,
+      "max_line_chars": 514,
+      "lines_over_240": 12
+    },
+    {
+      "file": "tests/pipeline.test.mjs",
+      "sha256": "8812048709f226f94d5966b601795fca3c630ea4cf33261badcf00386d6c1303",
+      "lines": 248,
+      "max_line_chars": 259,
+      "lines_over_240": 2
+    },
+    {
+      "file": "tests/portable.test.mjs",
+      "sha256": "4e471ef66d12ab310fa0980924fd4beb961cf5aa2acfc5b1b023cb78289ca5b8",
+      "lines": 101,
+      "max_line_chars": 209,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/private-migration.test.mjs",
+      "sha256": "2e1a0f13baccfed02b65f98ecb036e1cd8a1b6fe8a7c23a399f274ae8d7cf1f9",
+      "lines": 29,
+      "max_line_chars": 733,
+      "lines_over_240": 8
+    },
+    {
+      "file": "tests/product.test.mjs",
+      "sha256": "e5c0fece76f85e1eee83ca4b581b8ce1c528943bf824525d21aecb1b44d3f847",
+      "lines": 164,
+      "max_line_chars": 371,
+      "lines_over_240": 5
+    },
+    {
+      "file": "tests/release-archive.test.mjs",
+      "sha256": "3cdfda20fdbcdd1557296fbf6491bdd9de1a7826b0cd5de0070f9a32916b1289",
+      "lines": 24,
+      "max_line_chars": 321,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/release-privacy.test.mjs",
+      "sha256": "d41e44ecb3e51eabff9a230358af85198c359b1fa78da8f3bee2ae4f5a26de0f",
+      "lines": 28,
+      "max_line_chars": 368,
+      "lines_over_240": 1
+    },
+    {
+      "file": "tests/v04-preflight.test.mjs",
+      "sha256": "c78c4a6be3e31934d62eb335217737704b06b74820085faf61bb4f306c0da4c9",
+      "lines": 81,
+      "max_line_chars": 212,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/web-jobs.test.mjs",
+      "sha256": "847a98c50bb2f9e8c01e30aee1b4e74c2d50896e52820eaee959225caa26f9d9",
+      "lines": 53,
+      "max_line_chars": 131,
+      "lines_over_240": 0
+    },
+    {
+      "file": "tests/web.test.mjs",
+      "sha256": "2a93c62def948ea13b49c7cfc887573a0651cb1fbcd3487d28dd24ad7729a218",
+      "lines": 147,
+      "max_line_chars": 213,
+      "lines_over_240": 0
+    },
+    {
+      "file": "web/gui-lab.css",
+      "sha256": "8164defb34f89061fd448137d8e68e273d6de5ef13fc18765be39ffe98b3ee2a",
+      "lines": 3,
+      "max_line_chars": 4765,
+      "lines_over_240": 2
+    },
+    {
+      "file": "web/gui-lab.mjs",
+      "sha256": "d9f7923a4617c97e2d960654a440037cecfbdfbed79bae2d2ca946f1f5592125",
+      "lines": 123,
+      "max_line_chars": 766,
+      "lines_over_240": 19
+    },
+    {
+      "file": "web/index.html",
+      "sha256": "0d005f12f90e76ab07828fdfc785f75e8b321159f6b77d7a324cb4d80956d571",
+      "lines": 21,
+      "max_line_chars": 1925,
+      "lines_over_240": 3
+    },
+    {
+      "file": "web/model-settings.mjs",
+      "sha256": "54d5129170906d8d4f5a12ab121b752a1c7a48bc284547b1f2a4c2b79ecc13db",
+      "lines": 103,
+      "max_line_chars": 582,
+      "lines_over_240": 13
+    },
+    {
+      "file": "web/phone-connection-ui.mjs",
+      "sha256": "fb740f9207d0833d373c84b8aed772a6fb9458a3dd04c669b954eb8dca6b47c3",
+      "lines": 24,
+      "max_line_chars": 210,
+      "lines_over_240": 0
+    },
+    {
+      "file": "web/phone-evidence-integrity.mjs",
+      "sha256": "3681c5c3ea406ab5d33df6e6c14cbd43d75e6eb7039d98c0d888befc766baea0",
+      "lines": 16,
+      "max_line_chars": 217,
+      "lines_over_240": 0
+    },
+    {
+      "file": "web/phone-hilog-ui.mjs",
+      "sha256": "61e647753247be64d30e1a54ba13fceaafc7db9a165700e2ebe6a7ff18ffbea8",
+      "lines": 26,
+      "max_line_chars": 584,
+      "lines_over_240": 3
+    },
+    {
+      "file": "web/phone-image-time.mjs",
+      "sha256": "7eac7c10d995f70c3bb589e04e48829ba7f04a0f828626e442da6ea1cca5817a",
+      "lines": 13,
+      "max_line_chars": 209,
+      "lines_over_240": 0
+    },
+    {
+      "file": "web/phone-lab.css",
+      "sha256": "b6da65862e17451705592c16814c456cee63c83eb935fb8f4cfd759363731579",
+      "lines": 47,
+      "max_line_chars": 8258,
+      "lines_over_240": 22
+    },
+    {
+      "file": "web/phone-lab.html",
+      "sha256": "3c985f9728e741095a2fff03e3f8f5784977dec08367dce5955a2729c6f3e21c",
+      "lines": 82,
+      "max_line_chars": 938,
+      "lines_over_240": 21
+    },
+    {
+      "file": "web/phone-lab.mjs",
+      "sha256": "999b892b229e2cccf578f18c9e05880771c06fa909b3d3fc024651d56f4d5a52",
+      "lines": 233,
+      "max_line_chars": 1406,
+      "lines_over_240": 47
+    },
+    {
+      "file": "web/phone-process-ui.mjs",
+      "sha256": "e63347e633b6f238b28f8dfd4f916c50bf4b38f50f368b2e49d9f9b1cffe366e",
+      "lines": 81,
+      "max_line_chars": 588,
+      "lines_over_240": 4
+    },
+    {
+      "file": "web/phone-process.mjs",
+      "sha256": "d667a8c28a9c3a01322fde34a4c3369665312746a010ecac7ec4523c733c8634",
+      "lines": 42,
+      "max_line_chars": 571,
+      "lines_over_240": 6
+    },
+    {
+      "file": "web/phone-results.mjs",
+      "sha256": "4eb0e21d0971f4903e652c026a35fde4ecb3f1a1e7f711737ed005832a5e995c",
+      "lines": 24,
+      "max_line_chars": 317,
+      "lines_over_240": 3
+    },
+    {
+      "file": "web/phone-test-plan.mjs",
+      "sha256": "3d71e324906d247dc0e6df22963df1349cee8146d969eef4374525b47b774f42",
+      "lines": 14,
+      "max_line_chars": 300,
+      "lines_over_240": 1
+    },
+    {
+      "file": "web/phone-trace.mjs",
+      "sha256": "2ba1816b1addfab355607eaca5b606982b1f416d940eddb6e0857b58acb66a34",
+      "lines": 103,
+      "max_line_chars": 571,
+      "lines_over_240": 11
+    },
+    {
+      "file": "web/phone-video-protocol.mjs",
+      "sha256": "b5f57fa3565b030f5931f3e6a3c88e2f0c79fc5dcef3be75c7f54a68671a78f6",
+      "lines": 30,
+      "max_line_chars": 148,
+      "lines_over_240": 0
+    },
+    {
+      "file": "web/phone-video-ui.mjs",
+      "sha256": "00f946dacee18f6ad16ea467b2c57761c184d4c69baf305e5e56af7f861831f7",
+      "lines": 81,
+      "max_line_chars": 469,
+      "lines_over_240": 3
+    },
+    {
+      "file": "web/user-creator.mjs",
+      "sha256": "3ae5df03ffe398ebccfc38f9a80decab289ab485913935887d2a33ca153aa968",
+      "lines": 69,
+      "max_line_chars": 1141,
+      "lines_over_240": 8
+    },
+    {
+      "file": "web/v04-acceptance.html",
+      "sha256": "66ecf289c3eac4719a438b8ea18f7db9c81e8395d09dc3e2e4f90fd61a966b89",
+      "lines": 7,
+      "max_line_chars": 364,
+      "lines_over_240": 3
+    },
+    {
+      "file": "web/v04-acceptance.mjs",
+      "sha256": "cf58146db70762c546168e03ecea41a12dea949b817813eca4e7f6fd47ed2e68",
+      "lines": 11,
+      "max_line_chars": 549,
+      "lines_over_240": 2
+    },
+    {
+      "file": "web/workspace.css",
+      "sha256": "b185738198df49b4ef840cb42e102ff7013e781bf54d5dfb661f5689f725a40e",
+      "lines": 14,
+      "max_line_chars": 25771,
+      "lines_over_240": 7
+    },
+    {
+      "file": "web/workspace.mjs",
+      "sha256": "8bb91d4e56362eb5f47edacbf2e396da0b3ce64c81068b57b6d75fc737a56162",
+      "lines": 320,
+      "max_line_chars": 2843,
+      "lines_over_240": 42
+    }
+  ],
+  "static_dependency_edges": [
+    {
+      "from": "integrations/adapters/midscene.mjs",
+      "to": "src/gui-device-journal.mjs"
+    },
+    {
+      "from": "integrations/adapters/midscene.mjs",
+      "to": "src/phone-device.mjs"
+    },
+    {
+      "from": "integrations/adapters/midscene.mjs",
+      "to": "src/phone-execution-limits.mjs"
+    },
+    {
+      "from": "integrations/adapters/midscene.mjs",
+      "to": "src/phone-model-network.mjs"
+    },
+    {
+      "from": "integrations/adapters/python-native.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "integrations/midscene/probe.mjs",
+      "to": "src/gui-device-journal.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "src/gui-device-journal.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "src/gui-trial-transport.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "src/gui-screenshot-coordinates.mjs"
+    },
+    {
+      "from": "integrations/midscene/real-trial.mjs",
+      "to": "src/gui-trial-action-limits.mjs"
+    },
+    {
+      "from": "scripts/build-portable.mjs",
+      "to": "scripts/package-phone-runtime.mjs"
+    },
+    {
+      "from": "scripts/build-portable.mjs",
+      "to": "scripts/package-phone-video.mjs"
+    },
+    {
+      "from": "scripts/desktop-launcher.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "scripts/export-gui-comparison.mjs",
+      "to": "src/gui-comparison-cases.mjs"
+    },
+    {
+      "from": "scripts/export-gui-comparison.mjs",
+      "to": "src/gui-lab-catalog.mjs"
+    },
+    {
+      "from": "scripts/fault-worker.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "scripts/fault-worker.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "scripts/fault-worker.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "scripts/fault-worker.mjs",
+      "to": "src/descriptions.mjs"
+    },
+    {
+      "from": "scripts/gui-trial-audit.mjs",
+      "to": "src/local-secret.mjs"
+    },
+    {
+      "from": "scripts/hdc-device-baseline.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "scripts/hdc.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "scripts/hoscrcpy-setup.mjs",
+      "to": "src/phone-video-runtime.mjs"
+    },
+    {
+      "from": "scripts/import-migration-keys.mjs",
+      "to": "src/private-migration.mjs"
+    },
+    {
+      "from": "scripts/import-phone-calibration.mjs",
+      "to": "src/phone-companion-start.mjs"
+    },
+    {
+      "from": "scripts/package-phone-history.mjs",
+      "to": "src/private-migration.mjs"
+    },
+    {
+      "from": "scripts/package-phone-runtime.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "scripts/package-phone-runtime.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "scripts/package-phone-runtime.mjs",
+      "to": "scripts/materialize-node-packages.mjs"
+    },
+    {
+      "from": "scripts/package-phone-video.mjs",
+      "to": "src/phone-video-runtime.mjs"
+    },
+    {
+      "from": "scripts/package-phone-video.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "scripts/phone-anomaly-retest.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "scripts/phone-doctor.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "scripts/phone-doctor.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "scripts/phone-doctor.mjs",
+      "to": "src/phone-video-runtime.mjs"
+    },
+    {
+      "from": "scripts/phone-doctor.mjs",
+      "to": "scripts/package-phone-video.mjs"
+    },
+    {
+      "from": "scripts/phone-evaluation.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "scripts/phone-evaluation.mjs",
+      "to": "src/phone-evaluation-plan.mjs"
+    },
+    {
+      "from": "scripts/phone-framework-contract.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "scripts/phone-frameworks-setup.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "scripts/phone-frameworks-setup.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-device.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/gui-trial-transport.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/gui-trial-action-limits.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-permissions.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/local-secret.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-action-effects.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-execution-limits.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-model-network.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-grounding-recovery.mjs"
+    },
+    {
+      "from": "scripts/phone-lab-worker.mjs",
+      "to": "src/phone-worker-lease.mjs"
+    },
+    {
+      "from": "scripts/probe-model-services.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "scripts/probe-model-services.mjs",
+      "to": "src/model-probe.mjs"
+    },
+    {
+      "from": "scripts/redact-v04-release-archive.mjs",
+      "to": "scripts/release-privacy.mjs"
+    },
+    {
+      "from": "scripts/review-v04-source.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "scripts/v04-preflight.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "scripts/v04-preflight.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/descriptions.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/output.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/web-jobs.mjs"
+    },
+    {
+      "from": "scripts/web-worker.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/adapters/daily-content.mjs",
+      "to": "src/app-catalog.mjs"
+    },
+    {
+      "from": "src/adapters/mock.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/adapters/mock.mjs",
+      "to": "src/adapters/daily-content.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/descriptions.mjs"
+    },
+    {
+      "from": "src/cli.mjs",
+      "to": "src/output.mjs"
+    },
+    {
+      "from": "src/descriptions.mjs",
+      "to": "src/tracing.mjs"
+    },
+    {
+      "from": "src/gui-comparison-cases.mjs",
+      "to": "src/v04-acceptance.mjs"
+    },
+    {
+      "from": "src/gui-lab.mjs",
+      "to": "src/gui-lab-catalog.mjs"
+    },
+    {
+      "from": "src/gui-lab.mjs",
+      "to": "src/gui-comparison-cases.mjs"
+    },
+    {
+      "from": "src/gui-lab.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "src/gui-trial-transport.mjs",
+      "to": "src/phone-execution-limits.mjs"
+    },
+    {
+      "from": "src/model-settings.mjs",
+      "to": "src/local-secret.mjs"
+    },
+    {
+      "from": "src/output.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/persona-input.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/phone-companion-start.mjs",
+      "to": "src/phone-device.mjs"
+    },
+    {
+      "from": "src/phone-companion-start.mjs",
+      "to": "src/phone-permissions.mjs"
+    },
+    {
+      "from": "src/phone-connection.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/gui-screenshot-coordinates.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/phone-image-privacy.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/phone-action-effects.mjs"
+    },
+    {
+      "from": "src/phone-device.mjs",
+      "to": "src/phone-execution-limits.mjs"
+    },
+    {
+      "from": "src/phone-evidence.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-evidence.mjs",
+      "to": "src/phone-evidence-reader.mjs"
+    },
+    {
+      "from": "src/phone-grounding-recovery.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-hilog.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "src/phone-lab-catalog.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-action-effects.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-lab-catalog.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-evidence-reader.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-device.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-tasks.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-video.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "web/phone-test-plan.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/device-lease.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-connection.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "src/phone-hilog.mjs"
+    },
+    {
+      "from": "src/phone-startpoints.mjs",
+      "to": "src/phone-device.mjs"
+    },
+    {
+      "from": "src/phone-startpoints.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "src/phone-startpoints.mjs",
+      "to": "src/phone-companion-start.mjs"
+    },
+    {
+      "from": "src/phone-tasks.mjs",
+      "to": "src/phone-lab-catalog.mjs"
+    },
+    {
+      "from": "src/phone-video.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "src/phone-video.mjs",
+      "to": "src/phone-video-runtime.mjs"
+    },
+    {
+      "from": "src/phone-video.mjs",
+      "to": "web/phone-video-protocol.mjs"
+    },
+    {
+      "from": "src/phone-worker-lease.mjs",
+      "to": "src/device-lease.mjs"
+    },
+    {
+      "from": "src/private-migration.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "src/private-migration.mjs",
+      "to": "src/local-secret.mjs"
+    },
+    {
+      "from": "src/private-migration.mjs",
+      "to": "src/migration-credentials.mjs"
+    },
+    {
+      "from": "src/runner.mjs",
+      "to": "src/scheduler.mjs"
+    },
+    {
+      "from": "src/scheduler.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/scheduler.mjs",
+      "to": "src/descriptions.mjs"
+    },
+    {
+      "from": "src/scheduler.mjs",
+      "to": "src/tracing.mjs"
+    },
+    {
+      "from": "src/store.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/user-library.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/user-library.mjs",
+      "to": "src/persona-input.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/output.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/web-jobs.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/app-catalog.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/user-library.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/gui-lab.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/gui-comparison-cases.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/v04-acceptance.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "src/web-server.mjs",
+      "to": "src/phone-bundled-tasks.mjs"
+    },
+    {
+      "from": "tests/builtin-home.test.mjs",
+      "to": "tests/helpers/phone-hilog-fixture.mjs"
+    },
+    {
+      "from": "tests/builtin-home.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/builtin-home.test.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "tests/bundled-history.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/bundled-history.test.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "tests/bundled-history.test.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "tests/bundled-history.test.mjs",
+      "to": "web/phone-test-plan.mjs"
+    },
+    {
+      "from": "tests/bundled-history.test.mjs",
+      "to": "web/phone-results.mjs"
+    },
+    {
+      "from": "tests/gui-device-journal.test.mjs",
+      "to": "src/gui-device-journal.mjs"
+    },
+    {
+      "from": "tests/gui-lab.test.mjs",
+      "to": "src/gui-lab.mjs"
+    },
+    {
+      "from": "tests/gui-lab.test.mjs",
+      "to": "src/gui-device-journal.mjs"
+    },
+    {
+      "from": "tests/gui-lab.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/gui-screenshot-coordinates.test.mjs",
+      "to": "src/gui-screenshot-coordinates.mjs"
+    },
+    {
+      "from": "tests/gui-trial-action-limits.test.mjs",
+      "to": "src/gui-trial-action-limits.mjs"
+    },
+    {
+      "from": "tests/gui-trial-transport.test.mjs",
+      "to": "src/gui-trial-transport.mjs"
+    },
+    {
+      "from": "tests/hdc-environment.test.mjs",
+      "to": "src/hdc-environment.mjs"
+    },
+    {
+      "from": "tests/helpers/phone-input-lease-fixture.mjs",
+      "to": "src/phone-worker-lease.mjs"
+    },
+    {
+      "from": "tests/model-probe.test.mjs",
+      "to": "src/model-probe.mjs"
+    },
+    {
+      "from": "tests/model-settings.test.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "tests/model-settings.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/package-video.test.mjs",
+      "to": "scripts/package-phone-video.mjs"
+    },
+    {
+      "from": "tests/phone-action-effects.test.mjs",
+      "to": "src/phone-action-effects.mjs"
+    },
+    {
+      "from": "tests/phone-bundled-tasks.test.mjs",
+      "to": "src/phone-bundled-tasks.mjs"
+    },
+    {
+      "from": "tests/phone-bundled-tasks.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-bundled-tasks.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-calibration-import.test.mjs",
+      "to": "scripts/import-phone-calibration.mjs"
+    },
+    {
+      "from": "tests/phone-companion-start.test.mjs",
+      "to": "tests/helpers/phone-hilog-fixture.mjs"
+    },
+    {
+      "from": "tests/phone-companion-start.test.mjs",
+      "to": "src/phone-companion-start.mjs"
+    },
+    {
+      "from": "tests/phone-companion-start.test.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "tests/phone-companion-start.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-companion-start.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-connection-ui.test.mjs",
+      "to": "web/phone-connection-ui.mjs"
+    },
+    {
+      "from": "tests/phone-connection.test.mjs",
+      "to": "src/phone-connection.mjs"
+    },
+    {
+      "from": "tests/phone-connection.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-evaluation.test.mjs",
+      "to": "src/phone-evaluation-plan.mjs"
+    },
+    {
+      "from": "tests/phone-evaluation.test.mjs",
+      "to": "web/phone-results.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "src/phone-evidence-reader.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "web/phone-process.mjs"
+    },
+    {
+      "from": "tests/phone-evidence-reader.test.mjs",
+      "to": "web/phone-evidence-integrity.mjs"
+    },
+    {
+      "from": "tests/phone-framework-registry.test.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "tests/phone-framework-registry.test.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "tests/phone-grounding-recovery.test.mjs",
+      "to": "src/phone-grounding-recovery.mjs"
+    },
+    {
+      "from": "tests/phone-grounding-recovery.test.mjs",
+      "to": "src/gui-trial-transport.mjs"
+    },
+    {
+      "from": "tests/phone-grounding-recovery.test.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "tests/phone-grounding-recovery.test.mjs",
+      "to": "web/phone-process.mjs"
+    },
+    {
+      "from": "tests/phone-grounding-recovery.test.mjs",
+      "to": "src/phone-model-network.mjs"
+    },
+    {
+      "from": "tests/phone-hilog.test.mjs",
+      "to": "src/phone-hilog.mjs"
+    },
+    {
+      "from": "tests/phone-hilog.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-hilog.test.mjs",
+      "to": "src/device-lease.mjs"
+    },
+    {
+      "from": "tests/phone-hilog.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-image-privacy.test.mjs",
+      "to": "src/phone-image-privacy.mjs"
+    },
+    {
+      "from": "tests/phone-image-time.test.mjs",
+      "to": "web/phone-image-time.mjs"
+    },
+    {
+      "from": "tests/phone-image-time.test.mjs",
+      "to": "web/phone-trace.mjs"
+    },
+    {
+      "from": "tests/phone-image-time.test.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "tests/phone-input-lease.test.mjs",
+      "to": "src/device-lease.mjs"
+    },
+    {
+      "from": "tests/phone-input-lease.test.mjs",
+      "to": "src/phone-worker-lease.mjs"
+    },
+    {
+      "from": "tests/phone-input-lease.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-lab.test.mjs",
+      "to": "tests/helpers/phone-hilog-fixture.mjs"
+    },
+    {
+      "from": "tests/phone-lab.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-lab.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/phone-lab-catalog.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/phone-execution-limits.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/gui-trial-transport.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/phone-model-network.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "tests/phone-long-task.test.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "tests/phone-permissions.test.mjs",
+      "to": "src/phone-permissions.mjs"
+    },
+    {
+      "from": "tests/phone-process.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-process.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-process.test.mjs",
+      "to": "web/phone-process.mjs"
+    },
+    {
+      "from": "tests/phone-protocol.test.mjs",
+      "to": "src/phone-runtime-paths.mjs"
+    },
+    {
+      "from": "tests/phone-startpoints.test.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "tests/phone-startpoints.test.mjs",
+      "to": "src/phone-lab-catalog.mjs"
+    },
+    {
+      "from": "tests/phone-trace.test.mjs",
+      "to": "web/phone-trace.mjs"
+    },
+    {
+      "from": "tests/phone-video-ui.test.mjs",
+      "to": "web/phone-video-ui.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "src/phone-video.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "src/device-lease.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "web/phone-video-protocol.mjs"
+    },
+    {
+      "from": "tests/phone-video.test.mjs",
+      "to": "web/phone-results.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "tests/helpers/phone-hilog-fixture.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-tasks.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-lab.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "web/phone-test-plan.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-framework-registry.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "web/phone-results.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-evidence.mjs"
+    },
+    {
+      "from": "tests/phone-workbench.test.mjs",
+      "to": "src/phone-startpoints.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/contracts.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/descriptions.mjs"
+    },
+    {
+      "from": "tests/pipeline.test.mjs",
+      "to": "src/output.mjs"
+    },
+    {
+      "from": "tests/private-migration.test.mjs",
+      "to": "src/migration-credentials.mjs"
+    },
+    {
+      "from": "tests/private-migration.test.mjs",
+      "to": "src/local-secret.mjs"
+    },
+    {
+      "from": "tests/private-migration.test.mjs",
+      "to": "src/private-migration.mjs"
+    },
+    {
+      "from": "tests/private-migration.test.mjs",
+      "to": "src/model-settings.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/store.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/user-library.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/app-catalog.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/adapters/mock.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/runner.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "tests/product.test.mjs",
+      "to": "src/output.mjs"
+    },
+    {
+      "from": "tests/release-archive.test.mjs",
+      "to": "scripts/export-v04-release-archive.mjs"
+    },
+    {
+      "from": "tests/release-privacy.test.mjs",
+      "to": "scripts/release-privacy.mjs"
+    },
+    {
+      "from": "tests/release-privacy.test.mjs",
+      "to": "scripts/redact-v04-release-archive.mjs"
+    },
+    {
+      "from": "tests/v04-preflight.test.mjs",
+      "to": "scripts/v04-preflight.mjs"
+    },
+    {
+      "from": "tests/web-jobs.test.mjs",
+      "to": "src/web-jobs.mjs"
+    },
+    {
+      "from": "tests/web.test.mjs",
+      "to": "src/web-server.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-trace.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-results.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-test-plan.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-process-ui.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-video-ui.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-connection-ui.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-image-time.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-hilog-ui.mjs"
+    },
+    {
+      "from": "web/phone-lab.mjs",
+      "to": "web/phone-evidence-integrity.mjs"
+    },
+    {
+      "from": "web/phone-process-ui.mjs",
+      "to": "web/phone-process.mjs"
+    },
+    {
+      "from": "web/phone-process-ui.mjs",
+      "to": "web/phone-image-time.mjs"
+    },
+    {
+      "from": "web/phone-process-ui.mjs",
+      "to": "web/phone-hilog-ui.mjs"
+    },
+    {
+      "from": "web/phone-process-ui.mjs",
+      "to": "web/phone-evidence-integrity.mjs"
+    },
+    {
+      "from": "web/phone-process.mjs",
+      "to": "web/phone-trace.mjs"
+    },
+    {
+      "from": "web/phone-process.mjs",
+      "to": "web/phone-image-time.mjs"
+    },
+    {
+      "from": "web/phone-trace.mjs",
+      "to": "web/phone-image-time.mjs"
+    },
+    {
+      "from": "web/phone-trace.mjs",
+      "to": "web/phone-hilog-ui.mjs"
+    },
+    {
+      "from": "web/phone-video-ui.mjs",
+      "to": "web/vendor/jmuxer.min.js"
+    },
+    {
+      "from": "web/phone-video-ui.mjs",
+      "to": "web/phone-video-protocol.mjs"
+    },
+    {
+      "from": "web/workspace.mjs",
+      "to": "web/user-creator.mjs"
+    },
+    {
+      "from": "web/workspace.mjs",
+      "to": "web/model-settings.mjs"
+    },
+    {
+      "from": "web/workspace.mjs",
+      "to": "web/gui-lab.mjs"
+    }
+  ],
+  "layer_crossings": [
+    {
+      "from": "src/phone-device.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-evidence.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-grounding-recovery.mjs",
+      "to": "scripts/hdc-device-baseline.mjs"
+    },
+    {
+      "from": "src/phone-lab.mjs",
+      "to": "web/phone-test-plan.mjs"
+    },
+    {
+      "from": "src/phone-video.mjs",
+      "to": "web/phone-video-protocol.mjs"
+    }
+  ],
+  "known_findings": [
+    {
+      "id": "R01",
+      "scenario": "dead parent and live worker",
+      "reproduced": false
+    },
+    {
+      "id": "R02",
+      "scenario": "malformed ledger row silently omitted",
+      "reproduced": false
+    }
+  ],
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "limitations": [
+    "not a security certification",
+    "no whole-program semantic analysis",
+    "no real OS orphan-worker timing proof",
+    "no long-run memory benchmark"
+  ]
+}

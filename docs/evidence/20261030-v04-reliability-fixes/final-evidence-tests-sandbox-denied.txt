@@ -1,0 +1,31 @@
+✔ malformed internal rows retain positions without hiding the damage or copying raw text (3.2302ms)
+✔ only active unterminated JSON tails are provisional; closed or completed damage is an error (0.3195ms)
+✔ missing and unreadable ledgers are different diagnostics and do not leak filesystem errors (18.4355ms)
+✔ writers refuse damaged evidence unchanged and safely append after a valid unterminated row (14.6035ms)
+✔ snapshots, cursor updates and user review retain damage without rewriting the source (25.5012ms)
+✔ missing, tampered and escaping image references cannot certify a passed result (43.4848ms)
+✖ HTTP exports and process snapshots expose the same integrity report without hardware (70.4237ms)
+✔ the shared UI warning distinguishes an active tail from stable corruption and escapes values (0.997ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 387.9149
+
+✖ failing tests:
+
+test at tests\phone-evidence-reader.test.mjs:111:1
+✖ HTTP exports and process snapshots expose the same integrity report without hardware (70.4237ms)
+  [TypeError [Error]: fetch failed] {
+    [cause]: Error: connect EACCES 127.0.0.1:57199
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 57199
+    }
+  }

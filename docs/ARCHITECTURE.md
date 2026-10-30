@@ -106,7 +106,7 @@ sequenceDiagram
 | 描述与补跑 | 描述队列 | 只消费已有图像，不重新驱动手机 |
 | 模型凭据 | `ModelSettings` / 密钥保护 | 不从公共读接口返回；Windows 新写入使用当前账户 DPAPI |
 
-工作台每次开始创建独立运行；没有通用的原生框架会话自动续接。未知动作效果进入 `needs_attention`，不能按原 prompt 无条件重放。输入锁的崩溃窗口仍有已复现缺口，见审查 R01；不能仅因存在 `device-lease.mjs` 就宣称所有输入入口已接上它。
+工作台每次开始创建独立运行；没有通用的原生框架会话自动续接。未知动作效果进入 `needs_attention`，不能按原 prompt 无条件重放。本地R01修复将输入接到公共设备租约，父进程先登记worker再授予IPC许可，设备命令前重查所有权，worker结束确认后释放。旧格式／未知锁保守阻塞；跨安装与真实硬杀设备时序未验证。R02统一解析并在snapshot／过程响应返回完整性、损坏位置与待写尾行；坏账本不追加审核，诊断ZIP保留原始文件，所选图像通过前检查哈希。详见[当前修复与契约](V04_RELIABILITY_FIXES_20261030.md)。
 
 ## 运行目录与接口边界
 
@@ -115,8 +115,8 @@ sequenceDiagram
 | Q01–Q02 | 任务修订／起点，PhoneTasks 与 PhoneLab | PRD A01；workbench／bundled-tasks／startpoints 测试 |
 | Q03–Q04 | 注册表、PhoneLab、固定 adapter、测试组合 | PRD A01/A03；registry／evaluation 测试 |
 | Q05、Q08 | 证据、过程查询、视频与 HiLog、网页回放 | PRD A02/A07；trace／process／image-time／hilog 测试 |
-| Q06–Q07、N03 | worker 门禁、设备会话、未知效果与定位恢复 | PRD A03/A04；action-effects／grounding-recovery；R01 仍待修复 |
-| Q09、N02/N06 | 只读历史、审核、资产哈希、密钥与导出 | PRD A05/A08；bundled-history／privacy；R02 仍待修复 |
+| Q06–Q07、N03 | worker 门禁、设备会话、未知效果与定位恢复 | PRD A03/A04；action-effects／grounding-recovery／phone-input-lease；R01本地离线修复 |
+| Q09、N02/N06 | 只读历史、审核、资产哈希、密钥与导出 | PRD A05/A08；bundled-history／privacy／phone-evidence-reader；R02本地离线修复 |
 | Q10 | scheduler／Store／独立描述与导出 | PRD A06；pipeline 测试和 Mock 教程 |
 
 - `.data`：用户库、模型设置、主运行库、手机任务／起点／新运行；属于操作者数据。

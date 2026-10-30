@@ -1,0 +1,45 @@
+✔ writer rotates by bytes, preserves UTF-8 on merge and stops before disk exhaustion without deleting data (21.7138ms)
+✔ manual and automatic channels run in parallel and each stop leaves the other channel and test input lease unchanged (109.4477ms)
+✔ failed discovery never launches a reader and does not reveal device identifiers (4.6405ms)
+✔ connection EOF retains partial logs, releases its capture lease and does not automatically restart (54.9055ms)
+✔ a running trajectory reports an interrupted automatic log immediately and retains its partial download (66.6094ms)
+✔ HiLog HTTP starts only on explicit same-origin commands and downloads completed parts in order (152.1402ms)
+✔ automatic capture starts before preparation, finishes after the worker, and attaches its log to the run (159.3108ms)
+✔ a preparation failure keeps its own log and blocked trajectory without dispatching a worker (30.0346ms)
+✔ PhoneLab cannot steal a dead parent lease while its worker is alive (18.0977ms)
+✔ input leases reclaim confirmed dead workers but keep legacy and uncertain locks (20.4695ms)
+✔ workers require a registered, matching lease and recheck after replacement or disconnect (14.0414ms)
+✔ missing grants, wrong workers and parent loss fail before task I/O and remove listeners (24.8839ms)
+✔ actual child IPC waits for parent registration and keeps the lease until process exit (162.2678ms)
+✔ persistent pause blocks capture, run and batch before any physical or model call; configuration stays readable (28.3178ms)
+✔ shared lock rejects a second operation; real evidence references detect tampering (48.8639ms)
+✔ phone interface and read-only catalog require no device; paused HTTP requests return 423 and never call hardware (138.7674ms)
+✔ integration diagnostics remain readable with actual calls and source versions but are explicitly excluded from matrix scoring (17.5639ms)
+✔ a batch freezes its original reference and invalid limits cannot leave a batch active (44.0417ms)
+✔ every run reports its frozen execution phone, with explicitly labelled baseline and unknown fallbacks (27.8456ms)
+✔ recommended defaults preserve user combinations and handle missing or disabled services (1.8164ms)
+✔ named task library persists edits, protects builtins and detects stale revisions (31.3171ms)
+✔ task archive is reversible and validation rejects unsafe package names and empty criteria (9.6749ms)
+✔ single and matrix plans enforce all three axes and produce the full Cartesian product (0.8027ms)
+✔ task HTTP create and edit work while paused without touching a phone or model (138.9541ms)
+✔ a revised task cannot reuse its old baseline, and invalid preparations never access hardware (37.6773ms)
+✔ manual matrix waits per cell, rejects drift, freezes task content and supports cancellation (47.4746ms)
+✔ closing a batch waiting for a manual start does not leave an unresolved queue (20.6819ms)
+✔ custom home baselines need no target package, while manual starts compare actual page content (2.0967ms)
+✔ results support new batch scopes and keep protocols, revisions and limits in separate comparison groups (0.7232ms)
+✔ task startpoint configuration persists independently and is frozen for a batch without a test-page override (37.359ms)
+✔ a task rejects another task baseline, stale task revisions and stale configured startpoints (21.1606ms)
+✔ single-run names and task names are frozen separately, and configured starts are resolved on the server (271.793ms)
+✔ task baseline API can select existing evidence while paused and never calls the phone (51.5435ms)
+✔ a current-state start only needs a name and never resets or launches an app (27.0926ms)
+✔ an old start can be reused by a different task without hardware or rewriting the original evidence (26.6829ms)
+✔ named page comparison records actual metadata while detecting page changes (0.4285ms)
+✔ named starts are checked automatically in a matrix and drift blocks without repeated operator configuration (42.7229ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 961.1283

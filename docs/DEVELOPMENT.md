@@ -60,7 +60,7 @@ node src/cli.mjs check --data .build/tutorial-v04
 | 全量工程回归 | `node --test --test-concurrency=1 tests/*.test.mjs` | 该源码／环境下测试事实；失败和跳过分别保留 |
 | 原生离线循环 | `node scripts/phone-framework-contract.mjs` | 已装上游循环、中文／图像／动作协议，模型回复与设备为注入夹具 |
 | 完整依赖诊断 | `node scripts/phone-doctor.mjs` 或 `03_CHECK.cmd` | 固定依赖、源码哈希、类加载与离线协议；会写诊断，不发送真实业务调用 |
-| 源码审查复现 | `node scripts/review-v04-source.mjs` | 源码指标和 R01/R02 合成文件现象；不是健康检查或已修复证明 |
+| 源码审查复现 | `node scripts/review-v04-source.mjs` | 源码指标及R01/R02原现象是否仍复现；不是整机健康检查 |
 | 网页／真实设备 | 按显式任务范围核对入口与证据 | 与上述级别分别记录，不因工程通过自动执行 |
 
 preview.14 完整包已有207/207离线通过记录。本轮重新验证的环境、通过／跳过数以[审查报告](CODE_REVIEW_V04_20261030.md)为准。无原生依赖的源码结果不能借用完整包的207项通过数字。
@@ -70,6 +70,7 @@ preview.14 完整包已有207/207离线通过记录。本轮重新验证的环�
 - 用户／日／活动推进：`scheduler.mjs`；持久化与 schema：`store.mjs`、`contracts.mjs`。
 - 测试生命周期：`phone-lab.mjs`；真正循环与保护：`scripts/phone-lab-worker.mjs`。
 - 新框架：固定注册 → adapter `run(context)` → 离线协议夹具 → doctor／构建资源；详见[框架接入](FRAMEWORK_ADAPTER_GUIDE.md)。
+- 输入授权：`phone-worker-lease.mjs`与公共`device-lease.mjs`；证据解析：`phone-evidence-reader.mjs`。
 - 物理输入／截图：`phone-device.mjs`；用量：`gui-trial-transport.mjs`；未知效果：`phone-action-effects.mjs`。
 - 定位纠正：`phone-grounding-recovery.mjs`；起点与通用机型：`phone-startpoints.mjs`、`phone-companion-start.mjs`。
 - UI 与轨迹：`web/`；HTTP 路由和服务装配：`web-server.mjs`；不要在 UI 复制预算、调度或审核规则。
@@ -79,6 +80,6 @@ preview.14 完整包已有207/207离线通过记录。本轮重新验证的环�
 
 `.data`、`.runtime`、`node_modules`、原始新图、数据库、缓存与包按忽略规则保留本地。新版本不直接打开未知来源的高版本数据库。正常停服后备份整个数据与必要配置，包含 SQLite WAL；原目录保留回退。
 
-现有输入锁有崩溃窗口，轨迹解析有损坏行静默丢弃；它们是审查问题，不是已保证的容错能力。受限环境可能禁止本机端口、子进程或 DPAPI，报告实际失败原因，不将环境失败抹掉为通过。
+本地R01/R02修复已使用worker租约与统一完整性诊断，验证见[修复记录](V04_RELIABILITY_FIXES_20261030.md)，未更新已发布包。旧格式／不确定锁保守返回409；不要直接删锁。坏账本不继续追加审核，诊断ZIP保留原始文件；解析完成不等于全部图片或业务通过。跨安装互斥和真实系统硬杀未验证，长轨迹全量读取R03仍在。受限环境可能禁止本机端口、子进程或 DPAPI，报告实际失败原因，不将环境失败抹掉为通过。
 
 每轮修改按[贡献规范](../CONTRIBUTING.md)验证和提交。已确认按用户与行为规划、手机活动执行（含证据／存档／数据交付）、整体中控平台三大模块组织，文件归属和契约见[协作 Spec](COLLABORATION_MODULES.md)。每项任务确定一个牵头模块、公共文件一个主要提交方；本轮文档不自动开始源码重构、真实运行或发布。

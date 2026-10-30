@@ -91,7 +91,7 @@ const report = {
   known_findings: [
     { id: 'R01', scenario: 'dead parent and live worker', reproduced: inputLeaseGranted },
     { id: 'R02', scenario: 'malformed ledger row silently omitted',
-      reproduced: snapshot.events.length === 1 &&
+      reproduced: snapshot.events.length === 1 && !snapshot.ledger_integrity &&
         !snapshot.events.some(event => event.type === 'evidence_ledger_invalid') &&
         !snapshot.integrity_error },
   ],

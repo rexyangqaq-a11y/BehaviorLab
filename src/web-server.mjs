@@ -142,7 +142,7 @@ export async function createDebugServer({ dataRoot = path.join(project, '.data')
         response.end(await readFile(path.join(publicRoot, filename))); return;
       }
       const phoneFiles = { '/phone-connection-ui.mjs':['phone-connection-ui.mjs','text/javascript'], '/phone-video-ui.mjs':['phone-video-ui.mjs','text/javascript'], '/phone-video-protocol.mjs':['phone-video-protocol.mjs','text/javascript'], '/vendor/jmuxer.min.js':['vendor/jmuxer.min.js','text/javascript'], '/phone-process.mjs':['phone-process.mjs','text/javascript'], '/phone-process-ui.mjs':['phone-process-ui.mjs','text/javascript'], '/phone-lab': ['phone-lab.html','text/html'], '/phone-lab.mjs': ['phone-lab.mjs','text/javascript'], '/phone-test-plan.mjs':['phone-test-plan.mjs','text/javascript'], '/phone-trace.mjs': ['phone-trace.mjs','text/javascript'], '/phone-results.mjs': ['phone-results.mjs','text/javascript'], '/phone-lab.css': ['phone-lab.css','text/css'] };
-      phoneFiles['/phone-image-time.mjs']=['phone-image-time.mjs','text/javascript'];phoneFiles['/phone-hilog-ui.mjs']=['phone-hilog-ui.mjs','text/javascript'];
+      phoneFiles['/phone-image-time.mjs']=['phone-image-time.mjs','text/javascript'];phoneFiles['/phone-hilog-ui.mjs']=['phone-hilog-ui.mjs','text/javascript'];phoneFiles['/phone-evidence-integrity.mjs']=['phone-evidence-integrity.mjs','text/javascript'];
       if(request.method==='GET'&&phoneFiles[url.pathname]){
         const [file,type]=phoneFiles[url.pathname];response.writeHead(200,{'Content-Type':type+'; charset=utf-8'});response.end(await readFile(path.join(publicRoot,file)));return;
       }

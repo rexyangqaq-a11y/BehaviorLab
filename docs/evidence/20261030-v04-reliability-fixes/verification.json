@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "scope": "v0.4 R01/R02 local reliability fixes; offline and synthetic browser validation only",
+  "checked_at": "2026-10-30T11:20:17.153Z",
+  "parent_commit": "03e43190e270dc75ab1e8ec805eddb77fdbf40bf",
+  "published_tag": {
+    "name": "v0.4.0-preview.14",
+    "commit": "4da6336fb9fcf98bdef661dfa662aa865d6b9946",
+    "unchanged": true
+  },
+  "environment": {
+    "node": "v24.22.1",
+    "platform": "win32",
+    "arch": "x64",
+    "os_release": "10.0.26300"
+  },
+  "full_tests": {
+    "tests": 220,
+    "passed": 208,
+    "skipped": 12,
+    "failed": 0,
+    "duration_ms": 43236.739,
+    "log": "full-tests.txt",
+    "skipped_tests": [
+      "﹣ pinned Midscene codec rejects the recorded box and accepts the regenerated box at the unchanged input size (0.0989ms) # SKIP",
+      "﹣ actual HarmonyAgent keeps its native planner and executes only the regenerated Tap (0.1095ms) # SKIP",
+      "﹣ actual autoglm native loop executes only regenerated action, not the invalid action (0.054ms) # SKIP",
+      "﹣ actual mobiagent native loop executes only regenerated action, not the invalid action (0.0323ms) # SKIP",
+      "﹣ actual model client accepts a response after 31 seconds despite the SDK timeout being 1ms (0.1923ms) # SKIP",
+      "﹣ finite request deadlines cover the body and manual Stop still cancels an unlimited wait (0.0915ms) # SKIP",
+      "﹣ actual autoglm loop exceeds its native step default with unlimited settings (0.2121ms) # SKIP",
+      "﹣ actual mobiagent loop exceeds its native step default with unlimited settings (0.1101ms) # SKIP",
+      "﹣ strict protocol validates literal actions without changing native conversion or input messages (0.8483ms) # SKIP",
+      "﹣ actual AutoGLM loop rejects thinking_only without synthetic finish or a device action (0.1453ms) # SKIP",
+      "﹣ actual AutoGLM loop rejects malformed without synthetic finish or a device action (0.0877ms) # SKIP",
+      "﹣ actual AutoGLM loop rejects wrong_units without synthetic finish or a device action (0.1256ms) # SKIP"
+    ]
+  },
+  "targeted_tests": {
+    "R01": {
+      "passed": 37,
+      "failed": 0,
+      "log": "r01-tests.txt"
+    },
+    "R02": {
+      "passed": 42,
+      "failed": 0,
+      "log": "r02-tests.txt"
+    },
+    "overlaps_full_suite": true,
+    "final_copy_change_check": {
+      "passed": 8,
+      "failed": 0,
+      "log": "final-evidence-tests-local.txt",
+      "sandbox_attempt": {
+        "tests": 8,
+        "passed": 7,
+        "failed": 1,
+        "cause": "localhost HTTP connection denied with EACCES",
+        "log": "final-evidence-tests-sandbox-denied.txt"
+      }
+    }
+  },
+  "syntax": {
+    "checked_files": [
+      "scripts/phone-lab-worker.mjs",
+      "scripts/review-v04-source.mjs",
+      "src/phone-device.mjs",
+      "src/phone-evidence-reader.mjs",
+      "src/phone-evidence.mjs",
+      "src/phone-lab.mjs",
+      "src/phone-worker-lease.mjs",
+      "src/web-server.mjs",
+      "tests/helpers/phone-input-lease-fixture.mjs",
+      "tests/phone-evidence-reader.test.mjs",
+      "tests/phone-input-lease.test.mjs",
+      "web/phone-evidence-integrity.mjs",
+      "web/phone-lab.mjs",
+      "web/phone-process-ui.mjs"
+    ],
+    "failures": 0
+  },
+  "documentation": {
+    "checked_files": [
+      "AGENTS.md",
+      "README.md",
+      "CONTRIBUTING.md",
+      "docs/PRD.md",
+      "docs/ARCHITECTURE.md",
+      "docs/DOCUMENTATION_SPEC.md",
+      "docs/DEVELOPMENT.md",
+      "docs/USER_GUIDE.md",
+      "docs/FRAMEWORK_ADAPTER_GUIDE.md",
+      "docs/COLLABORATION_MODULES.md",
+      "docs/CODE_REVIEW_V04_20261030.md",
+      "docs/CURRENT_STATUS.md",
+      "docs/NEXT_TASK.md",
+      "docs/ROADMAP.md",
+      "docs/V04_RELIABILITY_FIXES_20261030.md"
+    ],
+    "local_links_checked": 83,
+    "missing_links": 0,
+    "requirement_rows": 25,
+    "ids_preserved": true
+  },
+  "known_findings": [
+    {
+      "id": "R01",
+      "scenario": "dead parent and live worker",
+      "reproduced": false
+    },
+    {
+      "id": "R02",
+      "scenario": "malformed ledger row silently omitted",
+      "reproduced": false
+    }
+  ],
+  "source_review": "source-review.json",
+  "browser": {
+    "fixture": "synthetic runs only, isolated temporary service",
+    "corrupt_record_line": 3,
+    "alert_visible": true,
+    "corrupt_review_button_count": 0,
+    "complete_record_alert_count": 0,
+    "complete_review_button_visible": true,
+    "screenshot": "corrupt-ledger-ui.png",
+    "screenshot_sha256": "ea20302a5f998d8e138c407ae2c6117ebf310dfdf3226ea71c962d6561dae06d",
+    "screenshot_scope": "actual browser screenshot during verification; final wording later clarified JSON contains parsed events and diagnostics",
+    "active_tail_live_browser_update": "not verified: hidden browser tab pauses process polling",
+    "isolated_service_stopped": true,
+    "device_factory_calls": 0
+  },
+  "diagnostic_zip": {
+    "verification": "zip-smoke.json",
+    "exact_current_source_python_snippet": true,
+    "raw_ledger_unchanged": true,
+    "full_installed_http_download_verified": false
+  },
+  "source_sha256": {
+    "scripts/phone-lab-worker.mjs": "cb71220b2a85c8a3f1f01f4f1356728119394004854b9aeba1a9988988c8deb9",
+    "scripts/review-v04-source.mjs": "2a912079d92debcb958c034d22e52968fd976f0e2af124aa66b529d16f7ec749",
+    "src/phone-device.mjs": "3bd2efc675af9e6fbfc8fdabb9604d7a8877e05373389af366bd3c1f580c4eaf",
+    "src/phone-evidence-reader.mjs": "19f76b9a4e440a8f15565d63e92df8fad90a065e4d349c4d375acefdae0f25b9",
+    "src/phone-evidence.mjs": "a11ed82f387d705d47a56c24f3e3407c4c162790965a070175b06ef44aa9a19d",
+    "src/phone-lab.mjs": "f77d7f76275af271cd6f74193c7008740c00c8c0bccef267d3b017e6448737bf",
+    "src/phone-worker-lease.mjs": "a5dc928f942c6439b07e1532360506036f5eb877e16dc50e74b8f0e66a571ef2",
+    "src/web-server.mjs": "56ed8b1c1bbb1422cc048e9d4352a231e280f6e4dee3fb1ee3c4b3ec2c500432",
+    "tests/helpers/phone-input-lease-fixture.mjs": "d16c1c9be3b7daaaaa383a899371110faa3e988dc846383369de8c04a3a158c0",
+    "tests/phone-evidence-reader.test.mjs": "88aa38939aef7df1f01fcff3020cfe50acc7ed172e0b8407c31fa1cb2c8e78dd",
+    "tests/phone-input-lease.test.mjs": "d89a104652b3db72209b57ffc9f1014795198002c03a1ae8a365e62fa6e92dc6",
+    "web/phone-evidence-integrity.mjs": "3681c5c3ea406ab5d33df6e6c14cbd43d75e6eb7039d98c0d888befc766baea0",
+    "web/phone-lab.mjs": "999b892b229e2cccf578f18c9e05880771c06fa909b3d3fc024651d56f4d5a52",
+    "web/phone-process-ui.mjs": "e63347e633b6f238b28f8dfd4f916c50bf4b38f50f368b2e49d9f9b1cffe366e"
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "production_service_restarts": 0,
+  "releases_published": 0,
+  "limitations": [
+    "12 native dependency tests skipped",
+    "no real phone or orphan-device-worker timing validation",
+    "no cross-install or cross-data-root device exclusion guarantee",
+    "ledger parsing completeness is not a full asset, event schema or business result audit",
+    "R03 whole-file synchronous reads unchanged",
+    "no native full-runtime deployment or second physical computer validation"
+  ]
+}

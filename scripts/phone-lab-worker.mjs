@@ -16,6 +16,7 @@ import {validatePhysicalAction} from '../src/phone-action-effects.mjs';
 import {limitReached,scheduleDeadline} from '../src/phone-execution-limits.mjs';
 import {createPhoneModelNetwork} from '../src/phone-model-network.mjs';
 import {createGroundingRecovery} from '../src/phone-grounding-recovery.mjs';
+import {waitForPhoneInputLease} from '../src/phone-worker-lease.mjs';
 const {values}=parseArgs({options:{root:{type:'string'},id:{type:'string'}}});
 if(!/^phone_[a-f0-9-]{36}$/.test(values.id??''))throw Error('Invalid run ID');
 const project=fileURLToPath(new URL('../',import.meta.url)),dir=path.join(path.resolve(values.root),'.phone-lab/runs',values.id);
@@ -27,6 +28,7 @@ let result={id:input.id,source:'real_device',status:'blocked',business_result:'p
 process.on('message',message=>{if(message?.type==='stop')control.abort('user_stop');});
 process.on('disconnect',()=>control.abort('server_disconnected'));
 try{
+  const inputLease=await waitForPhoneInputLease({owner:input.id,signal:control.signal});
   if(existsSync(path.join(project,'.runtime/phone-lab-pause.json'))&&JSON.parse(await readFile(path.join(project,'.runtime/phone-lab-pause.json'),'utf8')).paused)throw Error('用户已暂停真机测试，未操作设备或调用模型');
   let db,service,key;
   try{db=new DatabaseSync(path.join(values.root,'.model-services.sqlite'),{readOnly:true});const row=db.prepare('SELECT document FROM model_settings WHERE id=1').get();service=JSON.parse(row.document).services.find(s=>s.id===input.service_id);key=db.prepare('SELECT api_key FROM model_credentials WHERE service_id=?').get(input.service_id)?.api_key;}
@@ -36,14 +38,14 @@ try{
   evidence=new PhoneEvidence(dir,{secrets:[key]});
   process.env.MIDSCENE_RUN_DIR=path.join(dir,'sdk-local');process.env.MIDSCENE_LANGSMITH_DEBUG='false';process.env.MIDSCENE_LANGFUSE_DEBUG='false';process.env.MIDSCENE_RECORD_MODEL_CALL='false';process.env.DEBUG='';
   await state({status:'running',phase:'checking_start',started_at:new Date().toISOString()});
-  session=await createPhoneDevice({evidence,signal:control.signal,limits:input.limits});
+  session=await createPhoneDevice({evidence,signal:control.signal,limits:input.limits,assertInputOwnership:inputLease.assertOwnership});
   const environment=await session.environment(input.bundle),initial=await session.capture('initial'),layout=await session.layout();
   const current=input.startpoint.named?namedStartContract({environment,shot:initial,nodes:layout.nodes,recipeId:input.startpoint.contract.recipe_id}):startContract({environment,shot:initial,nodes:layout.nodes,task:input.task,manual:!input.task||input.task.reset==='manual'});
   const same=compareStart(input.startpoint.contract,current);result.same_start=same;evidence.save('environment.json',{...environment,screen:{width:initial.width,height:initial.height},framework:input.framework,model:input.service.model});
   evidence.save('start-check.json',{reference:input.startpoint.contract,current,comparison:same,initial_asset:initial.asset});
   if(!same.same)throw Error('执行前起点发生变化：'+same.reasons.join('；'));
   const files=['src/phone-grounding-recovery.mjs','scripts/phone-lab-worker.mjs','src/phone-lab.mjs','src/phone-tasks.mjs','src/phone-lab-catalog.mjs','web/phone-test-plan.mjs','src/phone-device.mjs','src/phone-evidence.mjs','src/phone-image-privacy.mjs','src/phone-permissions.mjs','src/phone-startpoints.mjs','src/phone-companion-start.mjs','integrations/phone-companion-profiles.json','src/gui-trial-transport.mjs','integrations/phone-frameworks.py'];
-  files.push('src/phone-hilog.mjs','web/phone-image-time.mjs','src/phone-execution-limits.mjs','src/phone-model-network.mjs','src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','src/device-lease.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
+  files.push('src/phone-worker-lease.mjs','src/phone-evidence-reader.mjs','src/phone-hilog.mjs','web/phone-image-time.mjs','src/phone-execution-limits.mjs','src/phone-model-network.mjs','src/local-secret.mjs','src/phone-action-effects.mjs','src/phone-framework-registry.mjs','src/phone-runtime-paths.mjs','src/device-lease.mjs','integrations/phone_protocol.py','integrations/adapters/'+frameworkSpec(input.framework_id).adapter+'.mjs',...frameworkSpec(input.framework_id).sourceFiles);
   evidence.save('source-versions.json',Object.fromEntries(await Promise.all(files.map(async file=>[file,sha256(await readFile(path.join(project,file)))]))));
   executionStarted=Date.now();evidence.testStartedAt=executionStarted;evidence.phase='execution';
   await state({status:'running',phase:'execution',started_at:new Date(executionStarted).toISOString()});

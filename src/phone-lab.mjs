@@ -1,7 +1,7 @@
 import {phonePython} from './phone-runtime-paths.mjs';
 import {PHONE_SELECTION_POLICY} from './phone-framework-registry.mjs';
 import {unexpectedWorkerState} from './phone-action-effects.mjs';
-import {mkdirSync,readFileSync,writeFileSync,existsSync,readdirSync,unlinkSync,renameSync} from 'node:fs';
+import {mkdirSync,readFileSync,writeFileSync,existsSync,readdirSync,renameSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {fork,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
@@ -10,20 +10,20 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {PHONE_CASES,PHONE_FRAMEWORKS,PHONE_LAB_VERSION,normalizePhoneLimits,phoneModelFamily} from './phone-lab-catalog.mjs';
 import {PhoneEvidence,sha256} from './phone-evidence.mjs';
+import {readPhoneLedger,readVerifiedPhoneAsset} from './phone-evidence-reader.mjs';
 import {createPhoneDevice,layoutNodes} from './phone-device.mjs';
 import {BUILTIN_HOME_START,BUILTIN_COMPANION_START,BUILTIN_STARTS,builtinStart,startContract,namedStartContract,compareStart,resetPhoneStart} from './phone-startpoints.mjs';
 import {PhoneTasks} from './phone-tasks.mjs';
 import {PhoneVideo} from './phone-video.mjs';
 import {phoneTestPlan} from '../web/phone-test-plan.mjs';
-import {acquireDeviceLease} from './device-lease.mjs';
+import {acquireDeviceLease,assertDeviceLease,readDeviceLease} from './device-lease.mjs';
 import {PhoneConnection} from './phone-connection.mjs';
 import {PhoneHilog} from './phone-hilog.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url)),now=()=>new Date().toISOString();
 const fail=(status,message)=>Object.assign(Error(message),{status});
 const read=file=>{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}};
 const save=(file,value)=>writeFileSync(file,JSON.stringify(value,null,2),{flush:true});
-const eventsAt=dir=>{try{return readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {type:'evidence_ledger_invalid'};}});}catch(error){return error.code==='ENOENT'?[]:[{type:'evidence_ledger_invalid'}];}};
-const alive=pid=>{try{process.kill(pid,0);return true;}catch{return false;}};
+const eventsAt=dir=>{const ledger=readPhoneLedger(dir);return ledger.integrity.complete?ledger.events:[...ledger.events,{type:'evidence_ledger_invalid',derived:true}];};
 const exec=promisify(execFile);
 export function phoneRunDeviceInfo(input,environment){
   const baseline=input?.startpoint?.environment,actual=environment?.device?environment:null,record=actual??baseline;
@@ -58,7 +58,8 @@ export class PhoneLab {
     if(scope.finishing)return scope.finishing;
     scope.finishing=(async()=>{let metadata;try{const state=await scope.recorder.stop(reason);metadata=state.recordings?.[0]??scope.initial;}catch(error){metadata={...scope.initial,state:'error',reason:error.message};}
       save(path.join(scope.dir,'hilog.json'),metadata);this.testLogs.delete(scope.id);
-      const evidence=new PhoneEvidence(scope.dir,{phase:'diagnostics'});evidence.record({type:'hilog_capture_end',recording:metadata,attachment:'hilog.json'});
+      try{const evidence=new PhoneEvidence(scope.dir,{phase:'diagnostics'});evidence.record({type:'hilog_capture_end',recording:metadata,attachment:'hilog.json'});}
+      catch(error){metadata={...metadata,evidence_error:error.message};save(path.join(scope.dir,'hilog.json'),metadata);}
       return metadata;
     })();return scope.finishing;
   }
@@ -73,10 +74,7 @@ export class PhoneLab {
   archived(id){return this.archiveIds.has(id)&&this.runDirectory(id)===path.join(this.archiveRoot,'runs',id);}
   assertWritableRun(id){if(this.archived(id))throw fail(409,'随包历史测试为只读档案，不修改历史判定或重新执行。');}
   list(kind,file){return readdirSync(path.join(this.base,kind)).map(id=>read(path.join(this.base,kind,id,file))).filter(Boolean).sort((a,b)=>(b.created_at??'').localeCompare(a.created_at??''));}
-  // REVIEW(v0.4): This legacy input lock checks the parent PID only. Do not
-  // assume it protects a surviving worker after a parent crash. R01 in the
-  // source review tracks the missing worker ownership check; it is not fixed here.
-  acquire(owner){const token=randomUUID();if(existsSync(this.lockPath)){const old=read(this.lockPath);if(old&&alive(old.pid))throw fail(409,'手机正在被另一项真机准备或测试占用');unlinkSync(this.lockPath);}writeFileSync(this.lockPath,JSON.stringify({token,pid:process.pid,owner}),{flag:'wx',flush:true});return ()=>{if(read(this.lockPath)?.token===token)unlinkSync(this.lockPath);};}
+  acquire(owner){return acquireDeviceLease(this.lockPath,owner);}
   assertDeviceEnabled(){if(read(this.pausePath)?.paused)throw fail(423,'真机测试已暂停；查看与编辑界面不受影响。手机可用后由测试者恢复。');}
   pause(reason='手机暂供日常使用'){save(this.pausePath,{paused:true,at:now(),reason});for(const id of this.children.keys())this.stop(id);if(this.activeBatch)this.stopBatch(this.activeBatch);void this.video.stopAll('真机操作已暂停');return read(this.pausePath);}
   resume(){save(this.pausePath,{paused:false,at:now(),reason:'测试者在界面恢复'});return read(this.pausePath);}
@@ -124,7 +122,7 @@ export class PhoneLab {
     const starts=this.list('starts','start.json'),tasks=this.listTasks(starts);
     return {version:PHONE_LAB_VERSION,final_framework:null,selection_policy:PHONE_SELECTION_POLICY,frameworks,services,tasks,cases:tasks.filter(t=>!t.archived),default_limits:normalizePhoneLimits(),batch_request_limit:null,active_batch_id:this.activeBatch??null,
       connection:this.connection.status(),archive:this.archiveManifest?{runs:this.archiveIds.size,evaluation_id:this.archiveManifest.evaluation_id,read_only:true}:null,
-      starts:[...BUILTIN_STARTS.map(s=>structuredClone(s)),...starts],runs:[...new Set([...this.list('runs','input.json').map(i=>i.id),...this.archiveIds])].map(id=>({...this.summary(id),evaluation_exclusion:excluded.get(id)??null,policy_deviation:deviations.get(id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:read(this.lockPath),device_pause:read(this.pausePath)??{paused:false},video:this.video.status(),hilog:this.hilog.status()};
+      starts:[...BUILTIN_STARTS.map(s=>structuredClone(s)),...starts],runs:[...new Set([...this.list('runs','input.json').map(i=>i.id),...this.archiveIds])].map(id=>({...this.summary(id),evaluation_exclusion:excluded.get(id)??null,policy_deviation:deviations.get(id)??null})),batches:this.list('batches','batch.json'),evaluations,busy:(()=>{const lease=readDeviceLease(this.lockPath);return lease?{owner:lease.owner,pid:lease.pid,worker_pid:lease.worker_pid??null}:existsSync(this.lockPath)?{owner:'unverified',needs_attention:true}:null;})(),device_pause:read(this.pausePath)??{paused:false},video:this.video.status(),hilog:this.hilog.status()};
   }
   async prepareBuiltinHome(task){return this.prepareBuiltinStart(task,BUILTIN_HOME_START.id);}
   async prepareBuiltinStart(task,recipeId){
@@ -144,7 +142,7 @@ export class PhoneLab {
     const release=this.acquire('capture_start'),id='start_'+randomUUID(),dir=this.directory('starts',id);mkdirSync(dir);
     const evidence=new PhoneEvidence(dir);
     try{
-      const session=await this.deviceFactory({evidence});
+      const session=await this.deviceFactory({evidence,assertInputOwnership:()=>assertDeviceLease(this.lockPath,release.token)});
       const before=await session.layout();if(before.nodes.some(n=>/ScreenLock|keyguard/i.test(n.id??'')))throw fail(409,'手机已锁屏，请手动解锁后重新记录');
       if(input.reset)await resetPhoneStart(session,task);
       const environment=await session.environment(input.named?null:task?.bundle??input.bundle??null),shot=await session.capture('start'),view=await session.layout();
@@ -180,7 +178,7 @@ export class PhoneLab {
     if(!start.named&&task&&task.revision!==start.contract.case_revision)throw fail(409,'任务版本已更新，请为当前版本重新记录起点');
     if(this.closing)throw fail(503,'真机测试服务正在关闭');release=this.acquire(id);
       mkdirSync(dir,{recursive:true});
-      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v13-timestamped-evidence-and-hilog-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
+      const frozen={id,created_at:now(),evaluation_protocol:'phone-lab-v14-worker-lease-ledger-integrity-v1',permission_policy:'deny_new_system_permissions_v1',framework_id:framework.id,framework,service_id:service.id,
         evaluation_id:typeof input.evaluation_id==='string'?input.evaluation_id.slice(0,100):null,phase_id:typeof input.phase_id==='string'?input.phase_id.slice(0,60):null,
         service:{id:service.id,name:service.name,model:service.model,base_url:service.base_url,protocol:service.protocol,timeout_ms:service.timeout_ms,family:phoneModelFamily(service.model)},
         settings_revision:settings.revision,case_id:task?.id??null,case_revision:task?.revision??null,name,task_name:task?.name??'自定义任务',
@@ -188,21 +186,59 @@ export class PhoneLab {
         task:task??null,startpoint_id:start.id,startpoint:start,limits,batch_id:batchId,source:'real_device',mode:'real',video_observation_at_start:this.video.observation(),automatic_hilog:scope.initial,final_framework:null};
       save(path.join(dir,'input.json'),frozen);save(path.join(dir,'state.json'),{status:'queued',created_at:now()});
       const child=fork(path.join(project,'scripts/phone-lab-worker.mjs'),['--root',this.root,'--id',id],{cwd:project,windowsHide:true,stdio:['ignore','pipe','pipe','ipc']});
-      const completion=new Promise(resolve=>{let settled=false;const finish=async error=>{if(settled)return;settled=true;try{const state=read(path.join(dir,'state.json'));if(error||['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),unexpectedWorkerState(state,eventsAt(dir),error));await this.finishTestLog(scope);}finally{this.children.delete(id);release();resolve();}};child.once('error',error=>void finish(error));child.once('exit',()=>void finish());});
+      let launchError=null,leaseGranted=false;
+      const completion=new Promise(resolve=>{
+        let settled=false;
+        const finish=async error=>{
+          if(settled)return;settled=true;
+          try{
+            const state=read(path.join(dir,'state.json'));
+            if(error||['running','queued','stopping'].includes(state?.status))save(path.join(dir,'state.json'),unexpectedWorkerState(state,eventsAt(dir),error));
+            await this.finishTestLog(scope);
+          }catch(error){
+            // Keep cleanup failures visible without leaving an unhandled child
+            // completion or clearing an input lease whose worker is still live.
+            try{save(path.join(dir,'state.json'),{...read(path.join(dir,'state.json')),cleanup_error:error.message});}catch{}
+          }finally{
+            child.removeListener('message',grantLease);this.children.delete(id);
+            try{if(!release())save(path.join(dir,'state.json'),{...read(path.join(dir,'state.json')),input_lease_retained:true});}
+            catch(error){try{save(path.join(dir,'state.json'),{...read(path.join(dir,'state.json')),lease_cleanup_error:error.message});}catch{}}
+            resolve();
+          }
+        };
+        // close follows process exit and drained stdio. A live worker is never
+        // detached from the input lease, including during parent failure.
+        child.once('error',error=>{launchError=error;});
+        child.once('close',()=>void finish(launchError));
+      });
+      const grantLease=message=>{
+        if(message?.type!=='phone_input_lease_request'||leaseGranted)return;
+        try{
+          assertDeviceLease(this.lockPath,release.token,child.pid);
+          leaseGranted=true;
+          child.send({type:'phone_input_lease',file:this.lockPath,token:release.token,worker_pid:child.pid},error=>{if(error){launchError=error;child.kill();}});
+        }catch(error){launchError=error;child.kill();}
+      };
+      child.on('message',grantLease);
       // Worker logs are not streamed to the browser. The durable sanitized ledger
       // is the source of UI information; no provider credential is in argv/stdin.
       child.stdout.on('data',()=>{});child.stderr.on('data',()=>{});
-      this.children.set(id,{child,completion});handedOff=true;scope.handedOff=true;return {id,status:'queued'};
+      this.children.set(id,{child,completion});handedOff=true;scope.handedOff=true;
+      try{release.registerWorker(child.pid);}catch(error){launchError=error;child.kill();await completion;throw error;}
+      return {id,status:'queued'};
     }catch(error){
       this.recordPreparationFailure(scope,{task,framework,service,name,instruction,limits,startpointId,batchId,error});
       throw error;
     }finally{if(!handedOff){try{await this.finishTestLog(scope,'测试未进入执行');}finally{release?.();}}}
   }
   summary(id){const dir=this.runDirectory(id),input=read(path.join(dir,'input.json'));if(!input)throw fail(404,'执行记录不存在');const legacy=read(path.join(dir,'review.json')),assistant_review=read(path.join(dir,'assistant-review.json'))??(legacy?.reviewer==='assistant'?legacy:null),user_review=read(path.join(dir,'user-review.json'))??(legacy&&legacy.reviewer!=='assistant'?legacy:null);return {...input,read_only:this.archived(id),record_origin:this.archived(id)?'bundled_history':'local_run',automatic_hilog:(()=>{const log=this.testLogs.get(id)?.recorder.status();return log?.current??log?.recordings?.[0]??read(path.join(dir,'hilog.json'));})(),device_info:phoneRunDeviceInfo(input,read(path.join(dir,'environment.json'))),source_versions:read(path.join(dir,'source-versions.json')),state:read(path.join(dir,'state.json')),result:read(path.join(dir,'result.json')),assistant_review,user_review,review:user_review??assistant_review??legacy};}
-  // REVIEW(v0.4): This is a complete in-memory projection, not an indexed read.
-  // Malformed rows currently disappear from this projection (R02). A partial
-  // trace shown by this method must not be treated as proof of ledger integrity.
-  snapshot(id){const result=this.summary(id),dir=this.runDirectory(id);let events=[];try{events=readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).flatMap(line=>{try{return [JSON.parse(line)];}catch{return [];}});}catch{}return {...result,environment:read(path.join(dir,'environment.json')),start_check:read(path.join(dir,'start-check.json')),source_versions:read(path.join(dir,'source-versions.json')),events,assets:events.filter(e=>e.type==='image').map(e=>e.asset)};}
+  // Still a full in-memory projection (R03). Parsing completeness is separate
+  // from business success and from the image hash checks performed on access.
+  snapshot(id){
+    const result=this.summary(id),dir=this.runDirectory(id);
+    const {events,integrity}=readPhoneLedger(dir,{active:['queued','running','stopping'].includes(result.state?.status)});
+    return {...result,environment:read(path.join(dir,'environment.json')),start_check:read(path.join(dir,'start-check.json')),source_versions:read(path.join(dir,'source-versions.json')),events,ledger_integrity:integrity,assets:events.filter(e=>e.type==='image'&&e.asset).map(e=>e.asset)};
+  }
   processSnapshot(id,after=0){
     if(!Number.isSafeInteger(after)||after<0)throw fail(400,'执行轨迹游标无效');
     const run=this.snapshot(id),latest=run.events.reduce((n,e)=>Math.max(n,Number.isSafeInteger(e.seq)?e.seq:0),0),reset=after>latest;
@@ -213,26 +249,29 @@ export class PhoneLab {
     const dir=kind==='runs'?this.runDirectory(id):this.directory(kind,id);let assets;
     if(kind==='starts')assets=[read(path.join(dir,'start.json'))?.asset];else assets=this.snapshot(id).assets;
     const asset=assets.find(a=>a?.id===assetId);if(!asset)throw fail(404,'图像不存在');
-    const file=path.resolve(dir,asset.file);if(!file.startsWith(dir+path.sep))throw fail(400,'图像路径无效');
-    const bytes=await readFile(file);if(sha256(bytes)!==asset.sha256)throw fail(409,'截图哈希核对失败');return {bytes,type:asset.format==='jpeg'?'image/jpeg':'image/png'};
+    return readVerifiedPhoneAsset(dir,asset);
   }
   async bundle(id){
     this.assertWritableRun(id);
     if(this.children.has(id)||this.testLogs.has(id))throw fail(409,'请等待测试与自动日志收尾后再导出完整证据包');
-    const s=this.summary(id);if(['queued','running','stopping'].includes(s.state.status))throw fail(409,'请在执行结束或停止后导出完整证据包');
+    const s=this.snapshot(id);if(['queued','running','stopping'].includes(s.state.status))throw fail(409,'请在执行结束或停止后导出完整证据包');
     const dir=this.directory('runs',id),file=path.join(dir,'evidence.zip'),python=phonePython(project);
     if(!python)throw fail(409,'证据包工具未安装；可先下载 JSON 与截图');
-    await exec(python,['-c','import sys,pathlib,zipfile;root=pathlib.Path(sys.argv[1]);dest=pathlib.Path(sys.argv[2]);files=[p for p in root.rglob("*") if p.is_file() and p.suffix in (".json",".jsonl",".txt",".log",".jpeg",".png",".jpg") and not p.name.startswith("capture-")];z=zipfile.ZipFile(dest,"w",zipfile.ZIP_DEFLATED);[(z.write(p,p.relative_to(root))) for p in files];z.close()',dir,file],{windowsHide:true,timeout:30000});
+    await exec(python,['-c','import sys,pathlib,zipfile;root=pathlib.Path(sys.argv[1]);dest=pathlib.Path(sys.argv[2]);files=[p for p in root.rglob("*") if p.is_file() and p.suffix in (".json",".jsonl",".txt",".log",".jpeg",".png",".jpg") and not p.name.startswith("capture-") and p.name!="ledger-integrity.json"];z=zipfile.ZipFile(dest,"w",zipfile.ZIP_DEFLATED);[(z.write(p,p.relative_to(root))) for p in files];z.writestr("ledger-integrity.json",sys.argv[3]);z.close()',dir,file,JSON.stringify(s.ledger_integrity)],{windowsHide:true,timeout:30000});
     return readFile(file);
   }
   stop(id){this.assertWritableRun(id);const dir=this.directory('runs',id),s=this.summary(id);if(!['running','queued','stopping'].includes(s.state.status))return s;save(path.join(dir,'stop.json'),{at:now(),reason:'user_stop'});this.children.get(id)?.child.send({type:'stop'});return {id,status:'stopping'};}
   review(id,input){
     this.assertWritableRun(id);
     const s=this.snapshot(id);if(['running','queued','stopping'].includes(s.state.status))throw fail(409,'请等待执行结束后判定');
+    // Preserve damaged source files: do not append review events to a corrupt
+    // ledger or certify a passed result from an incomplete trace.
+    if(!s.ledger_integrity.complete)throw fail(409,'轨迹不完整，已保留原记录；请先下载诊断证据包核对，暂不保存审核');
     if(!['passed','partial','failed','blocked','cannot_determine'].includes(input.verdict))throw fail(400,'判定状态无效');
     if(typeof input.note!=='string'||!input.note.trim()||input.note.length>6000)throw fail(400,'请填写结果依据');
     const evidenceIds=input.evidence_ids??[];if(!Array.isArray(evidenceIds)||evidenceIds.some(id=>!s.assets.some(a=>a.id===id)))throw fail(400,'证据引用无效');
     if(input.verdict==='passed'&&!evidenceIds.length)throw fail(400,'通过判定需关联实际截图');
+    if(input.verdict==='passed')for(const evidenceId of evidenceIds)readVerifiedPhoneAsset(this.runDirectory(id),s.assets.find(asset=>asset.id===evidenceId));
     const row={at:now(),reviewer:input.reviewer==='assistant'?'assistant':'user',verdict:input.verdict,note:input.note,evidence_ids:evidenceIds};
     const dir=this.directory('runs',id);new PhoneEvidence(dir).record({type:'independent_review',review:row});save(path.join(dir,row.reviewer==='assistant'?'assistant-review.json':'user-review.json'),row);save(path.join(dir,'review.json'),row.reviewer==='user'?row:s.user_review??row);return row;
   }

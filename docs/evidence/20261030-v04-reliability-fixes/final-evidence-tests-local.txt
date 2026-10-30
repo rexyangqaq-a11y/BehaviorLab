@@ -1,0 +1,16 @@
+✔ malformed internal rows retain positions without hiding the damage or copying raw text (3.1603ms)
+✔ only active unterminated JSON tails are provisional; closed or completed damage is an error (0.1946ms)
+✔ missing and unreadable ledgers are different diagnostics and do not leak filesystem errors (14.4793ms)
+✔ writers refuse damaged evidence unchanged and safely append after a valid unterminated row (13.5322ms)
+✔ snapshots, cursor updates and user review retain damage without rewriting the source (16.4718ms)
+✔ missing, tampered and escaping image references cannot certify a passed result (34.6403ms)
+✔ HTTP exports and process snapshots expose the same integrity report without hardware (97.1637ms)
+✔ the shared UI warning distinguishes an active tail from stable corruption and escapes values (0.633ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 361.5193
