@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-30T08:38:48.259Z",
+  "scope": "v0.4 PRD users and collaboration wording revision R2",
+  "source_parent": "a1c495100ef387117695a66a2bbf635fe29e8d5c",
+  "documents": [
+    "docs/PRD.md",
+    "docs/COLLABORATION_MODULES.md",
+    "docs/CURRENT_STATUS.md",
+    "docs/NEXT_TASK.md"
+  ],
+  "relative_links_checked": 27,
+  "broken_links": 0,
+  "requirement_and_acceptance_rows_unchanged": 25,
+  "business_user_categories": 1,
+  "module_count": 6,
+  "staffing_example_development_lines": 3,
+  "concrete_maintenance_tasks": 3,
+  "shared_file_ownership_reviewed": [
+    "src/phone-lab.mjs",
+    "src/store.mjs",
+    "src/web-server.mjs",
+    "src/adapters/mock.mjs"
+  ],
+  "business_source_changed": false,
+  "tests_rerun": false,
+  "reason": "documentation-only revision; verified diff, links, preserved requirement rows and scope",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "remote_writes": 0,
+  "formal_release": "paused",
+  "business_restructuring_implemented": false
+}
