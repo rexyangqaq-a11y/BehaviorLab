@@ -70,4 +70,4 @@
 Offline check only. No phone operation or model call was performed.
 Bundled video checks include file hashes, Java and SDK class loading.
 Report: .runtime\phone-doctor.json
-Press any key to continue . . . 
+Press any key to continue . . .

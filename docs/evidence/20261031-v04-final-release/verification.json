@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "0.4.0",
   "tested_source_commit": "5bb7db0663ad997bc67053d2c719e3a3da71ae19",
-  "checked_at": "2026-10-30T16:30:57.468Z",
+  "checked_at": "2026-10-30T16:37:34.536Z",
   "scope": "complete Windows formal package offline regression, doctor, actual CMD start/stop and synthetic browser verification",
   "packaged_node": {
     "version": "v24.19.0",
@@ -86,7 +86,7 @@
   },
   "files": {
     "package-tests.txt": "c615ac61c10583a3b8f7dd84aec89ac5e97faba150a91d3bab44eb987637bf10",
-    "package-doctor.txt": "67bfcff6ea616d869761aeb25822233a857613ef04f561af026f1ca84e569f8e",
+    "package-doctor.txt": "a0874eb9a1a77270d1df8f023903395ec36b1fa0322772e27b5338196a3295da",
     "package-doctor.json": "b182267e7bb989c923a294fbf940d3baf19402fcf5d6b997c96f7236d148bc58",
     "startup.json": "d0770c98967f290d393a8d9571387d8ea701b2aa4f555759286755cad2c56fd4",
     "browser.json": "1c4c6e7ca138bf31eeb1dac3eb31491862e255eb97d7dd80320218abc0d0255b",
@@ -98,6 +98,7 @@
   "real_model_requests": 0,
   "real_device_commands": 0,
   "original_service_modified": false,
+  "log_archival_normalization": "LF and trailing horizontal whitespace removed; original process output retained in ignored build reports",
   "publication": "pending ZIP freeze, upload and public download verification; not yet a publication claim",
   "unverified": [
     "new true phone/model GUI business tasks",
