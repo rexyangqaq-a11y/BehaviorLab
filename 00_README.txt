@@ -1,4 +1,8 @@
-﻿BehaviorLab v0.4.0-preview.14 · Windows 10/11 x64
+BehaviorLab v0.4.0 · Windows 10/11 x64
+
+正式版说明
+v0.4.0纳入worker输入租约、损坏轨迹诊断、审核证据保护及三模块协作文档。
+本版已保留既有框架与模型接口，使用者自行配置；主仿真内容仍Mock。
 
 下载与首次部署
 1. 本目录来自Release中的Windows-x64.zip，包含Node/Python/HDC、三框架和Java视频依赖。

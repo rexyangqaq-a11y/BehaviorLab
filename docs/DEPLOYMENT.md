@@ -1,13 +1,13 @@
 # v0.4 部署、升级与回退
 
-适用已发布构建：`v0.4.0-preview.14`，Windows 10/11 x64。用户已选定它为正式版基线；正式版新增材料与审查仍在整理，当前不改旧标签或附件。项目组内部使用与正式发布是不同事项。
+适用正式版：`v0.4.0`，Windows 10/11 x64；2026-10-31用户已恢复正式发布授权，保留旧预览版本和附件。项目组内部使用按下列步骤部署。
 
 ## 安装与校验
 
-从[preview.14 Release](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.14)取得 `BehaviorLab-v0.4.0-preview.14-Windows-x64.zip` 和 `SHA256SUMS.txt`。GitHub 自动生成的 Source code ZIP 不含运行依赖。
+从[v0.4.0 Release](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0)取得 `BehaviorLab-v0.4.0-Windows-x64.zip` 和 `SHA256SUMS.txt`。GitHub 自动生成的 Source code ZIP 不含运行依赖。
 
 ```powershell
-Get-FileHash .\BehaviorLab-v0.4.0-preview.14-Windows-x64.zip -Algorithm SHA256
+Get-FileHash .\BehaviorLab-v0.4.0-Windows-x64.zip -Algorithm SHA256
 ```
 
 与校验表同名行完整比较，解压到可写新目录，不在压缩包内运行。包内含 Node 24、Python 3.12、三框架、HDC、Java／视频组件和已审阅历史；USB 驱动、设备授权及自己的模型服务仍由操作者准备。
@@ -17,7 +17,7 @@ Get-FileHash .\BehaviorLab-v0.4.0-preview.14-Windows-x64.zip -Algorithm SHA256
 3. 端口被占用可能自动选空闲端口，以 `READY` 和该目录 `.runtime/desktop.json` 为准。
 4. 停止使用 `02_STOP.cmd`；关闭网页不停止后台服务。保留本地数据。
 
-实际操作见[使用指南](USER_GUIDE.md)。只查看历史或运行 Mock 不需要手机／模型；不要为验证安装自动开始真实任务。已有207/207离线记录不等于目标电脑、设备和长任务已经验收。
+实际操作见[使用指南](USER_GUIDE.md)。只查看历史或运行 Mock 不需要手机／模型；不要为验证安装自动开始真实任务。正式包离线、doctor、启动／停止及下载验证见发布记录；它们不等于目标电脑、设备和长任务已经验收。
 
 ## 升级和本地数据
 
