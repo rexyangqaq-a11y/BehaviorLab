@@ -1,0 +1,24 @@
+{
+  "source_commit": "8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b",
+  "source_files_verified": 416,
+  "source_matches_committed_index": true,
+  "runtime_source_matches_tested_commit": "5bb7db0",
+  "history_files_verified": 1888,
+  "historical_events_images_unchanged": true,
+  "historical_counts": {
+    "runs": 36,
+    "events": 12063,
+    "requests": 331,
+    "images": 1486
+  },
+  "packaged_tests": {
+    "total": 220,
+    "passed": 220,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 82704.1381
+  },
+  "credentials_or_databases_included": false,
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

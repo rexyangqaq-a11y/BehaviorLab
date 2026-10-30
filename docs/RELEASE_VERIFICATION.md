@@ -4,7 +4,7 @@
 
 实际浏览器使用正式包代码与全新合成数据，核对v0.4.0版号、6项任务、36历史及2条合成记录、损坏行3告警与隐藏审核入口，完整记录可审核。连接／视频／设备均替身，临时服务已停止，真实模型与设备调用0。
 
-[详细证据](evidence/20261031-v04-final-release/verification.json) · [包内测试](evidence/20261031-v04-final-release/package-tests.txt) · [部署](DEPLOYMENT.md)。源码及ZIP冻结、上传、回读由[发布记录](RELEASE_PUBLICATION.md)补充；下文是此前版本历史。
+[详细证据](evidence/20261031-v04-final-release/verification.json) · [包内测试](evidence/20261031-v04-final-release/package-tests.txt) · [部署](DEPLOYMENT.md)。源码冻结8665e18，新ZIP已发布；四附件完整摘要与匿名下载回读一致，最终ZIP中文空格新目录的启停和doctor通过，详见[发布核对](evidence/20261031-v04-final-release/publication-check.json)及[发布记录](RELEASE_PUBLICATION.md)。下文是此前版本历史。
 
 # preview.14 当前说明
 

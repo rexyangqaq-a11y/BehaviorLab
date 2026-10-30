@@ -1,15 +1,33 @@
-# v0.4 下一任务
+# v0.4 交接与下一步
 
-2026-10-31。用户明确要求继续直至发布最终版；已恢复v0.4.0公开发布授权，不再等待旧的暂停条件。正式包220/220、doctor、实际CMD启动／停止及隔离网页已通过。唯一下一步：冻结源码与ZIP，上传并下载回读，直到正式Release可用。
+2026-10-31。v0.4.0正式Release、四个新附件、源码新标签及下载回读均已完成；不再继续上传或重新打包该版本。**唯一下一步：在新目录按部署指南进行使用者本机部署与使用验收。** 原服务未替换，不自动启动模型、手机、投屏或旧队列。
 
-必须阅读根AGENTS、README、CURRENT_STATUS、PRD、ARCHITECTURE、RELEASE_PROCESS、releases/v0.4.0.md、RELEASE_PUBLICATION与此前R01/R02及原生补验记录。
+## 下一对话先读
 
-从独立codex/v04-github-release工作副本推进，仅含v0.4。保留三框架／模型配置、一个业务用户与已确认三模块方向；项目许可证暂不代选。旧发布不覆盖，不将其他本地开发代码推送。
+AGENTS.md、[README](../README.md)、[CURRENT_STATUS](CURRENT_STATUS.md)、[正式版说明](releases/v0.4.0.md)、[发布记录](RELEASE_PUBLICATION.md)、[发布核对](evidence/20261031-v04-final-release/publication-check.json)，再按任务阅读[PRD](PRD.md)、[架构](ARCHITECTURE.md)、[三模块分工](COLLABORATION_MODULES.md)、[开发指南](DEVELOPMENT.md)与[审查](CODE_REVIEW_V04_20261030.md)。
 
-候选业务源码已220/220离线通过；正式包使用自己的Node和完整框架／HDC／视频资源，单独核对测试、doctor、新目录启动／停止与网页入口。原生回复和设备为夹具，不算新真实GUI。
+## 已冻结决定与范围
 
-测试不读取原私人库、不操作手机或模型，不恢复投屏／旧队列；原服务继续保留。发布采用新标签v0.4.0、非预览Release及新附件，保留历史。提交排除依赖、凭据、数据库、新运行、HiLog与未经审阅的新图。
+- 正式标签v0.4.0固定指向 `8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b`，不得改写；后续交接文档提交不回填或替换已发布ZIP。旧preview标签和附件保留。
+- 仅v0.4，保留三框架／模型由用户配置；一个业务使用者，三个一级模块分工已确认。整体解耦未做，主仿真内容仍Mock。
+- 用户“继续，直到发布最终版”对应本轮发布，现已完成；不自动延伸为后续版本或新的真实调用授权。
+- 原有36项历史及用户自建任务定义已随包，模型密钥／私人库／新运行未携带。项目许可证按用户要求仍暂不指定。
 
-有CLI写权限，GitHub连接只用于读取；上传沿用此前配置的本机CLI。目标仓库rexyangqaq-a11y/BehaviorLab已公开；分支更新必须快进，不强推或改写标签。正式包、随包任务定义、校验表和发布清单一起核对。独立历史档案可复用preview.13原附件；完整包内含同一历史。
+## 部署与开发入口
 
-发布完成后更新当前状态、部署说明、下载链接与回读证据，并留本地回退提交。唯一后续转为新目录部署与使用验收；真实手机及后续版本不因发布自动启动。
+下载[Windows完整包](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/BehaviorLab-v0.4.0-Windows-x64.zip)，校验SHA256后完整解压到可写新目录；先03_CHECK.cmd、再01_START.cmd，停止02_STOP.cmd。GitHub自动源码ZIP没有运行依赖，完整包不依赖安装Codex。
+
+升级先停旧服务并备份完整旧目录，再按兼容说明迁移本人.data；不覆盖旧.runtime、不导入更高schema库、不删未知锁续跑。密钥跨账户迁移按PRIVATE_MIGRATION，不把无法解密当空密钥覆盖。旧目录保留回退。
+
+源码开发使用独立工作副本、空闲端口和新数据目录：
+
+```powershell
+node src/web-server.mjs --port 4321 --data .build/dev-v04
+node --test --test-concurrency=1 tests/*.test.mjs
+```
+
+完整包当前220/220、doctor、启动／停止、合成网页、中文空格路径与匿名下载检查均已通过；没有新改动、失败或环境变化时不重复全量。不连接设备或模型也能查看历史和运行Mock。
+
+## 仍保留的问题
+
+R03全量轨迹读取与R04–R06维护债；真实OS／设备硬杀、跨安装互斥、长期视频、第二台电脑、任意APP和数量目标未验证。后续修复先本地验证并Git提交；新版本按用户确认的需求／设计流程开展，不继承本轮发布或旧批次调用预算。

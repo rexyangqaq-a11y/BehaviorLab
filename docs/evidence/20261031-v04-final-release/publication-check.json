@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-30T16:53:34.4Z",
+  "status": "published_and_download_verified",
+  "version": "0.4.0",
+  "release_id": 429265615,
+  "url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0",
+  "draft": false,
+  "prerelease": false,
+  "public_latest_verified": true,
+  "frozen_source_commit": "8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b",
+  "source_files_verified": 416,
+  "zip_files": 14201,
+  "listed_file_hashes_verified_after_extraction": 14200,
+  "windows_zip_sha256": "0f8853b0911e2ec6e4ac23e77162ce675296e39871dd8247dc223a455910fa6b",
+  "four_server_asset_sizes_and_sha256_match": true,
+  "anonymous_small_asset_downloads": "complete",
+  "anonymous_zip_downloads": "first and last 64 KiB",
+  "full_zip_redownloaded": false,
+  "moved_unicode_space_directory_start_stop_and_doctor": "passed",
+  "browser_public_latest_release_visible": true,
+  "old_preview_tag_unchanged": true,
+  "history_event_image_bytes_unchanged": true,
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "original_service_restarted": false,
+  "private_credentials_or_runtime_databases_included": false,
+  "evidence_sha256": {
+    "published-release.json": "68223ca33e18863d2e02fc3d76860d1e24ac027d2dcb4fa72c7349d139a96111",
+    "public-download-verification.json": "e3913d3d0affa985918f04b0e2e7c13faec51b29990451820f469d5cc859dfeb",
+    "windows-zip.json": "755f65e8413fddc17c894a89606954d6533caceb1e81c5bd953f2fde27c23ffc",
+    "frozen-package.json": "5a18086a7069727ef1482e4639fbf18f13818dc846e59cd11a8088066c59d161",
+    "unpacked.json": "2a6196e452dae26560ae52b8cf991706bf7413eef4f303fd41100ecd535acf66",
+    "unpacked-startup.json": "66e7b0156f6db0caa0eb23ce0697f245bfedaafa17e7de8f79d1573ecf72fe4a",
+    "unpacked-doctor.json": "ef89f685c4cf8fbc6aecc768d25de09d7c7cf323acefad25416f81755ae9f384",
+    "published-release.png": "e2d6a08c23479ffc1a37e33d88d1d7e6d8a490f22955d420407059da0483b1b3"
+  },
+  "old_release_asset_digests_match_prior_state": true,
+  "remote_tag_commits": {
+    "v0.4.0": "8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b",
+    "v0.4.0-preview.14": "4da6336fb9fcf98bdef661dfa662aa865d6b9946"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "assets": [
+    {
+      "browser_download_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/BehaviorLab-v0.4.0-BundledTasks.json",
+      "digest": "sha256:f36fde6339ea25935608e321989284886f61119661b13fb6d4060240bd05f31d",
+      "name": "BehaviorLab-v0.4.0-BundledTasks.json",
+      "size": 1363,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/BehaviorLab-v0.4.0-Windows-x64.zip",
+      "digest": "sha256:0f8853b0911e2ec6e4ac23e77162ce675296e39871dd8247dc223a455910fa6b",
+      "name": "BehaviorLab-v0.4.0-Windows-x64.zip",
+      "size": 530738597,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/release-manifest.json",
+      "digest": "sha256:559da747b97f068c5638383801e0d2826c6106562b35f855e2e76171e663fd34",
+      "name": "release-manifest.json",
+      "size": 6968,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/SHA256SUMS.txt",
+      "digest": "sha256:c3a8753e07cc79e4b47616deb48c45e6148803de56c1494db5f28d1b463bcaf9",
+      "name": "SHA256SUMS.txt",
+      "size": 292,
+      "state": "uploaded"
+    }
+  ],
+  "draft": false,
+  "html_url": "https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0",
+  "id": 429265615,
+  "prerelease": false,
+  "published_at": "2026-10-30T16:48:31Z",
+  "tag_name": "v0.4.0"
+}

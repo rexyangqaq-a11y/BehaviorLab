@@ -1,3 +1,19 @@
+## 2026-10-31：v0.4.0正式版已发布并完成回读
+
+当前阶段：正式交付完成。[Release](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0) · [Windows完整包](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0/BehaviorLab-v0.4.0-Windows-x64.zip)。
+
+正式标签固定源码8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b；GitHub Release ID 429265615，draft=false、prerelease=false，latest指向v0.4.0。发布于2026-10-31 00:48:31（Asia/Hong_Kong）。后续交接文档提交不改该标签或包。
+
+Windows ZIP 530738597字节，SHA256为 `0f8853b0911e2ec6e4ac23e77162ce675296e39871dd8247dc223a455910fa6b`。416项源码与Git核对；1888项历史文件核对，36历史运行、12063事件、331请求和1486原图字节保持。ZIP含14201项文件，清单14200项逐一哈希验证。
+
+正式完整包220/220离线通过、0跳过，doctor、实际CMD启动／停止两轮及隔离合成网页通过。从最终ZIP解压至中文空格新目录后，哈希、启动／停止和doctor再次通过。旧包、旧标签及用户原服务不覆盖。
+
+四个新附件的GitHub完整SHA256、大小与本地一致；小附件匿名完整下载，ZIP首尾各64KiB匿名抽样匹配，未重复下载整个ZIP。三个小附件为随包任务定义JSON、SHA256SUMS及release-manifest。独立历史档案继续明确复用preview.13已公开附件。
+
+[发布与下载核对](evidence/20261031-v04-final-release/publication-check.json) · [包内验证](evidence/20261031-v04-final-release/verification.json) · [服务端附件](evidence/20261031-v04-final-release/published-release.json) · [匿名下载](evidence/20261031-v04-final-release/public-download-verification.json)。
+
+本轮真实模型请求与设备命令0，未恢复投屏／旧队列；主仿真内容仍Mock，未新增真实GUI业务成绩。密钥、私人库、新运行及HiLog未上传。R03–R06及真实系统／跨安装、长期视频和目标电脑未验证范围保留。唯一下一步是新目录部署与使用验收。以下为阶段历史。
+
 ## 2026-10-31：v0.4.0正式版发布进行中
 
 用户明确要求“继续，直到发布最终版”，恢复正式构建与公开发布授权。当前从独立v0.4候选生成新包并验收，随后使用新标签／新Release上传和回读；不覆盖旧预览，不运行真实模型／手机或旧队列。实际完成后补具体提交、附件摘要与下载结果。以下为历史。

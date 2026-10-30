@@ -1,0 +1,74 @@
+{
+  "version": "0.4.0",
+  "checked_at": "2026-10-30T16:49:11.925Z",
+  "release_id": 429265615,
+  "source_commit": "8665e189feb2a7ef3e0e4eca6ae0f49e9b8ae05b",
+  "method": "GitHub complete-asset SHA256 plus anonymous prefix/tail range verification; small assets fully downloaded",
+  "full_zip_redownloaded": false,
+  "assets": [
+    {
+      "name": "BehaviorLab-v0.4.0-BundledTasks.json",
+      "bytes": 1363,
+      "github_sha256": "f36fde6339ea25935608e321989284886f61119661b13fb6d4060240bd05f31d",
+      "samples": [
+        {
+          "range": null,
+          "anonymous_http_status": 200,
+          "bytes": 1363,
+          "bytes_match_local": true
+        }
+      ]
+    },
+    {
+      "name": "BehaviorLab-v0.4.0-Windows-x64.zip",
+      "bytes": 530738597,
+      "github_sha256": "0f8853b0911e2ec6e4ac23e77162ce675296e39871dd8247dc223a455910fa6b",
+      "samples": [
+        {
+          "range": [
+            0,
+            65535
+          ],
+          "anonymous_http_status": 206,
+          "bytes": 65536,
+          "bytes_match_local": true
+        },
+        {
+          "range": [
+            530673061,
+            530738596
+          ],
+          "anonymous_http_status": 206,
+          "bytes": 65536,
+          "bytes_match_local": true
+        }
+      ]
+    },
+    {
+      "name": "release-manifest.json",
+      "bytes": 6968,
+      "github_sha256": "559da747b97f068c5638383801e0d2826c6106562b35f855e2e76171e663fd34",
+      "samples": [
+        {
+          "range": null,
+          "anonymous_http_status": 200,
+          "bytes": 6968,
+          "bytes_match_local": true
+        }
+      ]
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 292,
+      "github_sha256": "c3a8753e07cc79e4b47616deb48c45e6148803de56c1494db5f28d1b463bcaf9",
+      "samples": [
+        {
+          "range": null,
+          "anonymous_http_status": 200,
+          "bytes": 292,
+          "bytes_match_local": true
+        }
+      ]
+    }
+  ]
+}
