@@ -12,12 +12,14 @@ BehaviorLab 为用户行为研究提供可追溯的仿真与手机操作记录�
 | 两条实际执行路径、模块、数据与进程 | [架构 Spec](docs/ARCHITECTURE.md) |
 | 环境、独立启动、离线教程与测试 | [开发指南](docs/DEVELOPMENT.md) |
 | 提交规范、注释、评审和公共文件协作 | [贡献指南](CONTRIBUTING.md) |
-| 后续怎样按职责分工 | [模块划分讨论稿](docs/COLLABORATION_MODULES.md) |
+| 三大模块怎样协作与认领代码 | [模块分工 Spec](docs/COLLABORATION_MODULES.md) |
 | 当前代码的风险、复现与改进顺序 | [v0.4 代码审查](docs/CODE_REVIEW_V04_20261030.md) |
 | 安装、升级、回退与操作 | [部署](docs/DEPLOYMENT.md) · [使用](docs/USER_GUIDE.md) |
 | 本轮状态与唯一下一步 | [CURRENT_STATUS](docs/CURRENT_STATUS.md) · [NEXT_TASK](docs/NEXT_TASK.md) |
 
 PRD 解释为什么做、做什么；技术 Spec 解释模块、接口和实现约束，引用需求编号；README 提供导航，不维护另一套需求。详细编写约定见[文档规范](docs/DOCUMENTATION_SPEC.md)。
+
+已确认按三个一级模块组织后续协作：**用户与行为规划**；**手机活动执行（含证据采集、存档与数据交付）**；**整体中控平台（工作台、仿真运行、公共基础与模块契约）**。这是职责方向，当前源码尚未按三模块完成重构；已有真实／Mock边界保持。
 
 ## v0.4 能做什么
 
