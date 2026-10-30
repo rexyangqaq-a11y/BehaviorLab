@@ -58,6 +58,8 @@ export async function createPhoneDevice({evidence,signal,limits={max_actions:40}
     for(const [field,key]of[['model','const.product.model'],['os_fullname','const.ohos.fullname'],['software_version','const.product.software.version'],['api','const.ohos.apiversion']])result.device[field]=(await command(['shell',`param get ${key}`])).trim()||null;
     if(bundle){const raw=await command(['shell',`bm dump -n ${bundle}`]);const j=JSON.parse(raw.slice(raw.indexOf('{')));result.app={bundle,version_name:j.versionName??null,version_code:j.versionCode??null};}return result;
   };
+  // REVIEW(v0.4): Write intent before sending input. The after-shot is an
+  // observation, not proof of the task goal; missing effects stay uncertain.
   const atomic=async(name,param,fn)=>{
     const id='action_'+randomUUID();evidence.actionId=id;const before=await capture('before');
     evidence.record({type:'action_intent',id,name,param,before:before.asset.id});actionActive=true;

@@ -31,6 +31,9 @@ export function phoneRunDeviceInfo(input,environment){
     screen:record?.screen??(!actual&&input?.startpoint?.contract?{width:input.startpoint.contract.width,height:input.startpoint.contract.height}:null),
     app:record?.app??null,source:actual?'execution_environment':baseline?'saved_startpoint':'not_recorded'};
 }
+// REVIEW(v0.4): Application service for one task/run/batch. Framework decisions
+// stay in adapters; physical I/O stays in the worker's device session. An ended
+// worker is an execution outcome, not an independent business pass verdict.
 export class PhoneLab {
   constructor(root,{deviceFactory=createPhoneDevice,lockPath=path.join(project,'.runtime/phone-lab-device.lock'),pausePath=path.join(project,'.runtime/phone-lab-pause.json'),archiveRoot=null,connectionFactory=()=>new PhoneConnection({configPath:path.join(project,'.runtime/device-tools.json')}),videoFactory=options=>new PhoneVideo(options),hilogFactory=options=>new PhoneHilog(options)}={}){
     this.archiveRoot=archiveRoot;this.archiveManifest=archiveRoot?read(path.join(archiveRoot,'manifest.json')):null;
@@ -70,6 +73,9 @@ export class PhoneLab {
   archived(id){return this.archiveIds.has(id)&&this.runDirectory(id)===path.join(this.archiveRoot,'runs',id);}
   assertWritableRun(id){if(this.archived(id))throw fail(409,'随包历史测试为只读档案，不修改历史判定或重新执行。');}
   list(kind,file){return readdirSync(path.join(this.base,kind)).map(id=>read(path.join(this.base,kind,id,file))).filter(Boolean).sort((a,b)=>(b.created_at??'').localeCompare(a.created_at??''));}
+  // REVIEW(v0.4): This legacy input lock checks the parent PID only. Do not
+  // assume it protects a surviving worker after a parent crash. R01 in the
+  // source review tracks the missing worker ownership check; it is not fixed here.
   acquire(owner){const token=randomUUID();if(existsSync(this.lockPath)){const old=read(this.lockPath);if(old&&alive(old.pid))throw fail(409,'手机正在被另一项真机准备或测试占用');unlinkSync(this.lockPath);}writeFileSync(this.lockPath,JSON.stringify({token,pid:process.pid,owner}),{flag:'wx',flush:true});return ()=>{if(read(this.lockPath)?.token===token)unlinkSync(this.lockPath);};}
   assertDeviceEnabled(){if(read(this.pausePath)?.paused)throw fail(423,'真机测试已暂停；查看与编辑界面不受影响。手机可用后由测试者恢复。');}
   pause(reason='手机暂供日常使用'){save(this.pausePath,{paused:true,at:now(),reason});for(const id of this.children.keys())this.stop(id);if(this.activeBatch)this.stopBatch(this.activeBatch);void this.video.stopAll('真机操作已暂停');return read(this.pausePath);}
@@ -193,6 +199,9 @@ export class PhoneLab {
     }finally{if(!handedOff){try{await this.finishTestLog(scope,'测试未进入执行');}finally{release?.();}}}
   }
   summary(id){const dir=this.runDirectory(id),input=read(path.join(dir,'input.json'));if(!input)throw fail(404,'执行记录不存在');const legacy=read(path.join(dir,'review.json')),assistant_review=read(path.join(dir,'assistant-review.json'))??(legacy?.reviewer==='assistant'?legacy:null),user_review=read(path.join(dir,'user-review.json'))??(legacy&&legacy.reviewer!=='assistant'?legacy:null);return {...input,read_only:this.archived(id),record_origin:this.archived(id)?'bundled_history':'local_run',automatic_hilog:(()=>{const log=this.testLogs.get(id)?.recorder.status();return log?.current??log?.recordings?.[0]??read(path.join(dir,'hilog.json'));})(),device_info:phoneRunDeviceInfo(input,read(path.join(dir,'environment.json'))),source_versions:read(path.join(dir,'source-versions.json')),state:read(path.join(dir,'state.json')),result:read(path.join(dir,'result.json')),assistant_review,user_review,review:user_review??assistant_review??legacy};}
+  // REVIEW(v0.4): This is a complete in-memory projection, not an indexed read.
+  // Malformed rows currently disappear from this projection (R02). A partial
+  // trace shown by this method must not be treated as proof of ledger integrity.
   snapshot(id){const result=this.summary(id),dir=this.runDirectory(id);let events=[];try{events=readFileSync(path.join(dir,'events.jsonl'),'utf8').trim().split('\n').filter(Boolean).flatMap(line=>{try{return [JSON.parse(line)];}catch{return [];}});}catch{}return {...result,environment:read(path.join(dir,'environment.json')),start_check:read(path.join(dir,'start-check.json')),source_versions:read(path.join(dir,'source-versions.json')),events,assets:events.filter(e=>e.type==='image').map(e=>e.asset)};}
   processSnapshot(id,after=0){
     if(!Number.isSafeInteger(after)||after<0)throw fail(400,'执行轨迹游标无效');

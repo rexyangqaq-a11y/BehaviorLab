@@ -1,3 +1,7 @@
+## 2026-10-30：v0.4内部协作整理，正式发布暂停
+
+用户已选定preview.14作为正式版功能基线，随后要求先补PRD、技术Spec、代码审查和协作模块方案。本轮仅整理v0.4，按开源工程标准供项目组内部协作；许可证暂不确定，不阻止本轮工作。正式标签、Release和新包尚未创建。实际资料见docs/PRD.md、docs/CODE_REVIEW_V04_20261030.md和docs/COLLABORATION_MODULES.md，下一步以CURRENT_STATUS及NEXT_TASK为准。以下为既有发布记录，不表示本轮恢复发布。
+
 ## 2026-10-30：preview.14已公开发布（当前）
 
 当前阶段：用户授权的GitHub部署包更新与新建任务随包发布已完成。[Release与直接下载](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.14)。

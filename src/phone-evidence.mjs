@@ -3,6 +3,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { imageDimensions } from '../scripts/hdc-device-baseline.mjs';
 export const sha256 = value => createHash('sha256').update(value).digest('hex');
+// REVIEW(v0.4): Append facts and retain image hashes; never store a model's
+// claim as a user verdict. Callers must serialize writers to a run's ledger.
 export class PhoneEvidence {
   constructor(dir, { secrets = [], phase = 'preparation' } = {}) {
     this.dir = dir; this.secrets = secrets.filter(Boolean); this.phase = phase; this.started = Date.now(); this.seq = 0;

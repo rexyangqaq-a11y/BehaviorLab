@@ -102,6 +102,8 @@ export function createGroundingRecovery({framework,transport,session,record,sign
           const content=data.choices[0]?.message?.content,issue=groundingIssue(framework,content);
           if(!issue){if(corrections){corrected++;await record({type:'grounding_recovery_returned',framework,corrections,reason:'已收到重新定位回复，未发现可识别的坐标越界；继续原生框架解析，不代表业务成功'});}return response;}
           await record({type:'grounding_response_rejected',framework,correction:corrections,...issue,action_not_sent:true,effect_unknown:false});
+          // REVIEW(v0.4): Recovery is allowed only before dispatch and with
+          // known usage/effects. It cannot repair an already executed action.
           safe();options.signal?.throwIfAborted();
           if(transport.summary().unknown_usage_requests)throw Error('定位回复用量未确认，不自动重新请求');
           if(corrections>=2){exhausted++;await record({type:'grounding_recovery_exhausted',framework,corrections,reason:'连续重新定位仍无效，已停止；未发送无效动作'});throw Error('坐标定位无效，最多2次重新定位仍未通过；未发送该动作');}

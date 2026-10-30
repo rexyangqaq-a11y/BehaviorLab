@@ -69,6 +69,8 @@ export function createTrialTransport({ baseUrl, model, apiKey, signal, record, s
     publicBody.messages = await retain(publicBody.messages);
     if (!imageCount) throw new Error('GUI trial requires a real image; text-only requests are disabled');
     seen.add(fingerprint);
+    // REVIEW(v0.4): One audited HTTP request may produce zero, one, or several
+    // framework actions. Count requests here, not in a screenshot/action hook.
     const id = `model_${++requests}`, started = Date.now();
     await record({ type: 'model_request_start', id, request: scrub(publicBody), serialized_sha256: fingerprint,
       serialized_bytes: Buffer.byteLength(serialized), images: imageCount, text_chars: textChars, max_retries: 0 });

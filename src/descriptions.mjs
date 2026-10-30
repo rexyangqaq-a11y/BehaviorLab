@@ -22,6 +22,8 @@ export async function drainDescriptions(store, describer, hooks = {}) {
   return count;
 }
 
+// REVIEW(v0.4): Only consumes saved assets. This separate lease and queue keep
+// description retries independent from execution and its device side effects.
 export async function describeSaved(store, describer, { retryFailed = false, ...hooks } = {}) {
   const release = store.acquireLease('descriptions');
   try {

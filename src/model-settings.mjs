@@ -82,6 +82,8 @@ export class ModelSettings {
       if (id !== null && (typeof id !== 'string' || !ids.has(id))) invalid('角色预设引用了不存在的服务');
       return [role.id, id];
     }));
+    // REVIEW(v0.4): Revision check, credential edits and public configuration
+    // are one transaction. A stale editor must not overwrite another save.
     this.db.exec('BEGIN IMMEDIATE');
     try {
       const row = this.db.prepare('SELECT revision FROM model_settings WHERE id=1').get();

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-30T08:13:10.051Z",
+  "scope": "v0.4 internal documentation/source review only",
+  "baseline_tag": "v0.4.0-preview.14",
+  "source_parent": "07e18d910f38fd4b11412d6ff262736cfe633e39",
+  "documentation_files_checked": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "docs/PRD.md",
+    "docs/ARCHITECTURE.md",
+    "docs/DEVELOPMENT.md",
+    "docs/DOCUMENTATION_SPEC.md",
+    "docs/COLLABORATION_MODULES.md",
+    "docs/CODE_REVIEW_V04_20261030.md",
+    "docs/CURRENT_STATUS.md",
+    "docs/NEXT_TASK.md",
+    "docs/DEPLOYMENT.md",
+    "docs/USER_GUIDE.md",
+    "docs/ROADMAP.md",
+    "docs/FRAMEWORK_ADAPTER_GUIDE.md",
+    "docs/RELEASE_PROCESS.md"
+  ],
+  "relative_links_checked": 76,
+  "broken_links": [],
+  "syntax_mjs_checked": 151,
+  "comment_only_proof": [
+    {
+      "file": "integrations/adapters/python-native.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "scripts/phone-lab-worker.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/descriptions.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/gui-trial-transport.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/model-settings.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/phone-device.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/phone-evidence.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/phone-grounding-recovery.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/phone-lab.mjs",
+      "unchanged_without_added_comments": true
+    },
+    {
+      "file": "src/scheduler.mjs",
+      "unchanged_without_added_comments": true
+    }
+  ],
+  "tutorial": {
+    "synthetic": true,
+    "stages": [
+      {
+        "command": "init",
+        "integrity_passed": null
+      },
+      {
+        "command": "run",
+        "integrity_passed": null
+      },
+      {
+        "command": "status",
+        "integrity_passed": null
+      },
+      {
+        "command": "describe",
+        "integrity_passed": null
+      },
+      {
+        "command": "export",
+        "integrity_passed": null
+      },
+      {
+        "command": "check",
+        "integrity_passed": true
+      }
+    ],
+    "repeat_run_export_unchanged": true
+  },
+  "offline_tests": {
+    "total": 207,
+    "passed": 195,
+    "skipped": 12,
+    "failed": 0
+  },
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "running_services_restarted": 0,
+  "remote_writes": 0,
+  "formal_release": "paused",
+  "new_packages_built": 0,
+  "business_fixes_implemented": [],
+  "known_findings": [
+    "R01 input owner checks",
+    "R02 corrupt ledger rows",
+    "R03 full trace reading",
+    "R04 dense responsibilities",
+    "R05 cross-layer utilities",
+    "R06 missing automated style gates"
+  ],
+  "limitations": [
+    "no dependency-complete native rerun",
+    "no real device/model revalidation",
+    "no long-run memory benchmark",
+    "no third-party full audit",
+    "module proposal awaiting review"
+  ],
+  "environment": {
+    "framework_dependencies": "not installed in source worktree",
+    "node": "v24.22.1",
+    "platform": "win32"
+  }
+}

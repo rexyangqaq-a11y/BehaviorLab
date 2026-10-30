@@ -1,3 +1,7 @@
+## 2026-10-30：v0.4内部协作整理，正式发布暂停
+
+用户已选定preview.14作为正式版功能基线，随后要求先补PRD、技术Spec、代码审查和协作模块方案。本轮仅整理v0.4，按开源工程标准供项目组内部协作；许可证暂不确定，不阻止本轮工作。正式标签、Release和新包尚未创建。实际资料见docs/PRD.md、docs/CODE_REVIEW_V04_20261030.md和docs/COLLABORATION_MODULES.md，下一步以CURRENT_STATUS及NEXT_TASK为准。以下为既有发布记录，不表示本轮恢复发布。
+
 ## 2026-10-30 preview.14发布交接
 
 已按用户明确要求公开发布preview.14，包含本地坐标恢复修复与用户自建任务定义；源码标签4da6336，207/207包内离线通过，四个新附件摘要及公开下载核对通过。独立历史档案复用preview.13原附件。未自动重跑任务或上传新运行、密钥和数据库；后续修复默认先本地验证，发布按用户当时明确要求执行。详见docs/GITHUB_RELEASE_STATUS.md（开发树）或docs/RELEASE_PUBLICATION.md（发布树）。

@@ -82,6 +82,8 @@ async function executeAll(store, adapters, hooks, root, { maxActivities, maxUser
     for (;;) {
       plan = store.latestPlan(user.user_id, date);
       const feedback = store.missingFeedback(plan);
+      // REVIEW(v0.4): Results are committed before feedback. Recovering this
+      // boundary must fill the missing decision, never recollect the activity.
       if (feedback) {
         const context = { ...planningContext(store, user, date), activity: feedback, latest_result: store.result(feedback.activity_id), remaining_tasks: store.pendingTasks(plan) };
         await traced(store, childCall(root, { module: 'upper_planner', operation: 'activity.adjust', ...adapters.planner.provenance, user_id: user.user_id, activity_id: feedback.activity_id, virtual_date: date, input: context }), async call => {

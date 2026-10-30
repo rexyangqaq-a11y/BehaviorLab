@@ -102,6 +102,8 @@ try{
     evidence.save('result.json',result);evidence.record({type:'execution_end',status:result.status,usage:result.model_usage,actions:result.actions});
   }else await writeFile(path.join(dir,'result.json'),JSON.stringify(result,null,2),{flag:'wx',flush:true});
   await state({status:result.status,finished_at:result.finished_at,business_result:'pending_review',reason:result.reason??null});
+  // REVIEW(v0.4): Shared SDK sessions stay alive until the final observation
+  // and result are durable. Cleanup cannot turn an uncertain action into a pass.
   for(const close of cleanup.reverse())try{await close();}catch{}
   process.disconnect?.();
 }

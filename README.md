@@ -1,112 +1,68 @@
-# 当前预览版：v0.4.0-preview.14
-
-三框架坐标恢复与用户自建“淘宝-浏览50个商品”任务已纳入完整包；首次启动即可在任务库查看、编辑，既有任务不覆盖。
-
-- [Windows完整运行包（含你的新任务及36项历史测试）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/BehaviorLab-v0.4.0-preview.14-Windows-x64.zip)
-- [随包任务定义JSON（供查看与复用）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/BehaviorLab-v0.4.0-preview.14-BundledTasks.json)
-- [SHA256校验表](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/SHA256SUMS.txt)
-- [发布清单](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.14/release-manifest.json)
-- [独立历史测试档案（36项数据未变，复用preview.13附件）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-TestArchive.zip)
-
-[本版部署与使用说明](docs/V04_PREVIEW14_RELEASE.md)。以下保留此前版本说明。
-
-# 当前预览版：v0.4.0-preview.13
-
-新增长任务默认不限额、模型等待调整、截图毫秒时间和手动／自动HiLog。保留工作台内36项历史轨迹与通用机型洛书标定。
-
-- [Windows完整运行包（内含历史测试）](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-Windows-x64.zip)
-- [独立历史测试档案](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/BehaviorLab-v0.4.0-preview.13-TestArchive.zip)
-- [SHA256校验表](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/SHA256SUMS.txt)
-- [发布清单](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.13/release-manifest.json)
-
-[本版说明](docs/V04_PREVIEW13_BACKPORT.md) · [部署教程](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md)。以下旧版本内容作为历史参考。
-
 # BehaviorLab · 用户行为序列仿真系统
 
-## 2026-10-28：preview.12工作台回迁
+BehaviorLab 为用户行为研究提供可追溯的仿真与手机操作记录。v0.4 聚焦一个具体问题：给定任务、起点、框架和模型，手机实际上做了什么、结果如何、失败发生在哪一层，以及消耗多少调用和时间。
 
-当前阶段：已确认范围的实现与发布验证。已回迁5项工作台改动，按用户更正内置v0.5实测通用机型标定，不绑定原手机。完整Windows包171/171离线通过、依赖预检通过，新增包的真机效果未重测。详见[回迁及部署说明](docs/V04_PREVIEW12_BACKPORT.md)。
+本轮材料面向**项目组内部协作**，按开源项目的文档、代码评审与可复现标准组织，不表示已经决定对外许可。范围仅 v0.4；其他本地开发内容不纳入此基线。
 
-唯一下一步：冻结提交并上传preview.12新Release，保留旧版与历史测试档案。以下为此前历史。
+## 先了解需求，再开始开发
 
-
-2026-10-26修复版：[v0.4.0-preview.11说明](docs/releases/v0.4.0-preview.11.md) · [Windows下载](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/download/v0.4.0-preview.11/BehaviorLab-v0.4.0-preview.11-Windows-x64.zip)。真机工作台直接显示历史轨迹，模型配置支持编辑区保存，内置桌面起点可在测试间自动复原。用户已审视历史图片并授权公开分发；v0.5仍在开发分支。
-
-
-Windows本地用户行为仿真与独立手机Agent测试工作台。本分支提供 **v0.4.0-preview.10**，功能来自v0.4交接基线；v0.5保留开发分支，不混入本包。仓库和Release均为私有，需要登录有权限的GitHub账户下载。
-
-[下载版本](https://github.com/rexyangqaq-a11y/BehaviorLab/releases) · [部署与更新](docs/DEPLOYMENT.md) · [使用教程](docs/USER_GUIDE.md) · [版本计划](docs/ROADMAP.md) · [版本差异](CHANGELOG.md) · [本版说明](docs/releases/v0.4.0-preview.10.md) · [发布验证记录](docs/RELEASE_PUBLICATION.md)
-
-下载Assets中的 `BehaviorLab-v0.4.0-preview.10-Windows-x64.zip`，完整解压后运行 `03_CHECK.cmd`，再运行 `01_START.cmd`；停止用 `02_STOP.cmd`。Windows10/11 x64，包内带Node/Python/HDC和框架依赖。GitHub自动的Source code ZIP仅含源码。
-
-发布包随附v0.4当时已有测试用例、36项历史矩阵的轨迹、1,486张历史原图和结果，含失败记录。按用户授权直接纳入私有Release。打开 `test-archive/index.html` 可离线逐项查看；另提供同内容的独立测试档案下载。[归档范围与分发说明](docs/RELEASE_TEST_ARCHIVE.md)。
-
-| 功能 | 当前边界 |
+| 你想了解什么 | 主入口 |
 |---|---|
-| 主系统 | 用户库、任务、调度、持久化和导出实际运行；生成内容和手机闭环仍Mock |
-| 独立手机工作台 | 三框架／模型组合、起点、逐图模型回复、动作、结果与审核；需自己配置设备和模型 |
-| 历史真实测试 | 四题×三框架×三模型：16通过、10部分完成、10未通过；用户复核待定，新保护协议未真机复测 |
-| 后续开发 | v0.5接下层、v0.6真实上层、v0.7存档VLM；后续尚未完成的能力不计入本版 |
+| 背景、用户、目标、范围、需求与验收 | [产品需求 PRD](docs/PRD.md) |
+| 两条实际执行路径、模块、数据与进程 | [架构 Spec](docs/ARCHITECTURE.md) |
+| 环境、独立启动、离线教程与测试 | [开发指南](docs/DEVELOPMENT.md) |
+| 提交规范、注释、评审和公共文件协作 | [贡献指南](CONTRIBUTING.md) |
+| 后续怎样按职责分工 | [模块划分讨论稿](docs/COLLABORATION_MODULES.md) |
+| 当前代码的风险、复现与改进顺序 | [v0.4 代码审查](docs/CODE_REVIEW_V04_20261030.md) |
+| 安装、升级、回退与操作 | [部署](docs/DEPLOYMENT.md) · [使用](docs/USER_GUIDE.md) |
+| 本轮状态与唯一下一步 | [CURRENT_STATUS](docs/CURRENT_STATUS.md) · [NEXT_TASK](docs/NEXT_TASK.md) |
 
-源码开发需Node24：`node src/web-server.mjs --port 4317`；`node --test tests/*.test.mjs`。主Mock无需安装npm依赖。真实任务、模型费用与手机权限由使用者明确发起；查看历史不会自动执行测试。
+PRD 解释为什么做、做什么；技术 Spec 解释模块、接口和实现约束，引用需求编号；README 提供导航，不维护另一套需求。详细编写约定见[文档规范](docs/DOCUMENTATION_SPEC.md)。
 
-源码Git和发布包不带私人模型配置、密钥、运行数据库及无关私人任务。第三方许可证随包保留；项目自身尚未指定开源许可证。
+## v0.4 能做什么
 
-## v0.4交接历史快照
+- 独立手机工作台支持 Midscene、MobiAgent、Open-AutoGLM 和用户配置的模型服务，默认推荐不覆盖用户选择。
+- 任务、测试、测试过程详情、结果与对比四个页签；命名任务与起点，单项或组合评估、筛选、逐图原始回复、动作、设备版本与用量。
+- HDC 设备操作、动作前意图、截图与证据、有限坐标重新定位；可选连续投屏、手动与测试自动 HiLog。
+- 保留主仿真的用户库、调度、虚拟时间、SQLite、调用追踪、执行／描述队列和导出；其人设、计划、动作与描述内容仍为 Mock。
 
-以下保留2026-10-25交接时记录；其中“尚未发布”“仅本地Git”和旧ZIP说明属于当时状态，发布维护以文首及[发布流程](docs/RELEASE_PROCESS.md)为准。
+**独立手机工作台的真实循环与主仿真 Mock 是两条路径。** 保存模型配置或文本探针成功，不代表主仿真变成真实闭环。任务定义也不自动证明数量、条件或去重目标完成。
 
-当前核对：2026-10-25。源码为`0.4.0-preview.10`，v0.4核心开发与离线收尾按用户确认范围交接；尚未发布正式`0.4.0`包。功能基线`9929ed4`，完整交接与回退入口见[当前状态](docs/CURRENT_STATUS.md)、[下一任务](docs/NEXT_TASK.md)、[本地基线](docs/LOCAL_BASELINE.md)。
+## 版本与验证口径
 
-## 当前能做什么
+用户已选定 preview.14 作为 v0.4 正式版基线；新增资料与整体审查仍在整理，**正式发布暂停**。已有构建仍标记 `v0.4.0-preview.14`，源码标签 `4da6336`；原标签、包与历史证据保留，不通过改写旧文件伪装正式发布。
 
-- 主系统的用户库、任务、日调度、虚拟时间、持久化、调用追踪、执行/描述队列和导出实际运行；人设补全、规划调整、主流程手机执行/截图、存档图转文内容仍为Mock。
-- 独立[真机工作台](http://127.0.0.1:4317/phone-lab)已接通三个实际框架循环和HDC，具备任务、测试、过程、结果四页签，可查看每图原始模型回复、动作、手机信息、耗时与用量。
-- 保留Midscene、MobiAgent、Open-AutoGLM及现有模型接口，由用户配置组合。默认推荐**Midscene + qwen3.7-plus**，用户改选后保留；这是四题3通过1部分完成的样本建议，不是稳定最优结论。[已确认策略](docs/FRAMEWORK_SELECTION_DECISION.md)。
-- [v0.4证据核对页](http://127.0.0.1:4317/v04-acceptance)将31项要求的证据、缺口与后续事项分别列出。新增执行保护与审核优先级做过离线验证，未追加真机任务。
-- HOScrcpy可直接在网页观看手机连续视频，不需打开官方工具；已有真实出帧证据，也存在未定位的断流，尚未证明长期稳定。[视频说明](docs/HOSCRCPY_VIDEO.md)。
+[已有发布与下载](https://github.com/rexyangqaq-a11y/BehaviorLab/releases/tag/v0.4.0-preview.14) · [发布记录](docs/RELEASE_PUBLICATION.md) · [preview.14 构建说明](docs/V04_PREVIEW14_RELEASE.md)
 
-**独立真机工作台尚未接入主仿真调度。** 这一接入属于v0.5；真实上层规划、存档逐图VLM及长期记忆引擎也未实现。
-
-## 测试与真实能力分别统计
-
-| 类型 | 最新事实 |
+| 验证类型 | 已有事实与限制 |
 |---|---|
-| 本机安装环境工程回归 | 133/133通过，0失败、0跳过；没有真实模型/手机调用 |
-| 干净源码、无数据与依赖 | 129通过、4项依赖相关测试跳过、0失败；共133项 |
-| 已安装原生Python循环离线契约 | 两框架各5条固定回复，中文与图片/动作协议通过；不是GUI成绩 |
-| 历史短文本模型连通 | 三模型合计60 tokens；只证明当时文本接口可响应 |
-| 历史真实GUI任务 | 计算器、存储、淘宝、小红书，三框架×三模型×四题=36单元；16通过、10部分完成、10未通过，用户复核待定 |
-| 31项能力清单 | 已有证据6、范围有限13、已知缺口6、未验证2、后续事项4；不是31项全部执行或通过 |
+| preview.14 完整 Windows 包 | 207/207 离线回归、依赖检查；不是207项真机任务 |
+| 历史真实 GUI | 四任务 × 三框架 × 三模型 = 36单元；16通过、10部分完成、10未通过；用户复核待定 |
+| 历史原始资料 | 331次矩阵请求、1,486张关联原图；不因本轮审查重新执行 |
+| 短文本连通 | 当时三模型合计60 tokens，只证明文本可响应 |
+| 31项能力清单 | 证据与缺口核对表，不是31项全部真实通过 |
+| 本轮审查 | 静态扫描、关键链路人工审查及合成文件复现；范围、结果与缺口见审查报告 |
 
-历史工程回归124、26项推荐测试及18项工作台子集属于各自阶段，不能相加。矩阵331次模型请求，含诊断及被替换样本的历史累计373次；未知费用不记零。已有39运行、6任务、83起点、3服务未改。本次交接模型请求0、设备命令0。
+“淘宝-浏览50个商品”修订3已随包初始化为可编辑任务；本版未证明其50件真实完成。投屏长期稳定性、第二台物理电脑和任意APP兼容也未由离线测试证明。
 
-[最新验证证据](docs/evidence/20261025-handoff/handoff-verification.json) · [真实GUI结果](docs/PHONE_EVALUATION_RESULTS_20261022.md) · [失败诊断](docs/PHONE_FAILURE_DIAGNOSIS_20261022.md)
+## 不连接手机或模型即可启动
 
-## 启动与离线测试
-
-开发环境需Node.js 24。核心Mock无需安装前端依赖或编译；真实框架依赖另行部署，安装与设备检测不会自动授予业务通过。
+源码开发需要 Node.js 24。主 Mock 和历史查看不需要先安装整个框架依赖；仓库内没有主工程 npm 安装步骤。
 
 ```powershell
-node scripts/desktop-launcher.mjs stop
-node scripts/desktop-launcher.mjs start --port 4317 --no-browser
-node --test tests/*.test.mjs
+node src/web-server.mjs --port 4321 --data .build/dev-v04
 ```
 
-也可前台执行`node src/web-server.mjs --port 4317`，Ctrl+C停止。主入口为`http://127.0.0.1:4317`，真机工作台为`/phone-lab`，验收页为`/v04-acceptance`。后台不自动热重载：本次交接时原4317服务仍加载较早后端，需正常重启后才有新验收接口。不要删除`.data`或`.runtime`来更新源码。
+浏览器打开 `http://127.0.0.1:4321`；手机工作台为 `/phone-lab`，证据页为 `/v04-acceptance`。这是独立开发端口与数据目录；Ctrl+C 停止。不要为了调试重启项目组正在使用的服务或读取其私人库。
 
-已安装框架的离线原生契约：`node scripts/phone-framework-contract.mjs`；`03_CHECK.cmd`为依赖/SDK检查，不是手机任务。核心Mock示例及独立执行/描述、恢复、导出方法见[开发说明](docs/DEVELOPMENT.md)与[业务流程](docs/WORKSPACE_V03.md)。
+```powershell
+node --test --test-concurrency=1 tests/*.test.mjs
+```
 
-## Windows部署与私人迁移
+未装原生依赖时部分测试会明确跳过，不能算通过。完整包使用 `runtime/node.exe`；安装用户先 `03_CHECK.cmd`、再 `01_START.cmd`，停止用 `02_STOP.cmd`。详细环境和验证分层见[开发指南](docs/DEVELOPMENT.md)。
 
-已交付的[干净包](output/BehaviorLab-Phone-Windows-x64-20261023.zip)和[私人包](output/BehaviorLab-Phone-Windows-x64-20261023-Private.zip)均为**preview.9**，未包含之后的preview.10源码改动。两包包含Node、Python、HDC、三框架及Java/HOScrcpy运行依赖。
+## 数据与协作边界
 
-完整解压后先`03_CHECK.cmd`，再`01_START.cmd`；停止用`02_STOP.cmd`。私人包含6任务/83起点/39运行与3个模型配置：先在原电脑同一Windows账户查看ZIP外的迁移密码，新电脑启动前运行`04_IMPORT_KEYS.cmd`输入密码。密钥以迁移密码认证加密，导入后由目标Windows账户DPAPI保护；原开发数据库兼容旧格式，本次未改写。详情见[部署](docs/WINDOWS_PORTABLE.md)和[私人迁移](docs/PRIVATE_MIGRATION.md)。
+`.data` 保存操作者数据；`.runtime` 保存局部依赖和控制信息；`test-archive` 是随包历史；`.build` 和 `output` 是生成物。凭据、运行数据库、原始新截图、依赖和输出包不提交。仅分享已检查的具体证据，不能把整个已用目录当干净安装包。
 
-私人包包含原始历史截图，只用于授权电脑间迁移。源码Git与恢复bundle不含运行数据、凭据、数据库、缓存、依赖或发布ZIP。第二台物理电脑尚未验收。
-
-## 下一阶段与协作
-
-下一步仅推进**v0.5：把用户所选下层接入主调度的一个活动**，先做离线契约。用户已决定暂不使用手机、不强行执行百对象任务；不重跑已完成的四题矩阵，不重新要求唯一框架选型，不自动调用模型。
-
-每轮源码/测试/文档改动都提交本地Git，不设置远程、不推送。开新对话先读[AGENTS.md](AGENTS.md)、[CURRENT_STATUS.md](docs/CURRENT_STATUS.md)和[NEXT_TASK.md](docs/NEXT_TASK.md)。框架入口和公共记录边界见[协作开发](docs/DEVELOPMENT.md)、[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)，用量按[调用规则](docs/MODEL_CALL_POLICY.md)执行。
+保留三框架和模型选择，新增框架按[适配契约](docs/FRAMEWORK_ADAPTER_GUIDE.md)接入。每轮变更完成对应验证后提交 Git；公共协议／数据库修改由集成人协调。当前不创建正式标签、不上传或替换附件，也不自动运行手机、模型或旧队列。
