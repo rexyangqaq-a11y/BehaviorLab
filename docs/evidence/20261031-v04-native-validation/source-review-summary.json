@@ -1,0 +1,26 @@
+{
+  "source_commit": "7920d6da057e887ac04e5b988e97ce7bba7c05c3",
+  "counts": {
+    "files": 171,
+    "lines": 12046,
+    "files_with_lines_over_240": 110,
+    "lines_over_240": 625
+  },
+  "known_findings": [
+    {
+      "id": "R01",
+      "scenario": "dead parent and live worker",
+      "reproduced": false
+    },
+    {
+      "id": "R02",
+      "scenario": "malformed ledger row silently omitted",
+      "reproduced": false
+    }
+  ],
+  "scope": "v0.4 tracked source review; synthetic files only",
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "previous_full_source_inventory": "../20261030-v04-reliability-fixes/source-review.json",
+  "business_source_unchanged": true
+}

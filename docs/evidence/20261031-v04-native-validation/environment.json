@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-30T16:06:33.229Z",
+  "source_commit": "7920d6da057e887ac04e5b988e97ce7bba7c05c3",
+  "node": "v24.22.1",
+  "platform": "win32",
+  "arch": "x64",
+  "os_release": "10.0.26300",
+  "node_packages": {
+    "@midscene/harmony": "1.16.0",
+    "@midscene/core": "1.16.0",
+    "openai": "6.3.0",
+    "undici": "8.12.2"
+  },
+  "python": {
+    "version": "3.12.14",
+    "packages": {
+      "openai": "2.9.0",
+      "httpx": "0.28.1",
+      "python-dotenv": "1.1.1",
+      "uiautomator2": "3.4.1",
+      "hmdriver2": "1.4.4",
+      "opencv-python-headless": "5.0.0.93",
+      "Pillow": "12.3.0"
+    }
+  },
+  "frameworks": [
+    {
+      "id": "midscene",
+      "version": "1.16.0"
+    },
+    {
+      "id": "mobiagent",
+      "version": "4ee794021bb34a8de4d00c52ca8fa6f0065a45ff"
+    },
+    {
+      "id": "autoglm",
+      "version": "86f55382982fb054e8fc98ca80609dff8a2cdc3c"
+    }
+  ],
+  "frozen_declarations_sha256": {
+    "integrations/midscene/package.json": "c8bc7bdbd4b8eb9a6639398b1acd25092c8b17b76dd5771fb43df03cf36d75e7",
+    "integrations/midscene/pnpm-lock.yaml": "f0d90e356d8c2e04f78d2a01a43b15276c5aafe394179890903bad159f2ad358",
+    "integrations/phone-frameworks-requirements.txt": "50da6e36933dd98708222d243c99c40b2eee7fec81bf52afa5e0f08db760de43"
+  },
+  "tracked_code_files": 179,
+  "tracked_code_manifest_sha256": "b124cc3e924286532cf919b4e05986a95b65d255037b1999fd3b99a068ab6ebf",
+  "code_changed_this_round": false,
+  "real_model_requests": 0,
+  "real_device_commands": 0
+}

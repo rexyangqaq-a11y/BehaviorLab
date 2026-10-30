@@ -1,0 +1,34 @@
+✔ midscene regenerates invalid coordinates before native execution and audits both requests (23.1904ms)
+✔ autoglm regenerates invalid coordinates before native execution and audits both requests (1.859ms)
+✔ mobiagent regenerates invalid coordinates before native execution and audits both requests (1.1542ms)
+✔ two correction requests maximum, never clamp invalid coordinates or report success (2.5894ms)
+✔ request budget and unknown action effects prohibit correction (0.8744ms)
+✔ HTTP errors, missing usage and network errors are never retried as grounding (1.0097ms)
+✔ Stop, screenshot failure and orientation changes cannot initiate a correction request (1.2023ms)
+✔ only declared geometry is interpreted; ordinary text, finish, permissions and malformed XML are left to native code (0.2513ms)
+✔ valid reply is returned unchanged without capture, extra requests or recovery (0.3795ms)
+✔ recovery diagnostics appear in the process timeline without being counted as device actions (0.4743ms)
+✔ pinned Midscene codec rejects the recorded box and accepts the regenerated box at the unchanged input size (5.9211ms)
+✔ actual HarmonyAgent keeps its native planner and executes only the regenerated Tap (1792.0573ms)
+✔ actual autoglm native loop executes only regenerated action, not the invalid action (2961.4692ms)
+✔ actual mobiagent native loop executes only regenerated action, not the invalid action (3723.2827ms)
+✔ new tests default to unlimited and accept values above every old task ceiling (1.0733ms)
+✔ long explicit deadlines use timer chunks while unlimited deadlines never arm a timer (0.6366ms)
+✔ unlimited transport exceeds 60 requests, 90k context, two images and 2MiB without injecting output caps (35.1981ms)
+✔ actual model client accepts a response after 31 seconds despite the SDK timeout being 1ms (31211.324ms)
+✔ finite request deadlines cover the body and manual Stop still cancels an unlimited wait (90.5868ms)
+✔ model timeout accepts unlimited and more than five minutes without modifying stored credentials (524.407ms)
+✔ actual autoglm loop exceeds its native step default with unlimited settings (867.052ms)
+✔ actual mobiagent loop exceeds its native step default with unlimited settings (1180.0767ms)
+✔ strict protocol validates literal actions without changing native conversion or input messages (55.5552ms)
+✔ actual AutoGLM loop rejects thinking_only without synthetic finish or a device action (747.3928ms)
+✔ actual AutoGLM loop rejects malformed without synthetic finish or a device action (724.1763ms)
+✔ actual AutoGLM loop rejects wrong_units without synthetic finish or a device action (733.9415ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44985.3241

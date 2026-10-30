@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-30T16:13:08.515Z",
+  "scope": "v0.4 fixed framework dependency offline validation; no business code changes",
+  "source_commit": "7920d6da057e887ac04e5b988e97ce7bba7c05c3",
+  "tag": {
+    "name": "v0.4.0-preview.14",
+    "commit": "4da6336fb9fcf98bdef661dfa662aa865d6b9946",
+    "unchanged": true
+  },
+  "tests": {
+    "full": {
+      "tests": 220,
+      "passed": 220,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 78045.4715,
+      "log": "full-tests.txt"
+    },
+    "native_group": {
+      "tests": 26,
+      "passed": 26,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 44985.3241,
+      "log": "native-tests.txt",
+      "overlaps_full_suite": true
+    },
+    "previous_skips_now_passed": [
+      {
+        "name": "pinned Midscene codec rejects the recorded box and accepts the regenerated box at the unchanged input size",
+        "passed": true
+      },
+      {
+        "name": "actual HarmonyAgent keeps its native planner and executes only the regenerated Tap",
+        "passed": true
+      },
+      {
+        "name": "actual autoglm native loop executes only regenerated action, not the invalid action",
+        "passed": true
+      },
+      {
+        "name": "actual mobiagent native loop executes only regenerated action, not the invalid action",
+        "passed": true
+      },
+      {
+        "name": "actual model client accepts a response after 31 seconds despite the SDK timeout being 1ms",
+        "passed": true
+      },
+      {
+        "name": "finite request deadlines cover the body and manual Stop still cancels an unlimited wait",
+        "passed": true
+      },
+      {
+        "name": "actual autoglm loop exceeds its native step default with unlimited settings",
+        "passed": true
+      },
+      {
+        "name": "actual mobiagent loop exceeds its native step default with unlimited settings",
+        "passed": true
+      },
+      {
+        "name": "strict protocol validates literal actions without changing native conversion or input messages",
+        "passed": true
+      },
+      {
+        "name": "actual AutoGLM loop rejects thinking_only without synthetic finish or a device action",
+        "passed": true
+      },
+      {
+        "name": "actual AutoGLM loop rejects malformed without synthetic finish or a device action",
+        "passed": true
+      },
+      {
+        "name": "actual AutoGLM loop rejects wrong_units without synthetic finish or a device action",
+        "passed": true
+      }
+    ],
+    "restored_count": 12
+  },
+  "native_contracts": {
+    "result": "passed",
+    "evidence": "native-contracts.json",
+    "real_gui_task": "not executed"
+  },
+  "http_bundle": {
+    "result": "passed",
+    "evidence": "http-bundle-check.json",
+    "complete_and_corrupt_cases": 2,
+    "temporary_server_closed": true,
+    "device_factory_calls": 0,
+    "connection_probes": 0,
+    "video_starts": 0,
+    "installed_app_or_browser_download": "not verified"
+  },
+  "environment": "environment.json",
+  "dependency_source_and_checks": "dependency-preparation.json",
+  "known_findings": [
+    {
+      "id": "R01",
+      "scenario": "dead parent and live worker",
+      "reproduced": false
+    },
+    {
+      "id": "R02",
+      "scenario": "malformed ledger row silently omitted",
+      "reproduced": false
+    }
+  ],
+  "documentation": {
+    "files": [
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "README.md",
+      "docs/CODE_REVIEW_V04_20261030.md",
+      "docs/CURRENT_STATUS.md",
+      "docs/DEVELOPMENT.md",
+      "docs/NEXT_TASK.md",
+      "docs/PRD.md",
+      "docs/ROADMAP.md",
+      "docs/V04_OFFLINE_CANDIDATE_20261031.md",
+      "docs/V04_RELIABILITY_FIXES_20261030.md",
+      "docs/ARCHITECTURE.md",
+      "docs/COLLABORATION_MODULES.md",
+      "docs/DOCUMENTATION_SPEC.md",
+      "CONTRIBUTING.md"
+    ],
+    "local_links_checked": 92,
+    "missing_links": 0,
+    "prd_requirement_rows": 25,
+    "ids_preserved": true
+  },
+  "ignored_dependency_paths": [
+    ".runtime/phone-frameworks.json",
+    ".runtime/python-phone/python.exe",
+    "integrations/midscene/node_modules/@midscene/harmony/package.json"
+  ],
+  "business_source_changed": false,
+  "credentials_copied": false,
+  "databases_copied": false,
+  "hdc_copied": false,
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "existing_service_restarts": 0,
+  "formal_releases_or_tags_created": 0,
+  "evidence_sha256": {
+    ".gitattributes": "c62165d9db79d54cd9c5c620385b60c627e34b6f9d352852a0eadbfbdb722c2e",
+    "dependency-preparation.json": "e0b738218d71e3a9fabcdb6c6f161d628ac84caa1b9c25fb69d776c7d5ba194c",
+    "environment.json": "639e973540796986bd4eb12b37b9da4d2ecae04c549b828c739fa870fe093e66",
+    "full-tests.txt": "fe3cefc9068099c3e8d1782fd687b3304a1a68e42dac3af38875e1a7f8771137",
+    "native-tests.txt": "3ba3f657ba22b5a45a546c4f8f4c1becac2fd08eb777d704b0ac864813b1d9a2",
+    "http-bundle-check.json": "82d74337529c6d4fff9aedd69bb011ba56d92d6cb980c32a5464c41301812083",
+    "native-contracts.json": "37bb7c35691c425a52bf8a6f71dab774869da1d25f1ff53369e9230f8006fb0b",
+    "source-review-summary.json": "c80dbab430844f69bdea42a74644f4425244725a600330740cf74539e8583053"
+  },
+  "evidence_text_line_endings": "LF for Git archive; original shell output retained in ignored working directory; test contents unchanged",
+  "limitations": [
+    "native framework model/device responses are injected fixtures",
+    "no new real phone, model, projection or browser GUI validation",
+    "no real OS/device orphan-worker timing or cross-install exclusion verification",
+    "R03 whole-file reads and R04-R06 maintenance debt remain",
+    "no full HDC/Java/video package doctor or second physical computer deployment validation",
+    "formal candidate freeze and publication await project review"
+  ]
+}

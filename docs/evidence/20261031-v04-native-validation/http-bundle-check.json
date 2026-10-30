@@ -1,0 +1,74 @@
+{
+  "checked_at": "2026-10-30T16:04:27.305Z",
+  "scope": "current v0.4 source HTTP bundle endpoint using copied portable Python and synthetic run data; not user installation/browser download",
+  "cases": [
+    {
+      "case": "complete ledger",
+      "http_status": 200,
+      "content_type": "application/zip",
+      "content_disposition_attachment": true,
+      "entries": [
+        "events.jsonl",
+        "input.json",
+        "state.json",
+        "assets/img_6d9e8ab7-fc77-4ef8-b453-648f57b3858d.png",
+        "ledger-integrity.json"
+      ],
+      "integrity": {
+        "schema_version": 1,
+        "scope": "ledger_parsing",
+        "status": "complete",
+        "complete": true,
+        "valid_events": 3,
+        "invalid_lines": 0,
+        "issues": [],
+        "issues_truncated": false,
+        "pending_tail_line": null
+      },
+      "raw_ledger_unchanged": true,
+      "raw_bytes_in_zip_match": true,
+      "image_hash_matches": true,
+      "zip_sha256": "4cb2cb64bf27fc632f531893e573931b809f6396e760a7b811b1287353b4a628"
+    },
+    {
+      "case": "stable corrupted ledger",
+      "http_status": 200,
+      "content_type": "application/zip",
+      "content_disposition_attachment": true,
+      "entries": [
+        "events.jsonl",
+        "input.json",
+        "state.json",
+        "assets/img_8eccc503-f7cd-4658-92b2-8ca48dca3713.png",
+        "ledger-integrity.json"
+      ],
+      "integrity": {
+        "schema_version": 1,
+        "scope": "ledger_parsing",
+        "status": "incomplete",
+        "complete": false,
+        "valid_events": 3,
+        "invalid_lines": 1,
+        "issues": [
+          {
+            "line": 4,
+            "code": "invalid_json"
+          }
+        ],
+        "issues_truncated": false,
+        "pending_tail_line": null
+      },
+      "raw_ledger_unchanged": true,
+      "raw_bytes_in_zip_match": true,
+      "image_hash_matches": true,
+      "zip_sha256": "b5f31ccd744be3be78b67e1299eb9d02ec747d5cc893a5b4bc31945c99591ccc"
+    }
+  ],
+  "temporary_server_closed": true,
+  "device_factory_calls": 0,
+  "connection_probes": 0,
+  "video_starts": 0,
+  "real_model_requests": 0,
+  "real_device_commands": 0,
+  "existing_service_modified": false
+}

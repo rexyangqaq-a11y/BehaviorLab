@@ -1,0 +1,4 @@
+# Preserve the archived evidence hashes on Windows and other checkouts.
+.gitattributes text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
